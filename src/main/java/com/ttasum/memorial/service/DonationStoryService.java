@@ -28,16 +28,35 @@ public class DonationStoryService {
     private final DonationStoryRepository donationStoryRepository;
     private final DonationStoryCommentRepository donationStoryCommentRepository;
 
-    // 기증후 스토리 등록
-    public DonationStory saveStory(DonationStory story) {
-        return donationStoryRepository.save(story);
+    /**
+     * 기증후 스토리 등록
+     * @param dto 등록 요청용 dto
+     * @return 엔티티 -> dto 변환후 반환
+     */
+    @Transactional
+    public DonationStoryResponseDto createStory(DonationStoryCreateRequestDto dto){
+        DonationStory story = dto.toEntity(); // DB 저장을 위해 Entity로 변환
+        DonationStory saved = donationStoryRepository.save(story);
+        return DonationStoryResponseDto.fromEntity(saved);
     }
 
-    // PK 기준 단건 조회
-    public Optional<DonationStory> findStoryById(Integer id) {
-        return donationStoryRepository.findById(id);
+    /**
+     * 단건 스토리 조회
+     * @param storySeq 스토리 ID
+     * @return 엔티티 -> dto 변환후 반환
+     */
+    @Transactional
+    public DonationStoryResponseDto getStory(Integer storySeq){
+        DonationStory story = donationStoryRepository.findById(storySeq)
+                .orElseThrow(() -> new DonationStoryNotFoundException(storySeq));
+        return DonationStoryResponseDto.fromEntity(story);
     }
 
+    /**
+     * 활성화된 스토리 페이징 조회
+     * @param pageable 페이징 처리 객체 -> Page<T> 반환
+     * @return Page 객체 -> dto 반환
+     */
     public PageResponse<DonationStoryResponseDto> getActiveStories(Pageable pageable) {
         // JPA가 반환한 Page<DonationStory> 조회
         Page<DonationStory> page = donationStoryRepository.findByDelFlagOrderByWriteTimeDesc("N", pageable);
@@ -58,7 +77,7 @@ public class DonationStoryService {
     }
 
     /**
-     * 기증후 스토리 수정 처리
+     * 기증후 스토리 수정
      * @param storySeq 스토리 ID
      * @param dto 수정 요청 dto
      */
@@ -77,7 +96,7 @@ public class DonationStoryService {
 
     /**
      * 수정 전 비밀번호 검증
-     * @param storySeq 검증할 id
+     * @param storySeq 검증할 ID
      * @param inputPasscode 사용자가 입력한 비밀번호
      * @return 비밀번호 일치 여부(true/false)
      */
