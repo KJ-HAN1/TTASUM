@@ -4,6 +4,7 @@ package com.ttasum.memorial.service;
 import com.ttasum.memorial.domain.entity.DonationStory.DonationStory;
 import com.ttasum.memorial.domain.repository.DonationStory.DonationStoryCommentRepository;
 import com.ttasum.memorial.domain.repository.DonationStory.DonationStoryRepository;
+import com.ttasum.memorial.dto.DonationStory.DonationStoryCreateRequestDto;
 import com.ttasum.memorial.dto.DonationStory.DonationStoryResponseDto;
 import com.ttasum.memorial.dto.DonationStory.DonationStoryUpdateRequestDto;
 import com.ttasum.memorial.dto.DonationStory.PageResponse;
