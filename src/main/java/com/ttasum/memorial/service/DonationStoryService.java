@@ -1,10 +1,12 @@
 package com.ttasum.memorial.service;
 
 
-import com.ttasum.memorial.domain.entity.DonationStory;
-import com.ttasum.memorial.domain.repository.DonationStoryCommentRepository;
-import com.ttasum.memorial.domain.repository.DonationStoryRepository;
+import com.ttasum.memorial.domain.entity.DonationStory.DonationStory;
+import com.ttasum.memorial.domain.repository.DonationStory.DonationStoryCommentRepository;
+import com.ttasum.memorial.domain.repository.DonationStory.DonationStoryRepository;
+import com.ttasum.memorial.dto.DonationStory.DonationStoryResponseDto;
 import com.ttasum.memorial.dto.DonationStory.DonationStoryUpdateRequestDto;
+import com.ttasum.memorial.dto.DonationStory.PageResponse;
 import com.ttasum.memorial.exception.DonationStory.DonationStoryNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -12,7 +14,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * 기증후 스토리 겟글의 저장 및 조회 로직을 처리하는 서비스 클래스
@@ -34,16 +38,29 @@ public class DonationStoryService {
         return donationStoryRepository.findById(id);
     }
 
-    // 기증후 스토리 목록 조회(페이징 처리)
-    public Page<DonationStory> getActiveStories(Pageable pageable) {
-        return donationStoryRepository.findByDelFlagOrderByWriteTimeDesc("N", pageable);
+    public PageResponse<DonationStoryResponseDto> getActiveStories(Pageable pageable) {
+        // JPA가 반환한 Page<DonationStory> 조회
+        Page<DonationStory> page = donationStoryRepository.findByDelFlagOrderByWriteTimeDesc("N", pageable);
+
+        // 엔티티 dto 변환 작업
+        List<DonationStoryResponseDto> dtoList = page.getContent().stream()
+                .map(DonationStoryResponseDto::fromEntity)
+                .collect(Collectors.toList());
+
+        // PageResponse<> 생성 후 반환
+        return new PageResponse<>(
+                dtoList,
+                page.getNumber(),        // 현재 페이지 번호
+                page.getSize(),          // 페이지 크기
+                page.getTotalElements(), // 전체 요소 개수
+                page.getTotalPages()     // 전체 페이지 수
+        );
     }
 
     /**
      * 기증후 스토리 수정 처리
      * @param storySeq 스토리 ID
      * @param dto 수정 요청 dto
-     * @return 수정 성공 여부
      */
     @Transactional
     public void updateStory(Integer storySeq, DonationStoryUpdateRequestDto dto) {

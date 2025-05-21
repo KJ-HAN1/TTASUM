@@ -1,12 +1,11 @@
 package com.ttasum.memorial.controller;
 
 
-import com.ttasum.memorial.domain.entity.DonationStory;
+import com.ttasum.memorial.domain.entity.DonationStory.DonationStory;
 import com.ttasum.memorial.dto.DonationStory.*;
 import com.ttasum.memorial.service.DonationStoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -26,26 +25,22 @@ public class DonationStoryController {
 
     /**
      * 기증후 스토리 목록 조회(페이징)
-     * @param page 페이지
+     * @param page 페이지 번호 (0부터 시작)
      * @param size 페이지당 개수
-     * @return 스토리의 페이징된 목록
+     * @return DTO로 매핑된 스토리의 페이징된 목록
      */
     @GetMapping
-    public ResponseEntity<PageResponse<DonationStory>> getStories(@RequestParam(defaultValue = "0") int page,
-                                                                  @RequestParam(defaultValue = "10") int size){
+    public ResponseEntity<PageResponse<DonationStoryResponseDto>> getStories(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
         log.info("/donationLetters?page={}&size={} - 기증후 스토리 목록 조회", page, size);
         Pageable pageable = PageRequest.of(page, size);
-        // DB에서 페이징된 DonationStory 목록 조회
-        Page<DonationStory> p = donationStoryService.getActiveStories(pageable);
-        PageResponse<DonationStory> stories = new PageResponse<>(
-                p.getContent(),
-                p.getNumber(),
-                p.getSize(),
-                p.getTotalElements(),
-                p.getTotalPages()
-        );
 
-        return ResponseEntity.ok(stories);
+        // Service에서 DTO로 변환된 PageResponse 객체를 그대로 반환
+        PageResponse<DonationStoryResponseDto> response = donationStoryService.getActiveStories(pageable);
+
+        return ResponseEntity.ok(response);
     }
 
     /**

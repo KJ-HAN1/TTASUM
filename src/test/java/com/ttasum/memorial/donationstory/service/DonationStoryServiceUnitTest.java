@@ -1,7 +1,7 @@
 package com.ttasum.memorial.donationstory.service;
 
-import com.ttasum.memorial.domain.entity.DonationStory;
-import com.ttasum.memorial.domain.repository.DonationStoryRepository;
+import com.ttasum.memorial.domain.entity.DonationStory.DonationStory;
+import com.ttasum.memorial.domain.repository.DonationStory.DonationStoryRepository;
 import com.ttasum.memorial.dto.DonationStory.DonationStoryUpdateRequestDto;
 import com.ttasum.memorial.exception.DonationStory.DonationStoryNotFoundException;
 import com.ttasum.memorial.service.DonationStoryService;

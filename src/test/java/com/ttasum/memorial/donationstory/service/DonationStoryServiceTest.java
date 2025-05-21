@@ -1,6 +1,6 @@
 package com.ttasum.memorial.donationstory.service;
 
-import com.ttasum.memorial.domain.entity.DonationStory;
+import com.ttasum.memorial.domain.entity.DonationStory.DonationStory;
 import com.ttasum.memorial.service.DonationStoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

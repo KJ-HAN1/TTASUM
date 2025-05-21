@@ -5,9 +5,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ttasum.memorial.controller.DonationStoryController;
-import com.ttasum.memorial.domain.entity.DonationStory;
+import com.ttasum.memorial.domain.entity.DonationStory.DonationStory;
 import com.ttasum.memorial.dto.DonationStory.DonationStoryDeleteRequestDto;
+import com.ttasum.memorial.dto.DonationStory.DonationStoryResponseDto;
 import com.ttasum.memorial.dto.DonationStory.DonationStoryUpdateRequestDto;
+import com.ttasum.memorial.dto.DonationStory.PageResponse;
 import com.ttasum.memorial.exception.DonationStory.DonationStoryNotFoundException;
 import com.ttasum.memorial.service.DonationStoryService;
 import org.junit.jupiter.api.Test;
@@ -15,8 +17,6 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
@@ -39,39 +39,53 @@ public class DonationStoryControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    // 목록 조회
+    // 목록 조회(페이징 처리)
     @Test
-    void getStories_ReturnsPageOfStories() throws Exception {
-        // 엔티티 준비
+    void getStories_ReturnsPageOfDto() throws Exception {
+        // 1) 테스트용 엔티티 및 DTO 준비
         DonationStory story = DonationStory.builder()
                 .areaCode("110")
-                .title("제목")
-                .donorName("기증자")
-                .passcode("pppp1234")
-                .writer("작성자")
+                .title("희망의 이야기")
+                .donorName("홍길동")
+                .passcode("abcd1234")
+                .writer("관리자")
                 .anonymityFlag("N")
                 .readCount(0)
-                .contents("내용")
-                .fileName("file.jpg")
-                .originalFileName("orig.jpg")
+                .contents("이곳에 스토리 내용을 입력합니다.")
+                .fileName("story.jpg")
+                .originalFileName("original_story.jpg")
                 .writerId("user123")
                 .modifierId("user123")
                 .build();
         ReflectionTestUtils.setField(story, "id", 1);
 
-        // Pageable(페이징 요청 정보를 담은 객체) 과 Page 리턴값을 모킹
-        Pageable pageable = PageRequest.of(0, 5);
-        Page<DonationStory> page = new PageImpl<>(List.of(story), pageable, 1);
-        when(donationStoryService.getActiveStories(pageable)).thenReturn(page);
+        DonationStoryResponseDto dto = DonationStoryResponseDto.fromEntity(story);
 
-        // get 요청 수행 및 기대 결과 설정
+        // 2) Pageable과 PageResponse 리턴값 모킹
+        Pageable pageable = PageRequest.of(0, 5);
+        PageResponse<DonationStoryResponseDto> pageResponse =
+                new PageResponse<>(
+                        List.of(dto),
+                        0,      // page number
+                        5,      // page size
+                        1,      // total elements
+                        1       // total pages
+                );
+
+        when(donationStoryService.getActiveStories(pageable))
+                .thenReturn(pageResponse);
+
+        // 3) MockMvc로 GET 요청 검증
         mockMvc.perform(get("/donationLetters")
                         .param("page", "0")
                         .param("size", "5"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.content[0].id").value(1))
-                .andExpect(jsonPath("$.content[0].title").value("제목"))
-                .andExpect(jsonPath("$.totalElements").value(1));
+                .andExpect(jsonPath("$.content[0].storySeq").value(1))
+                .andExpect(jsonPath("$.content[0].title").value("희망의 이야기"))
+                .andExpect(jsonPath("$.page").value(0))
+                .andExpect(jsonPath("$.size").value(5))
+                .andExpect(jsonPath("$.totalElements").value(1))
+                .andExpect(jsonPath("$.totalPages").value(1));
     }
 
     // 단건 조회 테스트

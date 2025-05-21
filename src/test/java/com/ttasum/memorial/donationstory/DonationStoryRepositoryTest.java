@@ -1,8 +1,8 @@
 package com.ttasum.memorial.donationstory;
 
 
-import com.ttasum.memorial.domain.entity.DonationStory;
-import com.ttasum.memorial.domain.repository.DonationStoryRepository;
+import com.ttasum.memorial.domain.entity.DonationStory.DonationStory;
+import com.ttasum.memorial.domain.repository.DonationStory.DonationStoryRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

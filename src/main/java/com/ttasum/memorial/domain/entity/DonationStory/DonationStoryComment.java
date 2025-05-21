@@ -1,4 +1,4 @@
-package com.ttasum.memorial.domain.entity;
+package com.ttasum.memorial.domain.entity.DonationStory;
 
 import javax.persistence.*;
 
