@@ -27,8 +27,7 @@ public class DonationStoryCreateRequestDto {
     @Size(max = 150)
     private String donorName;
 
-    @NotBlank
-    @Size(min = 8, max = 60)
+    @NotBlank @Size(min = 4, max = 60, message = "passcode는 최소4글자, 최대 60글자까지 가능합니다.")
     private String passcode;
 
     @NotBlank

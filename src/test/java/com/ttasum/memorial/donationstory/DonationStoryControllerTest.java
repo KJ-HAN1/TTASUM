@@ -12,6 +12,7 @@ import com.ttasum.memorial.dto.DonationStory.DonationStoryUpdateRequestDto;
 import com.ttasum.memorial.dto.DonationStory.PageResponse;
 import com.ttasum.memorial.exception.DonationStory.DonationStoryNotFoundException;
 import com.ttasum.memorial.service.DonationStoryService;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,6 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
-import java.util.Optional;
 
 // REST API 규약에 맞는 응답을 하고 있는지 검증
 @WebMvcTest(controllers = DonationStoryController.class)
@@ -41,6 +41,7 @@ public class DonationStoryControllerTest {
 
     // 목록 조회(페이징 처리)
     @Test
+    @DisplayName("GET /donationLetters → PageResponse 반환")
     void getStories_ReturnsPageOfDto() throws Exception {
         // 1) 테스트용 엔티티 및 DTO 준비
         DonationStory story = DonationStory.builder()
@@ -88,14 +89,14 @@ public class DonationStoryControllerTest {
                 .andExpect(jsonPath("$.totalPages").value(1));
     }
 
-    // 단건 조회 테스트
+    // 단건 조회 성공 테스트
     @Test
     void getStory_ReturnsOk() throws Exception {
-        DonationStory story = DonationStory.builder()
-                // ...필드 채우기
+        // dto 준비
+        DonationStoryResponseDto dto = DonationStoryResponseDto.builder()
+                .storySeq(2)
                 .title("단건제목")
                 .donorName("홍길동")
-                .passcode("pass")
                 .writer("작성자")
                 .anonymityFlag("Y")
                 .readCount(0)
@@ -105,21 +106,22 @@ public class DonationStoryControllerTest {
                 .writerId("u1")
                 .modifierId("u1")
                 .build();
-        ReflectionTestUtils.setField(story, "id", 2);
+        // 서비스 모킹: getStory → dto 반환
+        when(donationStoryService.getStory(2))
+                .thenReturn(dto);
 
-        when(donationStoryService.findStoryById(2))
-                .thenReturn(Optional.of(story));
-
+        // 요청 및 검증
         mockMvc.perform(get("/donationLetters/2"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(2))
+                .andExpect(jsonPath("$.storySeq").value(2))
                 .andExpect(jsonPath("$.title").value("단건제목"));
     }
 
+    // 단건 조회 실패 테스트
     @Test
     void getStory_ReturnsNotFound() throws Exception {
-        when(donationStoryService.findStoryById(999))
-                .thenReturn(Optional.empty());
+        when(donationStoryService.getStory(999))
+                .thenThrow(new DonationStoryNotFoundException(999));
 
         mockMvc.perform(get("/donationLetters/999"))
                 .andExpect(status().isNotFound());

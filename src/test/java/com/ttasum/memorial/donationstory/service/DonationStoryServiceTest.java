@@ -1,6 +1,8 @@
 package com.ttasum.memorial.donationstory.service;
 
 import com.ttasum.memorial.domain.entity.DonationStory.DonationStory;
+import com.ttasum.memorial.dto.DonationStory.DonationStoryCreateRequestDto;
+import com.ttasum.memorial.dto.DonationStory.DonationStoryResponseDto;
 import com.ttasum.memorial.service.DonationStoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -26,39 +28,41 @@ public class DonationStoryServiceTest {
     @Autowired
     private DonationStoryService donationStoryService;
 
-    private DonationStory saved;
+    private DonationStoryResponseDto saved;
 
     @BeforeEach
     void setUp() {
         // 기증후 스토리 저장
-        DonationStory story = DonationStory.builder()
-                .areaCode("DAEGU")
-                .title("새로운 삶을 선물한 이야기")
-                .donorName("이순신")
-                .passcode("pw1234")
-                .writer("코디네이터B")
-                .anonymityFlag("Y")
-                .readCount(0)
-                .contents("이 기증을 통해 새로운 생명이 이어졌습니다.")
-                .fileName("lee.png")
-                .originalFileName("이순신기증.jpg")
-                .writerId("admin")
-                .modifierId("admin")
-                .build();
+        DonationStoryCreateRequestDto dto = new DonationStoryCreateRequestDto();
+        dto.setAreaCode("110");
+        dto.setTitle("테스트 스토리");
+        dto.setDonorName("홍길동");
+        dto.setPasscode("testpass");
+        dto.setWriter("관리자");
+        dto.setAnonymityFlag("N");
+        dto.setContents("테스트 내용");
+        dto.setFileName("file.jpg");
+        dto.setOriginalFileName("orig.jpg");
+        dto.setWriterId("user123");
 
-        saved = donationStoryService.saveStory(story);
+        // 서비스로 저장하고, 반환받은 DTO를 saved에 보관
+        saved = donationStoryService.createStory(dto);
     }
 
     @Test
     @DisplayName("등록한 기증후 스토리를 ID로 조회할 수 있어야 함")
     void findStoryById() {
-        // when
-        Optional<DonationStory> found = donationStoryService.findStoryById(saved.getId());
+        // saved 는 @BeforeEach 에서 createStory() 호출로 채워둔 DTO
+        Integer id = saved.getStorySeq();
 
-        // then
-        assertThat(found).isPresent();
-        assertThat(found.get().getTitle()).isEqualTo("새로운 삶을 선물한 이야기");
-        assertThat(found.get().getPasscode()).isEqualTo("pw1234");
+        // when: DTO 반환 메서드 호출
+        DonationStoryResponseDto found = donationStoryService.getStory(id);
+
+        // then: DTO 필드 검증
+        assertThat(found).isNotNull();
+        assertThat(found.getStorySeq()).isEqualTo(id);
+        assertThat(found.getTitle()).isEqualTo("테스트 스토리");
     }
+
 
 }

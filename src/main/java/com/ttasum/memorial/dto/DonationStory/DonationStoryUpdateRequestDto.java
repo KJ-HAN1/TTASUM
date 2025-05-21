@@ -19,7 +19,7 @@ public class DonationStoryUpdateRequestDto {
     @NotBlank @Size(max = 150, message = "donorName은 최대 150글자까지 가능합니다.")
     private String donorName;
 
-    @NotBlank @Size(max = 60, message = "passcode는 최대 60글자까지 가능합니다.")
+    @NotBlank @Size(min = 4, max = 60, message = "passcode는 최소4글자, 최대 60글자까지 가능합니다.")
     private String passcode;
 
     @NotBlank @Size(max = 150, message = "writer는 최대 150글자까지 가능합니다.")
