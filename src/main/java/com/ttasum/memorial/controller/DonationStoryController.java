@@ -49,12 +49,10 @@ public class DonationStoryController {
      * @return 존재하는 경우 DonationStory 객체, 존재하지 않을 경우 404 응답
      */
     @GetMapping("/{storySeq}")
-    public ResponseEntity<DonationStory> getStory(@PathVariable Integer storySeq){
+    public ResponseEntity<DonationStoryResponseDto> getStory(@PathVariable Integer storySeq){
         log.info("/donationLetters/storySeq={} - 단건 조회", storySeq);
-        // 상태 코드 200 or 404
-        return donationStoryService.findStoryById(storySeq)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        DonationStoryResponseDto dto = donationStoryService.getStory(storySeq);
+        return ResponseEntity.ok(dto);
     }
 
     /**
@@ -63,24 +61,10 @@ public class DonationStoryController {
      * @return 생성된 DonationStory 객체와 201 CREATED 상태
      */
     @PostMapping
-    public ResponseEntity<DonationStory> createStory(@RequestBody @Valid DonationStoryRequest dto){
+    public ResponseEntity<DonationStoryResponseDto> createStory(@RequestBody @Valid DonationStoryCreateRequestDto dto){
         log.info("/donationLetters - 등록 요청: {}", dto);
-        DonationStory story = DonationStory.builder()
-                .areaCode(dto.getAreaCode())
-                .title(dto.getTitle())
-                .donorName(dto.getDonorName())
-                .passcode(dto.getPasscode())
-                .writer(dto.getWriter())
-                .anonymityFlag(dto.getAnonymityFlag())
-                .readCount(dto.getReadCount())
-                .contents(dto.getContents())
-                .fileName(dto.getFileName())
-                .originalFileName(dto.getOriginalFileName())
-                .writerId(dto.getWriterId())
-                .modifierId(dto.getModifierId())
-                .build();
-        DonationStory saved = donationStoryService.saveStory(story);
-        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+        DonationStoryResponseDto responseDto = donationStoryService.createStory(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
     }
 
     /**
@@ -98,7 +82,7 @@ public class DonationStoryController {
     }
 
     /**
-     * 기증후 스토리 수정 검증
+     * 비밀번호 검증
      * @param storySeq 수정할 스토리 ID
      * @param dto 비밀번호 확인 요청 dto
      * @return 200 or 401(인증되지 않음)
