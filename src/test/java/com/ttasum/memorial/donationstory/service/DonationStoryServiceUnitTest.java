@@ -55,7 +55,7 @@ class DonationStoryServiceUnitTest {
         // 업데이트 DTO 준비
         updateDto = new DonationStoryUpdateRequestDto();
         updateDto.setTitle("수정된 제목");
-        updateDto.setDonorName("곽우진");
+        updateDto.setDonorName("수정된 이름");
         updateDto.setContents("수정된 내용");
     }
 
@@ -69,7 +69,7 @@ class DonationStoryServiceUnitTest {
 
         // then: 엔티티 내부 필드가 DTO 값으로 변경되었는지 검증
         assertEquals("수정된 제목", existingStory.getTitle());
-        assertEquals("곽우진", existingStory.getDonorName());
+        assertEquals("수정된 이름", existingStory.getDonorName());
         assertEquals("수정된 내용", existingStory.getContents());
 
         // repository 조회만 호출, save()는 Dirty-Checking에 맡김
