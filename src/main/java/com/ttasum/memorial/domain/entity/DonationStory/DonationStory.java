@@ -40,6 +40,7 @@ public class DonationStory {
     @Column(name = "read_count")
     private Integer readCount;
 
+    @Lob // 긴 문자열 데이터를 저장
     @Column(name = "story_contents", columnDefinition = "TEXT")
     private String contents;
 
