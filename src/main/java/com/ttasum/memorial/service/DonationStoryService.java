@@ -27,7 +27,6 @@ import java.util.stream.Collectors;
 public class DonationStoryService {
 
     private final DonationStoryRepository donationStoryRepository;
-    private final DonationStoryCommentRepository donationStoryCommentRepository;
 
     /**
      * 기증후 스토리 등록
