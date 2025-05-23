@@ -1,4 +1,4 @@
-package com.ttasum.memorial.donationstory;
+package com.ttasum.memorial.donationstory.repository;
 
 
 import com.ttasum.memorial.domain.entity.DonationStory.DonationStory;

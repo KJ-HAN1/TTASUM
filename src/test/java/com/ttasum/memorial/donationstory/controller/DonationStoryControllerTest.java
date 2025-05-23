@@ -1,4 +1,4 @@
-package com.ttasum.memorial.donationstory;
+package com.ttasum.memorial.donationstory.controller;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -136,7 +136,7 @@ public class DonationStoryControllerTest {
         Mockito.doReturn(true)
                 .when(donationStoryService).softDeleteStory(1, "user123");
 
-        mockMvc.perform(patch("/donationLetters/1")
+        mockMvc.perform(delete("/donationLetters/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk());
@@ -150,7 +150,7 @@ public class DonationStoryControllerTest {
         Mockito.doReturn(false)
                 .when(donationStoryService).softDeleteStory(1, "user123");
 
-        mockMvc.perform(patch("/donationLetters/1")
+        mockMvc.perform(delete("/donationLetters/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isNotFound());
