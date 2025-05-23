@@ -1,5 +1,6 @@
 package com.ttasum.memorial.domain.entity.DonationStory;
 
+import com.ttasum.memorial.exception.DonationStory.InvalidCommentPasscodeException;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -64,18 +65,25 @@ public class DonationStoryComment {
     }
 
     /**
-     * 댓글 내용 수정
-     * @param contents 댓글 내용
-     * @param modifierId 작성자 인증 후 사용
+     * 비밀번호가 일치하는 경우 댓글 내용을 수정
+     * @param inputPasscode 요청자가 입력한 비밀번호
+     * @param newContents 수정할 내용
+     * @param modifierId 수정자 ID (로그인 사용자 또는 null)
      */
-    public void update(String contents, String modifierId) {
-        this.contents = contents;
+    public void updateIfPasscodeMatches(String inputPasscode, String newContents, String modifierId) {
+        if (!this.passcode.equals(inputPasscode)) {
+            throw new InvalidCommentPasscodeException(this.commentSeq);
+        }
+        this.contents = newContents;
         this.modifierId = modifierId;
         this.modifyTime = LocalDateTime.now();
     }
 
-    // 댓글 삭제(소프트 삭제)
-    public void delete(String modifierId) {
+    // 비밀번호가 일치하는 경우 댓글 삭제(소프트 삭제)
+    public void deleteIfPasscodeMatches(String inputPasscode, String modifierId) {
+        if (!this.passcode.equals(inputPasscode)) {
+            throw new InvalidCommentPasscodeException(this.commentSeq);
+        }
         this.delFlag = "Y";
         this.modifierId = modifierId;
         this.modifyTime = LocalDateTime.now();

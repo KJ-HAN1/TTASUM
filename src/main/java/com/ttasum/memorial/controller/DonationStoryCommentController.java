@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,13 +24,14 @@ public class DonationStoryCommentController {
      * 댓글 등록
      * @param storySeq 게시글 id
      * @param dto 댓글 등록 요청 dto
-     * @return 200 OK
+     * @return 201 Created -> location 다음 동작(조회 등)을 위한 URI를 제공
      */
     @PostMapping("/{storySeq}/comments")
     public ResponseEntity<Void> createComment(@PathVariable Integer storySeq, @RequestBody @Valid DonationStoryCommentCreateRequestDto dto) {
         log.info("POST /donationLetters/{}/comments - 댓글 등록 요청", storySeq);
-        commentService.createComment(storySeq, dto);
-        return ResponseEntity.ok().build();
+        int commentSeq = commentService.createComment(storySeq, dto);
+        URI location = URI.create(String.format("/donationLetters/%d/comments/%d", storySeq, commentSeq));
+        return ResponseEntity.created(location).build();
     }
 
     /**
@@ -39,10 +41,10 @@ public class DonationStoryCommentController {
      * @param dto 댓글 수정 요청 dto
      * @return 200 OK
      */
-    @PutMapping("/{storySeq}/comments/{commentSeq}")
+    @PatchMapping("/{storySeq}/comments/{commentSeq}")
     public ResponseEntity<Void> updateComment(@PathVariable Integer storySeq, @PathVariable Integer commentSeq, @RequestBody @Valid DonationStoryCommentUpdateRequestDto dto) {
         log.info("PUT /donationLetters/{}/comments/{} - 댓글 수정 요청", storySeq, commentSeq);
-        commentService.updateComment(commentSeq, dto);
+        commentService.updateComment(storySeq, commentSeq, dto);
         return ResponseEntity.ok().build();
     }
 
@@ -59,7 +61,7 @@ public class DonationStoryCommentController {
             @PathVariable Integer commentSeq,
             @Valid @RequestBody DonationStoryCommentDeleteRequestDto dto) {
         log.info("DELETE /donationLetters/{}/comments/{} - 댓글 삭제 요청", storySeq, commentSeq);
-        commentService.softDeleteComment(commentSeq, dto);
+        commentService.softDeleteComment(storySeq, commentSeq, dto);
         return ResponseEntity.ok().build();
     }
 }

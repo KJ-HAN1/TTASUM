@@ -10,6 +10,7 @@ import com.ttasum.memorial.dto.DonationStoryComment.DonationStoryCommentResponse
 import com.ttasum.memorial.dto.DonationStoryComment.DonationStoryCommentUpdateRequestDto;
 import com.ttasum.memorial.exception.DonationStory.DonationStoryCommentNotFoundException;
 import com.ttasum.memorial.exception.DonationStory.DonationStoryNotFoundException;
+import com.ttasum.memorial.exception.DonationStory.InvalidCommentPasscodeException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,10 +30,11 @@ public class DonationStoryCommentService {
      * 댓글 등록
      * @param storySeq 스토리 id
      * @param dto 댓글 등록 요청 dto
+     * @return 댓글 id 반환
      */
     @Transactional
-    public void createComment(Integer storySeq, DonationStoryCommentCreateRequestDto dto) {
-        DonationStory story = storyRepository.findById(storySeq)
+    public int createComment(Integer storySeq, DonationStoryCommentCreateRequestDto dto) {
+        DonationStory story = storyRepository.findByIdAndDelFlag(storySeq, "N")
                 .orElseThrow(() -> new DonationStoryNotFoundException(storySeq));
 
         DonationStoryComment comment = DonationStoryComment.builder()
@@ -44,7 +46,7 @@ public class DonationStoryCommentService {
                 .modifierId(null) // 수정자도 임시 값 적용
                 .build();
 
-        commentRepository.save(comment);
+        return commentRepository.save(comment).getCommentSeq();
     }
 
     /**
@@ -77,12 +79,12 @@ public class DonationStoryCommentService {
      * @param dto 댓글 수정 요청 dto
      */
     @Transactional
-    public void updateComment(Integer commentSeq, DonationStoryCommentUpdateRequestDto dto) {
-        DonationStoryComment comment = commentRepository.findByCommentSeqAndPasscodeAndDelFlag(commentSeq, dto.getPasscode(),"N")
+    public void updateComment(Integer storySeq, Integer commentSeq, DonationStoryCommentUpdateRequestDto dto) {
+        DonationStoryComment comment = commentRepository.findByStory_IdAndCommentSeqAndDelFlag(storySeq, commentSeq,"N")
                 .orElseThrow(() -> new DonationStoryCommentNotFoundException(commentSeq));
 
         // String modifierId = getUserIdFromToken(request); // 비회원이면 anonymous 반환
-        comment.update(dto.getContents(), null); // 로그인 연동 시 수정자 ID로 교체
+        comment.updateIfPasscodeMatches(dto.getPasscode(), dto.getContents(),null); // 로그인 연동 시 수정자 ID로 교체
     }
 
     // eGov 환경 -> Spring Security + JWT 필터 사용
@@ -102,11 +104,11 @@ public class DonationStoryCommentService {
      * @param dto 댓글 삭제 요청 dto
      */
     @Transactional
-    public void softDeleteComment(Integer commentSeq, DonationStoryCommentDeleteRequestDto dto) {
-        DonationStoryComment comment = commentRepository.findByCommentSeqAndPasscodeAndDelFlag(commentSeq, dto.getPasscode(), "N")
+    public void softDeleteComment(Integer storySeq, Integer commentSeq, DonationStoryCommentDeleteRequestDto dto) {
+        DonationStoryComment comment = commentRepository.findByStory_IdAndCommentSeqAndDelFlag(storySeq, commentSeq,"N")
                 .orElseThrow(() -> new DonationStoryCommentNotFoundException(commentSeq));
 
-        comment.delete(null);
+        comment.deleteIfPasscodeMatches(dto.getPasscode(),null);
     }
 
 

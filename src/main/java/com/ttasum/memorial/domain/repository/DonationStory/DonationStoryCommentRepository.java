@@ -13,6 +13,6 @@ public interface DonationStoryCommentRepository extends JpaRepository<DonationSt
     List<DonationStoryComment> findByStory_IdAndDelFlagOrderByWriteTimeAsc(Integer storySeq, String delFlag);
 
     // 댓글 ID와 비밀번호 일치 여부 확인
-    Optional<DonationStoryComment> findByCommentSeqAndPasscodeAndDelFlag(Integer commentSeq, String passcode, String delFlag);
+    Optional<DonationStoryComment> findByStory_IdAndCommentSeqAndDelFlag(Integer storySeq, Integer commentSeq, String delFlag);
 
 }
