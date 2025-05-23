@@ -2,6 +2,7 @@ package com.ttasum.memorial.service;
 
 
 import com.ttasum.memorial.domain.entity.DonationStory.DonationStory;
+import com.ttasum.memorial.domain.entity.DonationStory.DonationStoryComment;
 import com.ttasum.memorial.domain.repository.DonationStory.DonationStoryCommentRepository;
 import com.ttasum.memorial.domain.repository.DonationStory.DonationStoryRepository;
 import com.ttasum.memorial.dto.DonationStory.DonationStoryCreateRequestDto;
@@ -20,13 +21,14 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * 기증후 스토리 겟글의 저장 및 조회 로직을 처리하는 서비스 클래스
+ * 기증후 스토리 게시글의 저장 및 조회 로직을 처리하는 서비스 클래스
  */
 @Service
 @RequiredArgsConstructor
 public class DonationStoryService {
 
     private final DonationStoryRepository donationStoryRepository;
+    private final DonationStoryCommentRepository commentRepository;
 
     /**
      * 기증후 스토리 등록
@@ -45,11 +47,15 @@ public class DonationStoryService {
      * @param storySeq 스토리 ID
      * @return 엔티티 -> dto 변환후 반환
      */
-    @Transactional
+    @Transactional(readOnly = true)
     public DonationStoryResponseDto getStory(Integer storySeq){
         DonationStory story = donationStoryRepository.findById(storySeq)
                 .orElseThrow(() -> new DonationStoryNotFoundException(storySeq));
-        return DonationStoryResponseDto.fromEntity(story);
+
+        List<DonationStoryComment> comments = commentRepository
+                .findByStory_IdAndDelFlagOrderByWriteTimeAsc(storySeq, "N");
+
+        return DonationStoryResponseDto.fromEntity(story, comments);
     }
 
     /**
@@ -57,6 +63,7 @@ public class DonationStoryService {
      * @param pageable 페이징 처리 객체 -> Page<T> 반환
      * @return Page 객체 -> dto 반환
      */
+    @Transactional(readOnly = true)
     public PageResponse<DonationStoryResponseDto> getActiveStories(Pageable pageable) {
         // JPA가 반환한 Page<DonationStory> 조회
         Page<DonationStory> page = donationStoryRepository.findByDelFlagOrderByWriteTimeDesc("N", pageable);

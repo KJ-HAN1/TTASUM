@@ -55,7 +55,7 @@ public class DonationStoryCommentService {
     @Transactional(readOnly = true)
     public List<DonationStoryCommentResponseDto> getComments(Integer storySeq) {
         // 스토리 id로 게시글 찾고
-        List<DonationStoryComment> comments = commentRepository.findByStory_StorySeqAndDelFlagOrderByWriteTimeAsc(storySeq, "N");
+        List<DonationStoryComment> comments = commentRepository.findByStory_IdAndDelFlagOrderByWriteTimeAsc(storySeq, "N");
 
         // 해당 게시글의 댓글들을 dto형태로 변환 후 리스트에 저장
         List<DonationStoryCommentResponseDto> dtos = new ArrayList<>();
@@ -78,7 +78,7 @@ public class DonationStoryCommentService {
      */
     @Transactional
     public void updateComment(Integer commentSeq, DonationStoryCommentUpdateRequestDto dto) {
-        DonationStoryComment comment = commentRepository.findByIdAndPasscodeAndDelFlag(commentSeq, dto.getPasscode(),"N")
+        DonationStoryComment comment = commentRepository.findByCommentSeqAndPasscodeAndDelFlag(commentSeq, dto.getPasscode(),"N")
                 .orElseThrow(() -> new DonationStoryCommentNotFoundException(commentSeq));
 
         // String modifierId = getUserIdFromToken(request); // 비회원이면 anonymous 반환
@@ -101,8 +101,9 @@ public class DonationStoryCommentService {
      * @param commentSeq 댓글 id
      * @param dto 댓글 삭제 요청 dto
      */
+    @Transactional
     public void softDeleteComment(Integer commentSeq, DonationStoryCommentDeleteRequestDto dto) {
-        DonationStoryComment comment = commentRepository.findByIdAndPasscodeAndDelFlag(commentSeq, dto.getPasscode(), "N")
+        DonationStoryComment comment = commentRepository.findByCommentSeqAndPasscodeAndDelFlag(commentSeq, dto.getPasscode(), "N")
                 .orElseThrow(() -> new DonationStoryCommentNotFoundException(commentSeq));
 
         comment.delete(null);

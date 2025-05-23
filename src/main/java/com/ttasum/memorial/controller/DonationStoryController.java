@@ -106,7 +106,7 @@ public class DonationStoryController {
      * @param dto 삭제 요청 dto
      * @return 200 or 404
      */
-    @PatchMapping("/{storySeq}")
+    @DeleteMapping("/{storySeq}")
     public ResponseEntity<Void> softDeleteStory(@PathVariable Integer storySeq, @RequestBody @Valid DonationStoryDeleteRequestDto dto){
         log.info("/donationLetters/{} - 스토리 삭제(소프트) 요청", storySeq);
 

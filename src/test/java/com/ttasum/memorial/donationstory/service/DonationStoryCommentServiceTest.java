@@ -59,7 +59,7 @@ public class DonationStoryCommentServiceTest {
     @Test
     void getComments_shouldReturnDtos_withCorrectFields() {
         // given
-        when(commentRepository.findByStory_StorySeqAndDelFlagOrderByWriteTimeAsc(1, "N"))
+        when(commentRepository.findByStory_IdAndDelFlagOrderByWriteTimeAsc(1, "N"))
                 .thenReturn(List.of(comment));
 
         // when
@@ -75,7 +75,7 @@ public class DonationStoryCommentServiceTest {
         assertThat(dto.getWriteTime()).isEqualTo(comment.getWriteTime());
 
         verify(commentRepository, times(1))
-                .findByStory_StorySeqAndDelFlagOrderByWriteTimeAsc(1, "N");
+                .findByStory_IdAndDelFlagOrderByWriteTimeAsc(1, "N");
     }
 
 
@@ -86,7 +86,7 @@ public class DonationStoryCommentServiceTest {
         dto.setPasscode("pw1234");
         dto.setContents("수정된 내용");
 
-        when(commentRepository.findByIdAndPasscodeAndDelFlag(1, "pw1234", "N"))
+        when(commentRepository.findByCommentSeqAndPasscodeAndDelFlag(1, "pw1234", "N"))
                 .thenReturn(Optional.of(comment));
 
         // when
@@ -103,7 +103,7 @@ public class DonationStoryCommentServiceTest {
         dto.setPasscode("wrong");
         dto.setContents("수정 실패");
 
-        when(commentRepository.findByIdAndPasscodeAndDelFlag(1, "wrong", "N"))
+        when(commentRepository.findByCommentSeqAndPasscodeAndDelFlag(1, "wrong", "N"))
                 .thenReturn(Optional.empty());
 
         // then
@@ -117,7 +117,7 @@ public class DonationStoryCommentServiceTest {
         DonationStoryCommentDeleteRequestDto dto = new DonationStoryCommentDeleteRequestDto();
         dto.setPasscode("pw1234");
 
-        when(commentRepository.findByIdAndPasscodeAndDelFlag(1, "pw1234", "N"))
+        when(commentRepository.findByCommentSeqAndPasscodeAndDelFlag(1, "pw1234", "N"))
                 .thenReturn(Optional.of(comment));
 
         // when
@@ -133,7 +133,7 @@ public class DonationStoryCommentServiceTest {
         DonationStoryCommentDeleteRequestDto dto = new DonationStoryCommentDeleteRequestDto();
         dto.setPasscode("wrong");
 
-        when(commentRepository.findByIdAndPasscodeAndDelFlag(1, "wrong", "N"))
+        when(commentRepository.findByCommentSeqAndPasscodeAndDelFlag(1, "wrong", "N"))
                 .thenReturn(Optional.empty());
 
         // then
