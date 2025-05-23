@@ -62,7 +62,7 @@ class DonationStoryServiceUnitTest {
     @Test
     void updateStory_Success_changesEntityFields() {
         // given
-        when(repository.findById(1)).thenReturn(Optional.of(existingStory));
+        when(repository.findByIdAndDelFlag(1,"N")).thenReturn(Optional.of(existingStory));
 
         // when
         service.updateStory(1, updateDto);
@@ -73,20 +73,20 @@ class DonationStoryServiceUnitTest {
         assertEquals("수정된 내용", existingStory.getContents());
 
         // repository 조회만 호출, save()는 Dirty-Checking에 맡김
-        verify(repository, times(1)).findById(1); // 특정 메서드가 정확히 몇 번 호출됐는지 검증
+        verify(repository, times(1)).findByIdAndDelFlag(1,"N"); // 특정 메서드가 정확히 몇 번 호출됐는지 검증
         verifyNoMoreInteractions(repository); // 명시한 것 외에 다른 메서드 호출이 없었는지 검증
     }
 
     @Test
     void updateStory_NotFound_throwsDonationStoryNotFoundException() {
         // given
-        when(repository.findById(1)).thenReturn(Optional.empty());
+        when(repository.findByIdAndDelFlag(1,"N")).thenReturn(Optional.empty());
 
         // when & then
         assertThrows(DonationStoryNotFoundException.class,
                 () -> service.updateStory(1, updateDto));
 
-        verify(repository, times(1)).findById(1);
+        verify(repository, times(1)).findByIdAndDelFlag(1,"N");
         verifyNoMoreInteractions(repository);
     }
 }

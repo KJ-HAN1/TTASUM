@@ -49,7 +49,7 @@ public class DonationStoryService {
      */
     @Transactional(readOnly = true)
     public DonationStoryResponseDto getStory(Integer storySeq){
-        DonationStory story = donationStoryRepository.findById(storySeq)
+        DonationStory story = donationStoryRepository.findByIdAndDelFlag(storySeq, "N")
                 .orElseThrow(() -> new DonationStoryNotFoundException(storySeq));
 
         List<DonationStoryComment> comments = commentRepository
@@ -91,7 +91,7 @@ public class DonationStoryService {
     @Transactional
     public void updateStory(Integer storySeq, DonationStoryUpdateRequestDto dto) {
 
-        DonationStory story = donationStoryRepository.findById(storySeq)
+        DonationStory story = donationStoryRepository.findByIdAndDelFlag(storySeq, "N")
                 .orElseThrow(() -> new DonationStoryNotFoundException(storySeq));
 
         // 엔티티 수정 - Dirty Checking 으로 변경 감지
@@ -110,7 +110,7 @@ public class DonationStoryService {
     @Transactional(readOnly = true)
     public boolean verifyStoryPasscode(Integer storySeq, String inputPasscode) {
         // id로 스토리 조회
-        Optional<DonationStory> optionalStory  = donationStoryRepository.findById(storySeq);
+        Optional<DonationStory> optionalStory  = donationStoryRepository.findByIdAndDelFlag(storySeq, "N");
 
         // Optional이 비어 있지 않으면 비밀번호 비교
         return optionalStory.map(story -> inputPasscode.equals(story.getPasscode()))
@@ -125,7 +125,7 @@ public class DonationStoryService {
      */
     @Transactional
     public boolean softDeleteStory(Integer storySeq, String modifierId) {
-        DonationStory story = donationStoryRepository.findById(storySeq)
+        DonationStory story = donationStoryRepository.findByIdAndDelFlag(storySeq, "N")
                 .orElseThrow(() -> new DonationStoryNotFoundException(storySeq));
 
         // 엔티티 내부에서 delFlag, modifierId, modifyTime 갱신
