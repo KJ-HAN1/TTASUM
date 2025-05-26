@@ -11,4 +11,5 @@ public class BlameResponseDto {
     private int label;
     private double confidence;
     private List<Map<String, Object>> details;
+    private int forbidden_flag;
 }
