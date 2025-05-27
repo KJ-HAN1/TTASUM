@@ -1,5 +1,0 @@
-2025-05-26 13:23:23,068 [INFO] 현재 실행 중인 파일 경로: C:\JAVA\fast_campus_KDT\projects\final\DBE_Final_Project\python\forbiddenWord\main.py
-2025-05-26 13:23:42,764 [INFO] 현재 실행 중인 파일 경로: C:\JAVA\fast_campus_KDT\projects\final\DBE_Final_Project\python\forbiddenWord\main.py
-2025-05-26 13:24:37,313 [INFO] [PREDICT] sentence="2016년 신장 이식 수혜자 이명수" | label=0 | confidence=0.0360
-2025-05-26 13:25:44,945 [INFO] [PREDICT] sentence="5월이 다시 돌아왔고, 모두가 널 그리워하며 슬퍼하는 가운데, 나는 조금 다른 감정으로 이 시간을 지나고 있어. 솔직히 말하면 너의 갑작스러운 선택이 아직도 이해되지 않아. 나 하나 살자고 모든 걸 내려놓은 네 결정을 받아들이는 게 쉽지 않더라. 모두는 너를 아름답게 기억하지만, 난 네가 남긴 혼란과 빈자리로 아직도 하루하루 버티고 있어. 기증이라는 명분 아래에서 너의 부재가 미화되는 것 같아 억울하기도 해. 한 번이라도 가족들과 진심으로 대화를 나눴더라면, 이런 선택을 막을 수 있지 않았을까. 그 꿈에 나온 네 얼굴조차 왜인지 불편하게 다가오더라. 천국에서는 잘 지내고 있다지만, 남겨진 우리 삶은 그렇게 간단하지가 않아. 이건 누군가에겐 생명이지만, 누군가에겐 죄책감으로 남는 현실이야." | label=1 | confidence=0.8434
-2025-05-26 17:44:22,195 [INFO] 현재 실행 중인 파일 경로: C:\DBE_Final_Project\python\forbiddenWord\main.py
