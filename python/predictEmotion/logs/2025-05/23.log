@@ -1,0 +1,86 @@
+2025-05-23 11:34:15,111 [INFO] 현재 실행 중인 파일 경로: C:\JAVA\fast_campus_KDT\projects\final\DBE_Final_Project\python\predictEmotion\main.py
+2025-05-23 11:47:36,371 [INFO] 현재 실행 중인 파일 경로: C:\JAVA\fast_campus_KDT\projects\final\DBE_Final_Project\python\predictEmotion\main.py
+2025-05-23 11:47:58,415 [INFO] 현재 실행 중인 파일 경로: C:\JAVA\fast_campus_KDT\projects\final\DBE_Final_Project\python\predictEmotion\main.py
+2025-05-23 11:48:10,944 [WARNING] Oh! You have mecab in your environment. Kss will take this as a backend! :D
+
+2025-05-23 11:48:12,185 [INFO] [PREDICT] sentence="5월이 다시 돌아왔고, 모두가 널 그리워하며 슬퍼하는 가운데, 나는 조금 다른 감정으로 이 시간을 지나고 있어. 솔직히 말하면 너의 갑작스러운 선택이 아직도 이해되지 않아. 나 하나 살자고 모든 걸 내려놓은 네 결정을 받아들이는 게 쉽지 않더라. 모두는 너를 아름답게 기억하지만, 난 네가 남긴 혼란과 빈자리로 아직도 하루하루 버티고 있어. 기증이라는 명분 아래에서 너의 부재가 미화되는 것 같아 억울하기도 해. 한 번이라도 가족들과 진심으로 대화를 나눴더라면, 이런 선택을 막을 수 있지 않았을까. 그 꿈에 나온 네 얼굴조차 왜인지 불편하게 다가오더라. 천국에서는 잘 지내고 있다지만, 남겨진 우리 삶은 그렇게 간단하지가 않아. 이건 누군가에겐 생명이지만, 누군가에겐 죄책감으로 남는 현실이야." | label=1 | confidence=0.6582
+2025-05-23 11:48:12,188 [INFO] [DETAIL-1] sentence="5월이 다시 돌아왔고, 모두가 널 그리워하며 슬퍼하는 가운데, 나는 조금 다른 감정으로 이 시간을 지나고 있어." | label=0 | confidence=0.0383
+2025-05-23 11:48:12,188 [INFO] [DETAIL-2] sentence="솔직히 말하면 너의 갑작스러운 선택이 아직도 이해되지 않아." | label=1 | confidence=0.9414
+2025-05-23 11:48:12,188 [INFO] [DETAIL-3] sentence="나 하나 살자고 모든 걸 내려놓은 네 결정을 받아들이는 게 쉽지 않더라." | label=1 | confidence=0.9471
+2025-05-23 11:48:12,188 [INFO] [DETAIL-4] sentence="모두는 너를 아름답게 기억하지만, 난 네가 남긴 혼란과 빈자리로 아직도 하루하루 버티고 있어." | label=0 | confidence=0.0727
+2025-05-23 11:48:12,189 [INFO] [DETAIL-5] sentence="기증이라는 명분 아래에서 너의 부재가 미화되는 것 같아 억울하기도 해." | label=1 | confidence=0.9374
+2025-05-23 11:48:12,189 [INFO] [DETAIL-6] sentence="한 번이라도 가족들과 진심으로 대화를 나눴더라면, 이런 선택을 막을 수 있지 않았을까." | label=0 | confidence=0.5699
+2025-05-23 11:48:12,189 [INFO] [DETAIL-7] sentence="그 꿈에 나온 네 얼굴조차 왜인지 불편하게 다가오더라." | label=1 | confidence=0.9460
+2025-05-23 11:48:12,189 [INFO] [DETAIL-8] sentence="천국에서는 잘 지내고 있다지만, 남겨진 우리 삶은 그렇게 간단하지가 않아." | label=1 | confidence=0.7294
+2025-05-23 11:48:12,189 [INFO] [DETAIL-9] sentence="이건 누군가에겐 생명이지만, 누군가에겐 죄책감으로 남는 현실이야." | label=1 | confidence=0.7412
+2025-05-23 11:51:58,615 [INFO] 현재 실행 중인 파일 경로: C:\JAVA\fast_campus_KDT\projects\final\DBE_Final_Project\python\predictEmotion\main.py
+2025-05-23 11:52:17,468 [INFO] 현재 실행 중인 파일 경로: C:\JAVA\fast_campus_KDT\projects\final\DBE_Final_Project\python\predictEmotion\main.py
+2025-05-23 11:52:31,982 [INFO] 현재 실행 중인 파일 경로: C:\JAVA\fast_campus_KDT\projects\final\DBE_Final_Project\python\predictEmotion\main.py
+2025-05-23 11:53:54,057 [INFO] 현재 실행 중인 파일 경로: C:\JAVA\fast_campus_KDT\projects\final\DBE_Final_Project\python\predictEmotion\main.py
+2025-05-23 11:57:15,945 [INFO] 현재 실행 중인 파일 경로: C:\JAVA\fast_campus_KDT\projects\final\DBE_Final_Project\python\predictEmotion\main.py
+2025-05-23 11:57:25,510 [INFO] 현재 실행 중인 파일 경로: C:\JAVA\fast_campus_KDT\projects\final\DBE_Final_Project\python\predictEmotion\main.py
+2025-05-23 12:02:36,726 [INFO] 현재 실행 중인 파일 경로: C:\JAVA\fast_campus_KDT\projects\final\DBE_Final_Project\python\predictEmotion\main.py
+2025-05-23 12:02:46,087 [INFO] 현재 실행 중인 파일 경로: C:\JAVA\fast_campus_KDT\projects\final\DBE_Final_Project\python\predictEmotion\main.py
+2025-05-23 12:03:31,706 [INFO] 현재 실행 중인 파일 경로: C:\JAVA\fast_campus_KDT\projects\final\DBE_Final_Project\python\predictEmotion\main.py
+2025-05-23 12:05:29,203 [INFO] 현재 실행 중인 파일 경로: C:\JAVA\fast_campus_KDT\projects\final\DBE_Final_Project\python\predictEmotion\main.py
+2025-05-23 12:06:38,166 [INFO] 현재 실행 중인 파일 경로: C:\JAVA\fast_campus_KDT\projects\final\DBE_Final_Project\python\predictEmotion\main.py
+2025-05-23 12:07:09,476 [INFO] 현재 실행 중인 파일 경로: C:\JAVA\fast_campus_KDT\projects\final\DBE_Final_Project\python\predictEmotion\main.py
+2025-05-23 12:10:04,437 [WARNING] Oh! You have mecab in your environment. Kss will take this as a backend! :D
+
+2025-05-23 12:10:07,349 [INFO] [PREDICT] sentence="2016년 서울에서 4번의 심장 시술을 받았지만 상태는 호전되지 않았습니다. 심장이식은 누군가가 기증을 해야만 가능한 것이어서 쉽지 않았습니다. 수소문 끝에 사는 곳에서 가까운 병원에서 유능하고 최선을 다해주시는 의료진을 만나 혼신의 치료를 받았지만, 심장은 점점 나빠져 갔습니다. 그러다 기적같이 뇌사자로부터 심장이식을 받을 수 있게 되었고, 수술도 잘 되어 회복도 빨리 되었습니다. 이렇게 건강하게 잘 지낼 수 있는 것은 다 저에게 기증을 해주신 기증자와 기증자 유가족의 어려운 결심, 그리고 수술해주신 교수님 덕분인 것 같습니다.    수술을 한 지 45일이 되었을 때 마음대로 운동도 하고 정상적인 회복이 이루어졌습니다. 숨이 차지 않았고 몸과 마음이 날아갈 것 같았습니다. 기증자께서는 이미 하늘나라에 계시겠지요? 그 분의 가족이 이 글을 보실 수 있을지, 또 어느 좋은 분이 저에게 이런 선물을 주셨는지 저는 알 길이 없습니다. 하지만 늘 마음속으로 기증자께 감사하는 마음으로 살겠습니다. 제 생명을 구해주신 은혜 잊지 않겠습니다. 어디서든 기증자 가족을 만나면 마치 제가 그 분들께 생명을 선물 받은 것처럼 감사를 드리고 싶습니다. 이름도 알 수 없는 얼굴 없는 기증자님. 그리고 그 가족 분들께 진심을 담아 몇 자 적어봅니다. 감사합니다. 아름다운 선물   장기를 기증해주신 기증자 그리고 가족 분들 감사합니다.  하늘에서 내려준 축복 중에 가장 큰 축복이 심장이식이라 했습니다. 심장이식 수술을 받고 건강한 삶을 되찾게 해준 기증자 가족들에게 말로 표현할 수 없는 고마움을 전하고 싶습니다. 저는 기증자의 뜻을 가슴 깊이 새기며 건강하게 살겠습니다. 감사합니다.  2016년 신장 이식 수혜자 이명수" | label=0 | confidence=0.1558
+2025-05-23 12:10:07,351 [INFO] [DETAIL-1] sentence="2016년 서울에서 4번의 심장 시술을 받았지만 상태는 호전되지 않았습니다." | label=0 | confidence=0.4871
+2025-05-23 12:10:07,351 [INFO] [DETAIL-2] sentence="심장이식은 누군가가 기증을 해야만 가능한 것이어서 쉽지 않았습니다." | label=0 | confidence=0.5472
+2025-05-23 12:10:07,352 [INFO] [DETAIL-3] sentence="수소문 끝에 사는 곳에서 가까운 병원에서 유능하고 최선을 다해주시는 의료진을 만나 혼신의 치료를 받았지만, 심장은 점점 나빠져 갔습니다." | label=0 | confidence=0.1064
+2025-05-23 12:10:07,352 [INFO] [DETAIL-4] sentence="그러다 기적같이 뇌사자로부터 심장이식을 받을 수 있게 되었고, 수술도 잘 되어 회복도 빨리 되었습니다." | label=0 | confidence=0.0460
+2025-05-23 12:10:07,352 [INFO] [DETAIL-5] sentence="이렇게 건강하게 잘 지낼 수 있는 것은 다 저에게 기증을 해주신 기증자와 기증자 유가족의 어려운 결심, 그리고 수술해주신 교수님 덕분인 것 같습니다.  " | label=0 | confidence=0.0297
+2025-05-23 12:10:07,353 [INFO] [DETAIL-6] sentence="수술을 한 지 45일이 되었을 때 마음대로 운동도 하고 정상적인 회복이 이루어졌습니다." | label=0 | confidence=0.1738
+2025-05-23 12:10:07,353 [INFO] [DETAIL-7] sentence="숨이 차지 않았고 몸과 마음이 날아갈 것 같았습니다." | label=0 | confidence=0.1510
+2025-05-23 12:10:07,353 [INFO] [DETAIL-8] sentence="기증자께서는 이미 하늘나라에 계시겠지요?" | label=0 | confidence=0.5860
+2025-05-23 12:10:07,353 [INFO] [DETAIL-9] sentence="그 분의 가족이 이 글을 보실 수 있을지, 또 어느 좋은 분이 저에게 이런 선물을 주셨는지 저는 알 길이 없습니다." | label=0 | confidence=0.0782
+2025-05-23 12:10:07,354 [INFO] [DETAIL-10] sentence="하지만 늘 마음속으로 기증자께 감사하는 마음으로 살겠습니다." | label=0 | confidence=0.0296
+2025-05-23 12:10:07,354 [INFO] [DETAIL-11] sentence="제 생명을 구해주신 은혜 잊지 않겠습니다." | label=0 | confidence=0.0325
+2025-05-23 12:10:07,354 [INFO] [DETAIL-12] sentence="어디서든 기증자 가족을 만나면 마치 제가 그 분들께 생명을 선물 받은 것처럼 감사를 드리고 싶습니다." | label=0 | confidence=0.0291
+2025-05-23 12:10:07,354 [INFO] [DETAIL-13] sentence="이름도 알 수 없는 얼굴 없는 기증자님." | label=0 | confidence=0.5853
+2025-05-23 12:10:07,354 [INFO] [DETAIL-14] sentence="그리고 그 가족 분들께 진심을 담아 몇 자 적어봅니다." | label=0 | confidence=0.0645
+2025-05-23 12:10:07,354 [INFO] [DETAIL-15] sentence="감사합니다." | label=0 | confidence=0.0303
+2025-05-23 12:10:07,355 [INFO] [DETAIL-16] sentence="아름다운 선물   장기를 기증해주신 기증자 그리고 가족 분들 감사합니다." | label=0 | confidence=0.0292
+2025-05-23 12:10:07,355 [INFO] [DETAIL-17] sentence="하늘에서 내려준 축복 중에 가장 큰 축복이 심장이식이라 했습니다." | label=0 | confidence=0.0299
+2025-05-23 12:10:07,355 [INFO] [DETAIL-18] sentence="심장이식 수술을 받고 건강한 삶을 되찾게 해준 기증자 가족들에게 말로 표현할 수 없는 고마움을 전하고 싶습니다." | label=0 | confidence=0.0294
+2025-05-23 12:10:07,355 [INFO] [DETAIL-19] sentence="저는 기증자의 뜻을 가슴 깊이 새기며 건강하게 살겠습니다." | label=0 | confidence=0.0291
+2025-05-23 12:10:07,356 [INFO] [DETAIL-20] sentence="감사합니다." | label=0 | confidence=0.0303
+2025-05-23 12:10:07,356 [INFO] [DETAIL-21] sentence="2016년 신장 이식 수혜자 이명수" | label=0 | confidence=0.1464
+2025-05-23 14:26:44,588 [INFO] 현재 실행 중인 파일 경로: C:\JAVA\fast_campus_KDT\projects\final\DBE_Final_Project\python\predictEmotion\main.py
+2025-05-23 15:16:38,090 [WARNING] Oh! You have mecab in your environment. Kss will take this as a backend! :D
+
+2025-05-23 15:16:41,937 [INFO] [PREDICT] sentence="5월이 다시 돌아왔고, 모두가 널 그리워하며 슬퍼하는 가운데, 나는 조금 다른 감정으로 이 시간을 지나고 있어. 솔직히 말하면 너의 갑작스러운 선택이 아직도 이해되지 않아. 나 하나 살자고 모든 걸 내려놓은 네 결정을 받아들이는 게 쉽지 않더라. 모두는 너를 아름답게 기억하지만, 난 네가 남긴 혼란과 빈자리로 아직도 하루하루 버티고 있어. 기증이라는 명분 아래에서 너의 부재가 미화되는 것 같아 억울하기도 해. 한 번이라도 가족들과 진심으로 대화를 나눴더라면, 이런 선택을 막을 수 있지 않았을까. 그 꿈에 나온 네 얼굴조차 왜인지 불편하게 다가오더라. 천국에서는 잘 지내고 있다지만, 남겨진 우리 삶은 그렇게 간단하지가 않아. 이건 누군가에겐 생명이지만, 누군가에겐 죄책감으로 남는 현실이야." | label=1 | confidence=0.6582
+2025-05-23 15:16:41,937 [INFO] [DETAIL-1] sentence="5월이 다시 돌아왔고, 모두가 널 그리워하며 슬퍼하는 가운데, 나는 조금 다른 감정으로 이 시간을 지나고 있어." | label=0 | confidence=0.0383
+2025-05-23 15:16:41,938 [INFO] [DETAIL-2] sentence="솔직히 말하면 너의 갑작스러운 선택이 아직도 이해되지 않아." | label=1 | confidence=0.9414
+2025-05-23 15:16:41,938 [INFO] [DETAIL-3] sentence="나 하나 살자고 모든 걸 내려놓은 네 결정을 받아들이는 게 쉽지 않더라." | label=1 | confidence=0.9471
+2025-05-23 15:16:41,938 [INFO] [DETAIL-4] sentence="모두는 너를 아름답게 기억하지만, 난 네가 남긴 혼란과 빈자리로 아직도 하루하루 버티고 있어." | label=0 | confidence=0.0727
+2025-05-23 15:16:41,938 [INFO] [DETAIL-5] sentence="기증이라는 명분 아래에서 너의 부재가 미화되는 것 같아 억울하기도 해." | label=1 | confidence=0.9374
+2025-05-23 15:16:41,939 [INFO] [DETAIL-6] sentence="한 번이라도 가족들과 진심으로 대화를 나눴더라면, 이런 선택을 막을 수 있지 않았을까." | label=0 | confidence=0.5699
+2025-05-23 15:16:41,940 [INFO] [DETAIL-7] sentence="그 꿈에 나온 네 얼굴조차 왜인지 불편하게 다가오더라." | label=1 | confidence=0.9460
+2025-05-23 15:16:41,940 [INFO] [DETAIL-8] sentence="천국에서는 잘 지내고 있다지만, 남겨진 우리 삶은 그렇게 간단하지가 않아." | label=1 | confidence=0.7294
+2025-05-23 15:16:41,941 [INFO] [DETAIL-9] sentence="이건 누군가에겐 생명이지만, 누군가에겐 죄책감으로 남는 현실이야." | label=1 | confidence=0.7412
+2025-05-23 15:17:12,983 [INFO] [PREDICT] sentence="2016년 서울에서 4번의 심장 시술을 받았지만 상태는 호전되지 않았습니다. 심장이식은 누군가가 기증을 해야만 가능한 것이어서 쉽지 않았습니다. 수소문 끝에 사는 곳에서 가까운 병원에서 유능하고 최선을 다해주시는 의료진을 만나 혼신의 치료를 받았지만, 심장은 점점 나빠져 갔습니다. 그러다 기적같이 뇌사자로부터 심장이식을 받을 수 있게 되었고, 수술도 잘 되어 회복도 빨리 되었습니다. 이렇게 건강하게 잘 지낼 수 있는 것은 다 저에게 기증을 해주신 기증자와 기증자 유가족의 어려운 결심, 그리고 수술해주신 교수님 덕분인 것 같습니다.    수술을 한 지 45일이 되었을 때 마음대로 운동도 하고 정상적인 회복이 이루어졌습니다. 숨이 차지 않았고 몸과 마음이 날아갈 것 같았습니다. 기증자께서는 이미 하늘나라에 계시겠지요? 그 분의 가족이 이 글을 보실 수 있을지, 또 어느 좋은 분이 저에게 이런 선물을 주셨는지 저는 알 길이 없습니다. 하지만 늘 마음속으로 기증자께 감사하는 마음으로 살겠습니다. 제 생명을 구해주신 은혜 잊지 않겠습니다. 어디서든 기증자 가족을 만나면 마치 제가 그 분들께 생명을 선물 받은 것처럼 감사를 드리고 싶습니다. 이름도 알 수 없는 얼굴 없는 기증자님. 그리고 그 가족 분들께 진심을 담아 몇 자 적어봅니다. 감사합니다. 아름다운 선물   장기를 기증해주신 기증자 그리고 가족 분들 감사합니다.  하늘에서 내려준 축복 중에 가장 큰 축복이 심장이식이라 했습니다. 심장이식 수술을 받고 건강한 삶을 되찾게 해준 기증자 가족들에게 말로 표현할 수 없는 고마움을 전하고 싶습니다. 저는 기증자의 뜻을 가슴 깊이 새기며 건강하게 살겠습니다. 감사합니다.  2016년 신장 이식 수혜자 이명수" | label=0 | confidence=0.1558
+2025-05-23 15:17:12,983 [INFO] [DETAIL-1] sentence="2016년 서울에서 4번의 심장 시술을 받았지만 상태는 호전되지 않았습니다." | label=0 | confidence=0.4871
+2025-05-23 15:17:12,984 [INFO] [DETAIL-2] sentence="심장이식은 누군가가 기증을 해야만 가능한 것이어서 쉽지 않았습니다." | label=0 | confidence=0.5472
+2025-05-23 15:17:12,984 [INFO] [DETAIL-3] sentence="수소문 끝에 사는 곳에서 가까운 병원에서 유능하고 최선을 다해주시는 의료진을 만나 혼신의 치료를 받았지만, 심장은 점점 나빠져 갔습니다." | label=0 | confidence=0.1064
+2025-05-23 15:17:12,984 [INFO] [DETAIL-4] sentence="그러다 기적같이 뇌사자로부터 심장이식을 받을 수 있게 되었고, 수술도 잘 되어 회복도 빨리 되었습니다." | label=0 | confidence=0.0460
+2025-05-23 15:17:12,984 [INFO] [DETAIL-5] sentence="이렇게 건강하게 잘 지낼 수 있는 것은 다 저에게 기증을 해주신 기증자와 기증자 유가족의 어려운 결심, 그리고 수술해주신 교수님 덕분인 것 같습니다.  " | label=0 | confidence=0.0297
+2025-05-23 15:17:12,984 [INFO] [DETAIL-6] sentence="수술을 한 지 45일이 되었을 때 마음대로 운동도 하고 정상적인 회복이 이루어졌습니다." | label=0 | confidence=0.1738
+2025-05-23 15:17:12,984 [INFO] [DETAIL-7] sentence="숨이 차지 않았고 몸과 마음이 날아갈 것 같았습니다." | label=0 | confidence=0.1510
+2025-05-23 15:17:12,984 [INFO] [DETAIL-8] sentence="기증자께서는 이미 하늘나라에 계시겠지요?" | label=0 | confidence=0.5860
+2025-05-23 15:17:12,985 [INFO] [DETAIL-9] sentence="그 분의 가족이 이 글을 보실 수 있을지, 또 어느 좋은 분이 저에게 이런 선물을 주셨는지 저는 알 길이 없습니다." | label=0 | confidence=0.0782
+2025-05-23 15:17:12,985 [INFO] [DETAIL-10] sentence="하지만 늘 마음속으로 기증자께 감사하는 마음으로 살겠습니다." | label=0 | confidence=0.0296
+2025-05-23 15:17:12,985 [INFO] [DETAIL-11] sentence="제 생명을 구해주신 은혜 잊지 않겠습니다." | label=0 | confidence=0.0325
+2025-05-23 15:17:12,985 [INFO] [DETAIL-12] sentence="어디서든 기증자 가족을 만나면 마치 제가 그 분들께 생명을 선물 받은 것처럼 감사를 드리고 싶습니다." | label=0 | confidence=0.0291
+2025-05-23 15:17:12,985 [INFO] [DETAIL-13] sentence="이름도 알 수 없는 얼굴 없는 기증자님." | label=0 | confidence=0.5853
+2025-05-23 15:17:12,985 [INFO] [DETAIL-14] sentence="그리고 그 가족 분들께 진심을 담아 몇 자 적어봅니다." | label=0 | confidence=0.0645
+2025-05-23 15:17:12,985 [INFO] [DETAIL-15] sentence="감사합니다." | label=0 | confidence=0.0303
+2025-05-23 15:17:12,985 [INFO] [DETAIL-16] sentence="아름다운 선물   장기를 기증해주신 기증자 그리고 가족 분들 감사합니다." | label=0 | confidence=0.0292
+2025-05-23 15:17:12,986 [INFO] [DETAIL-17] sentence="하늘에서 내려준 축복 중에 가장 큰 축복이 심장이식이라 했습니다." | label=0 | confidence=0.0299
+2025-05-23 15:17:12,986 [INFO] [DETAIL-18] sentence="심장이식 수술을 받고 건강한 삶을 되찾게 해준 기증자 가족들에게 말로 표현할 수 없는 고마움을 전하고 싶습니다." | label=0 | confidence=0.0294
+2025-05-23 15:17:12,986 [INFO] [DETAIL-19] sentence="저는 기증자의 뜻을 가슴 깊이 새기며 건강하게 살겠습니다." | label=0 | confidence=0.0291
+2025-05-23 15:17:12,986 [INFO] [DETAIL-20] sentence="감사합니다." | label=0 | confidence=0.0303
+2025-05-23 15:17:12,986 [INFO] [DETAIL-21] sentence="2016년 신장 이식 수혜자 이명수" | label=0 | confidence=0.1464
