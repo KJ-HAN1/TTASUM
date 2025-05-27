@@ -5,3 +5,4 @@ TrainLog.txt
 tuning.py
 __pycache__
 finetuned-koelectra-badword/
+logs/
