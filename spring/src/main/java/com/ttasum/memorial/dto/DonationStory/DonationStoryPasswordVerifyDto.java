@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 @Setter
 public class DonationStoryPasswordVerifyDto {
     /** 편지 비밀번호 (VARCHAR(60), NULL 허용) */
-    @NotBlank
-    @Size(min = 4, max = 60, message = "passcode는 최소4글자, 최대 60글자까지 가능합니다.")
+    @NotBlank(message = "패스워드는 최소4글자, 최대 60글자까지 가능합니다.")
+    @Size(min = 4, max = 60, message = "패스워드는 최소4글자, 최대 60글자까지 가능합니다.")
     private String storyPasscode;
 }

@@ -42,8 +42,8 @@ class DonationStoryCommentServiceTest {
         // given
         Integer storySeq = 1;
         DonationStoryCommentCreateRequestDto dto = new DonationStoryCommentCreateRequestDto();
-        dto.setWriter("홍길동");
-        dto.setPasscode("pw123");
+        dto.setCommentWriter("홍길동");
+        dto.setCommentPasscode("pw123");
         dto.setContents("좋은 이야기입니다.");
 
         DonationStory story = DonationStory.builder()
@@ -60,8 +60,8 @@ class DonationStoryCommentServiceTest {
 
         DonationStoryComment saved = DonationStoryComment.builder()
                 .story(story)
-                .writer(dto.getWriter())
-                .passcode(dto.getPasscode())
+                .writer(dto.getCommentWriter())
+                .passcode(dto.getCommentPasscode())
                 .contents(dto.getContents())
                 .writerId(null)
                 .modifierId(null)
@@ -134,7 +134,7 @@ class DonationStoryCommentServiceTest {
     void updateComment_Success() {
         Integer storySeq = 1, commentSeq = 10;
         DonationStoryCommentUpdateRequestDto dto = new DonationStoryCommentUpdateRequestDto();
-        dto.setPasscode("correct");
+        dto.setCommentPasscode("correct");
         dto.setContents("수정된 내용");
 
         DonationStoryComment existing = spy(DonationStoryComment.builder()
@@ -166,7 +166,7 @@ class DonationStoryCommentServiceTest {
                 .thenReturn(Optional.empty());
 
         DonationStoryCommentUpdateRequestDto dto = new DonationStoryCommentUpdateRequestDto();
-        dto.setPasscode("any");
+        dto.setCommentPasscode("any");
 
         assertThatThrownBy(() ->
                 commentService.updateComment(1, 99, dto))
@@ -178,7 +178,7 @@ class DonationStoryCommentServiceTest {
     void updateComment_InvalidPasscode() {
         Integer storySeq = 1, commentSeq = 10;
         DonationStoryCommentUpdateRequestDto dto = new DonationStoryCommentUpdateRequestDto();
-        dto.setPasscode("wrong");
+        dto.setCommentPasscode("wrong");
         dto.setContents("irrelevant");
 
         DonationStoryComment existing = DonationStoryComment.builder()
@@ -205,7 +205,7 @@ class DonationStoryCommentServiceTest {
     void softDeleteComment_Success() {
         Integer storySeq = 1, commentSeq = 20;
         DonationStoryCommentDeleteRequestDto dto = new DonationStoryCommentDeleteRequestDto();
-        dto.setPasscode("ok");
+        dto.setCommentPasscode("ok");
 
         DonationStoryComment existing = spy(DonationStoryComment.builder()
                 .story(null)
@@ -236,7 +236,7 @@ class DonationStoryCommentServiceTest {
                 .thenReturn(Optional.empty());
 
         DonationStoryCommentDeleteRequestDto dto = new DonationStoryCommentDeleteRequestDto();
-        dto.setPasscode("any");
+        dto.setCommentPasscode("any");
 
         assertThatThrownBy(() ->
                 commentService.softDeleteComment(1, 99, dto))
@@ -248,7 +248,7 @@ class DonationStoryCommentServiceTest {
     void softDeleteComment_InvalidPasscode() {
         Integer storySeq = 1, commentSeq = 20;
         DonationStoryCommentDeleteRequestDto dto = new DonationStoryCommentDeleteRequestDto();
-        dto.setPasscode("bad");
+        dto.setCommentPasscode("bad");
 
         DonationStoryComment existing = DonationStoryComment.builder()
                 .story(null)

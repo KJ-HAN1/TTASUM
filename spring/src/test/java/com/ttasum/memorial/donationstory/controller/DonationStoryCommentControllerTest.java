@@ -43,8 +43,8 @@ public class DonationStoryCommentControllerTest {
         Integer commentSeq = 10;
 
         DonationStoryCommentCreateRequestDto dto = new DonationStoryCommentCreateRequestDto();
-        dto.setWriter("테스트 코디");
-        dto.setPasscode("123456");
+        dto.setCommentWriter("테스트 코디");
+        dto.setCommentPasscode("123456");
         dto.setContents("테스트 내용");
 
         // void 반환 -> doNothing
@@ -65,8 +65,8 @@ public class DonationStoryCommentControllerTest {
         @DisplayName("작성자 미입력 시 400")
         void createComment_fail_noWriter() throws Exception {
             DonationStoryCommentCreateRequestDto dto = new DonationStoryCommentCreateRequestDto();
-            dto.setWriter(""); // 유효하지 않음
-            dto.setPasscode("abcd1234");
+            dto.setCommentWriter(""); // 유효하지 않음
+            dto.setCommentPasscode("abcd1234");
             dto.setContents("댓글 내용");
 
             mockMvc.perform(post("/donationLetters/1/comments")
@@ -79,8 +79,8 @@ public class DonationStoryCommentControllerTest {
         @DisplayName("비밀번호 미입력 시 400")
         void createComment_fail_noPasscode() throws Exception {
             DonationStoryCommentCreateRequestDto dto = new DonationStoryCommentCreateRequestDto();
-            dto.setWriter("홍길동");
-            dto.setPasscode(""); // 유효하지 않음
+            dto.setCommentWriter("홍길동");
+            dto.setCommentPasscode(""); // 유효하지 않음
             dto.setContents("댓글 내용");
 
             mockMvc.perform(post("/donationLetters/1/comments")
@@ -93,8 +93,8 @@ public class DonationStoryCommentControllerTest {
         @DisplayName("내용 미입력 시 400")
         void createComment_fail_noContents() throws Exception {
             DonationStoryCommentCreateRequestDto dto = new DonationStoryCommentCreateRequestDto();
-            dto.setWriter("홍길동");
-            dto.setPasscode("abcd1234");
+            dto.setCommentWriter("홍길동");
+            dto.setCommentPasscode("abcd1234");
             dto.setContents(""); // 유효하지 않음
 
             mockMvc.perform(post("/donationLetters/1/comments")

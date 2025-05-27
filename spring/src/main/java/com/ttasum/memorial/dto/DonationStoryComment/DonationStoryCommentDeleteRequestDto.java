@@ -13,6 +13,6 @@ public class DonationStoryCommentDeleteRequestDto {
 
     @NotBlank
     @Size(max = 60)
-    private String passcode;
+    private String commentPasscode;
 
 }
