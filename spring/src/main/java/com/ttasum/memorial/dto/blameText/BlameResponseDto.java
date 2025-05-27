@@ -1,4 +1,4 @@
-package com.ttasum.memorial.dto;
+package com.ttasum.memorial.dto.blameText;
 
 import lombok.Data;
 
@@ -11,5 +11,4 @@ public class BlameResponseDto {
     private int label;
     private double confidence;
     private List<Map<String, Object>> details;
-    private int forbidden_flag;
 }
