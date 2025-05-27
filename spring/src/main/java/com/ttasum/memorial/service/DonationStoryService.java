@@ -5,10 +5,7 @@ import com.ttasum.memorial.domain.entity.DonationStory.DonationStory;
 import com.ttasum.memorial.domain.entity.DonationStory.DonationStoryComment;
 import com.ttasum.memorial.domain.repository.DonationStory.DonationStoryCommentRepository;
 import com.ttasum.memorial.domain.repository.DonationStory.DonationStoryRepository;
-import com.ttasum.memorial.dto.DonationStory.DonationStoryCreateRequestDto;
-import com.ttasum.memorial.dto.DonationStory.DonationStoryResponseDto;
-import com.ttasum.memorial.dto.DonationStory.DonationStoryUpdateRequestDto;
-import com.ttasum.memorial.dto.DonationStory.PageResponse;
+import com.ttasum.memorial.dto.DonationStory.*;
 import com.ttasum.memorial.exception.DonationStory.DonationStoryNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -102,19 +99,21 @@ public class DonationStoryService {
     }
 
     /**
-     * 수정 전 비밀번호 검증
-     * @param storySeq 검증할 ID
-     * @param inputPasscode 사용자가 입력한 비밀번호
-     * @return 비밀번호 일치 여부(true/false)
+     * 비밀번호 검증
+     * @param storySeq 스토리 id
+     * @param inputPasscode 입력받은 비밀번호
+     * @return 응답용 dto
      */
-    @Transactional(readOnly = true)
-    public boolean verifyStoryPasscode(Integer storySeq, String inputPasscode) {
-        // id로 스토리 조회
-        Optional<DonationStory> optionalStory  = donationStoryRepository.findByIdAndDelFlag(storySeq, "N");
+    public DonationStoryPasswordVerifyResponseDto verifyStoryPasscode(Integer storySeq, String inputPasscode) {
+        Optional<DonationStory> optionalStory = donationStoryRepository.findByIdAndDelFlag(storySeq, "N");
 
-        // Optional이 비어 있지 않으면 비밀번호 비교
-        return optionalStory.map(story -> inputPasscode.equals(story.getPasscode()))
+        boolean matched = optionalStory.map(story -> inputPasscode.equals(story.getPasscode()))
                 .orElse(false);
+
+        int result = matched ? 1 : 0;
+        String message = matched ? "비밀번호가 일치합니다." : "비밀번호가 일치하지 않습니다.";
+
+        return new DonationStoryPasswordVerifyResponseDto(result, message);
     }
 
     /**
@@ -124,15 +123,10 @@ public class DonationStoryService {
      * @return 삭제 성공 여부
      */
     @Transactional
-    public boolean softDeleteStory(Integer storySeq, String modifierId) {
+    public void softDeleteStory(Integer storySeq, String modifierId) {
         DonationStory story = donationStoryRepository.findByIdAndDelFlag(storySeq, "N")
                 .orElseThrow(() -> new DonationStoryNotFoundException(storySeq));
-
         // 엔티티 내부에서 delFlag, modifierId, modifyTime 갱신
         story.delete(modifierId);
-        // 더티 체킹 기능으로 생략 가능
-        // donationStoryRepository.save(story);
-
-        return true;
     }
 }

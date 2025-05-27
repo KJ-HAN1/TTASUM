@@ -2,6 +2,7 @@ package com.ttasum.memorial.controller;
 
 
 import com.ttasum.memorial.domain.entity.DonationStory.DonationStory;
+import com.ttasum.memorial.dto.ApiResponse;
 import com.ttasum.memorial.dto.DonationStory.*;
 import com.ttasum.memorial.service.DonationStoryService;
 import lombok.RequiredArgsConstructor;
@@ -61,10 +62,13 @@ public class DonationStoryController {
      * @return 생성된 DonationStory 객체와 201 CREATED 상태
      */
     @PostMapping
-    public ResponseEntity<DonationStoryResponseDto> createStory(@RequestBody @Valid DonationStoryCreateRequestDto dto){
+    public ResponseEntity<ApiResponse> createStory(@RequestBody @Valid DonationStoryCreateRequestDto dto){
         log.info("/donationLetters - 등록 요청: {}", dto);
-        DonationStoryResponseDto responseDto = donationStoryService.createStory(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
+        donationStoryService.createStory(dto);
+        return ResponseEntity.ok().body(ApiResponse.ok(
+                HttpStatus.CREATED.value(),
+                "스토리가 성곡적으로 등록되었습니다."
+        ));
     }
 
     /**
@@ -74,30 +78,45 @@ public class DonationStoryController {
      * @return 200 OK or 404
      */
     @PutMapping("/{storySeq}")
-    public ResponseEntity<Void> updateStory(@PathVariable Integer storySeq, @RequestBody @Valid DonationStoryUpdateRequestDto dto){
+    public ResponseEntity<ApiResponse> updateStory(@PathVariable Integer storySeq, @RequestBody @Valid DonationStoryUpdateRequestDto dto){
         log.info("/donationLetters/{} - 스토리 수정 요청", storySeq);
         // 서비스에서 예외 발생시 자동으로 404반환
         donationStoryService.updateStory(storySeq, dto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(ApiResponse.ok(
+                HttpStatus.OK.value(),
+                "스토리가 성공적으로 수정되었습니다."
+        ));
     }
 
     /**
      * 비밀번호 검증
-     * @param storySeq 수정할 스토리 ID
-     * @param dto 비밀번호 확인 요청 dto
-     * @return 200 or 401(인증되지 않음)
+     * @param storySeq 스토리 id
+     * @param dto 사용자 입력을 담은 요청 dto
+     * @return 비밀번호 검증 결과를 담은 200 OK 응답 (result: 1 또는 0, message: 결과 메시지 포함)
      */
     @PostMapping("/{storySeq}/verifyPwd")
-    public ResponseEntity<String> verifyStoryPasscode(@PathVariable Integer storySeq, @RequestBody @Valid DonationStoryPasswordVerifyDto dto){
+    public ResponseEntity<DonationStoryPasswordVerifyResponseDto> verifyStoryPasscode(
+            @PathVariable Integer storySeq,
+            @RequestBody @Valid DonationStoryPasswordVerifyDto dto){
         log.info("/donationLetters/{}/verifyPwd - 비밀번호 확인 요청", storySeq);
+        return ResponseEntity.ok(donationStoryService.verifyStoryPasscode(storySeq,dto.getStoryPasscode()));
+    }
 
-        boolean matched = donationStoryService.verifyStoryPasscode(storySeq, dto.getStoryPasscode());
+    /**
+     * 기증후 스토리 삭제(소프트) -> 비밀번호 검증에서 처리 후 진행
+     * @param storySeq 수정할 스토리 ID
+     * @param dto 삭제 요청 dto
+     * @return 200 or 404
+     */
+    @DeleteMapping("/{storySeq}")
+    public ResponseEntity<ApiResponse> softDeleteStory(@PathVariable Integer storySeq, @RequestBody @Valid DonationStoryDeleteRequestDto dto){
+        log.info("/donationLetters/{} - 스토리 삭제(소프트) 요청", storySeq);
 
-        if(matched){
-            return ResponseEntity.ok("비밀번호가 일치합니다.");
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("비밀번호가 일치하지 않습니다");
-        }
+        donationStoryService.softDeleteStory(storySeq, dto.getModifierId());
+        return ResponseEntity.ok(ApiResponse.ok(
+                HttpStatus.OK.value(),
+                "스토리가 정상적으로 삭제 되었습니다."
+        ));
     }
 
     /**
@@ -106,17 +125,15 @@ public class DonationStoryController {
      * @param dto 삭제 요청 dto
      * @return 200 or 404
      */
-    @DeleteMapping("/{storySeq}")
-    public ResponseEntity<Void> softDeleteStory(@PathVariable Integer storySeq, @RequestBody @Valid DonationStoryDeleteRequestDto dto){
-        log.info("/donationLetters/{} - 스토리 삭제(소프트) 요청", storySeq);
-
-        boolean isDeleted = donationStoryService.softDeleteStory(storySeq, dto.getModifierId());
-
-        if(isDeleted){
-            return ResponseEntity.ok().build(); // 성공 -> 200 반환
-        }else {
-            return ResponseEntity.notFound().build(); // 실패 -> 404 반환
-        }
-    }
+//    @DeleteMapping("/{storySeq}")
+//    public ResponseEntity<DonationStoryPasswordVerifyResponseDto> softDeleteStory(@PathVariable Integer storySeq, @RequestBody @Valid DonationStoryDeleteRequestDto dto){
+//        log.info("/donationLetters/{} - 스토리 삭제(소프트) 요청", storySeq);
+//
+//        boolean isDeleted = donationStoryService.softDeleteStory(storySeq, dto.getModifierId());
+//        int result = isDeleted ? 1 : 0;
+//        String msg = isDeleted ? "스토리가 정상적으로 삭제 되었습니다." : "비밀번호가 일치하지 않습니다.";
+//        DonationStoryPasswordVerifyResponseDto response = new DonationStoryPasswordVerifyResponseDto(result, msg);
+//        return ResponseEntity.ok(response);
+//    }
 
 }

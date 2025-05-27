@@ -95,14 +95,14 @@ public class DonationStoryControllerTest {
         // dto 준비
         DonationStoryResponseDto dto = DonationStoryResponseDto.builder()
                 .storySeq(2)
-                .title("단건제목")
+                .storyTitle("단건제목")
                 .donorName("홍길동")
-                .writer("작성자")
+                .storyWriter("작성자")
                 .anonymityFlag("Y")
                 .readCount(0)
-                .contents("내용")
+                .storyContents("내용")
                 .fileName("")
-                .originalFileName("")
+                .orgFileName("")
                 .writerId("u1")
                 .modifierId("u1")
                 .build();
@@ -163,15 +163,15 @@ public class DonationStoryControllerTest {
         DonationStoryUpdateRequestDto dto = new DonationStoryUpdateRequestDto();
 
         dto.setAreaCode("110");
-        dto.setTitle("희망의 이야기");
+        dto.setStoryTitle("희망의 이야기");
         dto.setDonorName("홍길동");
-        dto.setPasscode("abcd1234");
-        dto.setWriter("관리자");
+        dto.setStoryPasscode("abcd1234");
+        dto.setStoryWriter("관리자");
         dto.setAnonymityFlag("N");
         dto.setReadCount(0);
-        dto.setContents("이곳에 스토리 내용을 입력합니다.");
+        dto.setStoryContents("이곳에 스토리 내용을 입력합니다.");
         dto.setFileName("story.jpg");
-        dto.setOriginalFileName("original_story.jpg");
+        dto.setOrgFileName("original_story.jpg");
         dto.setWriterId("user123");
         dto.setModifierId("user123");
 
@@ -192,15 +192,15 @@ public class DonationStoryControllerTest {
         // DTO 준비
         DonationStoryUpdateRequestDto dto = new DonationStoryUpdateRequestDto();
         dto.setAreaCode("110");
-        dto.setTitle("제목");
+        dto.setStoryTitle("제목");
         dto.setDonorName("기증자");
-        dto.setPasscode("pppp1234");
-        dto.setWriter("작성자");
+        dto.setStoryPasscode("pppp1234");
+        dto.setStoryWriter("작성자");
         dto.setAnonymityFlag("N");
         dto.setReadCount(0);
-        dto.setContents("내용");
+        dto.setStoryContents("내용");
         dto.setFileName("file.jpg");
-        dto.setOriginalFileName("orig.jpg");
+        dto.setOrgFileName("orig.jpg");
         dto.setWriterId("user123");
         dto.setModifierId("user123");
 

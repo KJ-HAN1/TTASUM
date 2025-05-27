@@ -93,15 +93,15 @@ public class DonationStory {
     }
 
     public void update(DonationStoryUpdateRequestDto dto) {
-        this.title = dto.getTitle();
+        this.title = dto.getStoryTitle();
         this.donorName = dto.getDonorName();
-        this.writer = dto.getWriter();
+        this.writer = dto.getStoryWriter();
         this.areaCode = dto.getAreaCode();
-        this.contents = dto.getContents();
+        this.contents = dto.getStoryContents();
         this.fileName = dto.getFileName();
-        this.originalFileName = dto.getOriginalFileName();
+        this.originalFileName = dto.getOrgFileName();
         this.modifierId = dto.getModifierId();
-        this.passcode = dto.getPasscode();
+        this.passcode = dto.getStoryPasscode();
     }
 
     public void delete(String modifierId) {

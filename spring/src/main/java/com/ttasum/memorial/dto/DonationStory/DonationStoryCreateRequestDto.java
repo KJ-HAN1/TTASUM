@@ -16,56 +16,54 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class DonationStoryCreateRequestDto {
 
-    @NotBlank
-    @Size(max = 10)
+    @NotBlank(message = "작성자는 필수 입력값입니다.")
+    @Size(max = 150, message = "작성자는 최대 150자까지 입력할 수 있습니다.")
+    private String storyWriter;
+
+    @NotBlank(message = "익명 여부는 필수 입력값입니다.")
+    @Size(max = 1, message = "익명 여부는 1자리(Y/N)여야 합니다.")
+    private String anonymityFlag;
+
+    @NotBlank(message = "패스워드는 필수 입력값입니다.")
+    @Size(min = 4, max = 8, message = "패스워드는 최소 4자, 최대 8자까지 가능합니다.")
+    private String storyPasscode;
+
+    @NotBlank(message = "제목은 필수 입력값입니다.")
+    @Size(max = 600, message = "제목은 최대 600자까지 입력할 수 있습니다.")
+    private String storyTitle;
+
+    @NotBlank(message = "지역 코드는 필수 입력값입니다.")
+    @Size(max = 10, message = "지역 코드는 최대 10자까지 입력할 수 있습니다.")
     private String areaCode;
 
-    @NotBlank
-    @Size(max = 600)
-    private String title;
+    @NotBlank(message = "본문 내용은 필수 입력값입니다.")
+    private String storyContents;
+
+    @Size(max = 600, message = "원본 파일명은 최대 600자까지 입력할 수 있습니다.")
+    private String orgFileName;
 
     @Size(max = 150)
     private String donorName;
 
-    @NotBlank @Size(min = 4, max = 60, message = "passcode는 최소4글자, 최대 60글자까지 가능합니다.")
-    private String passcode;
-
-    @NotBlank
-    @Size(max = 150)
-    private String writer;
-
-    @NotBlank
-    @Size(max = 1)
-    private String anonymityFlag;
-
-    /**
-     * 본문 내용 (story_contents)
-     * (TEXT)
-     */
-    private String contents;
-
     @Size(max = 600)
     private String fileName;
 
-    @Size(max = 600)
-    private String originalFileName;
-
-    @NotBlank
     @Size(max = 60)
     private String writerId;
+
 
     // DTO → Entity 변환
     public DonationStory toEntity() {
         return DonationStory.builder()
                 .areaCode(this.areaCode)
-                .title(this.title)
+                .title(this.storyTitle)
                 .donorName(this.donorName)
-                .passcode(this.passcode)
-                .writer(this.writer)
+                .passcode(this.storyPasscode)
+                .writer(this.storyWriter)
                 .anonymityFlag(this.anonymityFlag)
-                .contents(this.contents)
+                .contents(this.storyContents)
                 .fileName(this.fileName)
-                .originalFileName(this.originalFileName)
+                .originalFileName(this.orgFileName)
                 .writerId(this.writerId)
                 .build();
     }

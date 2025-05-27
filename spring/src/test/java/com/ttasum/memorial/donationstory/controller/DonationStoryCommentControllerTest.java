@@ -113,8 +113,8 @@ public class DonationStoryCommentControllerTest {
         @DisplayName("정상 수정 시 200 OK")
         void updateComment_success() throws Exception {
             DonationStoryUpdateRequestDto dto = new DonationStoryUpdateRequestDto();
-            dto.setPasscode("123456");
-            dto.setContents("수정된 댓글");
+            dto.setStoryPasscode("123456");
+            dto.setStoryContents("수정된 댓글");
 
 
 

@@ -1,5 +1,6 @@
 package com.ttasum.memorial.dto.DonationStory;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ttasum.memorial.domain.entity.DonationStory.DonationStory;
 import com.ttasum.memorial.domain.entity.DonationStory.DonationStoryComment;
 import com.ttasum.memorial.dto.DonationStoryComment.DonationStoryCommentResponseDto;
@@ -19,37 +20,46 @@ import java.util.stream.Collectors;
 public class DonationStoryResponseDto {
 
     private Integer storySeq;
-    private String title;
-    private String donorName;
-    private String writer;
     private String anonymityFlag;
+    private String areaCode;
+    private String storyTitle;
+    private String storyPasscode;
+    private String storyWriter;
+    private String storyContents;
     private Integer readCount;
-    private String contents;
     private String fileName;
-    private String originalFileName;
-    private String writerId;
-    private String modifierId;
+    private String orgFileName;
+    // JSON 직렬화 시 포맷 지정 (예: "2020-02-04 오후 1:11:10")
+    @JsonFormat(pattern = "yyyy-MM-dd a h:mm:ss", locale = "ko")
     private LocalDateTime writeTime;
+    @JsonFormat(pattern = "yyyy-MM-dd a h:mm:ss", locale = "ko")
     private LocalDateTime modifyTime;
+    private String modifierId;
+    private String delFlag;
 
+    private String donorName;
+    private String writerId;
     // 댓글 목록
     private List<DonationStoryCommentResponseDto> comments;
 
-    public static DonationStoryResponseDto fromEntity(DonationStory story) {
+    public static DonationStoryResponseDto fromEntity(DonationStory entity) {
         return DonationStoryResponseDto.builder()
-                .storySeq(story.getId())
-                .title(story.getTitle())
-                .donorName(story.getDonorName())
-                .writer(story.getWriter())
-                .anonymityFlag(story.getAnonymityFlag())
-                .readCount(story.getReadCount())
-                .contents(story.getContents())
-                .fileName(story.getFileName())
-                .originalFileName(story.getOriginalFileName())
-                .writerId(story.getWriterId())
-                .modifierId(story.getModifierId())
-                .writeTime(story.getWriteTime())
-                .modifyTime(story.getModifyTime())
+                .storySeq(entity.getId())
+                .anonymityFlag(entity.getAnonymityFlag())
+                .areaCode(entity.getAreaCode())
+                .storyTitle(entity.getTitle())
+                .storyPasscode(entity.getPasscode())
+                .storyWriter(entity.getWriter())
+                .storyContents(entity.getContents())
+                .readCount(entity.getReadCount())
+                .fileName(entity.getFileName())
+                .orgFileName(entity.getOriginalFileName())
+                .writeTime(entity.getWriteTime())
+                .writerId(entity.getWriterId())
+                .modifyTime(entity.getModifyTime())
+                .modifierId(entity.getModifierId())
+                .delFlag(entity.getDelFlag())
+                .donorName(entity.getDonorName())
                 .comments(null) // 목록에서는 댓글 포함하지 않음
                 .build();
     }
@@ -57,11 +67,11 @@ public class DonationStoryResponseDto {
 
     /**
      * 엔티티 → DTO 변환
-     * @param story DonationStory 엔티티
+     * @param entity DonationStory 엔티티
      * @param commentEntities 댓글 엔티티 목록
      * @return 변환된 DTO 객체
      */
-    public static DonationStoryResponseDto fromEntity(DonationStory story, List<DonationStoryComment> commentEntities) {
+    public static DonationStoryResponseDto fromEntity(DonationStory entity, List<DonationStoryComment> commentEntities) {
         List<DonationStoryCommentResponseDto> commentDtos = commentEntities.stream()
                 .map(comment -> DonationStoryCommentResponseDto.builder()
                         .id(comment.getCommentSeq())
@@ -72,19 +82,22 @@ public class DonationStoryResponseDto {
                 .collect(Collectors.toList());
 
         return DonationStoryResponseDto.builder()
-                .storySeq(story.getId())
-                .title(story.getTitle())
-                .donorName(story.getDonorName())
-                .writer(story.getWriter())
-                .anonymityFlag(story.getAnonymityFlag())
-                .readCount(story.getReadCount())
-                .contents(story.getContents())
-                .fileName(story.getFileName())
-                .originalFileName(story.getOriginalFileName())
-                .writerId(story.getWriterId())
-                .modifierId(story.getModifierId())
-                .writeTime(story.getWriteTime())
-                .modifyTime(story.getModifyTime())
+                .storySeq(entity.getId())
+                .anonymityFlag(entity.getAnonymityFlag())
+                .areaCode(entity.getAreaCode())
+                .storyTitle(entity.getTitle())
+                .storyPasscode(entity.getPasscode())
+                .storyWriter(entity.getWriter())
+                .storyContents(entity.getContents())
+                .readCount(entity.getReadCount())
+                .fileName(entity.getFileName())
+                .orgFileName(entity.getOriginalFileName())
+                .writeTime(entity.getWriteTime())
+                .writerId(entity.getWriterId())
+                .modifyTime(entity.getModifyTime())
+                .modifierId(entity.getModifierId())
+                .delFlag(entity.getDelFlag())
+                .donorName(entity.getDonorName())
                 .comments(commentDtos)
                 .build();
     }

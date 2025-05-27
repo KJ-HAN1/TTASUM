@@ -54,9 +54,9 @@ class DonationStoryServiceUnitTest {
 
         // 업데이트 DTO 준비
         updateDto = new DonationStoryUpdateRequestDto();
-        updateDto.setTitle("수정된 제목");
+        updateDto.setStoryTitle("수정된 제목");
         updateDto.setDonorName("수정된 이름");
-        updateDto.setContents("수정된 내용");
+        updateDto.setStoryContents("수정된 내용");
     }
 
     @Test

@@ -76,7 +76,7 @@ public class DonationStoryPageServiceTest {
         // and: DTO 필드 매핑 확인
         DonationStoryResponseDto dto = response.getContent().get(0);
         assertThat(dto.getStorySeq()).isEqualTo(story.getId());
-        assertThat(dto.getTitle()).isEqualTo(story.getTitle());
+        assertThat(dto.getStoryTitle()).isEqualTo(story.getTitle());
         assertThat(dto.getDonorName()).isEqualTo(story.getDonorName());
         assertThat(dto.getAnonymityFlag()).isEqualTo(story.getAnonymityFlag());
         assertThat(dto.getReadCount()).isEqualTo(story.getReadCount());

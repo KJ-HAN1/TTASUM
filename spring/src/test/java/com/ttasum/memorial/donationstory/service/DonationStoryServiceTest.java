@@ -1,6 +1,5 @@
 package com.ttasum.memorial.donationstory.service;
 
-import com.ttasum.memorial.domain.entity.DonationStory.DonationStory;
 import com.ttasum.memorial.dto.DonationStory.DonationStoryCreateRequestDto;
 import com.ttasum.memorial.dto.DonationStory.DonationStoryResponseDto;
 import com.ttasum.memorial.service.DonationStoryService;
@@ -9,8 +8,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -35,14 +32,14 @@ public class DonationStoryServiceTest {
         // 기증후 스토리 저장
         DonationStoryCreateRequestDto dto = new DonationStoryCreateRequestDto();
         dto.setAreaCode("110");
-        dto.setTitle("테스트 스토리");
+        dto.setStoryTitle("테스트 스토리");
         dto.setDonorName("홍길동");
-        dto.setPasscode("testpass");
-        dto.setWriter("관리자");
+        dto.setStoryPasscode("testpass");
+        dto.setStoryWriter("관리자");
         dto.setAnonymityFlag("N");
-        dto.setContents("테스트 내용");
+        dto.setStoryContents("테스트 내용");
         dto.setFileName("file.jpg");
-        dto.setOriginalFileName("orig.jpg");
+        dto.setOrgFileName("orig.jpg");
         dto.setWriterId("user123");
 
         // 서비스로 저장하고, 반환받은 DTO를 saved에 보관
@@ -61,7 +58,7 @@ public class DonationStoryServiceTest {
         // then: DTO 필드 검증
         assertThat(found).isNotNull();
         assertThat(found.getStorySeq()).isEqualTo(id);
-        assertThat(found.getTitle()).isEqualTo("테스트 스토리");
+        assertThat(found.getStoryTitle()).isEqualTo("테스트 스토리");
     }
 
 
