@@ -1,0 +1,28 @@
+{'loss': 0.6919, 'grad_norm': 1.2955902814865112, 'learning_rate': 4.761904761904762e-05, 'epoch': 0.16}
+{'loss': 0.6331, 'grad_norm': 3.5476841926574707, 'learning_rate': 4.4973544973544974e-05, 'epoch': 0.32}
+{'loss': 0.5609, 'grad_norm': 7.3036627769470215, 'learning_rate': 4.232804232804233e-05, 'epoch': 0.48}
+{'loss': 0.512, 'grad_norm': 4.691984176635742, 'learning_rate': 3.968253968253968e-05, 'epoch': 0.63}
+{'loss': 0.4794, 'grad_norm': 10.622008323669434, 'learning_rate': 3.7037037037037037e-05, 'epoch': 0.79}
+{'loss': 0.5034, 'grad_norm': 10.68641185760498, 'learning_rate': 3.439153439153439e-05, 'epoch': 0.95}
+{'eval_loss': 0.4360421895980835, 'eval_runtime': 533.7872, 'eval_samples_per_second': 1.873, 'eval_steps_per_second': 0.118, 'epoch': 1.0}
+ 33%|██████████████████████████████████                                                                    | 63/189 [34:24<54:32, 25.97s/it]C:\Users\User\anaconda-forbiddenWord\Lib\site-packages\torch\utils\data\dataloader.py:665: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+{'loss': 0.4503, 'grad_norm': 7.991937160491943, 'learning_rate': 3.1746031746031745e-05, 'epoch': 1.11}
+{'loss': 0.505, 'grad_norm': 28.094573974609375, 'learning_rate': 2.91005291005291e-05, 'epoch': 1.27}
+{'loss': 0.5038, 'grad_norm': 22.22781753540039, 'learning_rate': 2.6455026455026456e-05, 'epoch': 1.43}
+{'loss': 0.4458, 'grad_norm': 14.717045783996582, 'learning_rate': 2.380952380952381e-05, 'epoch': 1.59}
+{'loss': 0.329, 'grad_norm': 19.430484771728516, 'learning_rate': 2.1164021164021164e-05, 'epoch': 1.75}
+{'loss': 0.3773, 'grad_norm': 6.778326034545898, 'learning_rate': 1.8518518518518518e-05, 'epoch': 1.9}
+ 67%|██████████████████████████████████████████████████████████████████                                 | 126/189 [1:16:23<27:14, 25.95s/it]
+{'eval_loss': 0.21089023351669312, 'eval_runtime': 358.5785, 'eval_samples_per_second': 2.789, 'eval_steps_per_second': 0.176, 'epoch': 2.0}
+ 67%|██████████████████████████████████████████████████████████████████                                 | 126/189 [1:22:21<27:14, 25.95s/it]C:\Users\User\anaconda-forbiddenWord\Lib\site-packages\torch\utils\data\dataloader.py:665: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+{'loss': 0.2793, 'grad_norm': 8.971535682678223, 'learning_rate': 1.5873015873015872e-05, 'epoch': 2.06}
+{'loss': 0.2288, 'grad_norm': 14.605849266052246, 'learning_rate': 1.3227513227513228e-05, 'epoch': 2.22}
+{'loss': 0.2021, 'grad_norm': 16.760944366455078, 'learning_rate': 1.0582010582010582e-05, 'epoch': 2.38}
+{'loss': 0.1998, 'grad_norm': 19.15532112121582, 'learning_rate': 7.936507936507936e-06, 'epoch': 2.54}
+{'loss': 0.1972, 'grad_norm': 0.8472734093666077, 'learning_rate': 5.291005291005291e-06, 'epoch': 2.7}
+{'loss': 0.2423, 'grad_norm': 10.070165634155273, 'learning_rate': 2.6455026455026455e-06, 'epoch': 2.86}
+{'eval_loss': 0.14169225096702576, 'eval_runtime': 375.9421, 'eval_samples_per_second': 2.66, 'eval_steps_per_second': 0.168, 'epoch': 3.0}
+{'train_runtime': 6952.8921, 'train_samples_per_second': 0.431, 'train_steps_per_second': 0.027, 'train_loss': 0.39758935996464323, 'epoch': 3.0}
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████| 189/189 [1:55:52<00:00, 36.79s/it]
