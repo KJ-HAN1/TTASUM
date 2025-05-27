@@ -4,11 +4,9 @@ import lombok.Getter;
 
 @Getter
 public class ForbiddenWordException extends RuntimeException{
-    private final String forbiddenPoint;
 
-    public ForbiddenWordException(String message, String forbiddenPoint) {
+    public ForbiddenWordException(String message) {
         super(message);
-        this.forbiddenPoint = forbiddenPoint;
     }
 
 }
