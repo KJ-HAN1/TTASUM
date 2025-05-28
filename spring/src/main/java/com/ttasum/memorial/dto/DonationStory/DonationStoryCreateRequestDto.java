@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 /**
@@ -25,7 +26,11 @@ public class DonationStoryCreateRequestDto {
     private String anonymityFlag;
 
     @NotBlank(message = "패스워드는 필수 입력값입니다.")
-    @Size(min = 4, max = 8, message = "패스워드는 최소 4자, 최대 8자까지 가능합니다.")
+    @Size(min = 8, max = 8, message = "비밀번호는 8자리여야 합니다.")
+    @Pattern(
+            regexp = "(?=.*[A-Za-z]).{8}",
+            message = "비밀번호에 영문자를 최소 한 글자 포함해야 합니다."
+    )
     private String storyPasscode;
 
     @NotBlank(message = "제목은 필수 입력값입니다.")

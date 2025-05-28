@@ -104,6 +104,7 @@ public class DonationStoryService {
      * @param inputPasscode 입력받은 비밀번호
      * @return 응답용 dto
      */
+    @Transactional(readOnly = true)
     public DonationStoryPasswordVerifyResponseDto verifyStoryPasscode(Integer storySeq, String inputPasscode) {
         Optional<DonationStory> optionalStory = donationStoryRepository.findByIdAndDelFlag(storySeq, "N");
 

@@ -20,8 +20,12 @@ public class DonationStoryUpdateRequestDto {
     @Size(max = 150, message = "기증자 이름은 최대 150글자까지 가능합니다.")
     private String donorName;
 
-    @NotBlank(message = "패스워드는 최소4글자, 최대 60글자까지 가능합니다.")
-    @Size(min = 4, max = 60, message = "패스워드는 최소4글자, 최대 60글자까지 가능합니다.")
+    @NotBlank(message = "패스워드는 필수 입력값입니다.")
+    @Size(min = 8, max = 8, message = "비밀번호는 8자리여야 합니다.")
+    @Pattern(
+            regexp = "(?=.*[A-Za-z]).{8}",
+            message = "비밀번호에 영문자를 최소 한 글자 포함해야 합니다."
+    )
     private String storyPasscode;
 
     @NotBlank(message = "작성자는 공백일 수 없습니다.")
