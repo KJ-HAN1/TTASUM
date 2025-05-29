@@ -1,9 +1,11 @@
 package com.ttasum.memorial.dto.blameText;
 
 import lombok.Builder;
+import lombok.Getter;
 
 // factory 패턴
 // 사용자에게 전달할 응답 dto
+@Getter
 @Builder
 public class ResponseDto {
     private String status;

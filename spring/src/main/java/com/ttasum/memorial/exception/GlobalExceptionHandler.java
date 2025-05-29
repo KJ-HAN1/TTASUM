@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
@@ -92,7 +94,7 @@ public class GlobalExceptionHandler {
             MissingSentenceException.class,
             InvalidBlameTextRequestException.class})
     public ResponseEntity<?> handleForbiddenWordException(RuntimeException e) {
-        return ResponseEntity.badRequest().body(
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                 ResponseDto.badRequest("error", HttpStatus.BAD_REQUEST.value(),
                         e.getMessage()));
     }
