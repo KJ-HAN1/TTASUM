@@ -28,7 +28,7 @@ public class DonationStoryCommentCreateRequestDto {
     @Size(max = 3000, message = "댓글 내용은 3000자 이하로 입력해주세요.")
     private String contents;
 
-    @NotBlank(message = "캡차 토큰이 필요합니다.")
+//    @NotBlank(message = "캡차 토큰이 필요합니다.")
     private String captchaToken;
 
 }
