@@ -1,14 +1,9 @@
-// 전역 예외 처리기
 package com.ttasum.memorial.exception;
 
 import com.ttasum.memorial.dto.ApiResponse;
 import com.ttasum.memorial.exception.DonationStory.DonationStoryNotFoundException;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import com.ttasum.memorial.dto.ApiResponse;
+import com.ttasum.memorial.exception.CaptchaVerificationFailedException;
+import com.ttasum.memorial.exception.ResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,56 +25,48 @@ public class GlobalExceptionHandler {
         String msg = ex.getBindingResult().getFieldErrors().stream()
                 .map(FieldError::getDefaultMessage)
                 .collect(Collectors.joining(", "));
-
-        // 메시지가 없으면 기본 문구
         if (msg.isEmpty()) {
             msg = "필수 입력값이 누락되었습니다.";
         }
-        return ResponseEntity.badRequest().body(ApiResponse.badRequest(msg));
+        ApiResponse response = ApiResponse.badRequest(msg);
+        return ResponseEntity.badRequest().body(response);
+    }
+
+    // ResponseStatusException 처리
+    @ExceptionHandler(ResponseStatusException.class)
+    public ResponseEntity<ApiResponse> handleStatusException(ResponseStatusException ex) {
+        ApiResponse response = ApiResponse.fail(ex.getStatus().value(), ex.getReason());
+        return ResponseEntity.status(ex.getStatus()).body(response);
+    }
+
+    // DonationStory 조회 실패 (404 Not Found)
+    @ExceptionHandler(DonationStoryNotFoundException.class)
+    public ResponseEntity<ApiResponse> handleDonationStoryNotFound(DonationStoryNotFoundException ex) {
+        log.warn("스토리 조회 실패: {}", ex.getMessage());
+        ApiResponse response = ApiResponse.fail(HttpStatus.NOT_FOUND.value(), ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    // ResourceNotFoundException 처리 (404 Not Found)
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ApiResponse> handleResourceNotFound(ResourceNotFoundException ex) {
+        log.warn("공지사항 조회 실패: {}", ex.getMessage());
+        ApiResponse response = ApiResponse.fail(HttpStatus.NOT_FOUND.value(), ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    // CAPTCHA 검증 실패 (400 Bad Request)
+    @ExceptionHandler(CaptchaVerificationFailedException.class)
+    public ResponseEntity<ApiResponse> handleCaptchaException(CaptchaVerificationFailedException ex) {
+        ApiResponse response = ApiResponse.badRequest(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
     // 서버 내부 오류 (500 Internal Server Error)
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse> handleAll(Exception ex) {
-        ApiResponse response = new ApiResponse(
-                false,
-                HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                "서버 내부 오류가 발생했습니다."
-        );
+        log.error("서버 내부 오류", ex);
+        ApiResponse response = ApiResponse.serverError();
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
-
-    // ResponseStatusException 처리
-    @ExceptionHandler(ResponseStatusException.class)
-    public String handleStatusException(ResponseStatusException ex) {
-        return ex.getReason();
-    }
-
-    @ExceptionHandler(DonationStoryNotFoundException.class)
-    public ResponseEntity<Void> handleNotFound(DonationStoryNotFoundException ex) {
-        log.warn("스토리 조회 실패: {}", ex.getMessage());
-        return ResponseEntity.notFound().build();
-    }
-
-    // 공지사항 조회 중 ResourceNotFoundException 처리
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleNoticeNotFound(ResourceNotFoundException ex) {
-        log.warn("공지사항 조회 실패: {}", ex.getMessage());
-        ErrorResponse body = new ErrorResponse("NOT_FOUND", ex.getMessage());
-        return ResponseEntity.status(404).body(body);
-    }
-
-    // 공통 에러 응답 DTO
-    public static class ErrorResponse {
-        private final String code;
-        private final String message;
-
-        public ErrorResponse(String code, String message) {
-            this.code    = code;
-            this.message = message;
-        }
-        public String getCode()    { return code; }
-        public String getMessage() { return message; }
-    }
-
 }
