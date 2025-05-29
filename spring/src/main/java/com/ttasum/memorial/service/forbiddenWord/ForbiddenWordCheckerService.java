@@ -1,7 +1,6 @@
 // AI 호출용 Service 클래스 작성
 package com.ttasum.memorial.service.forbiddenWord;
 
-import com.ttasum.memorial.dto.blameText.BlameResponseDto;
 import com.ttasum.memorial.dto.forbiddenWord.ForbiddenResponseDto;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -17,6 +16,7 @@ import java.util.Map;
 @Service
 public class ForbiddenWordCheckerService {
     private final RestTemplate restTemplate = new RestTemplate();
+
 
     public void containsForbiddenWord(String sentence) throws Exception{
         try {

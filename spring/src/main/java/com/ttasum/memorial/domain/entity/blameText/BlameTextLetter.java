@@ -1,8 +1,6 @@
 package com.ttasum.memorial.domain.entity.blameText;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -10,8 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "blameText_letter")
-@Data
+@Table(name = "blame_text_letter")
+@Builder
+@Getter
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class BlameTextLetter {
 

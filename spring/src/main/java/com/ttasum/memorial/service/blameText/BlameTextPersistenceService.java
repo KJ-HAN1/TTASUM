@@ -7,6 +7,10 @@ import com.ttasum.memorial.domain.repository.blameText.BlameTextLetterSentenceRe
 import com.ttasum.memorial.dto.blameText.BlameResponseDto;
 import com.ttasum.memorial.exception.blameText.BlamTextException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.TransientDataAccessException;
+import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,36 +24,43 @@ public class BlameTextPersistenceService {
     private final BlameTextLetterRepository blameTextLetterRepository;
     private final BlameTextLetterSentenceRepository blameTextLetterSentenceRepository;
 
+    // 매직 넘버 제거
+    private static final double DEFAULT_REGULATION = 0.7;
+    private static final String DEFAULT_BOARD_TYPE = "donation";
+
+
     @Autowired
     public BlameTextPersistenceService(BlameTextLetterRepository blameTextLetterRepository, BlameTextLetterSentenceRepository blameTextLetterSentenceRepository) {
         this.blameTextLetterRepository = blameTextLetterRepository;
         this.blameTextLetterSentenceRepository = blameTextLetterSentenceRepository;
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    // 새로운 트랜잭션: 감정 분석과 DB 저장이 별개로 rollback 되어야 할 때
+    @Transactional(propagation = Propagation.REQUIRES_NEW)  //호출자가 트랜잭션 중이더라도 기존 트랜잭션을 분리
     public void saveToDb(BlameResponseDto response) {
         BlameTextLetter savedLetter = blameTextLetterRepository.save(setBlameLetter(response));
         ArrayList<BlameTextLetterSentence> list = setBlameLetterSentence(response, savedLetter);
         blameTextLetterSentenceRepository.saveAll(list);
     }
 
+    // python 서버에서 받은 json 응답 값을 엔티티에 매핑
     private BlameTextLetter setBlameLetter(BlameResponseDto response) {
         try {
-            BlameTextLetter letter = new BlameTextLetter();
-            letter.setSentence(response.getSentence());
-            letter.setBlameLabel(response.getLabel());
-            letter.setBlameConfidence(response.getConfidence());
-            letter.setSentenceLine(response.getDetails().size());
-            letter.setRegulation(0.7); // 규제 정도 계산 방식에 따라 설정(임의 설정)
-            letter.setUpdateTime(LocalDateTime.now());
-            letter.setBoardType("donation"); // 혹은 파라미터로 받아서 설정(임의 설정)
-
-            return letter;
+            return BlameTextLetter.builder()
+                    .sentence(response.getSentence())
+                    .blameLabel(response.getLabel())
+                    .blameConfidence(response.getConfidence())
+                    .sentenceLine(response.getDetails().size())
+                    .regulation(DEFAULT_REGULATION)  //임의 설정
+                    .updateTime(LocalDateTime.now())
+                    .boardType(DEFAULT_BOARD_TYPE)  //임의 설정
+                    .build();
         } catch (NullPointerException e) {
             throw new BlamTextException("Null pointer exception.");
         }
     }
 
+    // python 서버 json 응답 값 중 Text를 sentence로 split한 결과를 DB에 저장
     private ArrayList<BlameTextLetterSentence> setBlameLetterSentence(BlameResponseDto response, BlameTextLetter savedLetter){
         int seq = 0;
         ArrayList<BlameTextLetterSentence> list = new ArrayList<>();

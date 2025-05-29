@@ -29,7 +29,8 @@ public class BlameTextLetterSentence {
     @Column(nullable = false)
     private int label;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "letter_seq", insertable = false, updatable = false)
+    // BlameTextLetterSentence가 하나의 BlameTextLetter에 연결
+    @ManyToOne(fetch = FetchType.LAZY)  //  지연 로딩(실제로 사용할 때 DB에서 조회)
+    @JoinColumn(name = "letter_seq", insertable = false, updatable = false)  //외래 키(letter_seq)를 참조해서 연관된 BlameTextLetter를 찾음,
     private BlameTextLetter letter;
 }

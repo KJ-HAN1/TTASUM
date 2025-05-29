@@ -19,7 +19,7 @@ public class TestReviewController {
     }
 
     @PostMapping("/reviews")
-    public ResponseEntity<Map<String, Object>> saveReview(@RequestBody ReviewRequestDto request) {
+    public ResponseEntity<?> saveReview(@RequestBody ReviewRequestDto request) {
         return reviewService.saveReview(request);
     }
 }
