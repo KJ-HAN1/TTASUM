@@ -2,7 +2,7 @@ package com.ttasum.memorial.donationstory.service;
 
 import com.ttasum.memorial.dto.DonationStory.DonationStoryCreateRequestDto;
 import com.ttasum.memorial.dto.DonationStory.DonationStoryResponseDto;
-import com.ttasum.memorial.service.DonationStoryService;
+import com.ttasum.memorial.service.DonationStory.DonationStoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

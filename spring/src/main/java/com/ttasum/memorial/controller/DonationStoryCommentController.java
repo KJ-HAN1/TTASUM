@@ -1,11 +1,10 @@
 package com.ttasum.memorial.controller;
 
 import com.ttasum.memorial.dto.ApiResponse;
-import com.ttasum.memorial.dto.DonationStory.DonationStoryCreateRequestDto;
 import com.ttasum.memorial.dto.DonationStoryComment.DonationStoryCommentCreateRequestDto;
 import com.ttasum.memorial.dto.DonationStoryComment.DonationStoryCommentDeleteRequestDto;
 import com.ttasum.memorial.dto.DonationStoryComment.DonationStoryCommentUpdateRequestDto;
-import com.ttasum.memorial.service.DonationStoryCommentService;
+import com.ttasum.memorial.service.DonationStory.DonationStoryCommentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -13,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor

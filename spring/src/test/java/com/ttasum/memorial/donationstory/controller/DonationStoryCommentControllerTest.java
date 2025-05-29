@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ttasum.memorial.controller.DonationStoryCommentController;
 import com.ttasum.memorial.dto.DonationStory.DonationStoryUpdateRequestDto;
 import com.ttasum.memorial.dto.DonationStoryComment.DonationStoryCommentCreateRequestDto;
-import com.ttasum.memorial.service.DonationStoryCommentService;
+import com.ttasum.memorial.service.DonationStory.DonationStoryCommentService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

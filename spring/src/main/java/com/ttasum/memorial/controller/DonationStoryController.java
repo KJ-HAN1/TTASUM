@@ -1,10 +1,9 @@
 package com.ttasum.memorial.controller;
 
 
-import com.ttasum.memorial.domain.entity.DonationStory.DonationStory;
 import com.ttasum.memorial.dto.ApiResponse;
 import com.ttasum.memorial.dto.DonationStory.*;
-import com.ttasum.memorial.service.DonationStoryService;
+import com.ttasum.memorial.service.DonationStory.DonationStoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
