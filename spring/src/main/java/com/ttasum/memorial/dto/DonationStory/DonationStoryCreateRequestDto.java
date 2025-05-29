@@ -26,9 +26,9 @@ public class DonationStoryCreateRequestDto {
     private String anonymityFlag;
 
     @NotBlank(message = "패스워드는 필수 입력값입니다.")
-    @Size(min = 8, max = 16, message = "비밀번호는 8자리여야 합니다.")
+    @Size(min = 8, max = 16, message = "비밀번호는 최소 8자리 최대 16자리입니다.")
     @Pattern(
-            regexp = "(?=.*[A-Za-z]).{8}",
+            regexp = "(?=.*[A-Za-z]).{8,}",
             message = "비밀번호에 영문자를 최소 한 글자 포함해야 합니다."
     )
     private String storyPasscode;
@@ -46,6 +46,9 @@ public class DonationStoryCreateRequestDto {
 
     @Size(max = 600, message = "원본 파일명은 최대 600자까지 입력할 수 있습니다.")
     private String orgFileName;
+
+    @NotBlank(message = "캡차 토큰이 필요합니다.")
+    private String captchaToken;
 
     @Size(max = 150)
     private String donorName;

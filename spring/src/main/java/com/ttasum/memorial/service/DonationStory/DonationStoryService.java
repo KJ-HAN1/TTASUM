@@ -6,7 +6,9 @@ import com.ttasum.memorial.domain.entity.DonationStory.DonationStoryComment;
 import com.ttasum.memorial.domain.repository.DonationStory.DonationStoryCommentRepository;
 import com.ttasum.memorial.domain.repository.DonationStory.DonationStoryRepository;
 import com.ttasum.memorial.dto.DonationStory.*;
+import com.ttasum.memorial.exception.CaptchaVerificationFailedException;
 import com.ttasum.memorial.exception.DonationStory.DonationStoryNotFoundException;
+import com.ttasum.memorial.service.common.CaptchaVerifier;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,6 +28,7 @@ public class DonationStoryService {
 
     private final DonationStoryRepository donationStoryRepository;
     private final DonationStoryCommentRepository commentRepository;
+    private final CaptchaVerifier captchaVerifier;
 
     /**
      * 기증후 스토리 등록
@@ -34,6 +37,9 @@ public class DonationStoryService {
      */
     @Transactional
     public DonationStoryResponseDto createStory(DonationStoryCreateRequestDto dto){
+        if (!captchaVerifier.verifyCaptcha(dto.getCaptchaToken())) {
+            throw new CaptchaVerificationFailedException();
+        }
         DonationStory story = dto.toEntity(); // DB 저장을 위해 Entity로 변환
         DonationStory saved = donationStoryRepository.save(story);
         return DonationStoryResponseDto.fromEntity(saved);
@@ -120,16 +126,23 @@ public class DonationStoryService {
     }
 
     /**
-     * 소프트 삭제 기능
-     * @param storySeq  검증할 id
-     * @param modifierId 수정 id
-     * @return 삭제 성공 여부
+     * 스토리 소프트 삭제 (delFlag = 'Y')
+     * @param storySeq      삭제할 스토리 ID
+     * @param inputPasscode 사용자가 입력한 스토리 비밀번호
+     * @param modifierId    삭제 요청자 ID (로그용)
+     * @return 삭제 성공(true) 또는 비밀번호 불일치(false)
      */
     @Transactional
-    public void softDeleteStory(Integer storySeq, String modifierId) {
+    public boolean softDeleteStory(Integer storySeq, String inputPasscode, String modifierId) {
         DonationStory story = donationStoryRepository.findByIdAndDelFlag(storySeq, "N")
                 .orElseThrow(() -> new DonationStoryNotFoundException(storySeq));
+        // 비밀번호 검증
+        if (!story.getPasscode().equals(inputPasscode)) {
+            return false;
+        }
         // 엔티티 내부에서 delFlag, modifierId, modifyTime 갱신
         story.delete(modifierId);
+
+        return true;
     }
 }
