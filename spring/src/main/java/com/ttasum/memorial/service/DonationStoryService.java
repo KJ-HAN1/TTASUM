@@ -52,6 +52,8 @@ public class DonationStoryService {
         List<DonationStoryComment> comments = commentRepository
                 .findByStory_IdAndDelFlagOrderByWriteTimeAsc(storySeq, "N");
 
+        story.increaseReadCount();
+
         return DonationStoryResponseDto.fromEntity(story, comments);
     }
 

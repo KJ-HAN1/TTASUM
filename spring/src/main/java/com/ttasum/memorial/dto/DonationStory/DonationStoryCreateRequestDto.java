@@ -26,7 +26,7 @@ public class DonationStoryCreateRequestDto {
     private String anonymityFlag;
 
     @NotBlank(message = "패스워드는 필수 입력값입니다.")
-    @Size(min = 8, max = 8, message = "비밀번호는 8자리여야 합니다.")
+    @Size(min = 8, max = 16, message = "비밀번호는 8자리여야 합니다.")
     @Pattern(
             regexp = "(?=.*[A-Za-z]).{8}",
             message = "비밀번호에 영문자를 최소 한 글자 포함해야 합니다."

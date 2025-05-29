@@ -89,7 +89,11 @@ public class DonationStory {
     }
 
     public void increaseReadCount() {
-        this.readCount = (this.readCount == null ? 1 : this.readCount + 1);
+        if (this.readCount == null) {
+            this.readCount = 1;
+        }else {
+            this.readCount++;
+        }
     }
 
     public void update(DonationStoryUpdateRequestDto dto) {
