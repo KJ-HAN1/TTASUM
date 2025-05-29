@@ -8,8 +8,10 @@ import com.ttasum.memorial.dto.DonationStoryComment.DonationStoryCommentCreateRe
 import com.ttasum.memorial.dto.DonationStoryComment.DonationStoryCommentDeleteRequestDto;
 import com.ttasum.memorial.dto.DonationStoryComment.DonationStoryCommentResponseDto;
 import com.ttasum.memorial.dto.DonationStoryComment.DonationStoryCommentUpdateRequestDto;
+import com.ttasum.memorial.exception.CaptchaVerificationFailedException;
 import com.ttasum.memorial.exception.DonationStory.DonationStoryCommentNotFoundException;
 import com.ttasum.memorial.exception.DonationStory.DonationStoryNotFoundException;
+import com.ttasum.memorial.service.common.CaptchaVerifier;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +25,7 @@ public class DonationStoryCommentService {
 
     private final DonationStoryRepository storyRepository;
     private final DonationStoryCommentRepository commentRepository;
+    private final CaptchaVerifier captchaVerifier;
 
 
     /**
@@ -33,6 +36,9 @@ public class DonationStoryCommentService {
      */
     @Transactional
     public int createComment(Integer storySeq, DonationStoryCommentCreateRequestDto dto) {
+        if (!captchaVerifier.verifyCaptcha(dto.getCaptchaToken())) {
+            throw new CaptchaVerificationFailedException();
+        }
         DonationStory story = storyRepository.findByIdAndDelFlag(storySeq, "N")
                 .orElseThrow(() -> new DonationStoryNotFoundException(storySeq));
 
