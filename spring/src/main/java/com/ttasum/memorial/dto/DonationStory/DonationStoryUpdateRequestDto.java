@@ -16,10 +16,6 @@ public class DonationStoryUpdateRequestDto {
     @Size(max = 600, message = "제목은 최대 600글자까지 가능합니다.")
     private String storyTitle;
 
-    @NotBlank(message = "기증자 이름은 공백일 수 없습니다.")
-    @Size(max = 150, message = "기증자 이름은 최대 150글자까지 가능합니다.")
-    private String donorName;
-
     @NotBlank(message = "패스워드는 필수 입력값입니다.")
     @Size(min = 8, max = 16, message = "비밀번호는 최소 8자리 최대 16자리입니다.")
     @Pattern(
@@ -52,4 +48,5 @@ public class DonationStoryUpdateRequestDto {
 
     @Size(max = 60, message = "modifierId는 최대 60글자까지 가능합니다.")
     private String modifierId;
+
 }

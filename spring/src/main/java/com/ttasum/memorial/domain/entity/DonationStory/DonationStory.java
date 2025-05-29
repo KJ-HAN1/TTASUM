@@ -98,7 +98,6 @@ public class DonationStory {
 
     public void update(DonationStoryUpdateRequestDto dto) {
         this.title = dto.getStoryTitle();
-        this.donorName = dto.getDonorName();
         this.writer = dto.getStoryWriter();
         this.areaCode = dto.getAreaCode();
         this.contents = dto.getStoryContents();
