@@ -1,5 +1,8 @@
 package com.ttasum.memorial.aop.blameText;
 
+import com.ttasum.memorial.domain.Board;
+import com.ttasum.memorial.domain.entity.DonationStory.DonationStory;
+import com.ttasum.memorial.domain.entity.Story;
 import com.ttasum.memorial.dto.blameText.BlameResponseDto;
 import com.ttasum.memorial.dto.forbiddenWord.ReviewRequestDto;
 import com.ttasum.memorial.exception.blameText.BlamTextException;
@@ -31,20 +34,20 @@ public class BlameTextAspect {
     @Around("@annotation(com.ttasum.memorial.annotation.blameText.CheckBlameText)")
     public Object checkBlameText(ProceedingJoinPoint joinPoint) throws Throwable {
 
-        // 메서드의 인자 중 ReviewRequestDto 타입이 있는지 확인
+        // 메서드의 인자 중 DonationStory 타입이 있는지 확인
         for (Object arg : joinPoint.getArgs()) {
-            if (arg instanceof ReviewRequestDto req) {
-
+            if(arg instanceof Story req) {
                 // 문장을 분석하고 결과를 가져옴
-                BlameResponseDto response = checkerService.analyzeAndSave(req.getSentence());
+                BlameResponseDto response = checkerService.analyzeAndSave(req);
 
                 // 비난 의도로 판단되면 예외 발생시켜 흐름 중단
                 if (response.getLabel() == 1) {
                     // 금칙어 체크가 필요한 경우 아래 주석을 풀면 됨
                     // forbiddenWordCheckerService.containsForbiddenWord(req.getSentence());
-                    throw new BlamTextException("비난하는 의도가 예상되는 글입니다.");
+                    throw new BlamTextException("비난하는 의도가 예상되는 글입니다. 관리자가 해당 글을 삭제할 수 있습니다.");
                 }
             }
+
         }
 
         // 문제가 없으면 원래 메서드 실행 계속 진행

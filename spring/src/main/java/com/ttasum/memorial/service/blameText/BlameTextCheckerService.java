@@ -1,5 +1,7 @@
 package com.ttasum.memorial.service.blameText;
 
+import com.ttasum.memorial.domain.entity.DonationStory.DonationStory;
+import com.ttasum.memorial.domain.entity.Story;
 import com.ttasum.memorial.dto.blameText.BlameResponseDto;
 import com.ttasum.memorial.exception.blameText.*;
 import lombok.AllArgsConstructor;
@@ -25,9 +27,9 @@ public class BlameTextCheckerService {
     private BlameTextPersistenceService persistenceService;
 
 
-    public BlameResponseDto analyzeAndSave(String sentence) {
-        BlameResponseDto response = analyze(sentence);
-        persistenceService.saveToDb(response); // 트랜잭션 분리됨
+    public BlameResponseDto analyzeAndSave(Story story) {
+        BlameResponseDto response = analyze(story.getContents());
+        persistenceService.saveToDb(response, story); // 트랜잭션 분리됨
         return response;
     }
 

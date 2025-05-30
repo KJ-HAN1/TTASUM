@@ -1,5 +1,6 @@
 package com.ttasum.memorial.domain.entity.blameText;
 
+import com.ttasum.memorial.domain.entity.DonationStory.DonationStory;
 import lombok.*;
 
 import javax.persistence.*;
@@ -42,4 +43,9 @@ public class BlameTextLetter {
 
     @OneToMany(mappedBy = "letter")
     private List<BlameTextLetterSentence> sentences = new ArrayList<>();
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="origin_seq", referencedColumnName = "story_seq")
+    private DonationStory donationStory;
+
 }

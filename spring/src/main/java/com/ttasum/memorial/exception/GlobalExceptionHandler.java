@@ -11,19 +11,13 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.orm.jpa.JpaSystemException;
 import com.ttasum.memorial.dto.ApiResponse;
 import com.ttasum.memorial.exception.DonationStory.DonationStoryNotFoundException;
-import com.ttasum.memorial.exception.CaptchaVerificationFailedException;
-import com.ttasum.memorial.exception.ResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
@@ -73,30 +67,25 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
-    // 서버 내부 오류 (500 Internal Server Error)
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiResponse> handleAll(Exception ex) {
-        log.error("서버 내부 오류", ex);
-        ApiResponse response = ApiResponse.serverError();
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-    }
-
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<?> handleInvalidJsonRequestException(HttpMessageNotReadableException ex) {
         return ResponseEntity.badRequest().body(
-                ResponseDto.badRequest("error", HttpStatus.BAD_REQUEST.value(),
-                        ex.getMessage()));
+                ApiResponse.badRequest(ex.getMessage()));
     }
 
-    // 비난 글, 금칙어 확인 예외 처리
+    // 비난 글, 금칙어 확인 예외 처리 - 사용자에게 추가 메세지 전달
+    @ExceptionHandler(BlamTextException.class)
+    public ResponseEntity<?> handleBlameTextException(RuntimeException e) {
+        return ResponseEntity.ok().body(
+                ResponseDto.ok(e.getMessage()));
+    }
+
     @ExceptionHandler({ForbiddenWordException.class,
-            BlamTextException.class,
             MissingSentenceException.class,
             InvalidBlameTextRequestException.class})
     public ResponseEntity<?> handleForbiddenWordException(RuntimeException e) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                ResponseDto.badRequest("error", HttpStatus.BAD_REQUEST.value(),
-                        e.getMessage()));
+        return ResponseEntity.badRequest().body(
+                ApiResponse.badRequest(e.getMessage()));
     }
 
     @ExceptionHandler({ExternalServerConnectionException.class,
@@ -104,35 +93,39 @@ public class GlobalExceptionHandler {
             BlameTextApiServerException.class})
     public ResponseEntity<?> handleExternalServerConnectionException(RuntimeException e) {
         return ResponseEntity.internalServerError().body(
-                ResponseDto.badRequest("error", HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                        e.getMessage()));
+                ApiResponse.serverError(e.getMessage()));
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<?> handleIntegrityViolation(DataIntegrityViolationException e) {
         return ResponseEntity.badRequest().body(
-                ResponseDto.badRequest("error", HttpStatus.BAD_REQUEST.value(),
-                        "제약 조건 위반: 중복 또는 null 값 오류가 발생했습니다."));
+                ApiResponse.badRequest("제약 조건 위반: 중복 또는 null 값 오류가 발생했습니다."));
     }
 
     @ExceptionHandler(JpaSystemException.class)
     public ResponseEntity<?> handleJpaError(JpaSystemException e) {
         return ResponseEntity.status(500).body(
-                ResponseDto.badRequest("error", HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                        "JPA 처리 중 시스템 오류 발생했습니다."));
+                ApiResponse.serverError("JPA 처리 중 시스템 오류 발생했습니다."));
     }
 
     @ExceptionHandler(DataAccessException.class)
     public ResponseEntity<?> handleDataAccess(DataAccessException e) {
         return ResponseEntity.status(500).body(
-                ResponseDto.badRequest("error", HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                        "데이터베이스 접근 중 오류가 발생했습니다."));
+                ApiResponse.serverError("데이터베이스 접근 중 오류가 발생했습니다."));
     }
 
     @ExceptionHandler(InvalidJsonRequestException.class)
     public ResponseEntity<?> handleInvalidJsonRequestException(InvalidJsonRequestException e) {
         return ResponseEntity.badRequest().body(
-                ResponseDto.badRequest("error", HttpStatus.BAD_REQUEST.value(), e.getMessage())
+                ApiResponse.badRequest(e.getMessage())
         );
+    }
+
+    // 서버 내부 오류 (500 Internal Server Error)
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiResponse> handleAll(Exception ex) {
+        log.error("서버 내부 오류", ex);
+        ApiResponse response = ApiResponse.serverError(null);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 }

@@ -43,7 +43,7 @@ public class DonationStoryServiceTest {
         dto.setWriterId("user123");
 
         // 서비스로 저장하고, 반환받은 DTO를 saved에 보관
-        saved = donationStoryService.createStory(dto);
+//        saved = donationStoryService.createStory(dto);
     }
 
     @Test

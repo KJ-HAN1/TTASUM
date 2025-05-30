@@ -1,11 +1,14 @@
 package com.ttasum.memorial.service.blameText;
 
+import com.ttasum.memorial.domain.entity.DonationStory.DonationStory;
+import com.ttasum.memorial.domain.entity.Story;
 import com.ttasum.memorial.domain.entity.blameText.BlameTextLetter;
 import com.ttasum.memorial.domain.entity.blameText.BlameTextLetterSentence;
 import com.ttasum.memorial.domain.repository.blameText.BlameTextLetterRepository;
 import com.ttasum.memorial.domain.repository.blameText.BlameTextLetterSentenceRepository;
 import com.ttasum.memorial.dto.blameText.BlameResponseDto;
 import com.ttasum.memorial.exception.blameText.BlamTextException;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -18,8 +21,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Objects;
 
 @Service
+@AllArgsConstructor
 public class BlameTextPersistenceService {
     private final BlameTextLetterRepository blameTextLetterRepository;
     private final BlameTextLetterSentenceRepository blameTextLetterSentenceRepository;
@@ -29,32 +34,32 @@ public class BlameTextPersistenceService {
     private static final String DEFAULT_BOARD_TYPE = "donation";
 
 
-    @Autowired
-    public BlameTextPersistenceService(BlameTextLetterRepository blameTextLetterRepository, BlameTextLetterSentenceRepository blameTextLetterSentenceRepository) {
-        this.blameTextLetterRepository = blameTextLetterRepository;
-        this.blameTextLetterSentenceRepository = blameTextLetterSentenceRepository;
-    }
-
     // 새로운 트랜잭션: 감정 분석과 DB 저장이 별개로 rollback 되어야 할 때
     @Transactional(propagation = Propagation.REQUIRES_NEW)  //호출자가 트랜잭션 중이더라도 기존 트랜잭션을 분리
-    public void saveToDb(BlameResponseDto response) {
-        BlameTextLetter savedLetter = blameTextLetterRepository.save(setBlameLetter(response));
+    public void saveToDb(BlameResponseDto response, Story story) {
+        BlameTextLetter savedLetter = blameTextLetterRepository.save(
+                Objects.requireNonNull(setBlameLetter(response, story)));
         ArrayList<BlameTextLetterSentence> list = setBlameLetterSentence(response, savedLetter);
         blameTextLetterSentenceRepository.saveAll(list);
     }
 
     // python 서버에서 받은 json 응답 값을 엔티티에 매핑
-    private BlameTextLetter setBlameLetter(BlameResponseDto response) {
+    private BlameTextLetter setBlameLetter(BlameResponseDto response, Story story) {
         try {
-            return BlameTextLetter.builder()
-                    .sentence(response.getSentence())
-                    .blameLabel(response.getLabel())
-                    .blameConfidence(response.getConfidence())
-                    .sentenceLine(response.getDetails().size())
-                    .regulation(DEFAULT_REGULATION)  //임의 설정
-                    .updateTime(LocalDateTime.now())
-                    .boardType(DEFAULT_BOARD_TYPE)  //임의 설정
-                    .build();
+            // Donation 게시글인 경우
+            if(story instanceof DonationStory) {
+                return BlameTextLetter.builder()
+                        .sentence(response.getSentence())
+                        .blameLabel(response.getLabel())
+                        .blameConfidence(response.getConfidence())
+                        .sentenceLine(response.getDetails().size())
+                        .regulation(DEFAULT_REGULATION)  //임의 설정
+                        .updateTime(LocalDateTime.now())
+                        .boardType(DEFAULT_BOARD_TYPE)  //임의 설정
+                        .donationStory((DonationStory) story)
+                        .build();
+            }
+            return null;
         } catch (NullPointerException e) {
             throw new BlamTextException("Null pointer exception.");
         }
