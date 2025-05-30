@@ -22,7 +22,7 @@ public class TestReviewService {
     }
 
     @CheckBlameText  // 이 메서드가 AOP의 Pointcut 대상임을 나타냄
-    public void saveReviewFromBlameTable(Story story, Board board){
+    public void saveReviewFromBlameTable(Story story, boolean isCreated){
         // 이 메서드 자체가 JoinPoint이며, 실행 전후에 Advice가 적용됨
     }
 }

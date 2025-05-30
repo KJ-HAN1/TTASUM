@@ -101,14 +101,14 @@ public class DonationStoryService {
      * @param dto 수정 요청 dto
      */
     @Transactional
-    public void updateStory(Integer storySeq, DonationStoryUpdateRequestDto dto) {
+    public DonationStory updateStory(Integer storySeq, DonationStoryUpdateRequestDto dto) {
 
         DonationStory story = donationStoryRepository.findByIdAndDelFlag(storySeq, "N")
                 .orElseThrow(() -> new DonationStoryNotFoundException(storySeq));
 
         // 엔티티 수정 - Dirty Checking 으로 변경 감지
         story.update(dto);
-
+        return story;
         // Dirty Checking 으로 자동 반영
         // donationStoryRepository.save(story);
     }

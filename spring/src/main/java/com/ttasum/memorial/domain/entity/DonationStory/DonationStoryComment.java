@@ -1,5 +1,6 @@
 package com.ttasum.memorial.domain.entity.DonationStory;
 
+import com.ttasum.memorial.domain.entity.Comment;
 import com.ttasum.memorial.exception.DonationStory.InvalidCommentPasscodeException;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 @Table(name = "tb25_421_donation_story_comment")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // JPA 접근, 외부 생성 제한
-public class DonationStoryComment {
+public class DonationStoryComment extends Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

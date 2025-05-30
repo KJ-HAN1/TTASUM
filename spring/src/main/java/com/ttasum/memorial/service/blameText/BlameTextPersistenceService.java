@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
@@ -43,6 +44,20 @@ public class BlameTextPersistenceService {
         blameTextLetterSentenceRepository.saveAll(list);
     }
 
+    @Transactional(propagation = Propagation.REQUIRES_NEW)  //호출자가 트랜잭션 중이더라도 기존 트랜잭션을 분리
+    public void updateToDb(BlameResponseDto response, Story story) {
+        BlameTextLetter existing =
+                blameTextLetterRepository.findByDonationStory_IdAndDeleteFlag(story.getId(), 0)
+                .orElseThrow(() -> new EntityNotFoundException("기존 비난 텍스트 없음"));
+        System.out.println(existing.getDonationStory().getId());
+        // 기존 데이터 삭제 delete_flag (text, sentence 모두)
+        existing.setDeleteFlag(1);
+        existing.setUpdateTime(LocalDateTime.now());
+        blameTextLetterRepository.save(existing);
+        // 다시 저장
+        this.saveToDb(response, story);
+    }
+
     // python 서버에서 받은 json 응답 값을 엔티티에 매핑
     private BlameTextLetter setBlameLetter(BlameResponseDto response, Story story) {
         try {
@@ -57,6 +72,7 @@ public class BlameTextPersistenceService {
                         .updateTime(LocalDateTime.now())
                         .boardType(DEFAULT_BOARD_TYPE)  //임의 설정
                         .donationStory((DonationStory) story)
+                        .deleteFlag(0)
                         .build();
             }
             return null;

@@ -12,6 +12,7 @@ import java.util.List;
 @Table(name = "blame_text_letter")
 @Builder
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class BlameTextLetter {
@@ -42,7 +43,12 @@ public class BlameTextLetter {
     private String boardType;
 
     @OneToMany(mappedBy = "letter")
+    @Builder.Default
     private List<BlameTextLetterSentence> sentences = new ArrayList<>();
+
+
+    @Column(name = "delete_flag", nullable = false)
+    private int deleteFlag;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="origin_seq", referencedColumnName = "story_seq")

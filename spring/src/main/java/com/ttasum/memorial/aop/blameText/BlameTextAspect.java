@@ -33,12 +33,23 @@ public class BlameTextAspect {
     // 어노테이션이 붙은 메서드 실행 전후로 동작
     @Around("@annotation(com.ttasum.memorial.annotation.blameText.CheckBlameText)")
     public Object checkBlameText(ProceedingJoinPoint joinPoint) throws Throwable {
-
+        boolean isCreated = false;
+        for (Object arg : joinPoint.getArgs()) {
+            if(arg instanceof Boolean)
+                isCreated = (Boolean) arg;
+        }
+        System.out.println(isCreated);
         // 메서드의 인자 중 DonationStory 타입이 있는지 확인
         for (Object arg : joinPoint.getArgs()) {
             if(arg instanceof Story req) {
+                System.out.println(req);
+                BlameResponseDto response;
                 // 문장을 분석하고 결과를 가져옴
-                BlameResponseDto response = checkerService.analyzeAndSave(req);
+                if(isCreated) {
+                    response = checkerService.analyzeAndSave(req);
+                }else{
+                    response = checkerService.analyzeAndUpdate(req);
+                }
 
                 // 비난 의도로 판단되면 예외 발생시켜 흐름 중단
                 if (response.getLabel() == 1) {

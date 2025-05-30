@@ -33,6 +33,12 @@ public class BlameTextCheckerService {
         return response;
     }
 
+    public BlameResponseDto analyzeAndUpdate(Story story) {
+        BlameResponseDto response = analyze(story.getContents());
+        persistenceService.updateToDb(response, story); // 트랜잭션 분리됨
+        return response;
+    }
+
     public BlameResponseDto analyze(String sentence) {
         String url = "http://localhost:8000/predict-blameText";
 
