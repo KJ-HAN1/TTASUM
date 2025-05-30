@@ -1,9 +1,9 @@
 package com.ttasum.memorial.exception;
 
 import com.ttasum.memorial.dto.ApiResponse;
-import com.ttasum.memorial.exception.DonationStory.DonationStoryNotFoundException;
-import com.ttasum.memorial.exception.CaptchaVerificationFailedException;
-import com.ttasum.memorial.exception.ResourceNotFoundException;
+import com.ttasum.memorial.exception.donationStory.DonationStoryNotFoundException;
+import com.ttasum.memorial.exception.donationStory.CaptchaVerificationFailedException;
+import com.ttasum.memorial.exception.notice.ResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,10 +1,10 @@
-package com.ttasum.memorial.service.Notice;
+package com.ttasum.memorial.service.notice;
 
-import com.ttasum.memorial.domain.entity.ArticleId;
-import com.ttasum.memorial.domain.entity.Notice;
-import com.ttasum.memorial.domain.repository.NoticeRepository;
-import com.ttasum.memorial.dto.NoticeResponseDto;
-import com.ttasum.memorial.exception.ResourceNotFoundException;
+import com.ttasum.memorial.domain.entity.notice.NoticeId;
+import com.ttasum.memorial.domain.entity.notice.Notice;
+import com.ttasum.memorial.domain.repository.notice.NoticeRepository;
+import com.ttasum.memorial.dto.notice.response.NoticeResponseDto;
+import com.ttasum.memorial.exception.notice.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,7 +29,7 @@ public class NoticeService {
     public Page<NoticeResponseDto> getAllNotices(Pageable pageable) {
         return noticeRepository
                 .findByArticleIdBoardCodeAndDelFlag(BOARD_CODE, ACTIVE_FLAG, pageable)
-                .map(NoticeResponseDto::of);
+                .map(NoticeResponseDto::fromEntity);
     }
 
     /**
@@ -39,7 +39,7 @@ public class NoticeService {
      */
     @Transactional
     public NoticeResponseDto getNoticeById(Integer articleSeq) {
-        ArticleId id = new ArticleId(BOARD_CODE, articleSeq);
+        NoticeId id = new NoticeId(BOARD_CODE, articleSeq);
         Notice notice = noticeRepository.findById(id)
                 .filter(n -> ACTIVE_FLAG.equals(n.getDelFlag()))
                 .orElseThrow(() ->
@@ -47,7 +47,7 @@ public class NoticeService {
                 );
         // 조회수 증가
         notice.increaseReadCount();
-        return NoticeResponseDto.of(notice);
+        return NoticeResponseDto.fromEntity(notice);
     }
 
 }
