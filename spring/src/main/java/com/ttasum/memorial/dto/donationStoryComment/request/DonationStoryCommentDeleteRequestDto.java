@@ -20,4 +20,8 @@ public class DonationStoryCommentDeleteRequestDto {
     )
     private String commentPasscode;
 
+    @Size(max = 150, message = "작성자는 최대 150자까지 입력할 수 있습니다.")
+    private String commentWriter;
+
+
 }

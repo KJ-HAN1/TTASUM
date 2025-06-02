@@ -11,6 +11,7 @@ import com.ttasum.memorial.dto.donationStoryComment.request.DonationStoryComment
 import com.ttasum.memorial.exception.donationStory.CaptchaVerificationFailedException;
 import com.ttasum.memorial.exception.donationStory.DonationStoryCommentNotFoundException;
 import com.ttasum.memorial.exception.donationStory.DonationStoryNotFoundException;
+import com.ttasum.memorial.exception.donationStory.InvalidCommentPasscodeException;
 import com.ttasum.memorial.service.common.CaptchaVerifier;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -88,8 +89,13 @@ public class DonationStoryCommentService {
         DonationStoryComment comment = commentRepository.findByStory_IdAndCommentSeqAndDelFlag(storySeq, commentSeq,"N")
                 .orElseThrow(() -> new DonationStoryCommentNotFoundException(commentSeq));
 
+        // 비밀번호 검증
+        if (!comment.getPasscode().equals(dto.getCommentPasscode())) {
+            throw new InvalidCommentPasscodeException(commentSeq);
+        }
+
         // String modifierId = getUserIdFromToken(request); // 비회원이면 anonymous 반환
-        comment.updateIfPasscodeMatches(dto.getCommentPasscode(), dto.getContents(),null); // 로그인 연동 시 수정자 ID로 교체
+        comment.updateComment(dto.getContents(),dto.getCommentWriter()); // 로그인 연동 시 수정자 ID로 교체
     }
 
     // eGov 환경 -> Spring Security + JWT 필터 사용
@@ -110,10 +116,16 @@ public class DonationStoryCommentService {
      */
     @Transactional
     public void softDeleteComment(Integer storySeq, Integer commentSeq, DonationStoryCommentDeleteRequestDto dto) {
-        DonationStoryComment comment = commentRepository.findByStory_IdAndCommentSeqAndDelFlag(storySeq, commentSeq,"N")
+        DonationStoryComment comment = commentRepository
+                .findByStory_IdAndCommentSeqAndDelFlag(storySeq, commentSeq,"N")
                 .orElseThrow(() -> new DonationStoryCommentNotFoundException(commentSeq));
 
-        comment.deleteIfPasscodeMatches(dto.getCommentPasscode(),null);
+        // 비밀번호 검증
+        if (!comment.getPasscode().equals(dto.getCommentPasscode())) {
+            throw new InvalidCommentPasscodeException(commentSeq);
+        }
+
+        comment.deleteComment(dto.getCommentWriter());
     }
 
 

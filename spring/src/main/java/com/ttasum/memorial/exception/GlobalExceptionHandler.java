@@ -1,10 +1,10 @@
 package com.ttasum.memorial.exception;
 
-import com.ttasum.memorial.dto.ApiResponse;
+import com.ttasum.memorial.dto.common.ApiResponse;
 import com.ttasum.memorial.exception.donationStory.DonationStoryNotFoundException;
-import com.ttasum.memorial.exception.donationStory.CaptchaVerificationFailedException;
 import com.ttasum.memorial.exception.notice.ResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -18,6 +18,12 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
+    // 잘못된 검색 필드 등 BadRequest 계열
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<ApiResponse> handleBadRequest(BadRequestException ex) {
+        log.info("잘못된 요청: {}", ex.getMessage());
+        return ResponseEntity.badRequest().body(ApiResponse.badRequest(ex.getMessage()));
+    }
 
     // 유효성 검사 실패 (400 Bad Request)
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -42,7 +48,7 @@ public class GlobalExceptionHandler {
     // DonationStory 조회 실패 (404 Not Found)
     @ExceptionHandler(DonationStoryNotFoundException.class)
     public ResponseEntity<ApiResponse> handleDonationStoryNotFound(DonationStoryNotFoundException ex) {
-        log.warn("스토리 조회 실패: {}", ex.getMessage());
+        log.info("스토리 조회 실패: {}", ex.getMessage());
         ApiResponse response = ApiResponse.fail(HttpStatus.NOT_FOUND.value(), ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
@@ -50,16 +56,9 @@ public class GlobalExceptionHandler {
     // ResourceNotFoundException 처리 (404 Not Found)
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ApiResponse> handleResourceNotFound(ResourceNotFoundException ex) {
-        log.warn("공지사항 조회 실패: {}", ex.getMessage());
+        log.info("공지사항 조회 실패: {}", ex.getMessage());
         ApiResponse response = ApiResponse.fail(HttpStatus.NOT_FOUND.value(), ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-    }
-
-    // CAPTCHA 검증 실패 (400 Bad Request)
-    @ExceptionHandler(CaptchaVerificationFailedException.class)
-    public ResponseEntity<ApiResponse> handleCaptchaException(CaptchaVerificationFailedException ex) {
-        ApiResponse response = ApiResponse.badRequest(ex.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
     // 서버 내부 오류 (500 Internal Server Error)

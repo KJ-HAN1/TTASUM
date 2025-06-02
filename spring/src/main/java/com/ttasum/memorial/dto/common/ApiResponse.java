@@ -1,4 +1,4 @@
-package com.ttasum.memorial.dto;
+package com.ttasum.memorial.dto.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

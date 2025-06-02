@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface NoticeRepository extends JpaRepository<Notice, NoticeId>, NoticeRepositoryCustom{
 
-    Page<Notice> findByArticleIdBoardCodeAndDelFlag(
+    Page<Notice> findByIdBoardCodeAndDelFlag(
             String boardCode,
             String delFlag,
             Pageable pageable

@@ -1,7 +1,7 @@
 package com.ttasum.memorial.controller.donationStory;
 
 
-import com.ttasum.memorial.dto.ApiResponse;
+import com.ttasum.memorial.dto.common.ApiResponse;
 import com.ttasum.memorial.dto.donationStory.request.DonationStoryCreateRequestDto;
 import com.ttasum.memorial.dto.donationStory.request.DonationStoryDeleteRequestDto;
 import com.ttasum.memorial.dto.donationStory.request.DonationStoryPasswordVerifyDto;
@@ -44,9 +44,8 @@ public class DonationStoryController {
         Pageable pageable = PageRequest.of(page, size);
 
         // Service에서 DTO로 변환된 PageResponse 객체를 그대로 반환
-        PageResponse<DonationStoryResponseDto> response = donationStoryService.getActiveStories(pageable);
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(donationStoryService.getActiveStories(pageable));
     }
 
     /**
@@ -57,8 +56,7 @@ public class DonationStoryController {
     @GetMapping("/{storySeq}")
     public ResponseEntity<DonationStoryResponseDto> getStory(@PathVariable Integer storySeq){
         log.info("/donationLetters/storySeq={} - 단건 조회", storySeq);
-        DonationStoryResponseDto dto = donationStoryService.getStory(storySeq);
-        return ResponseEntity.ok(dto);
+        return ResponseEntity.ok(donationStoryService.getStory(storySeq));
     }
 
     /**

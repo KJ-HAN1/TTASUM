@@ -4,11 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -41,21 +41,18 @@ public class BoardCategory {
     @Column(name = "del_flag", length = 1, nullable = false)
     private String delFlag = "N";
 
-    @Builder.Default
+    @CreationTimestamp
     @Column(name = "write_time", nullable = false, updatable = false)
-    private LocalDateTime writeTime = LocalDateTime.now();
+    private LocalDateTime writeTime;
+
+    @UpdateTimestamp
+    @Column(name = "modify_time", nullable = false)
+    private LocalDateTime modifyTime;
 
     @Column(name = "writer_id", length = 60, nullable = false)
     private String writerId;
 
-    @Builder.Default
-    @Column(name = "modify_time", nullable = false)
-    private LocalDateTime modifyTime = LocalDateTime.now();
-
     @Column(name = "modifier_id", length = 60, nullable = false)
     private String modifierId;
 
-    @Builder.Default
-    @OneToMany(mappedBy = "boardCategory", cascade = CascadeType.ALL)
-    private List<Notice> articles = new ArrayList<>();
 }

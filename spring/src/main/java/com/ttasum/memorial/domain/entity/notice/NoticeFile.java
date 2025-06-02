@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -35,19 +37,20 @@ public class NoticeFile {
     @Column(name = "org_file_name", length = 600)
     private String orgFileName;
 
-    @Column(name = "del_flag", length = 1, nullable = false)
-    private String delFlag;
-
     @Builder.Default
+    @Column(name = "del_flag", length = 1, nullable = false)
+    private String delFlag = "N";
+
+    @CreationTimestamp
     @Column(name = "write_time", nullable = false, updatable = false)
-    private LocalDateTime writeTime = LocalDateTime.now();
+    private LocalDateTime writeTime;
+
+    @UpdateTimestamp
+    @Column(name = "modify_time", nullable = false)
+    private LocalDateTime modifyTime;
 
     @Column(name = "writer_id", length = 60, nullable = false)
     private String writerId;
-
-    @Builder.Default
-    @Column(name = "modify_time", nullable = false)
-    private LocalDateTime modifyTime = LocalDateTime.now();
 
     @Column(name = "modifier_id", length = 60, nullable = false)
     private String modifierId;

@@ -1,6 +1,6 @@
 package com.ttasum.memorial.controller.donationStory;
 
-import com.ttasum.memorial.dto.ApiResponse;
+import com.ttasum.memorial.dto.common.ApiResponse;
 import com.ttasum.memorial.dto.donationStoryComment.request.DonationStoryCommentCreateRequestDto;
 import com.ttasum.memorial.dto.donationStoryComment.request.DonationStoryCommentDeleteRequestDto;
 import com.ttasum.memorial.dto.donationStoryComment.request.DonationStoryCommentUpdateRequestDto;

@@ -1,6 +1,8 @@
 package com.ttasum.memorial.domain.entity.notice;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -17,7 +19,7 @@ import java.util.List;
 public class Notice {
 
     @EmbeddedId
-    private NoticeId id;
+    private NoticeId id; // boardCode + articleSeq
 
     @Column(name = "title", length = 600, nullable = false)
     private String title;
@@ -52,12 +54,14 @@ public class Notice {
     @Column(name = "del_flag", length = 1, nullable = false)
     private String delFlag = "N";
 
+    @CreationTimestamp // 자동 타임 스탬프 관리
     @Column(name = "write_time", nullable = false, updatable = false)
     private LocalDateTime writeTime;
 
     @Column(name = "writer_id", length = 60, nullable = false)
     private String writerId;
 
+    @UpdateTimestamp // 자동 타임 스탬프 관리
     @Column(name = "modify_time", nullable = false)
     private LocalDateTime modifyTime;
 
@@ -74,6 +78,7 @@ public class Notice {
      * 첨부파일 리스트
      * 조인 컬럼: board_code, article_seq, file_seq
      */
+    @Builder.Default
     @OneToMany(mappedBy = "notice", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<NoticeFile> files = new ArrayList<>();
 
