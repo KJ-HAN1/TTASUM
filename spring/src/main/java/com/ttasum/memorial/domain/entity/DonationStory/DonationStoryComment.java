@@ -71,22 +71,24 @@ public class DonationStoryComment extends Comment {
      * @param newContents 수정할 내용
      * @param modifierId 수정자 ID (로그인 사용자 또는 null)
      */
-    public void updateIfPasscodeMatches(String inputPasscode, String newContents, String modifierId) {
+    public DonationStoryComment updateIfPasscodeMatches(String inputPasscode, String newContents, String modifierId) {
         if (!this.passcode.equals(inputPasscode)) {
             throw new InvalidCommentPasscodeException(this.commentSeq);
         }
         this.contents = newContents;
         this.modifierId = modifierId;
         this.modifyTime = LocalDateTime.now();
+        return this;
     }
 
     // 비밀번호가 일치하는 경우 댓글 삭제(소프트 삭제)
-    public void deleteIfPasscodeMatches(String inputPasscode, String modifierId) {
+    public DonationStoryComment deleteIfPasscodeMatches(String inputPasscode, String modifierId) {
         if (!this.passcode.equals(inputPasscode)) {
             throw new InvalidCommentPasscodeException(this.commentSeq);
         }
         this.delFlag = "Y";
         this.modifierId = modifierId;
         this.modifyTime = LocalDateTime.now();
+        return this;
     }
 }

@@ -74,7 +74,7 @@ public class GlobalExceptionHandler {
     }
 
     // 비난 글, 금칙어 확인 예외 처리 - 사용자에게 추가 메세지 전달
-    @ExceptionHandler(BlamTextException.class)
+    @ExceptionHandler(BlameTextException.class)
     public ResponseEntity<?> handleBlameTextException(RuntimeException e) {
         return ResponseEntity.ok().body(
                 ResponseDto.ok(e.getMessage()));

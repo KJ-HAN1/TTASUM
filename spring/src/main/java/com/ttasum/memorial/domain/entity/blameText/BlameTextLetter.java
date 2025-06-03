@@ -1,5 +1,6 @@
 package com.ttasum.memorial.domain.entity.blameText;
 
+import com.ttasum.memorial.domain.entity.Contents;
 import com.ttasum.memorial.domain.entity.DonationStory.DonationStory;
 import lombok.*;
 
@@ -14,8 +15,8 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class BlameTextLetter {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class BlameTextLetter extends Contents {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,10 +43,9 @@ public class BlameTextLetter {
     @Column(name = "board_type", nullable = false, length = 20)
     private String boardType;
 
-    @OneToMany(mappedBy = "letter")
+    @OneToMany(mappedBy = "letter", cascade = CascadeType.PERSIST)
     @Builder.Default
     private List<BlameTextLetterSentence> sentences = new ArrayList<>();
-
 
     @Column(name = "delete_flag", nullable = false)
     private int deleteFlag;
@@ -53,5 +53,4 @@ public class BlameTextLetter {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="origin_seq", referencedColumnName = "story_seq")
     private DonationStory donationStory;
-
 }

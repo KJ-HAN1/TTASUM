@@ -1,5 +1,6 @@
 package com.ttasum.memorial.service.blameText;
 
+import com.ttasum.memorial.domain.entity.Comment;
 import com.ttasum.memorial.domain.entity.DonationStory.DonationStory;
 import com.ttasum.memorial.domain.entity.Story;
 import com.ttasum.memorial.dto.blameText.BlameResponseDto;
@@ -33,9 +34,21 @@ public class BlameTextCheckerService {
         return response;
     }
 
+    public BlameResponseDto analyzeAndSave(Comment comment) {
+        BlameResponseDto response = analyze(comment.getContents());
+        persistenceService.saveToDb(response, comment); // 트랜잭션 분리됨
+        return response;
+    }
+
     public BlameResponseDto analyzeAndUpdate(Story story) {
         BlameResponseDto response = analyze(story.getContents());
         persistenceService.updateToDb(response, story); // 트랜잭션 분리됨
+        return response;
+    }
+
+    public BlameResponseDto analyzeAndUpdate(Comment comment) {
+        BlameResponseDto response = analyze(comment.getContents());
+        persistenceService.updateToDb(response, comment); // 트랜잭션 분리됨
         return response;
     }
 

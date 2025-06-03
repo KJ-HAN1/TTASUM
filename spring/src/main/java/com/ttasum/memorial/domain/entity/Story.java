@@ -6,7 +6,7 @@ import lombok.Getter;
 
 // 게시글 공통 조상
 @Getter
-public abstract class Story {
+public abstract class Story extends Contents{
     public abstract Integer getId();
     public abstract Board getBoardType();
     public abstract String getContents();

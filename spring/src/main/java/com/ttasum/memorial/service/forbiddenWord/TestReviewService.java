@@ -3,6 +3,7 @@ package com.ttasum.memorial.service.forbiddenWord;
 
 import com.ttasum.memorial.annotation.blameText.CheckBlameText;
 import com.ttasum.memorial.domain.Board;
+import com.ttasum.memorial.domain.entity.Comment;
 import com.ttasum.memorial.domain.entity.DonationStory.DonationStory;
 import com.ttasum.memorial.domain.entity.Story;
 import com.ttasum.memorial.domain.entity.blameText.BlameTextLetter;
@@ -22,7 +23,12 @@ public class TestReviewService {
     }
 
     @CheckBlameText  // 이 메서드가 AOP의 Pointcut 대상임을 나타냄
-    public void saveReviewFromBlameTable(Story story, boolean isCreated){
+    public void saveBoardFromBlameTable(Story story, boolean isCreated){
+        // 이 메서드 자체가 JoinPoint이며, 실행 전후에 Advice가 적용됨
+    }
+
+    @CheckBlameText  // 이 메서드가 AOP의 Pointcut 대상임을 나타냄
+    public void saveCommentFromBlameTable(Comment comment, boolean isCreated){
         // 이 메서드 자체가 JoinPoint이며, 실행 전후에 Advice가 적용됨
     }
 }
