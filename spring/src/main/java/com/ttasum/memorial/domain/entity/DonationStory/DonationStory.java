@@ -71,8 +71,8 @@ public class DonationStory extends Story {
             columnDefinition = "varchar(1) default 'N'", nullable = false)
     private String delFlag = "N";
 
-    @OneToOne(mappedBy = "donationStory", cascade = CascadeType.ALL)
-    private BlameTextLetter blameTextLetter;
+//    @OneToOne(mappedBy = "donationStory", cascade = CascadeType.ALL)
+//    private BlameTextLetter blameTextLetter;
 
     @Getter
     @Transient

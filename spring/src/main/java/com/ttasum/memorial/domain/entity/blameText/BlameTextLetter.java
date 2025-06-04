@@ -50,7 +50,7 @@ public class BlameTextLetter extends Contents {
     @Column(name = "delete_flag", nullable = false)
     private int deleteFlag;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="origin_seq", referencedColumnName = "story_seq")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "origin_seq", referencedColumnName = "story_seq", nullable = false)
     private DonationStory donationStory;
 }
