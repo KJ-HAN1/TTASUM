@@ -1,5 +1,8 @@
 package com.ttasum.memorial.domain.entity.DonationStory;
 
+import com.ttasum.memorial.domain.Board;
+import com.ttasum.memorial.domain.entity.Story;
+import com.ttasum.memorial.domain.entity.blameText.BlameTextLetter;
 import com.ttasum.memorial.dto.DonationStory.DonationStoryUpdateRequestDto;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -12,7 +15,7 @@ import java.time.LocalDateTime;
 @Table(name = "tb25_420_donation_story")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class DonationStory {
+public class DonationStory extends Story {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -67,6 +70,13 @@ public class DonationStory {
     @Column(name = "del_flag", length = 1,
             columnDefinition = "varchar(1) default 'N'", nullable = false)
     private String delFlag = "N";
+
+//    @OneToOne(mappedBy = "donationStory", cascade = CascadeType.ALL)
+//    private BlameTextLetter blameTextLetter;
+
+    @Getter
+    @Transient
+    private final Board boardType = Board.DONATION;
 
     @Builder
     public DonationStory(String areaCode, String title, String donorName,

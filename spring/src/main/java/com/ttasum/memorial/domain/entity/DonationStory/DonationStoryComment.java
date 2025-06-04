@@ -1,5 +1,6 @@
 package com.ttasum.memorial.domain.entity.DonationStory;
 
+import com.ttasum.memorial.domain.entity.Comment;
 import com.ttasum.memorial.exception.DonationStory.InvalidCommentPasscodeException;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 @Table(name = "tb25_421_donation_story_comment")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // JPA 접근, 외부 생성 제한
-public class DonationStoryComment {
+public class DonationStoryComment extends Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -70,22 +71,24 @@ public class DonationStoryComment {
      * @param newContents 수정할 내용
      * @param modifierId 수정자 ID (로그인 사용자 또는 null)
      */
-    public void updateIfPasscodeMatches(String inputPasscode, String newContents, String modifierId) {
+    public DonationStoryComment updateIfPasscodeMatches(String inputPasscode, String newContents, String modifierId) {
         if (!this.passcode.equals(inputPasscode)) {
             throw new InvalidCommentPasscodeException(this.commentSeq);
         }
         this.contents = newContents;
         this.modifierId = modifierId;
         this.modifyTime = LocalDateTime.now();
+        return this;
     }
 
     // 비밀번호가 일치하는 경우 댓글 삭제(소프트 삭제)
-    public void deleteIfPasscodeMatches(String inputPasscode, String modifierId) {
+    public DonationStoryComment deleteIfPasscodeMatches(String inputPasscode, String modifierId) {
         if (!this.passcode.equals(inputPasscode)) {
             throw new InvalidCommentPasscodeException(this.commentSeq);
         }
         this.delFlag = "Y";
         this.modifierId = modifierId;
         this.modifyTime = LocalDateTime.now();
+        return this;
     }
 }

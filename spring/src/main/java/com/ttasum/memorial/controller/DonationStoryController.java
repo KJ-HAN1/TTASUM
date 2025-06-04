@@ -1,9 +1,12 @@
 package com.ttasum.memorial.controller;
 
 
+import com.ttasum.memorial.domain.entity.DonationStory.DonationStory;
 import com.ttasum.memorial.dto.ApiResponse;
 import com.ttasum.memorial.dto.DonationStory.*;
+import com.ttasum.memorial.exception.blameText.BlameTextException;
 import com.ttasum.memorial.service.DonationStory.DonationStoryService;
+import com.ttasum.memorial.service.forbiddenWord.TestReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -11,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 
 
@@ -22,6 +26,8 @@ import javax.validation.Valid;
 public class DonationStoryController {
 
     private final DonationStoryService donationStoryService;
+    private final TestReviewService testReviewService;
+
 
     /**
      * 기증후 스토리 목록 조회(페이징)
@@ -62,12 +68,19 @@ public class DonationStoryController {
      */
     @PostMapping
     public ResponseEntity<ApiResponse> createStory(@RequestBody @Valid DonationStoryCreateRequestDto dto){
-        log.info("/donationLetters - 등록 요청: {}", dto);
-        donationStoryService.createStory(dto);
-        return ResponseEntity.ok().body(ApiResponse.ok(
-                HttpStatus.CREATED.value(),
-                "스토리가 성곡적으로 등록되었습니다."
-        ));
+        try {
+            log.info("/donationLetters - 등록 요청: {}", dto);
+            DonationStory donationStory = donationStoryService.createStory(dto);
+
+            // 비난글 AI 필터링 추가
+            testReviewService.saveBoardFromBlameTable(donationStory, true);
+            return ResponseEntity.ok().body(ApiResponse.ok(
+                    HttpStatus.CREATED.value(),
+                    "스토리가 성공적으로 등록되었습니다."
+            ));
+        } catch (BlameTextException e) {
+            throw new BlameTextException("비난하는 의도가 예상되는 글입니다. 관리자가 해당 글을 삭제할 수 있습니다.");
+        }
     }
 
     /**
@@ -78,13 +91,20 @@ public class DonationStoryController {
      */
     @PutMapping("/{storySeq}")
     public ResponseEntity<ApiResponse> updateStory(@PathVariable Integer storySeq, @RequestBody @Valid DonationStoryUpdateRequestDto dto){
-        log.info("/donationLetters/{} - 스토리 수정 요청", storySeq);
-        // 서비스에서 예외 발생시 자동으로 404반환
-        donationStoryService.updateStory(storySeq, dto);
-        return ResponseEntity.ok(ApiResponse.ok(
-                HttpStatus.OK.value(),
-                "스토리가 성공적으로 수정되었습니다."
-        ));
+        try {
+            log.info("/donationLetters/{} - 스토리 수정 요청", storySeq);
+            // 서비스에서 예외 발생시 자동으로 404반환
+            DonationStory donationStory = donationStoryService.updateStory(storySeq, dto);
+
+            // 비난글 AI 필터링 추가
+            testReviewService.saveBoardFromBlameTable(donationStory, false);
+            return ResponseEntity.ok(ApiResponse.ok(
+                    HttpStatus.OK.value(),
+                    "스토리가 성공적으로 수정되었습니다."
+            ));
+        } catch (BlameTextException e) {
+            throw new BlameTextException("비난하는 의도가 예상되는 글입니다. 관리자가 해당 글을 삭제할 수 있습니다.");
+        }
     }
 
     /**
