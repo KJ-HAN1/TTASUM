@@ -23,6 +23,10 @@ repositories {
     mavenCentral()
 }
 
+springBoot {
+    mainClass = 'com.ttasum.memorial.MemorialApplication'
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-jdbc' // JDBC를 통한 DB 연결 (MyBatis 등과 함께 사용 가능)
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // JPA 기반 ORM 사용을 위한 의존성
