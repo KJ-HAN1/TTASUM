@@ -3,7 +3,7 @@
 FastAPI 서버를 통해 RESTful 방식으로 사용할 수 있음
 
 ## 모델 파일 구성
-아래와 같은 모델 구성 파일들이 ./results/final_e3_model 폴더에 포함되어 있어야 함:
+아래와 같은 모델 구성 파일들이 /python/predictEmotion/results/final_e3_model 폴더에 포함되어 있어야 함:
 - config.json  
 - model.safetensors  
 - special_tokens_map.json  
@@ -19,7 +19,7 @@ FastAPI 서버를 통해 RESTful 방식으로 사용할 수 있음
 
    conda env create -f environment.yml
 
-   conda activate blame-text
+   conda activate forbiddenWord-env
 2. FastAPI 서버 실행
 
    uvicorn main:app --reload --host 0.0.0.0 --port 8000
