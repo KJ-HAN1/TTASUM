@@ -27,7 +27,7 @@ import java.util.Set;
 public class NoticeServiceImpl implements NoticeService {
     // 허용 가능한 정렬 필드 집합
     private static final Set<String> ALLOWED_SEARCH_FIELDS = Set.of("title", "contents", "all");
-    private static final int MIN_KEYWORD_LENGTH = 1;
+    private static final int MIN_KEYWORD_LENGTH = 2;
     private static final int MAX_KEYWORD_LENGTH = 100;
 
     private final NoticeRepository noticeRepository;
@@ -77,7 +77,7 @@ public class NoticeServiceImpl implements NoticeService {
     public NoticeDetailResponseDto getNoticeById(String boardCode, Integer articleSeq) {
         NoticeId id = new NoticeId(boardCode, articleSeq);
 
-        // 1) 먼저 존재 여부 및 삭제 여부 확인
+        // 먼저 존재 여부 및 삭제 여부 확인
         Notice existing = noticeRepository.findById(id)
                 .filter(n -> "N".equals(n.getDelFlag()))
                 .orElseThrow(() -> new ResourceNotFoundException(

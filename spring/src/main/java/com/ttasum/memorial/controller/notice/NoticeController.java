@@ -29,7 +29,7 @@ public class NoticeController {
      * @return 서비스 호출 → Page<NoticeDTO> 반환
      */
     @GetMapping
-    public Page<NoticeResponseDto> listNotices(
+    public ResponseEntity<Page<NoticeResponseDto>> listNotices(
             @RequestParam(defaultValue = "all") String option,
             @RequestParam(required = false, defaultValue = "all") String searchField,
             @RequestParam(required = false) String keyword,
@@ -47,7 +47,7 @@ public class NoticeController {
             default: // all
                 boardCodes = List.of("7", "27");
         }
-        return noticeService.listNotices(boardCodes, searchField, keyword, pageable);
+        return ResponseEntity.ok(noticeService.listNotices(boardCodes, searchField, keyword, pageable));
     }
 
     /**
