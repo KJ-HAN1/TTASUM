@@ -1,4 +1,4 @@
-package com.ttasum.memorial.controller;
+package com.ttasum.memorial.controller.DonationStory;
 
 import com.ttasum.memorial.dto.ApiResponse;
 import com.ttasum.memorial.dto.DonationStoryComment.DonationStoryCommentCreateRequestDto;
