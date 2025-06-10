@@ -22,4 +22,5 @@ public class MemorialApplication extends SpringBootServletInitializer {
 
         SpringApplication.run(MemorialApplication.class, args);
     }
+
 }

@@ -28,7 +28,7 @@ public class DonationStoryCommentController {
      */
     @PostMapping("/{storySeq}/comments")
     public ResponseEntity<ApiResponse> createComment(@PathVariable Integer storySeq, @RequestBody @Valid DonationStoryCommentCreateRequestDto dto) {
-        log.info("POST /donationLetters/{}/comments - 댓글 등록 요청", storySeq);
+        log.debug("POST /donationLetters/{}/comments - 댓글 등록 요청", storySeq);
         commentService.createComment(storySeq, dto);
         // 201 Created -> location 다음 동작(조회 등)을 위한 URI를 제공
 //        int commentSeq = commentService.createComment(storySeq, dto);
@@ -49,7 +49,7 @@ public class DonationStoryCommentController {
      */
     @PatchMapping("/{storySeq}/comments/{commentSeq}")
     public ResponseEntity<ApiResponse> updateComment(@PathVariable Integer storySeq, @PathVariable Integer commentSeq, @RequestBody @Valid DonationStoryCommentUpdateRequestDto dto) {
-        log.info("PUT /donationLetters/{}/comments/{} - 댓글 수정 요청", storySeq, commentSeq);
+        log.debug("PUT /donationLetters/{}/comments/{} - 댓글 수정 요청", storySeq, commentSeq);
         commentService.updateComment(storySeq, commentSeq, dto);
         return ResponseEntity.ok().body(ApiResponse.ok(
                 HttpStatus.OK.value(),
@@ -69,7 +69,7 @@ public class DonationStoryCommentController {
             @PathVariable Integer storySeq,
             @PathVariable Integer commentSeq,
             @Valid @RequestBody DonationStoryCommentDeleteRequestDto dto) {
-        log.info("DELETE /donationLetters/{}/comments/{} - 댓글 삭제 요청", storySeq, commentSeq);
+        log.debug("DELETE /donationLetters/{}/comments/{} - 댓글 삭제 요청", storySeq, commentSeq);
         commentService.softDeleteComment(storySeq, commentSeq, dto);
         return ResponseEntity.ok().body(ApiResponse.ok(
                 HttpStatus.OK.value(),
