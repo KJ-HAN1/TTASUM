@@ -10,7 +10,7 @@
 //import com.ttasum.memorial.dto.donationStoryComment.request.DonationStoryCommentUpdateRequestDto;
 //import com.ttasum.memorial.exception.donationStory.DonationStoryCommentNotFoundException;
 //import com.ttasum.memorial.exception.donationStory.DonationStoryNotFoundException;
-//import com.ttasum.memorial.exception.donationStory.InvalidCommentPasscodeException;
+//import com.ttasum.memorial.exception.common.BadRequest.InvalidCommentPasscodeException;
 //import com.ttasum.memorial.service.donationStory.DonationStoryCommentService;
 //import org.junit.jupiter.api.DisplayName;
 //import org.junit.jupiter.api.Test;

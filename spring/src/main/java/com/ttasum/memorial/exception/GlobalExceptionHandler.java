@@ -1,8 +1,9 @@
 package com.ttasum.memorial.exception;
 
 import com.ttasum.memorial.dto.common.ApiResponse;
+import com.ttasum.memorial.exception.common.notFound.NotFoundException;
 import com.ttasum.memorial.exception.donationStory.DonationStoryNotFoundException;
-import com.ttasum.memorial.exception.notice.ResourceNotFoundException;
+import com.ttasum.memorial.exception.notice.NoticeNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
@@ -38,27 +39,18 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(response);
     }
 
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ApiResponse> handleNotFound(NotFoundException ex) {
+        log.info("리소스를 찾을 수 없음: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(ApiResponse.notFound(ex.getMessage()));
+    }
+
     // ResponseStatusException 처리
     @ExceptionHandler(ResponseStatusException.class)
     public ResponseEntity<ApiResponse> handleStatusException(ResponseStatusException ex) {
         ApiResponse response = ApiResponse.fail(ex.getStatus().value(), ex.getReason());
         return ResponseEntity.status(ex.getStatus()).body(response);
-    }
-
-    // DonationStory 조회 실패 (404 Not Found)
-    @ExceptionHandler(DonationStoryNotFoundException.class)
-    public ResponseEntity<ApiResponse> handleDonationStoryNotFound(DonationStoryNotFoundException ex) {
-        log.info("스토리 조회 실패: {}", ex.getMessage());
-        ApiResponse response = ApiResponse.fail(HttpStatus.NOT_FOUND.value(), ex.getMessage());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-    }
-
-    // ResourceNotFoundException 처리 (404 Not Found)
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ApiResponse> handleResourceNotFound(ResourceNotFoundException ex) {
-        log.info("공지사항 조회 실패: {}", ex.getMessage());
-        ApiResponse response = ApiResponse.fail(HttpStatus.NOT_FOUND.value(), ex.getMessage());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
     // 서버 내부 오류 (500 Internal Server Error)

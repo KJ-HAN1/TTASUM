@@ -6,12 +6,11 @@ import com.ttasum.memorial.domain.entity.notice.NoticeId;
 import com.ttasum.memorial.domain.repository.notice.NoticeRepository;
 import com.ttasum.memorial.dto.notice.response.NoticeDetailResponseDto;
 import com.ttasum.memorial.dto.notice.response.NoticeResponseDto;
-import com.ttasum.memorial.exception.common.InvalidKeywordLengthException;
-import com.ttasum.memorial.exception.common.InvalidPaginationParameterException;
-import com.ttasum.memorial.exception.common.InvalidSearchFieldException;
-import com.ttasum.memorial.exception.notice.ResourceNotFoundException;
+import com.ttasum.memorial.exception.common.badRequest.InvalidKeywordLengthException;
+import com.ttasum.memorial.exception.common.badRequest.InvalidPaginationParameterException;
+import com.ttasum.memorial.exception.common.badRequest.InvalidSearchFieldException;
+import com.ttasum.memorial.exception.notice.NoticeNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.BadRequestException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -80,7 +79,7 @@ public class NoticeServiceImpl implements NoticeService {
         // 먼저 존재 여부 및 삭제 여부 확인
         Notice existing = noticeRepository.findById(id)
                 .filter(n -> "N".equals(n.getDelFlag()))
-                .orElseThrow(() -> new ResourceNotFoundException(
+                .orElseThrow(() -> new NoticeNotFoundException(
                         "공지사항을 찾을 수 없습니다. boardCode=" + boardCode + ", articleSeq=" + articleSeq));
 
         // 2) 조회수 증가 (벌크 업데이트)
@@ -93,7 +92,7 @@ public class NoticeServiceImpl implements NoticeService {
         // 4) 업데이트된 엔티티 다시 조회 (delFlag 확인 포함)
         Notice updated = noticeRepository.findById(id)
                 .filter(n -> "N".equals(n.getDelFlag()))
-                .orElseThrow(() -> new ResourceNotFoundException(
+                .orElseThrow(() -> new NoticeNotFoundException(
                         "공지사항을 찾을 수 없습니다. boardCode=" + boardCode + ", articleSeq=" + articleSeq));
 
         // 5) DTO로 변환하여 반환

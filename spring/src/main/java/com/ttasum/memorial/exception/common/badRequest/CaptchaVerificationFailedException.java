@@ -1,6 +1,4 @@
-package com.ttasum.memorial.exception.donationStory;
-
-import com.ttasum.memorial.exception.common.BadRequestException;
+package com.ttasum.memorial.exception.common.badRequest;
 
 public class CaptchaVerificationFailedException extends BadRequestException {
     public CaptchaVerificationFailedException() {

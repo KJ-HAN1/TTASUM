@@ -26,6 +26,11 @@ public class ApiResponse {
         return fail(HttpStatus.BAD_REQUEST.value(), message);
     }
 
+    // 404 Not Found 전용
+    public static ApiResponse notFound(String message) {
+        return fail(HttpStatus.NOT_FOUND.value(), message);
+    }
+
     // 500 Internal Server Error 전용
     public static ApiResponse serverError() {
         return fail(HttpStatus.INTERNAL_SERVER_ERROR.value(), "서버 내부 오류가 발생했습니다.");
