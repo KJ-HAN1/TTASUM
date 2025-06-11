@@ -13,9 +13,6 @@ public class MemorialApplication {
                 .ignoreIfMissing()   // .env 파일이 없어도 에러 안 나게
                 .load();
         System.setProperty("DB_PW", dotenv.get("DB_PW"));
-        System.setProperty("DB_ID", dotenv.get("DB_ID"));
-        System.setProperty("DB_URL", dotenv.get("DB_URL"));
-
         SpringApplication.run(MemorialApplication.class, args);
     }
 
