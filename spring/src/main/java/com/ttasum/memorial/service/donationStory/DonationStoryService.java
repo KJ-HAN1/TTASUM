@@ -10,7 +10,7 @@ import com.ttasum.memorial.dto.donationStory.request.DonationStoryUpdateRequestD
 import com.ttasum.memorial.dto.donationStory.response.DonationStoryPasswordVerifyResponseDto;
 import com.ttasum.memorial.dto.donationStory.response.DonationStoryResponseDto;
 import com.ttasum.memorial.dto.donationStory.response.PageResponse;
-import com.ttasum.memorial.exception.donationStory.CaptchaVerificationFailedException;
+import com.ttasum.memorial.exception.common.badRequest.CaptchaVerificationFailedException;
 import com.ttasum.memorial.exception.donationStory.DonationStoryNotFoundException;
 import com.ttasum.memorial.service.common.CaptchaVerifier;
 import lombok.RequiredArgsConstructor;

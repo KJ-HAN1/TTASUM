@@ -1,6 +1,5 @@
 package com.ttasum.memorial.domain.entity.donationStory;
 
-import com.ttasum.memorial.exception.donationStory.InvalidCommentPasscodeException;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

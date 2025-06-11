@@ -1,5 +1,6 @@
 package com.ttasum.memorial;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -7,6 +8,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class MemorialApplication {
 
     public static void main(String[] args) {
+        // .env 파일을 로드하여 환경변수로 설정
+        Dotenv dotenv = Dotenv.configure()
+                .ignoreIfMissing()   // .env 파일이 없어도 에러 안 나게
+                .load();
+        System.setProperty("DB_PW", dotenv.get("DB_PW"));
+        System.setProperty("DB_ID", dotenv.get("DB_ID"));
+        System.setProperty("DB_URL", dotenv.get("DB_URL"));
+
         SpringApplication.run(MemorialApplication.class, args);
     }
 
