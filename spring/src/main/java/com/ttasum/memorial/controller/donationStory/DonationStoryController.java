@@ -40,7 +40,7 @@ public class DonationStoryController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
 
-        log.info("/donationLetters?page={}&size={} - 기증후 스토리 목록 조회", page, size);
+        log.debug("/donationLetters?page={}&size={} - 기증후 스토리 목록 조회", page, size);
         Pageable pageable = PageRequest.of(page, size);
 
         // Service에서 DTO로 변환된 PageResponse 객체를 그대로 반환
@@ -66,7 +66,7 @@ public class DonationStoryController {
      */
     @PostMapping
     public ResponseEntity<ApiResponse> createStory(@RequestBody @Valid DonationStoryCreateRequestDto dto){
-        log.info("/donationLetters - 등록 요청: {}", dto);
+        log.debug("/donationLetters - 등록 요청: {}", dto);
         donationStoryService.createStory(dto);
         return ResponseEntity.ok().body(ApiResponse.ok(
                 HttpStatus.CREATED.value(),
@@ -82,7 +82,7 @@ public class DonationStoryController {
      */
     @PutMapping("/{storySeq}")
     public ResponseEntity<ApiResponse> updateStory(@PathVariable Integer storySeq, @RequestBody @Valid DonationStoryUpdateRequestDto dto){
-        log.info("/donationLetters/{} - 스토리 수정 요청", storySeq);
+        log.debug("/donationLetters/{} - 스토리 수정 요청", storySeq);
         // 서비스에서 예외 발생시 자동으로 404반환
         donationStoryService.updateStory(storySeq, dto);
         return ResponseEntity.ok(ApiResponse.ok(
@@ -101,7 +101,7 @@ public class DonationStoryController {
     public ResponseEntity<DonationStoryPasswordVerifyResponseDto> verifyStoryPasscodeModification(
             @PathVariable Integer storySeq,
             @RequestBody @Valid DonationStoryPasswordVerifyDto dto){
-        log.info("/donationLetters/{}/verifyPwd - 비밀번호 확인 요청(수정)", storySeq);
+        log.debug("/donationLetters/{}/verifyPwd - 비밀번호 확인 요청(수정)", storySeq);
         return ResponseEntity.ok(donationStoryService.verifyStoryPasscode(storySeq,dto.getStoryPasscode()));
     }
 
@@ -113,7 +113,7 @@ public class DonationStoryController {
      */
 //    @DeleteMapping("/{storySeq}")
 //    public ResponseEntity<ApiResponse> softDeleteStory(@PathVariable Integer storySeq, @RequestBody @Valid DonationStoryDeleteRequestDto dto){
-//        log.info("/donationLetters/{} - 스토리 삭제(소프트) 요청", storySeq);
+//        log.debug("/donationLetters/{} - 스토리 삭제(소프트) 요청", storySeq);
 //
 //        donationStoryService.softDeleteStory(storySeq, dto.getModifierId());
 //        return ResponseEntity.ok(ApiResponse.ok(
@@ -130,7 +130,7 @@ public class DonationStoryController {
      */
     @DeleteMapping("/{storySeq}")
     public ResponseEntity<ApiResponse> softDeleteStory(@PathVariable Integer storySeq, @RequestBody @Valid DonationStoryDeleteRequestDto dto){
-        log.info("/donationLetters/{} - 스토리 삭제(소프트) 요청", storySeq);
+        log.debug("/donationLetters/{} - 스토리 삭제(소프트) 요청", storySeq);
 
         boolean isDeleted = donationStoryService.softDeleteStory(storySeq, dto.getStoryPasscode(), dto.getModifierId());
         int result = isDeleted ? 1 : 0;
