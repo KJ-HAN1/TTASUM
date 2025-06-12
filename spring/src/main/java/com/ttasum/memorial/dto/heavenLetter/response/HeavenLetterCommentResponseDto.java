@@ -1,9 +1,12 @@
 package com.ttasum.memorial.dto.heavenLetter.response;
 
+import com.ttasum.memorial.domain.entity.heavenLetter.HeavenLetterComment;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -23,6 +26,25 @@ public class HeavenLetterCommentResponseDto {
     //등록 - 실패 400, 500
     public static HeavenLetterCommentResponseDto fail(int code, String message) {
         return new HeavenLetterCommentResponseDto(false, code, message);
+    }
+
+    //조회
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class CommentListResponse {
+        private Integer commentSeq;
+        private String commentWriter;
+        private String contents;
+        private LocalDateTime writeTime;
+
+        public CommentListResponse(HeavenLetterComment heavenLetterComment) {
+            this.commentSeq = heavenLetterComment.getCommentSeq();
+            this.commentWriter = heavenLetterComment.getCommentWriter();
+            this.contents = heavenLetterComment.getContents();
+            this.writeTime = heavenLetterComment.getWriteTime();
+        }
     }
 
 }

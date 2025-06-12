@@ -3,9 +3,12 @@ package com.ttasum.memorial.domain.entity.heavenLetter;
 import com.ttasum.memorial.dto.heavenLetter.request.HeavenLetterUpdateRequestDto;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -22,7 +25,7 @@ import java.time.LocalDateTime;
     @Column(name = "letter_seq", nullable = false)
     private Integer letterSeq;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @ManyToOne(fetch = FetchType.LAZY)
     //실제 DB컬럼명
     @JoinColumn(name = "donate_seq")
     //donateSeq은 필드명
@@ -76,6 +79,11 @@ import java.time.LocalDateTime;
     @ColumnDefault("'N'")
     @Column(name = "del_flag", nullable = false, length = 1)
     private String delFlag;
+
+    //댓글 엔티티
+    @OneToMany(mappedBy = "letterSeq")
+    @Where(clause = "del_flag = 'N'")
+    private List<HeavenLetterComment> comments = new ArrayList<>();
 
     //JPA생명주기 중 하나 : save()로 DB에 insert되기 직전에 실행(기본값 세팅)
     //update할 땐 작동 안 함

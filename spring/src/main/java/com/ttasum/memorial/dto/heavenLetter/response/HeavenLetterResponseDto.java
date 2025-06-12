@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -51,13 +53,14 @@ public class HeavenLetterResponseDto {
         private LocalDateTime modifyTime;
         private String modifierId;
         private String delFlag;
+        private List<HeavenLetterCommentResponseDto.CommentListResponse> comments;
 
         public HeavenLetterDetailResponse(HeavenLetter heavenLetter) {
             this.letterSeq = heavenLetter.getLetterSeq();
 //            this.donateSeq = heavenLetter.getDonateSeq().getDonateSeq() != null ? heavenLetter.getDonateSeq().getDonateSeq() : null;
-            Memorial mem = heavenLetter.getDonateSeq();
-            this.donateSeq = (mem != null && mem.getDonateSeq() != null)
-                    ? mem.getDonateSeq()
+            Memorial memorial = heavenLetter.getDonateSeq();
+            this.donateSeq = (memorial != null && memorial.getDonateSeq() != null)
+                    ? memorial.getDonateSeq()
                     : null;
             this.areaCode = heavenLetter.getAreaCode();
             this.letterTitle = heavenLetter.getLetterTitle();
@@ -74,6 +77,9 @@ public class HeavenLetterResponseDto {
             this.modifyTime = heavenLetter.getModifyTime();
             this.modifierId = heavenLetter.getModifierId();
             this.delFlag = heavenLetter.getDelFlag();
+            this.comments = heavenLetter.getComments().stream()
+                    .map(HeavenLetterCommentResponseDto.CommentListResponse::new)
+                    .collect(Collectors.toList());
         }
     }
     //조회 - 목록
@@ -91,9 +97,9 @@ public class HeavenLetterResponseDto {
         public HeavenLetterListResponse(HeavenLetter heavenLetter) {
             this.letterSeq = heavenLetter.getLetterSeq();
 //            this.donateSeq = heavenLetter.getDonateSeq().getDonateSeq() != null ? heavenLetter.getDonateSeq().getDonateSeq() : null;
-            Memorial mem = heavenLetter.getDonateSeq();
-            this.donateSeq = (mem != null && mem.getDonateSeq() != null)
-                    ? mem.getDonateSeq()
+            Memorial memorial = heavenLetter.getDonateSeq();
+            this.donateSeq = (memorial != null && memorial.getDonateSeq() != null)
+                    ? memorial.getDonateSeq()
                     : null;
             this.letterTitle = heavenLetter.getLetterTitle();
             this.donorName = heavenLetter.getDonorName();

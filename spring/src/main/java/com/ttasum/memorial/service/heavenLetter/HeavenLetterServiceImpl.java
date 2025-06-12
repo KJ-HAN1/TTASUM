@@ -69,9 +69,7 @@ public class HeavenLetterServiceImpl implements HeavenLetterService {
     @Override
     public HeavenLetterResponseDto.HeavenLetterDetailResponse getLetterById(Integer letterSeq) {
 
-        // findById: JPA 제공 메서드. Optional로 반환
-
-        HeavenLetter heavenLetter = heavenLetterRepository.findById(letterSeq).get();
+        HeavenLetter heavenLetter = heavenLetterRepository.findByLetterSeqAndDelFlag(letterSeq,"N").get();
 
         //커맨드 메서드 사용
         heavenLetter.increaseReadCount();
