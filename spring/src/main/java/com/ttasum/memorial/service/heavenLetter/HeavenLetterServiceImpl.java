@@ -18,8 +18,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Locale;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
 @Service
 //final 필드에 대해 생성자 주입 자동 생성
@@ -169,4 +174,30 @@ public class HeavenLetterServiceImpl implements HeavenLetterService {
                         cb.like(root.get("letterContents"), "%" + keyword + "%")
                 );
     }
+    //이미지 업로드
+    @Transactional
+    @Override
+    public List<Map<String, String>> uploadFiles(List<MultipartFile> files, String subFolder) throws IOException {
+        String baseDir = System.getProperty("user.dir") + "/src/main/resources/static/images/";
+        String uploadDir = baseDir + subFolder + "/";
+        List<Map<String, String>> resultList = new ArrayList<>();
+
+        for (MultipartFile file : files) {
+            String orgFileName = file.getOriginalFilename();
+            String fileName = orgFileName;
+
+            Path dirPath = Paths.get(uploadDir);
+            Files.createDirectories(dirPath);
+            Path filePath = dirPath.resolve(fileName);
+            Files.write(filePath, file.getBytes());
+
+            Map<String, String> fileMap = new HashMap<>();
+            fileMap.put("fileName", fileName);
+            fileMap.put("orgFileName", orgFileName);
+            fileMap.put("url", "/images/" + subFolder + "/" + fileName);
+            resultList.add(fileMap);
+        }
+        return resultList;
+    }
 }
+

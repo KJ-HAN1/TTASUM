@@ -15,8 +15,17 @@ import org.springframework.data.domain.jaxb.SpringDataJaxb;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -142,7 +151,18 @@ public class HeavenLetterController {
                 heavenLetterService.searchLetters(type, keyword, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
+    //사진 업로드
+    @PostMapping("/upload-image")
+    public ResponseEntity<List<Map<String, String>>> uploadFiles(
+            @RequestParam("files") List<MultipartFile> files) throws IOException {
+        List<Map<String, String>> resultList = heavenLetterService.uploadFiles(files, "heavenLetter");
+        return ResponseEntity.ok(resultList);
+    }
+
+
+
 }
+
 
 
 
