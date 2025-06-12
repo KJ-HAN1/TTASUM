@@ -1,11 +1,10 @@
 package com.ttasum.memorial.domain.entity.heavenLetter;
 
-import com.ttasum.memorial.dto.heavenLetter.request.HeavenLetterUpdateRequest;
+import com.ttasum.memorial.dto.heavenLetter.request.HeavenLetterUpdateRequestDto;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Entity
@@ -23,9 +22,9 @@ import java.time.LocalDateTime;
     @Column(name = "letter_seq", nullable = false)
     private Integer letterSeq;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
     //실제 DB컬럼명
-    @JoinColumn(name = "donate_seq", nullable = false)
+    @JoinColumn(name = "donate_seq")
     //donateSeq은 필드명
     private Memorial donateSeq;
 
@@ -51,7 +50,7 @@ import java.time.LocalDateTime;
     private Integer readCount;
 
     @Lob
-    @Column(name = "letter_contents" , columnDefinition = "TEXT")
+    @Column(name = "letter_contents" , columnDefinition = "LongTEXT")
     private String letterContents;
 
     @Column(name = "file_name", length = 600)
@@ -90,15 +89,15 @@ import java.time.LocalDateTime;
         this.readCount = 0;
     }
     //수정 메서드
-    public void updateLetterContents(HeavenLetterUpdateRequest heavenLetterUpdateRequest, Memorial memorial) {
-        this.letterWriter = heavenLetterUpdateRequest.getLetterWriter();
-        this.donorName = heavenLetterUpdateRequest.getDonorName();
+    public void updateLetterContents(HeavenLetterUpdateRequestDto heavenLetterUpdateRequestDto, Memorial memorial) {
+        this.letterWriter = heavenLetterUpdateRequestDto.getLetterWriter();
+        this.donorName = heavenLetterUpdateRequestDto.getDonorName();
         this.donateSeq = memorial;
-        this.areaCode = heavenLetterUpdateRequest.getAreaCode();
-        this.letterTitle = heavenLetterUpdateRequest.getLetterTitle();
-        this.letterContents = heavenLetterUpdateRequest.getLetterContents();
-        this.anonymityFlag = heavenLetterUpdateRequest.getAnonymityFlag();
-        this.orgFileName = heavenLetterUpdateRequest.getOrgFileName();
+        this.areaCode = heavenLetterUpdateRequestDto.getAreaCode();
+        this.letterTitle = heavenLetterUpdateRequestDto.getLetterTitle();
+        this.letterContents = heavenLetterUpdateRequestDto.getLetterContents();
+        this.anonymityFlag = heavenLetterUpdateRequestDto.getAnonymityFlag();
+        this.orgFileName = heavenLetterUpdateRequestDto.getOrgFileName();
         this.modifyTime = LocalDateTime.now();
     }
 

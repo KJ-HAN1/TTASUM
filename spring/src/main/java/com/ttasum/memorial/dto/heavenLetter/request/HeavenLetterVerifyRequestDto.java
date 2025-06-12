@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 
-public class HeavenLetterVerifyRequest{
+public class HeavenLetterVerifyRequestDto {
 
     @NotNull(message = "편지 번호는 필수입니다.")
     private Integer letterSeq;

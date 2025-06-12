@@ -1,9 +1,8 @@
 package com.ttasum.memorial.exception;
 
 import com.ttasum.memorial.dto.ApiResponse;
+import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterResponseDto;
 import com.ttasum.memorial.exception.DonationStory.DonationStoryNotFoundException;
-import com.ttasum.memorial.exception.CaptchaVerificationFailedException;
-import com.ttasum.memorial.exception.ResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -62,11 +61,30 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
-    // 서버 내부 오류 (500 Internal Server Error)
+    //유효성 검증 실패(400)
+    //@ExceptionHandler : 지정한 예외가 발생했을 때 메서드 자동 호출
+    //ResponseEntity<CommonResponse<Void>> : 응답 객체 형식
+    //CommonResponse<Void>: 우리가 만든 공통 응답 구조. Void는 data가 없다는 뜻
+//    @ExceptionHandler(MethodArgumentNotValidException.class)
+//    public ResponseEntity<com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterResponse> handleValidationException(MethodArgumentNotValidException e){
+//        String message = e.getBindingResult().getAllErrors().get(0).getDefaultMessage();
+//        return ResponseEntity
+//                .status(HttpStatus.BAD_REQUEST)
+//                .body(com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterResponse.fail(400,message));
+//    }
+    //잘못된 값 전달(비밀번호)
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<HeavenLetterResponseDto> handleIllegalArgumentException(IllegalArgumentException e){
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(HeavenLetterResponseDto.fail(400,e.getMessage()));
+    }
+
+    //서버 오류
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiResponse> handleAll(Exception ex) {
-        log.error("서버 내부 오류", ex);
-        ApiResponse response = ApiResponse.serverError();
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    public ResponseEntity<HeavenLetterResponseDto> handleException(Exception e){
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(HeavenLetterResponseDto.fail(500,"서버 내부 오류가 발생했습니다"));
     }
 }

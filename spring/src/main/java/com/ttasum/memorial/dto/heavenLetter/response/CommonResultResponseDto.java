@@ -11,17 +11,17 @@ import lombok.Setter;
 @AllArgsConstructor
 
 // 1: 성공, 0: 실패
-public class CommonResultResponse {
+public class CommonResultResponseDto {
     private int result;
     private String message;
 
     //성공
-    public static CommonResultResponse success(String message) {
-        return new CommonResultResponse(1, message);
+    public static CommonResultResponseDto success(String message) {
+        return new CommonResultResponseDto(1, message);
     }
 
     //실패(false하면 오류 나는 이유 찾기)
-    public static CommonResultResponse fail(String message) {
-        return new CommonResultResponse(0, message);
+    public static CommonResultResponseDto fail(String message) {
+        return new CommonResultResponseDto(0, message);
     }
 }

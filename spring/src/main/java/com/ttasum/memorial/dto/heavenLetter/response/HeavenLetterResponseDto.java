@@ -1,6 +1,7 @@
 package com.ttasum.memorial.dto.heavenLetter.response;
 
 import com.ttasum.memorial.domain.entity.heavenLetter.HeavenLetter;
+import com.ttasum.memorial.domain.entity.heavenLetter.Memorial;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,20 +14,20 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class HeavenLetterResponse {
+public class HeavenLetterResponseDto {
     //등록
     private boolean success;
     private int code;
     private String message;
 
     //등록 - 성공 201
-    public static HeavenLetterResponse success(){
+    public static HeavenLetterResponseDto success(){
 
-        return new HeavenLetterResponse(true, 201, "편지가 성공적으로 등록되었습니다.");
+        return new HeavenLetterResponseDto(true, 201, "편지가 성공적으로 등록되었습니다.");
     }
     //등록 - 실패 400, 500
-    public static HeavenLetterResponse fail(int code, String message){
-        return new HeavenLetterResponse(false,code,message);
+    public static HeavenLetterResponseDto fail(int code, String message){
+        return new HeavenLetterResponseDto(false,code,message);
     }
 
     //조회 - 단건
@@ -53,7 +54,11 @@ public class HeavenLetterResponse {
 
         public HeavenLetterDetailResponse(HeavenLetter heavenLetter) {
             this.letterSeq = heavenLetter.getLetterSeq();
-            this.donateSeq = heavenLetter.getDonateSeq().getDonateSeq();
+//            this.donateSeq = heavenLetter.getDonateSeq().getDonateSeq() != null ? heavenLetter.getDonateSeq().getDonateSeq() : null;
+            Memorial mem = heavenLetter.getDonateSeq();
+            this.donateSeq = (mem != null && mem.getDonateSeq() != null)
+                    ? mem.getDonateSeq()
+                    : null;
             this.areaCode = heavenLetter.getAreaCode();
             this.letterTitle = heavenLetter.getLetterTitle();
             this.letterPasscode = heavenLetter.getLetterPasscode();
@@ -83,14 +88,21 @@ public class HeavenLetterResponse {
         private LocalDateTime writeTime;
         private Integer readCount;
 
-        public HeavenLetterListResponse(HeavenLetter heavenletter) {
-            this.letterSeq = heavenletter.getLetterSeq();
-            this.donateSeq = heavenletter.getDonateSeq().getDonateSeq();
-            this.letterTitle = heavenletter.getLetterTitle();
-            this.donorName = heavenletter.getDonorName();
-            this.letterWriter = heavenletter.getLetterWriter();
-            this.writeTime = heavenletter.getWriteTime();
-            this.readCount = heavenletter.getReadCount();
+        public HeavenLetterListResponse(HeavenLetter heavenLetter) {
+            this.letterSeq = heavenLetter.getLetterSeq();
+//            this.donateSeq = heavenLetter.getDonateSeq().getDonateSeq() != null ? heavenLetter.getDonateSeq().getDonateSeq() : null;
+            Memorial mem = heavenLetter.getDonateSeq();
+            this.donateSeq = (mem != null && mem.getDonateSeq() != null)
+                    ? mem.getDonateSeq()
+                    : null;
+            this.letterTitle = heavenLetter.getLetterTitle();
+            this.donorName = heavenLetter.getDonorName();
+            this.letterWriter = heavenLetter.getLetterWriter();
+            this.writeTime = heavenLetter.getWriteTime();
+            this.readCount = heavenLetter.getReadCount();
+        }
+        public static HeavenLetterListResponse fromEntity(HeavenLetter heavenLetterEntity) {
+            return new HeavenLetterListResponse(heavenLetterEntity);
         }
     }
 
