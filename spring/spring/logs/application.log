@@ -2301,3 +2301,560 @@ Identify and stop the process that's listening on port 8080 or configure this ap
 2025-06-12 12:26:00 INFO  [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
 2025-06-12 12:26:00 INFO  [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
 2025-06-12 12:26:00 INFO  [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2025-06-12 13:52:45 WARN  [HikariPool-9 housekeeper] com.zaxxer.hikari.pool.HikariPool - HikariPool-9 - Thread starvation or clock leap detected (housekeeper delta=1h20m25s402ms68µs400ns).
+2025-06-12 14:02:35 INFO  [File Watcher] o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2025-06-12 14:02:35 INFO  [Thread-35] o.a.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+2025-06-12 14:02:35 INFO  [Thread-35] o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2025-06-12 14:02:35 INFO  [Thread-35] o.a.c.c.C.[Tomcat].[localhost].[/] - Destroying Spring FrameworkServlet 'dispatcherServlet'
+2025-06-12 14:02:35 INFO  [Thread-35] o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+2025-06-12 14:02:35 INFO  [Thread-35] o.a.coyote.http11.Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+2025-06-12 14:02:35 INFO  [Thread-35] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12 14:02:35 INFO  [Thread-35] com.zaxxer.hikari.HikariDataSource - HikariPool-9 - Shutdown initiated...
+2025-06-12 14:02:35 INFO  [Thread-35] com.zaxxer.hikari.HikariDataSource - HikariPool-9 - Shutdown completed.
+2025-06-12 14:02:35 INFO  [restartedMain] c.t.memorial.MemorialApplication - Starting MemorialApplication using Java 17.0.12 on DESKTOP-JH6PQI3 with PID 18456 (C:\DBE_Final_Project\spring\build\classes\java\main started by user in C:\DBE_Final_Project\spring)
+2025-06-12 14:02:35 INFO  [restartedMain] c.t.memorial.MemorialApplication - No active profile set, falling back to 1 default profile: "default"
+2025-06-12 14:02:36 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-12 14:02:36 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 12 ms. Found 5 JPA repository interfaces.
+2025-06-12 14:02:36 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2025-06-12 14:02:36 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-06-12 14:02:36 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-12 14:02:36 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2025-06-12 14:02:36 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-12 14:02:36 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 260 ms
+2025-06-12 14:02:36 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-12 14:02:36 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-10 - Starting...
+2025-06-12 14:02:36 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-10 - Start completed.
+2025-06-12 14:02:36 INFO  [restartedMain] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2025-06-12 14:02:36 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-06-12 14:02:36 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12 14:02:36 WARN  [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-12 14:02:36 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-06-12 14:02:36 WARN  [restartedMain] o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-06-12 14:02:36 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-06-12 14:02:36 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2025-06-12 14:02:36 INFO  [restartedMain] c.t.memorial.MemorialApplication - Started MemorialApplication in 1.127 seconds (JVM running for 10539.45)
+2025-06-12 14:02:36 INFO  [restartedMain] o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-06-12 14:03:07 INFO  [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-06-12 14:03:07 INFO  [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-06-12 14:03:07 INFO  [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2025-06-12 14:03:07 INFO  [http-nio-8080-exec-2] c.t.m.a.l.ControllerLoggingAspect - method=GET, uri=/heavenLetters, ip=0:0:0:0:0:0:0:1
+2025-06-12 14:03:07 DEBUG [http-nio-8080-exec-2] org.hibernate.SQL - 
+    select
+        heavenlett0_.letter_seq as letter_s1_1_,
+        heavenlett0_.anonymity_flag as anonymit2_1_,
+        heavenlett0_.area_code as area_cod3_1_,
+        heavenlett0_.del_flag as del_flag4_1_,
+        heavenlett0_.donate_seq as donate_17_1_,
+        heavenlett0_.donor_name as donor_na5_1_,
+        heavenlett0_.file_name as file_nam6_1_,
+        heavenlett0_.letter_contents as letter_c7_1_,
+        heavenlett0_.letter_passcode as letter_p8_1_,
+        heavenlett0_.letter_title as letter_t9_1_,
+        heavenlett0_.letter_writer as letter_10_1_,
+        heavenlett0_.modifier_id as modifie11_1_,
+        heavenlett0_.modify_time as modify_12_1_,
+        heavenlett0_.org_file_name as org_fil13_1_,
+        heavenlett0_.read_count as read_co14_1_,
+        heavenlett0_.write_time as write_t15_1_,
+        heavenlett0_.writer_id as writer_16_1_ 
+    from
+        tb25_410_heaven_letter heavenlett0_ 
+    where
+        heavenlett0_.del_flag=? 
+    order by
+        heavenlett0_.letter_seq desc limit ?
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.type.descriptor.sql.BasicBinder - binding parameter [1] as [VARCHAR] - [N]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_s1_1_] : [INTEGER]) - [8193]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([anonymit2_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([area_cod3_1_] : [VARCHAR]) - [AREA200]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([del_flag4_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_17_1_] : [INTEGER]) - [112]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donor_na5_1_] : [VARCHAR]) - [김민서]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([file_nam6_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_c7_1_] : [CLOB]) - [민서야  잘지내고 있니??]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_p8_1_] : [VARCHAR]) - [abcd1234]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_t9_1_] : [VARCHAR]) - [가끔 널 잊고싶어진다]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_10_1_] : [VARCHAR]) - [테스트2]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modifie11_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modify_12_1_] : [TIMESTAMP]) - [null]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([org_fil13_1_] : [VARCHAR]) - [Hydrangeas.jpg]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([read_co14_1_] : [INTEGER]) - [1]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([write_t15_1_] : [TIMESTAMP]) - [2025-06-11T18:51:18]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer_16_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_s1_1_] : [INTEGER]) - [8192]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([anonymit2_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([area_cod3_1_] : [VARCHAR]) - [AREA200]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([del_flag4_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_17_1_] : [INTEGER]) - [111]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donor_na5_1_] : [VARCHAR]) - [이]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([file_nam6_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_c7_1_] : [CLOB]) - [민서야  잘지내고 있니??]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_p8_1_] : [VARCHAR]) - [abcd1234]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_t9_1_] : [VARCHAR]) - [가끔 널 잊고싶어진다]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_10_1_] : [VARCHAR]) - [민]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modifie11_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modify_12_1_] : [TIMESTAMP]) - [2025-06-11T18:48:52]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([org_fil13_1_] : [VARCHAR]) - []
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([read_co14_1_] : [INTEGER]) - [3]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([write_t15_1_] : [TIMESTAMP]) - [2025-06-11T17:55:27]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer_16_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_s1_1_] : [INTEGER]) - [7028]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([anonymit2_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([area_cod3_1_] : [VARCHAR]) - [AREA100]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([del_flag4_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_17_1_] : [INTEGER]) - [null]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donor_na5_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([file_nam6_1_] : [VARCHAR]) - []
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_c7_1_] : [CLOB]) - [&lt;p&gt;&lt;strong&gt;&amp;lt;script&amp;gt;fetch(&amp;#39;https://3w0m2zpad34n22nvav8r35g9n0trhp5e.oastify.com/&amp;#39;);&amp;lt;/script&amp;gt;&lt;/strong&gt;&lt;/p&gt;
+]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_p8_1_] : [VARCHAR]) - [thdrl617]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_t9_1_] : [VARCHAR]) - [1234]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_10_1_] : [VARCHAR]) - [1234]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modifie11_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modify_12_1_] : [TIMESTAMP]) - [2025-03-24T07:15:05]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([org_fil13_1_] : [VARCHAR]) - []
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([read_co14_1_] : [INTEGER]) - [8]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([write_t15_1_] : [TIMESTAMP]) - [2025-03-10T05:31:09]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer_16_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_s1_1_] : [INTEGER]) - [7027]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([anonymit2_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([area_cod3_1_] : [VARCHAR]) - [AREA100]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([del_flag4_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_17_1_] : [INTEGER]) - [null]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donor_na5_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([file_nam6_1_] : [VARCHAR]) - []
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_c7_1_] : [CLOB]) - [&lt;p&gt;해킹해킹이래&lt;/p&gt;
+&lt;script&gt;fetch(&#39;https://3w0m2zpad34n22nvav8r35g9n0trhp5e.oastify.com/&#39;);&lt;/script&gt;]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_p8_1_] : [VARCHAR]) - [thdrl617]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_t9_1_] : [VARCHAR]) - [123123]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_10_1_] : [VARCHAR]) - [1234]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modifie11_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modify_12_1_] : [TIMESTAMP]) - [2025-03-24T07:15:05]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([org_fil13_1_] : [VARCHAR]) - []
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([read_co14_1_] : [INTEGER]) - [4]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([write_t15_1_] : [TIMESTAMP]) - [2025-03-10T05:29:31]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer_16_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_s1_1_] : [INTEGER]) - [7026]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([anonymit2_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([area_cod3_1_] : [VARCHAR]) - [AREA100]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([del_flag4_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_17_1_] : [INTEGER]) - [null]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donor_na5_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([file_nam6_1_] : [VARCHAR]) - []
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_c7_1_] : [CLOB]) - [&lt;script&gt;alert(&amp;quot;!!&amp;quot;)&lt;/script&gt;
+]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_p8_1_] : [VARCHAR]) - [thdrl617!]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_t9_1_] : [VARCHAR]) - [1234]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_10_1_] : [VARCHAR]) - [1234]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modifie11_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modify_12_1_] : [TIMESTAMP]) - [2025-03-24T07:15:05]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([org_fil13_1_] : [VARCHAR]) - []
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([read_co14_1_] : [INTEGER]) - [4]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([write_t15_1_] : [TIMESTAMP]) - [2025-03-10T05:24:38]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer_16_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_s1_1_] : [INTEGER]) - [7025]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([anonymit2_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([area_cod3_1_] : [VARCHAR]) - [AREA100]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([del_flag4_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_17_1_] : [INTEGER]) - [null]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donor_na5_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([file_nam6_1_] : [VARCHAR]) - []
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_c7_1_] : [CLOB]) - [&lt;p&gt;댓글테러 예정&lt;/p&gt;
+]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_p8_1_] : [VARCHAR]) - [thdrl617]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_t9_1_] : [VARCHAR]) - [댓글테러 예정]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_10_1_] : [VARCHAR]) - [김추모]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modifie11_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modify_12_1_] : [TIMESTAMP]) - [2025-03-24T07:15:05]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([org_fil13_1_] : [VARCHAR]) - []
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([read_co14_1_] : [INTEGER]) - [10]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([write_t15_1_] : [TIMESTAMP]) - [2025-03-10T01:09:18]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer_16_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_s1_1_] : [INTEGER]) - [7024]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([anonymit2_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([area_cod3_1_] : [VARCHAR]) - [AREA100]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([del_flag4_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_17_1_] : [INTEGER]) - [null]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donor_na5_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([file_nam6_1_] : [VARCHAR]) - []
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_c7_1_] : [CLOB]) - [&lt;p&gt;1234&lt;/p&gt;
+]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_p8_1_] : [VARCHAR]) - [thdrl617!]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_t9_1_] : [VARCHAR]) - [1234]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_10_1_] : [VARCHAR]) - [1234]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modifie11_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modify_12_1_] : [TIMESTAMP]) - [2025-03-24T07:15:05]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([org_fil13_1_] : [VARCHAR]) - []
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([read_co14_1_] : [INTEGER]) - [4]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([write_t15_1_] : [TIMESTAMP]) - [2025-03-10T00:57:59]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer_16_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_s1_1_] : [INTEGER]) - [7023]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([anonymit2_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([area_cod3_1_] : [VARCHAR]) - [AREA100]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([del_flag4_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_17_1_] : [INTEGER]) - [null]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donor_na5_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([file_nam6_1_] : [VARCHAR]) - []
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_c7_1_] : [CLOB]) - [&lt;p&gt;모바일 글쓰기 테스트2&lt;/p&gt;
+]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_p8_1_] : [VARCHAR]) - [1234]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_t9_1_] : [VARCHAR]) - [모바일 글쓰기 테스트2]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_10_1_] : [VARCHAR]) - [1234]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modifie11_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modify_12_1_] : [TIMESTAMP]) - [2025-03-24T07:15:05]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([org_fil13_1_] : [VARCHAR]) - []
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([read_co14_1_] : [INTEGER]) - [7]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([write_t15_1_] : [TIMESTAMP]) - [2025-03-10T00:46:49]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer_16_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_s1_1_] : [INTEGER]) - [7022]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([anonymit2_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([area_cod3_1_] : [VARCHAR]) - [AREA100]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([del_flag4_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_17_1_] : [INTEGER]) - [null]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donor_na5_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([file_nam6_1_] : [VARCHAR]) - []
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_c7_1_] : [CLOB]) - [&lt;p&gt;1234&lt;/p&gt;
+]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_p8_1_] : [VARCHAR]) - [1234]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_t9_1_] : [VARCHAR]) - [1234]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_10_1_] : [VARCHAR]) - [1234]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modifie11_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modify_12_1_] : [TIMESTAMP]) - [2025-03-24T07:15:05]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([org_fil13_1_] : [VARCHAR]) - []
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([read_co14_1_] : [INTEGER]) - [0]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([write_t15_1_] : [TIMESTAMP]) - [2025-03-08T06:37:35]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer_16_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_s1_1_] : [INTEGER]) - [7021]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([anonymit2_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([area_cod3_1_] : [VARCHAR]) - [AREA100]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([del_flag4_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_17_1_] : [INTEGER]) - [null]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donor_na5_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([file_nam6_1_] : [VARCHAR]) - []
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_c7_1_] : [CLOB]) - [&lt;p&gt;공격!!&lt;/p&gt;
+]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_p8_1_] : [VARCHAR]) - [thdrl617]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_t9_1_] : [VARCHAR]) - [공격!!]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_10_1_] : [VARCHAR]) - [공격자]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modifie11_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modify_12_1_] : [TIMESTAMP]) - [2025-03-24T07:15:05]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([org_fil13_1_] : [VARCHAR]) - []
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([read_co14_1_] : [INTEGER]) - [0]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([write_t15_1_] : [TIMESTAMP]) - [2025-03-08T06:36:10]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer_16_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:07 DEBUG [http-nio-8080-exec-2] org.hibernate.SQL - 
+    select
+        count(heavenlett0_.letter_seq) as col_0_0_ 
+    from
+        tb25_410_heaven_letter heavenlett0_ 
+    where
+        heavenlett0_.del_flag=?
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.type.descriptor.sql.BasicBinder - binding parameter [1] as [VARCHAR] - [N]
+2025-06-12 14:03:07 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([col_0_0_] : [BIGINT]) - [7026]
+2025-06-12 14:03:13 INFO  [http-nio-8080-exec-3] c.t.m.a.l.ControllerLoggingAspect - method=GET, uri=/heavenLetters, ip=0:0:0:0:0:0:0:1
+2025-06-12 14:03:13 DEBUG [http-nio-8080-exec-3] org.hibernate.SQL - 
+    select
+        heavenlett0_.letter_seq as letter_s1_1_,
+        heavenlett0_.anonymity_flag as anonymit2_1_,
+        heavenlett0_.area_code as area_cod3_1_,
+        heavenlett0_.del_flag as del_flag4_1_,
+        heavenlett0_.donate_seq as donate_17_1_,
+        heavenlett0_.donor_name as donor_na5_1_,
+        heavenlett0_.file_name as file_nam6_1_,
+        heavenlett0_.letter_contents as letter_c7_1_,
+        heavenlett0_.letter_passcode as letter_p8_1_,
+        heavenlett0_.letter_title as letter_t9_1_,
+        heavenlett0_.letter_writer as letter_10_1_,
+        heavenlett0_.modifier_id as modifie11_1_,
+        heavenlett0_.modify_time as modify_12_1_,
+        heavenlett0_.org_file_name as org_fil13_1_,
+        heavenlett0_.read_count as read_co14_1_,
+        heavenlett0_.write_time as write_t15_1_,
+        heavenlett0_.writer_id as writer_16_1_ 
+    from
+        tb25_410_heaven_letter heavenlett0_ 
+    where
+        heavenlett0_.del_flag=? 
+    order by
+        heavenlett0_.letter_seq desc limit ?
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.type.descriptor.sql.BasicBinder - binding parameter [1] as [VARCHAR] - [N]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_s1_1_] : [INTEGER]) - [8193]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([anonymit2_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([area_cod3_1_] : [VARCHAR]) - [AREA200]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([del_flag4_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_17_1_] : [INTEGER]) - [112]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donor_na5_1_] : [VARCHAR]) - [김민서]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([file_nam6_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_c7_1_] : [CLOB]) - [민서야  잘지내고 있니??]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_p8_1_] : [VARCHAR]) - [abcd1234]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_t9_1_] : [VARCHAR]) - [가끔 널 잊고싶어진다]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_10_1_] : [VARCHAR]) - [테스트2]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modifie11_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modify_12_1_] : [TIMESTAMP]) - [null]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([org_fil13_1_] : [VARCHAR]) - [Hydrangeas.jpg]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([read_co14_1_] : [INTEGER]) - [1]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([write_t15_1_] : [TIMESTAMP]) - [2025-06-11T18:51:18]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer_16_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_s1_1_] : [INTEGER]) - [8192]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([anonymit2_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([area_cod3_1_] : [VARCHAR]) - [AREA200]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([del_flag4_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_17_1_] : [INTEGER]) - [111]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donor_na5_1_] : [VARCHAR]) - [이]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([file_nam6_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_c7_1_] : [CLOB]) - [민서야  잘지내고 있니??]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_p8_1_] : [VARCHAR]) - [abcd1234]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_t9_1_] : [VARCHAR]) - [가끔 널 잊고싶어진다]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_10_1_] : [VARCHAR]) - [민]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modifie11_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modify_12_1_] : [TIMESTAMP]) - [2025-06-11T18:48:52]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([org_fil13_1_] : [VARCHAR]) - []
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([read_co14_1_] : [INTEGER]) - [3]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([write_t15_1_] : [TIMESTAMP]) - [2025-06-11T17:55:27]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer_16_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_s1_1_] : [INTEGER]) - [7028]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([anonymit2_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([area_cod3_1_] : [VARCHAR]) - [AREA100]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([del_flag4_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_17_1_] : [INTEGER]) - [null]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donor_na5_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([file_nam6_1_] : [VARCHAR]) - []
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_c7_1_] : [CLOB]) - [&lt;p&gt;&lt;strong&gt;&amp;lt;script&amp;gt;fetch(&amp;#39;https://3w0m2zpad34n22nvav8r35g9n0trhp5e.oastify.com/&amp;#39;);&amp;lt;/script&amp;gt;&lt;/strong&gt;&lt;/p&gt;
+]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_p8_1_] : [VARCHAR]) - [thdrl617]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_t9_1_] : [VARCHAR]) - [1234]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_10_1_] : [VARCHAR]) - [1234]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modifie11_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modify_12_1_] : [TIMESTAMP]) - [2025-03-24T07:15:05]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([org_fil13_1_] : [VARCHAR]) - []
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([read_co14_1_] : [INTEGER]) - [8]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([write_t15_1_] : [TIMESTAMP]) - [2025-03-10T05:31:09]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer_16_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_s1_1_] : [INTEGER]) - [7027]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([anonymit2_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([area_cod3_1_] : [VARCHAR]) - [AREA100]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([del_flag4_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_17_1_] : [INTEGER]) - [null]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donor_na5_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([file_nam6_1_] : [VARCHAR]) - []
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_c7_1_] : [CLOB]) - [&lt;p&gt;해킹해킹이래&lt;/p&gt;
+&lt;script&gt;fetch(&#39;https://3w0m2zpad34n22nvav8r35g9n0trhp5e.oastify.com/&#39;);&lt;/script&gt;]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_p8_1_] : [VARCHAR]) - [thdrl617]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_t9_1_] : [VARCHAR]) - [123123]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_10_1_] : [VARCHAR]) - [1234]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modifie11_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modify_12_1_] : [TIMESTAMP]) - [2025-03-24T07:15:05]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([org_fil13_1_] : [VARCHAR]) - []
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([read_co14_1_] : [INTEGER]) - [4]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([write_t15_1_] : [TIMESTAMP]) - [2025-03-10T05:29:31]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer_16_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_s1_1_] : [INTEGER]) - [7026]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([anonymit2_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([area_cod3_1_] : [VARCHAR]) - [AREA100]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([del_flag4_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_17_1_] : [INTEGER]) - [null]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donor_na5_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([file_nam6_1_] : [VARCHAR]) - []
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_c7_1_] : [CLOB]) - [&lt;script&gt;alert(&amp;quot;!!&amp;quot;)&lt;/script&gt;
+]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_p8_1_] : [VARCHAR]) - [thdrl617!]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_t9_1_] : [VARCHAR]) - [1234]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_10_1_] : [VARCHAR]) - [1234]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modifie11_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modify_12_1_] : [TIMESTAMP]) - [2025-03-24T07:15:05]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([org_fil13_1_] : [VARCHAR]) - []
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([read_co14_1_] : [INTEGER]) - [4]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([write_t15_1_] : [TIMESTAMP]) - [2025-03-10T05:24:38]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer_16_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_s1_1_] : [INTEGER]) - [7025]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([anonymit2_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([area_cod3_1_] : [VARCHAR]) - [AREA100]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([del_flag4_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_17_1_] : [INTEGER]) - [null]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donor_na5_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([file_nam6_1_] : [VARCHAR]) - []
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_c7_1_] : [CLOB]) - [&lt;p&gt;댓글테러 예정&lt;/p&gt;
+]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_p8_1_] : [VARCHAR]) - [thdrl617]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_t9_1_] : [VARCHAR]) - [댓글테러 예정]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_10_1_] : [VARCHAR]) - [김추모]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modifie11_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modify_12_1_] : [TIMESTAMP]) - [2025-03-24T07:15:05]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([org_fil13_1_] : [VARCHAR]) - []
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([read_co14_1_] : [INTEGER]) - [10]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([write_t15_1_] : [TIMESTAMP]) - [2025-03-10T01:09:18]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer_16_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_s1_1_] : [INTEGER]) - [7024]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([anonymit2_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([area_cod3_1_] : [VARCHAR]) - [AREA100]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([del_flag4_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_17_1_] : [INTEGER]) - [null]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donor_na5_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([file_nam6_1_] : [VARCHAR]) - []
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_c7_1_] : [CLOB]) - [&lt;p&gt;1234&lt;/p&gt;
+]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_p8_1_] : [VARCHAR]) - [thdrl617!]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_t9_1_] : [VARCHAR]) - [1234]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_10_1_] : [VARCHAR]) - [1234]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modifie11_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modify_12_1_] : [TIMESTAMP]) - [2025-03-24T07:15:05]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([org_fil13_1_] : [VARCHAR]) - []
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([read_co14_1_] : [INTEGER]) - [4]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([write_t15_1_] : [TIMESTAMP]) - [2025-03-10T00:57:59]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer_16_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_s1_1_] : [INTEGER]) - [7023]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([anonymit2_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([area_cod3_1_] : [VARCHAR]) - [AREA100]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([del_flag4_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_17_1_] : [INTEGER]) - [null]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donor_na5_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([file_nam6_1_] : [VARCHAR]) - []
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_c7_1_] : [CLOB]) - [&lt;p&gt;모바일 글쓰기 테스트2&lt;/p&gt;
+]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_p8_1_] : [VARCHAR]) - [1234]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_t9_1_] : [VARCHAR]) - [모바일 글쓰기 테스트2]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_10_1_] : [VARCHAR]) - [1234]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modifie11_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modify_12_1_] : [TIMESTAMP]) - [2025-03-24T07:15:05]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([org_fil13_1_] : [VARCHAR]) - []
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([read_co14_1_] : [INTEGER]) - [7]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([write_t15_1_] : [TIMESTAMP]) - [2025-03-10T00:46:49]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer_16_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_s1_1_] : [INTEGER]) - [7022]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([anonymit2_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([area_cod3_1_] : [VARCHAR]) - [AREA100]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([del_flag4_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_17_1_] : [INTEGER]) - [null]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donor_na5_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([file_nam6_1_] : [VARCHAR]) - []
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_c7_1_] : [CLOB]) - [&lt;p&gt;1234&lt;/p&gt;
+]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_p8_1_] : [VARCHAR]) - [1234]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_t9_1_] : [VARCHAR]) - [1234]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_10_1_] : [VARCHAR]) - [1234]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modifie11_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modify_12_1_] : [TIMESTAMP]) - [2025-03-24T07:15:05]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([org_fil13_1_] : [VARCHAR]) - []
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([read_co14_1_] : [INTEGER]) - [0]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([write_t15_1_] : [TIMESTAMP]) - [2025-03-08T06:37:35]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer_16_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_s1_1_] : [INTEGER]) - [7021]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([anonymit2_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([area_cod3_1_] : [VARCHAR]) - [AREA100]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([del_flag4_1_] : [VARCHAR]) - [N]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_17_1_] : [INTEGER]) - [null]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donor_na5_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([file_nam6_1_] : [VARCHAR]) - []
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_c7_1_] : [CLOB]) - [&lt;p&gt;공격!!&lt;/p&gt;
+]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_p8_1_] : [VARCHAR]) - [thdrl617]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_t9_1_] : [VARCHAR]) - [공격!!]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_10_1_] : [VARCHAR]) - [공격자]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modifie11_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modify_12_1_] : [TIMESTAMP]) - [2025-03-24T07:15:05]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([org_fil13_1_] : [VARCHAR]) - []
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([read_co14_1_] : [INTEGER]) - [0]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([write_t15_1_] : [TIMESTAMP]) - [2025-03-08T06:36:10]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer_16_1_] : [VARCHAR]) - [null]
+2025-06-12 14:03:13 DEBUG [http-nio-8080-exec-3] org.hibernate.SQL - 
+    select
+        count(heavenlett0_.letter_seq) as col_0_0_ 
+    from
+        tb25_410_heaven_letter heavenlett0_ 
+    where
+        heavenlett0_.del_flag=?
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.type.descriptor.sql.BasicBinder - binding parameter [1] as [VARCHAR] - [N]
+2025-06-12 14:03:13 TRACE [http-nio-8080-exec-3] o.h.t.descriptor.sql.BasicExtractor - extracted value ([col_0_0_] : [BIGINT]) - [7026]
+2025-06-12 14:36:23 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12 14:36:23 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-10 - Shutdown initiated...
+2025-06-12 14:36:23 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-10 - Shutdown completed.
+2025-06-12 14:38:22 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+2025-06-12 14:38:22 INFO  [restartedMain] c.t.memorial.MemorialApplication - Starting MemorialApplication using Java 17.0.12 on DESKTOP-JH6PQI3 with PID 13984 (C:\DBE_Final_Project\spring\build\classes\java\main started by user in C:\DBE_Final_Project\spring)
+2025-06-12 14:38:22 INFO  [restartedMain] c.t.memorial.MemorialApplication - No active profile set, falling back to 1 default profile: "default"
+2025-06-12 14:38:22 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-06-12 14:38:22 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-06-12 14:38:22 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-12 14:38:23 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 34 ms. Found 6 JPA repository interfaces.
+2025-06-12 14:38:23 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2025-06-12 14:38:23 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-06-12 14:38:23 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-12 14:38:23 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2025-06-12 14:38:23 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-12 14:38:23 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1063 ms
+2025-06-12 14:38:23 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-12 14:38:23 INFO  [restartedMain] org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+2025-06-12 14:38:23 INFO  [restartedMain] o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2025-06-12 14:38:23 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-06-12 14:38:23 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-06-12 14:38:23 INFO  [restartedMain] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2025-06-12 14:38:24 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-06-12 14:38:24 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12 14:38:25 WARN  [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-12 14:38:25 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-06-12 14:38:25 WARN  [restartedMain] o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-06-12 14:38:25 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-06-12 14:38:25 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2025-06-12 14:38:25 INFO  [restartedMain] c.t.memorial.MemorialApplication - Started MemorialApplication in 3.309 seconds (JVM running for 3.919)
+2025-06-12 14:41:07 INFO  [http-nio-8080-exec-3] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-06-12 14:41:07 INFO  [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-06-12 14:41:07 INFO  [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-06-12 14:41:07 WARN  [http-nio-8080-exec-3] o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Failed to convert value of type 'java.lang.String' to required type 'java.lang.Integer'; nested exception is java.lang.NumberFormatException: For input string: "comments"]
+2025-06-12 14:41:18 WARN  [http-nio-8080-exec-5] o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' not supported]
+2025-06-12 14:41:31 WARN  [http-nio-8080-exec-2] o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' not supported]
+2025-06-12 14:42:05 INFO  [http-nio-8080-exec-8] c.t.m.a.l.ControllerLoggingAspect - method=POST, uri=/heavenLetters/8193/comments, ip=0:0:0:0:0:0:0:1
+2025-06-12 14:42:05 DEBUG [http-nio-8080-exec-8] org.hibernate.SQL - 
+    select
+        heavenlett0_.letter_seq as letter_s1_1_0_,
+        heavenlett0_.anonymity_flag as anonymit2_1_0_,
+        heavenlett0_.area_code as area_cod3_1_0_,
+        heavenlett0_.del_flag as del_flag4_1_0_,
+        heavenlett0_.donate_seq as donate_17_1_0_,
+        heavenlett0_.donor_name as donor_na5_1_0_,
+        heavenlett0_.file_name as file_nam6_1_0_,
+        heavenlett0_.letter_contents as letter_c7_1_0_,
+        heavenlett0_.letter_passcode as letter_p8_1_0_,
+        heavenlett0_.letter_title as letter_t9_1_0_,
+        heavenlett0_.letter_writer as letter_10_1_0_,
+        heavenlett0_.modifier_id as modifie11_1_0_,
+        heavenlett0_.modify_time as modify_12_1_0_,
+        heavenlett0_.org_file_name as org_fil13_1_0_,
+        heavenlett0_.read_count as read_co14_1_0_,
+        heavenlett0_.write_time as write_t15_1_0_,
+        heavenlett0_.writer_id as writer_16_1_0_ 
+    from
+        tb25_410_heaven_letter heavenlett0_ 
+    where
+        heavenlett0_.letter_seq=?
+2025-06-12 14:42:05 TRACE [http-nio-8080-exec-8] o.h.type.descriptor.sql.BasicBinder - binding parameter [1] as [INTEGER] - [8193]
+2025-06-12 14:42:05 TRACE [http-nio-8080-exec-8] o.h.t.descriptor.sql.BasicExtractor - extracted value ([anonymit2_1_0_] : [VARCHAR]) - [N]
+2025-06-12 14:42:05 TRACE [http-nio-8080-exec-8] o.h.t.descriptor.sql.BasicExtractor - extracted value ([area_cod3_1_0_] : [VARCHAR]) - [AREA200]
+2025-06-12 14:42:05 TRACE [http-nio-8080-exec-8] o.h.t.descriptor.sql.BasicExtractor - extracted value ([del_flag4_1_0_] : [VARCHAR]) - [N]
+2025-06-12 14:42:05 TRACE [http-nio-8080-exec-8] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_17_1_0_] : [INTEGER]) - [112]
+2025-06-12 14:42:05 TRACE [http-nio-8080-exec-8] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donor_na5_1_0_] : [VARCHAR]) - [김민서]
+2025-06-12 14:42:05 TRACE [http-nio-8080-exec-8] o.h.t.descriptor.sql.BasicExtractor - extracted value ([file_nam6_1_0_] : [VARCHAR]) - [null]
+2025-06-12 14:42:05 TRACE [http-nio-8080-exec-8] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_c7_1_0_] : [CLOB]) - [민서야  잘지내고 있니??]
+2025-06-12 14:42:05 TRACE [http-nio-8080-exec-8] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_p8_1_0_] : [VARCHAR]) - [abcd1234]
+2025-06-12 14:42:05 TRACE [http-nio-8080-exec-8] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_t9_1_0_] : [VARCHAR]) - [가끔 널 잊고싶어진다]
+2025-06-12 14:42:05 TRACE [http-nio-8080-exec-8] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_10_1_0_] : [VARCHAR]) - [테스트2]
+2025-06-12 14:42:05 TRACE [http-nio-8080-exec-8] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modifie11_1_0_] : [VARCHAR]) - [null]
+2025-06-12 14:42:05 TRACE [http-nio-8080-exec-8] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modify_12_1_0_] : [TIMESTAMP]) - [null]
+2025-06-12 14:42:05 TRACE [http-nio-8080-exec-8] o.h.t.descriptor.sql.BasicExtractor - extracted value ([org_fil13_1_0_] : [VARCHAR]) - [Hydrangeas.jpg]
+2025-06-12 14:42:05 TRACE [http-nio-8080-exec-8] o.h.t.descriptor.sql.BasicExtractor - extracted value ([read_co14_1_0_] : [INTEGER]) - [1]
+2025-06-12 14:42:05 TRACE [http-nio-8080-exec-8] o.h.t.descriptor.sql.BasicExtractor - extracted value ([write_t15_1_0_] : [TIMESTAMP]) - [2025-06-11T18:51:18]
+2025-06-12 14:42:05 TRACE [http-nio-8080-exec-8] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer_16_1_0_] : [VARCHAR]) - [null]
+2025-06-12 14:42:05 DEBUG [http-nio-8080-exec-8] org.hibernate.SQL - 
+    insert 
+    into
+        tb25_411_heaven_letter_comment
+        (comment_passcode, comment_writer, contents, del_flag, letter_seq, modifier_id, modify_time, write_time, writer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-06-12 14:42:05 TRACE [http-nio-8080-exec-8] o.h.type.descriptor.sql.BasicBinder - binding parameter [1] as [VARCHAR] - [abcd12345]
+2025-06-12 14:42:05 TRACE [http-nio-8080-exec-8] o.h.type.descriptor.sql.BasicBinder - binding parameter [2] as [VARCHAR] - [댓글테스트]
+2025-06-12 14:42:05 TRACE [http-nio-8080-exec-8] o.h.type.descriptor.sql.BasicBinder - binding parameter [3] as [CLOB] - [댓글테스트입니다.]
+2025-06-12 14:42:05 TRACE [http-nio-8080-exec-8] o.h.type.descriptor.sql.BasicBinder - binding parameter [4] as [VARCHAR] - [N]
+2025-06-12 14:42:05 TRACE [http-nio-8080-exec-8] o.h.type.descriptor.sql.BasicBinder - binding parameter [5] as [INTEGER] - [8193]
+2025-06-12 14:42:05 TRACE [http-nio-8080-exec-8] o.h.type.descriptor.sql.BasicBinder - binding parameter [6] as [VARCHAR] - [null]
+2025-06-12 14:42:05 TRACE [http-nio-8080-exec-8] o.h.type.descriptor.sql.BasicBinder - binding parameter [7] as [TIMESTAMP] - [null]
+2025-06-12 14:42:05 TRACE [http-nio-8080-exec-8] o.h.type.descriptor.sql.BasicBinder - binding parameter [8] as [TIMESTAMP] - [2025-06-12T14:42:05.401587700]
+2025-06-12 14:42:05 TRACE [http-nio-8080-exec-8] o.h.type.descriptor.sql.BasicBinder - binding parameter [9] as [VARCHAR] - [null]
