@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 
 public class HeavenLetterCommentResponseDto {
 
-    // 등록
+    // 등록&수정
     private boolean success;
     private int code;
     private String message;
@@ -47,4 +47,24 @@ public class HeavenLetterCommentResponseDto {
         }
     }
 
+    //인증
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class CommentVerifyResponse {
+        private int result;
+        private String message;
+
+        //성공
+        public static CommentVerifyResponse success(String message) {
+
+            return new CommentVerifyResponse(1, message);
+        }
+        //실패(false하면 오류 나는 이유 찾기)
+        public static CommentVerifyResponse fail(String message) {
+
+            return new CommentVerifyResponse(0, message);
+        }
+    }
 }

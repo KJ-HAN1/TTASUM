@@ -1,5 +1,6 @@
 package com.ttasum.memorial.domain.entity.heavenLetter;
 
+import com.ttasum.memorial.dto.heavenLetter.request.CommonCommentRequestDto;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -62,6 +63,17 @@ public class HeavenLetterComment {
         this.writeTime = LocalDateTime.now();
         //삭제 여부 — 기본값 'N'으로 설정 (삭제 안 됨)
         this.delFlag = "N";
+    }
+    //수정 메서드
+    public void updateComment(CommonCommentRequestDto.UpdateCommentRequest updateCommentRequest) {
+//        this.commentSeq = updateCommentRequest.getCommentSeq();
+//        this.letterSeq = heavenLetter;
+        this.commentWriter = updateCommentRequest.getCommentWriter();
+        //현재는 비밀번호를 바꿀 순 없지만 일단 넣어둠
+        this.commentPasscode = updateCommentRequest.getCommentPasscode();
+        this.contents = updateCommentRequest.getContents();
+        this.modifyTime = LocalDateTime.now();
+
     }
 
 }

@@ -36,4 +36,26 @@ public class HeavenLetterCommentServiceImpl implements HeavenLetterCommentServic
 
         return HeavenLetterCommentResponseDto.success("편지 댓글이 성공적으로 등록되었습니다.");
     }
+    //수정 인증(공통)
+    @Transactional(readOnly = true)
+    @Override
+    public boolean verifyCommentPasscode(Integer commentSeq, String passcode) {
+        HeavenLetterComment heavenLetterComment = commentRepository.findById(commentSeq).orElseThrow();
+        return heavenLetterComment.getCommentPasscode().equals(passcode);
+    }
+    //
+//    //댓글 수정
+    @Transactional
+    @Override
+    public HeavenLetterCommentResponseDto updateComment(CommonCommentRequestDto.UpdateCommentRequest updateCommentRequest) {
+        HeavenLetterComment heavenLetterComment = commentRepository.findById(updateCommentRequest.getCommentSeq()).get();
+//
+//        if (!this.verifyCommentPasscode(deleteCommentRequest.getCommentSeq(), deleteCommentRequest.getCommentPasscode())) {
+//            return HeavenLetterCommentResponse.CommentVerifyResponse.fail("비밀번호가 일치하지 않습니다.");
+//
+        //댓글 수정
+        heavenLetterComment.updateComment(updateCommentRequest);
+
+        return HeavenLetterCommentResponseDto.success("편지 댓글이 성공적으로 수정되었습니다.");
+    }
 }

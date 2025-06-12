@@ -8,4 +8,10 @@ public interface HeavenLetterCommentService {
     //댓글 등록
     HeavenLetterCommentResponseDto createComment(CommonCommentRequestDto.CreateCommentRequest createCommentRequest);
 
+    //댓글 수정 인증(공통)
+    boolean verifyCommentPasscode(Integer commentSeq, String passcode);
+
+    //댓글 수정
+    HeavenLetterCommentResponseDto updateComment(CommonCommentRequestDto.UpdateCommentRequest updateCommentRequest);
+
 }
