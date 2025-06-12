@@ -11,6 +11,7 @@ import com.ttasum.memorial.service.heavenLetter.HeavenLetterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.jaxb.SpringDataJaxb;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,22 +34,21 @@ public class HeavenLetterController {
         //상태코드 분기 처리
         HttpStatus status;
         //등록 성공
-        if(createResponse.getCode() == 201){
+        if (createResponse.getCode() == 201) {
             status = HttpStatus.CREATED;
         }
         //등록 실패
-        else if (createResponse.getCode() == 400){
+        else if (createResponse.getCode() == 400) {
             status = HttpStatus.BAD_REQUEST;
-        }
-        else if (createResponse.getCode() == 500){
+        } else if (createResponse.getCode() == 500) {
             status = HttpStatus.INTERNAL_SERVER_ERROR;
-        } else{
+        } else {
             //400,500을 제외한 다른 예외를 기본 값으로 처리
             //안전성 확보의 이유
             status = HttpStatus.BAD_REQUEST;
         }
         return ResponseEntity.status(status).body(createResponse);
-        }
+    }
 
     //단건 조회
     @GetMapping("/{letterSeq}")
@@ -75,16 +75,17 @@ public class HeavenLetterController {
             @RequestBody @Valid HeavenLetterVerifyRequestDto heavenLetterVerifyRequestDto) {
 
         //verify -> verified 확인
-        boolean verified = heavenLetterService.verifyPasscode(letterSeq , heavenLetterVerifyRequestDto.getLetterPasscode());
+        boolean verified = heavenLetterService.verifyPasscode(letterSeq, heavenLetterVerifyRequestDto.getLetterPasscode());
 
         // 위의 결과에 따른 bad response
-        if(!verified){
+        if (!verified) {
             // return "redirect:/";
             return ResponseEntity.badRequest().body(CommonResultResponseDto.fail("비밀번호가 일치하지 않습니다."));
         }
         // return "letterUpdate";
         return ResponseEntity.status(HttpStatus.OK).body(CommonResultResponseDto.success("비밀번호가 일치합니다."));
     }
+
     //편지 수정 (letterUpdate.html)
     @PatchMapping("/{letterSeq}")
     public ResponseEntity<HeavenLetterUpdateResponsDto> updateLetter(
@@ -119,6 +120,27 @@ public class HeavenLetterController {
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(deleteResponse);
         }
+    }
+
+    //검색
+    @GetMapping("/search")
+    public ResponseEntity<Page<HeavenLetterResponseDto.HeavenLetterListResponse>> searchLetters(
+            @RequestParam(defaultValue = "전체") String type,
+            @RequestParam(defaultValue = "") String keyword,
+            @ModelAttribute PageRequest pageRequest) {
+
+        // 한글 타입을 영문으로 매핑
+        String mappedType = switch (type) {
+            case "제목" -> "title";
+            case "내용" -> "contents";
+            case "전체" -> "all";
+            default -> "all";
+        };
+
+        Pageable pageable = pageRequest.toPageable("letterSeq");
+        Page<HeavenLetterResponseDto.HeavenLetterListResponse> result =
+                heavenLetterService.searchLetters(type, keyword, pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 }
 

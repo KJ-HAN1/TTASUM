@@ -31,4 +31,8 @@ public interface HeavenLetterService {
 
     //편지 삭제
     CommonResultResponseDto deleteLetter(HeavenLetterVerifyRequestDto deleteRequest);
+
+    //편지 전체 조회(검색 포함)
+    Page<HeavenLetterResponseDto.HeavenLetterListResponse> searchLetters(String type, String keyword, Pageable pageable);
+
 }

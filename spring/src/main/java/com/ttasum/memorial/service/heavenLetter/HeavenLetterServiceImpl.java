@@ -11,10 +11,15 @@ import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterResponseDto;
 import com.ttasum.memorial.domain.repository.heavenLetter.HeavenLetterRepository;
 import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterUpdateResponsDto;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Locale;
 
 @Service
 //final 필드에 대해 생성자 주입 자동 생성
@@ -117,5 +122,51 @@ public class HeavenLetterServiceImpl implements HeavenLetterService {
         heavenLetter.softDelete();
 
         return CommonResultResponseDto.success("편지가 정상적으로 삭제 되었습니다.");
+    }
+    //검색
+    @Transactional(readOnly = true)
+    @Override
+    public Page<HeavenLetterResponseDto.HeavenLetterListResponse> searchLetters(String type, String keyword, Pageable pageable) {
+        Logger log = LoggerFactory.getLogger(HeavenLetterServiceImpl.class);
+
+        log.info("[HeavenLetter 검색] type={}, keyword={}, page={}, size={}",
+                type, keyword, pageable.getPageNumber(), pageable.getPageSize());
+
+        Specification<HeavenLetter> spec = notDeleted();
+
+        if ("title".equalsIgnoreCase(type)) {
+            spec = spec.and(titleContains(keyword));
+        } else if ("contents".equalsIgnoreCase(type)) {
+            spec = spec.and(contentsContains(keyword));
+        } else if ("all".equalsIgnoreCase(type)) {
+            spec = spec.and(titleOrContentsContains(keyword));
+        }
+
+        Page<HeavenLetter> result = heavenLetterRepository.findAll(spec, pageable);
+        log.info("[검색 결과] 총 건수: {}", result.getTotalElements());
+
+        return result.map(HeavenLetterResponseDto.HeavenLetterListResponse::fromEntity);
+    }
+
+    private Specification<HeavenLetter> notDeleted() {
+        return (root, query, cb) -> cb.equal(root.get("delFlag"), "N");
+    }
+
+    private Specification<HeavenLetter> titleContains(String keyword) {
+        return (root, query, cb) ->
+                cb.like(cb.lower(root.get("letterTitle")), "%" + keyword.toLowerCase(Locale.ROOT) + "%");
+    }
+
+    private Specification<HeavenLetter> contentsContains(String keyword) {
+        return (root, query, cb) ->
+                cb.like(root.get("letterContents"), "%" + keyword + "%");
+    }
+
+    private Specification<HeavenLetter> titleOrContentsContains(String keyword) {
+        return (root, query, cb) ->
+                cb.or(
+                        cb.like(cb.lower(root.get("letterTitle")), "%" + keyword.toLowerCase(Locale.ROOT) + "%"),
+                        cb.like(root.get("letterContents"), "%" + keyword + "%")
+                );
     }
 }
