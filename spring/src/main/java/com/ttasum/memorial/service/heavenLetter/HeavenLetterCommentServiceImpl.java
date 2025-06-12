@@ -49,13 +49,24 @@ public class HeavenLetterCommentServiceImpl implements HeavenLetterCommentServic
     @Override
     public HeavenLetterCommentResponseDto updateComment(CommonCommentRequestDto.UpdateCommentRequest updateCommentRequest) {
         HeavenLetterComment heavenLetterComment = commentRepository.findById(updateCommentRequest.getCommentSeq()).get();
-//
-//        if (!this.verifyCommentPasscode(deleteCommentRequest.getCommentSeq(), deleteCommentRequest.getCommentPasscode())) {
-//            return HeavenLetterCommentResponse.CommentVerifyResponse.fail("비밀번호가 일치하지 않습니다.");
-//
-        //댓글 수정
+
         heavenLetterComment.updateComment(updateCommentRequest);
 
         return HeavenLetterCommentResponseDto.success("편지 댓글이 성공적으로 수정되었습니다.");
     }
+    //댓글 삭제
+    @Transactional
+    @Override
+    public HeavenLetterCommentResponseDto.CommentVerifyResponse deleteComment(CommonCommentRequestDto.DeleteCommentRequest deleteCommentRequest) {
+
+        if (!this.verifyCommentPasscode(deleteCommentRequest.getCommentSeq(), deleteCommentRequest.getCommentPasscode())) {
+            return HeavenLetterCommentResponseDto.CommentVerifyResponse.fail("비밀번호가 일치하지 않습니다.");
+        }
+        HeavenLetterComment heavenLetterComment = commentRepository.findById(deleteCommentRequest.getCommentSeq()).get();
+        //소프트 삭제 커멘드 사용
+        heavenLetterComment.softDeleteComment();
+
+        return HeavenLetterCommentResponseDto.CommentVerifyResponse.success("편지 댓글이 성공적으로 삭제되었습니다.");
+    }
 }
+

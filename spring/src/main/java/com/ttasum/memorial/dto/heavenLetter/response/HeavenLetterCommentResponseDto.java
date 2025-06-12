@@ -47,7 +47,7 @@ public class HeavenLetterCommentResponseDto {
         }
     }
 
-    //인증
+    //인증&삭제
     @Getter
     @Setter
     @NoArgsConstructor

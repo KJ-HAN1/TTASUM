@@ -40,7 +40,7 @@ public class HeavenLetterCommentController {
         }
         return ResponseEntity.status(status).body(createCommentResponse);
     }
-    //편지 수정 인증
+    // 수정 인증
     @PostMapping("/{commentSeq}/verifyPwd")
     public ResponseEntity<HeavenLetterCommentResponseDto.CommentVerifyResponse> verifyCommentPasscode(
             @PathVariable Integer commentSeq,
@@ -71,5 +71,18 @@ public class HeavenLetterCommentController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(updateCommentResponse);
     }
+    //댓글 삭제
+    @DeleteMapping("/{commentSeq}")
+    public ResponseEntity<HeavenLetterCommentResponseDto.CommentVerifyResponse> deleteComment(
+            @RequestBody CommonCommentRequestDto.DeleteCommentRequest deleteCommentRequest) {
 
+        HeavenLetterCommentResponseDto.CommentVerifyResponse deleteCommentResponse = heavenLetterCommentService.deleteComment(deleteCommentRequest);
+
+        // 결과에 따라 상태코드 분기
+        if (deleteCommentResponse.getResult() == 1) {
+            return ResponseEntity.ok(deleteCommentResponse);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(deleteCommentResponse);
+        }
+    }
 }

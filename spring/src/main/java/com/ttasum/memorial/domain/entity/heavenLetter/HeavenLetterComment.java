@@ -75,6 +75,11 @@ public class HeavenLetterComment {
         this.modifyTime = LocalDateTime.now();
 
     }
+    //삭제 메서드
+    public void softDeleteComment() {
+        this.delFlag = "Y";
+        this.modifyTime = LocalDateTime.now();
+    }
 
 }
 

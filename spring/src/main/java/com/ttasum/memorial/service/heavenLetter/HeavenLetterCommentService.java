@@ -14,4 +14,6 @@ public interface HeavenLetterCommentService {
     //댓글 수정
     HeavenLetterCommentResponseDto updateComment(CommonCommentRequestDto.UpdateCommentRequest updateCommentRequest);
 
+    //댓글 삭제
+    HeavenLetterCommentResponseDto.CommentVerifyResponse deleteComment(CommonCommentRequestDto.DeleteCommentRequest deleteCommentRequest);
 }

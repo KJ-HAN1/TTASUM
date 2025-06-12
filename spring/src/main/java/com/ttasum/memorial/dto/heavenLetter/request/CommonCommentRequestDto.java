@@ -66,6 +66,20 @@ public class CommonCommentRequestDto {
         private String contents;
 
     }
+    //댓글 삭제
+    @Getter
+    @Setter
+    public static class DeleteCommentRequest {
+
+        @NotNull(message = "댓글 번호는 필수입니다.")
+        private Integer commentSeq;
+
+        @NotNull(message = "편지 번호는 필수입니다.")
+        private Integer letterSeq;
+
+        @NotBlank(message = "댓글 비밀번호는 필수입니다.")
+        private String commentPasscode;
+    }
 }
 
 
