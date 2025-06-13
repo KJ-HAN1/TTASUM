@@ -2,8 +2,8 @@
 //
 //import com.fasterxml.jackson.databind.ObjectMapper;
 //import com.ttasum.memorial.controller.donationStory.DonationStoryCommentController;
-//import com.ttasum.memorial.dto.donationStory.request.DonationStoryUpdateRequestDto;
-//import com.ttasum.memorial.dto.donationStoryComment.request.DonationStoryCommentCreateRequestDto;
+//import com.ttasum.memorial.dto.donationStory.DonationStoryUpdateRequestDto;
+//import com.ttasum.memorial.dto.donationStoryComment.DonationStoryCommentCreateRequestDto;
 //import com.ttasum.memorial.service.donationStory.DonationStoryCommentService;
 //import org.junit.jupiter.api.DisplayName;
 //import org.junit.jupiter.api.Nested;

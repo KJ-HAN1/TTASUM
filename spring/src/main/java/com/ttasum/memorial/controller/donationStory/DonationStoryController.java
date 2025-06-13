@@ -8,10 +8,10 @@ import com.ttasum.memorial.dto.donationStory.request.DonationStoryPasswordVerify
 import com.ttasum.memorial.dto.donationStory.request.DonationStoryUpdateRequestDto;
 import com.ttasum.memorial.dto.donationStory.response.DonationStoryPasswordVerifyResponseDto;
 import com.ttasum.memorial.dto.donationStory.response.DonationStoryResponseDto;
-import com.ttasum.memorial.dto.donationStory.response.PageResponse;
 import com.ttasum.memorial.service.donationStory.DonationStoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -36,16 +36,18 @@ public class DonationStoryController {
      * @return DTO로 매핑된 스토리의 페이징된 목록
      */
     @GetMapping
-    public ResponseEntity<PageResponse<DonationStoryResponseDto>> getStories(
+    public ResponseEntity<Page<DonationStoryResponseDto>> getStories(
+            @RequestParam(defaultValue = "all") String searchField,
+            @RequestParam(required = false) String keyword,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(defaultValue = "20") int size) {
 
-        log.debug("/donationLetters?page={}&size={} - 기증후 스토리 목록 조회", page, size);
+        log.debug("/donationLetters?searchField={}&keyword={}&page={}&size={} - 기증후 스토리 목록 조회",
+                searchField, keyword, page, size);
         Pageable pageable = PageRequest.of(page, size);
 
-        // Service에서 DTO로 변환된 PageResponse 객체를 그대로 반환
-
-        return ResponseEntity.ok(donationStoryService.getActiveStories(pageable));
+        return ResponseEntity.ok(donationStoryService.searchStories(
+                searchField, keyword, pageable));
     }
 
     /**
@@ -55,8 +57,9 @@ public class DonationStoryController {
      */
     @GetMapping("/{storySeq}")
     public ResponseEntity<DonationStoryResponseDto> getStory(@PathVariable Integer storySeq){
-        log.info("/donationLetters/storySeq={} - 단건 조회", storySeq);
-        return ResponseEntity.ok(donationStoryService.getStory(storySeq));
+        log.debug("/donationLetters/storySeq={} - 단건 조회", storySeq);
+        DonationStoryResponseDto dto = donationStoryService.getStory(storySeq);
+        return ResponseEntity.ok(dto);
     }
 
     /**
@@ -70,7 +73,7 @@ public class DonationStoryController {
         donationStoryService.createStory(dto);
         return ResponseEntity.ok().body(ApiResponse.ok(
                 HttpStatus.CREATED.value(),
-                "스토리가 성곡적으로 등록되었습니다."
+                "스토리가 성공적으로 등록되었습니다."
         ));
     }
 
@@ -80,7 +83,7 @@ public class DonationStoryController {
      * @param dto 수정 데이터
      * @return 200 OK or 404
      */
-    @PutMapping("/{storySeq}")
+    @PatchMapping("/{storySeq}")
     public ResponseEntity<ApiResponse> updateStory(@PathVariable Integer storySeq, @RequestBody @Valid DonationStoryUpdateRequestDto dto){
         log.debug("/donationLetters/{} - 스토리 수정 요청", storySeq);
         // 서비스에서 예외 발생시 자동으로 404반환
