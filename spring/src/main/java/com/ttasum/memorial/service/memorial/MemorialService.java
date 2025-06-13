@@ -9,11 +9,16 @@ import com.ttasum.memorial.dto.HeavenLetterSummaryDto;
 import com.ttasum.memorial.dto.memorial.response.MemorialDetailResponseDto;
 import com.ttasum.memorial.dto.memorial.response.MemorialResponseDto;
 import com.ttasum.memorial.dto.memorialComment.request.MemorialReplyCreateRequestDto;
+import com.ttasum.memorial.dto.memorialComment.request.MemorialReplyDeleteRequestDto;
+import com.ttasum.memorial.dto.memorialComment.request.MemorialReplyUpdateRequestDto;
 import com.ttasum.memorial.dto.memorialComment.response.MemorialReplyResponseDto;
+import com.ttasum.memorial.exception.common.badRequest.CaptchaVerificationFailedException;
+import com.ttasum.memorial.exception.common.badRequest.InvalidCommentPasscodeException;
 import com.ttasum.memorial.exception.common.badRequest.InvalidPaginationParameterException;
 import com.ttasum.memorial.exception.common.badRequest.InvalidSearchFieldException;
 import com.ttasum.memorial.exception.memorial.MemorialNotFoundException;
 import com.ttasum.memorial.exception.memorial.MemorialReplyNotFoundException;
+import com.ttasum.memorial.service.common.CaptchaVerifier;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -37,6 +42,8 @@ public class MemorialService {
     private final MemorialReplyRepository memorialReplyRepository;
     private final MemorialRepository memorialRepository;
     private final HeavenLetterRepository heavenLetterRepository;
+    private final CaptchaVerifier captchaVerifier;
+
 
     /**
      * 기증자 추모관 목록 조회
@@ -85,7 +92,7 @@ public class MemorialService {
 
         // 댓글 목록 조회
         List<MemorialReplyResponseDto> replyDtoList = memorialReplyRepository
-                .findByMemorialDonateSeqOrderByReplyWriteTimeAsc(donateSeq)
+                .findByMemorialDonateSeqAndDelFlagOrderByReplyWriteTimeAsc(donateSeq, "N")
                 .stream()
                 .map(MemorialReplyResponseDto::of)
                 .toList();
@@ -126,13 +133,21 @@ public class MemorialService {
      */
     @Transactional
     public MemorialReplyResponseDto createReply(Integer donateSeq, MemorialReplyCreateRequestDto dto) {
+        if (!captchaVerifier.verifyCaptcha(dto.getCaptchaToken())) {
+            throw new CaptchaVerificationFailedException();
+        }
+
         Memorial memorial = memorialRepository.findByDonateSeqAndDelFlag(donateSeq, "N")
                 .orElseThrow(() -> new MemorialNotFoundException(donateSeq));
 
         MemorialReply reply = MemorialReply.builder()
+                .replyWriter(dto.getReplyWriter())
+                .replyPassword(dto.getReplyPassword())
+                .replyWriterId(null)
                 .replyContents(dto.getReplyContents())
                 .replyWriteTime(LocalDateTime.now())
                 .memorial(memorial)
+                .delFlag("N")
                 .build();
 
         MemorialReply saved = memorialReplyRepository.save(reply);
@@ -142,27 +157,47 @@ public class MemorialService {
     /**
      * 댓글 수정
      * @param replySeq 댓글 번호
-     * @param newContents 댓글 수정 내용
      * @return 엔티티 -> DTO 변환 후 반환
      */
     @Transactional
-    public MemorialReplyResponseDto updateReply(Integer replySeq, String newContents) {
-        MemorialReply reply = memorialReplyRepository.findById(replySeq)
+    public MemorialReplyResponseDto updateReply(Integer donateSeq, Integer replySeq, MemorialReplyUpdateRequestDto dto) {
+        MemorialReply reply = memorialReplyRepository.findByMemorialDonateSeqAndReplySeqAndDelFlag(donateSeq, replySeq, "N")
                 .orElseThrow(() -> new MemorialReplyNotFoundException(replySeq));
 
-        reply.updateContents(newContents);
+        // 비밀번호 검증
+        if (!reply.getReplyPassword().equals(dto.getReplyPassword())) {
+            throw new InvalidCommentPasscodeException(replySeq);
+        }
+
+        reply.updateComment(dto.getReplyContents(), dto.getModifierId()); // 로그인 연동 시 수정자 ID로 교체
         return MemorialReplyResponseDto.of(reply);
     }
 
     /**
-     * 댓글 삭제 (del_flag 컬럼 없음)
-     * @param replySeq 댓글 번호
+     * 댓글 소프트 삭제 + 비밀번호(또는 사용자 ID) 검증
+     * @param donateSeq 글 번호
+     * @param replySeq  댓글 번호
+     * @param dto       삭제 요청 DTO
      */
     @Transactional
-    public void deleteReply(Integer replySeq) {
-        MemorialReply reply = memorialReplyRepository.findById(replySeq)
+    public void softDeleteReply(
+            Integer donateSeq,
+            Integer replySeq,
+            MemorialReplyDeleteRequestDto dto
+    ) {
+        MemorialReply reply = memorialReplyRepository
+                .findByMemorialDonateSeqAndReplySeqAndDelFlag(donateSeq, replySeq, "N")
                 .orElseThrow(() -> new MemorialReplyNotFoundException(replySeq));
-        memorialReplyRepository.delete(reply);
+
+        // 비밀번호 검증 (익명 댓글의 경우)
+        if (reply.getReplyPassword() != null) {
+            if (!reply.getReplyPassword().equals(dto.getReplyPassword())) {
+                throw new InvalidCommentPasscodeException(replySeq);
+            }
+        }
+
+        // 도메인 메서드 호출: delFlag='Y', modifierId·modifyTime 갱신
+        reply.deleteComment(dto.getReplyModifyId());
     }
 
 }

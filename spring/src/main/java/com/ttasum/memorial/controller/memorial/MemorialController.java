@@ -4,6 +4,8 @@ import com.ttasum.memorial.dto.common.ApiResponse;
 import com.ttasum.memorial.dto.memorial.response.MemorialDetailResponseDto;
 import com.ttasum.memorial.dto.memorial.response.MemorialResponseDto;
 import com.ttasum.memorial.dto.memorialComment.request.MemorialReplyCreateRequestDto;
+import com.ttasum.memorial.dto.memorialComment.request.MemorialReplyDeleteRequestDto;
+import com.ttasum.memorial.dto.memorialComment.request.MemorialReplyUpdateRequestDto;
 import com.ttasum.memorial.dto.memorialComment.response.MemorialReplyResponseDto;
 import com.ttasum.memorial.service.memorial.MemorialService;
 import lombok.RequiredArgsConstructor;
@@ -104,14 +106,15 @@ public class MemorialController {
     /**
      * 댓글 수정
      * @param replySeq 댓글 번호
-     * @param requestBody 수정 요청 dto
+     * @param dto 수정 요청 dto
      */
     @PatchMapping("/{donateSeq}/comments/{replySeq}")
     public ResponseEntity<ApiResponse> updateReply(
+            @PathVariable Integer donateSeq,
             @PathVariable Integer replySeq,
-            @RequestBody @Valid MemorialReplyCreateRequestDto requestBody
+            @RequestBody @Valid MemorialReplyUpdateRequestDto dto
     ) {
-        MemorialReplyResponseDto result = memorialService.updateReply(replySeq, requestBody.getReplyContents());
+        MemorialReplyResponseDto result = memorialService.updateReply(donateSeq, replySeq, dto);
         return ResponseEntity.ok(ApiResponse.ok(
                 HttpStatus.OK.value(),
                 "댓글이 성공적으로 수정되었습니다."
@@ -124,13 +127,15 @@ public class MemorialController {
      */
     @DeleteMapping("/{donateSeq}/comments/{replySeq}")
     public ResponseEntity<ApiResponse> deleteReply(
-            @PathVariable Integer replySeq
+            @PathVariable Integer donateSeq,
+            @PathVariable Integer replySeq,
+            @Valid @RequestBody MemorialReplyDeleteRequestDto dto
     ) {
-        memorialService.deleteReply(replySeq);
+        memorialService.softDeleteReply(donateSeq,replySeq, dto);
         return ResponseEntity.ok(
                 ApiResponse.ok(
                         HttpStatus.OK.value(),
-                        "댓글이 정상적으로 삭제되었습니다."
+                        "댓글이 성공적으로 삭제되었습니다."
                 )
         );
     }

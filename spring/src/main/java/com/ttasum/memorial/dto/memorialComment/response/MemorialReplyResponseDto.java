@@ -12,15 +12,25 @@ import java.time.LocalDateTime;
 public class MemorialReplyResponseDto {
 
     private Integer replySeq;
+    private Integer donateSeq;
+    private String replyWriter;
+    private String replyWriterId;
     private String replyContents;
     private LocalDateTime replyWriteTime;
+    private LocalDateTime replyModifyTime;
+    private String replyModifierId;
 
     // 엔티티 -> DTO 변환
     public static MemorialReplyResponseDto of(MemorialReply reply) {
         return new MemorialReplyResponseDto(
                 reply.getReplySeq(),
+                reply.getMemorial().getDonateSeq(),
+                reply.getReplyWriter(),
+                reply.getReplyWriterId(),
                 reply.getReplyContents(),
-                reply.getReplyWriteTime()
+                reply.getReplyWriteTime(),
+                reply.getReplyModifyTime(),
+                reply.getReplyModifierId()
         );
     }
 }

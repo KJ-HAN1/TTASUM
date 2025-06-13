@@ -1,11 +1,9 @@
 package com.ttasum.memorial.exception;
 
 import com.ttasum.memorial.dto.common.ApiResponse;
+import com.ttasum.memorial.exception.common.badRequest.BadRequestException;
 import com.ttasum.memorial.exception.common.notFound.NotFoundException;
-import com.ttasum.memorial.exception.donationStory.DonationStoryNotFoundException;
-import com.ttasum.memorial.exception.notice.NoticeNotFoundException;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -23,7 +21,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<ApiResponse> handleBadRequest(BadRequestException ex) {
         log.info("잘못된 요청: {}", ex.getMessage());
-        return ResponseEntity.badRequest().body(ApiResponse.badRequest(ex.getMessage()));
+        return ResponseEntity.badRequest()
+                .body(ApiResponse.badRequest(ex.getMessage()));
     }
 
     // 유효성 검사 실패 (400 Bad Request)
