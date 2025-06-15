@@ -29,23 +29,7 @@ public class HeavenLetterController {
             @RequestBody @Valid HeavenLetterRequestDto creatRequest) {
         HeavenLetterResponseDto createResponse = heavenLetterService.createLetter(creatRequest);
 
-        //상태코드 분기 처리
-        HttpStatus status;
-        //등록 성공
-        if (createResponse.getCode() == 201) {
-            status = HttpStatus.CREATED;
-        }
-        //등록 실패
-        else if (createResponse.getCode() == 400) {
-            status = HttpStatus.BAD_REQUEST;
-        } else if (createResponse.getCode() == 500) {
-            status = HttpStatus.INTERNAL_SERVER_ERROR;
-        } else {
-            //400,500을 제외한 다른 예외를 기본 값으로 처리
-            //안전성 확보의 이유
-            status = HttpStatus.BAD_REQUEST;
-        }
-        return ResponseEntity.status(status).body(createResponse);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createResponse);
     }
 
     //추모관에서 등록하는 편지폼
@@ -78,16 +62,8 @@ public class HeavenLetterController {
             @PathVariable Integer letterSeq,
             @RequestBody @Valid HeavenLetterVerifyRequestDto heavenLetterVerifyRequestDto) {
 
-        //verify -> verified 확인
-        boolean verified = heavenLetterService.verifyPasscode(letterSeq, heavenLetterVerifyRequestDto.getLetterPasscode());
-
-        // 위의 결과에 따른 bad response
-        if (!verified) {
-            // return "redirect:/";
-            return ResponseEntity.badRequest().body(CommonResultResponseDto.fail("비밀번호가 일치하지 않습니다."));
-        }
-        // return "letterUpdate";
-        return ResponseEntity.status(HttpStatus.OK).body(CommonResultResponseDto.success("비밀번호가 일치합니다."));
+        heavenLetterService.verifyPasscode(letterSeq, heavenLetterVerifyRequestDto.getLetterPasscode());
+        return ResponseEntity.ok(CommonResultResponseDto.success("비밀번호가 일치합니다."));
     }
 
     //편지 수정 (letterUpdate.html)
@@ -112,18 +88,8 @@ public class HeavenLetterController {
     public ResponseEntity<CommonResultResponseDto> deleteLetter(
             @RequestBody HeavenLetterVerifyRequestDto deleteRequest) {
 
-        // DTO 객체 생성 후 setter로 값 설정
-//        HeavenLetterVerifyRequest deleteRequest = new HeavenLetterVerifyRequest();
-//        deleteRequest.setLetterSeq(letterSeq);
-
         CommonResultResponseDto deleteResponse = heavenLetterService.deleteLetter(deleteRequest);
-
-        // 결과에 따라 상태코드 분기
-        if (deleteResponse.getResult() == 1) {
-            return ResponseEntity.ok(deleteResponse);
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(deleteResponse);
-        }
+        return ResponseEntity.ok(deleteResponse);
     }
 
     //검색

@@ -9,6 +9,9 @@ import com.ttasum.memorial.dto.heavenLetter.request.HeavenLetterVerifyRequestDto
 import com.ttasum.memorial.dto.heavenLetter.request.MemorialSearchRequestDto;
 import com.ttasum.memorial.dto.heavenLetter.response.*;
 import com.ttasum.memorial.domain.repository.heavenLetter.HeavenLetterRepository;
+import com.ttasum.memorial.exception.heavenLetter.HeavenLetterNotFoundException;
+import com.ttasum.memorial.exception.heavenLetter.InvalidPasswordException;
+import com.ttasum.memorial.exception.heavenLetter.MemorialNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +47,7 @@ public class HeavenLetterServiceImpl implements HeavenLetterService {
         Memorial memorial = null;
         if (heavenLetterRequestDto.getDonateSeq() != null) {
             memorial = memorialRepository.findById(heavenLetterRequestDto.getDonateSeq())
-                    .orElseThrow(() -> new IllegalArgumentException("기증자 정보를 찾을 수 없습니다."));
+                    .orElseThrow(MemorialNotFoundException::new);
         }
 
         HeavenLetter heavenLetter = HeavenLetter.builder()
@@ -70,7 +73,7 @@ public class HeavenLetterServiceImpl implements HeavenLetterService {
     @Transactional(readOnly = true)
     public HeavenLetterFormResponseDto getFormWithDonor(Integer donateSeq) {
         Memorial memorial = memorialRepository.findById(donateSeq)
-                .orElseThrow(() -> new IllegalArgumentException("기증자 정보를 찾을 수 없습니다."));
+                .orElseThrow(MemorialNotFoundException::new);
 
         return HeavenLetterFormResponseDto.builder()
                 .donateSeq(memorial.getDonateSeq())
@@ -84,7 +87,8 @@ public class HeavenLetterServiceImpl implements HeavenLetterService {
     @Override
     public HeavenLetterResponseDto.HeavenLetterDetailResponse getLetterById(Integer letterSeq) {
 
-        HeavenLetter heavenLetter = heavenLetterRepository.findByLetterSeqAndDelFlag(letterSeq, "N").get();
+        HeavenLetter heavenLetter = heavenLetterRepository.findByLetterSeqAndDelFlag(letterSeq, "N")
+                .orElseThrow(HeavenLetterNotFoundException::new);
 
         //커맨드 메서드 사용
         heavenLetter.increaseReadCount();
@@ -105,8 +109,14 @@ public class HeavenLetterServiceImpl implements HeavenLetterService {
     @Transactional(readOnly = true)
     @Override
     public boolean verifyPasscode(Integer letterSeq, String passcode) {
-        HeavenLetter heavenLetter = heavenLetterRepository.findById(letterSeq).orElseThrow();
-        return heavenLetter.getLetterPasscode().equals(passcode);
+        HeavenLetter heavenLetter = heavenLetterRepository.findById(letterSeq)
+                .orElseThrow(HeavenLetterNotFoundException::new);
+
+        if (!heavenLetter.getLetterPasscode().equals(passcode)) {
+            throw new InvalidPasswordException();
+        }
+
+        return true;
     }
 
     //수정
@@ -130,12 +140,11 @@ public class HeavenLetterServiceImpl implements HeavenLetterService {
     @Override
     public CommonResultResponseDto deleteLetter(HeavenLetterVerifyRequestDto deleteRequest) {
 
-        //편지 조회
         //비밀번호 인증
-        if (!this.verifyPasscode(deleteRequest.getLetterSeq(), deleteRequest.getLetterPasscode())) {
-            return CommonResultResponseDto.fail("비밀번호가 일치하지 않습니다.");
-        }
-        HeavenLetter heavenLetter = heavenLetterRepository.findById(deleteRequest.getLetterSeq()).get();
+        this.verifyPasscode(deleteRequest.getLetterSeq(), deleteRequest.getLetterPasscode());
+
+        HeavenLetter heavenLetter = heavenLetterRepository.findById(deleteRequest.getLetterSeq())
+                .orElseThrow(HeavenLetterNotFoundException::new);
 
         //소프트 삭제 커멘드 사용
         heavenLetter.softDelete();
