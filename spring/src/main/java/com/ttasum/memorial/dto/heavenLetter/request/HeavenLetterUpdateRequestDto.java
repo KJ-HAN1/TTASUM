@@ -11,28 +11,28 @@ import javax.validation.constraints.NotNull;
 
 public class HeavenLetterUpdateRequestDto {
 
-    @NotNull(message = "편지 번호는 필수입니다.")
+    @NotNull(message = "필수 입력값이 누락되었습니다.")
     private Integer letterSeq;
 
-    @NotBlank(message = "편지 작성자는 필수입니다.")
+    @NotBlank(message = "필수 입력값이 누락되었습니다.")
     private String letterWriter;
 
     private String anonymityFlag;
 
-    @NotBlank(message = "비밀번호는 필수입니다.")
+    @NotBlank(message = "필수 입력값이 누락되었습니다.")
     private String letterPasscode;
 
     private String donorName;
 
     private Integer donateSeq;
 
-    @NotBlank(message = "지역 코드는 필수입니다.")
+    @NotBlank(message = "필수 입력값이 누락되었습니다.")
     private String areaCode;
 
-    @NotBlank(message = "편지 제목은 필수입니다.")
+    @NotBlank(message = "필수 입력값이 누락되었습니다.")
     private String letterTitle;
 
-    @NotBlank(message = "편지 내용은 필수입니다.")
+    @NotBlank(message = "필수 입력값이 누락되었습니다.")
     private String letterContents;
 
     private String orgFileName;

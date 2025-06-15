@@ -4047,3 +4047,129 @@ com.ttasum.memorial.exception.heavenLetter.HeavenLetterCommentMismatchException:
 2025-06-16 04:26:48 INFO  [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
 2025-06-16 04:26:48 INFO  [http-nio-8080-exec-3] c.t.m.a.l.ControllerLoggingAspect - method=PATCH, uri=/heavenLetters/8198/comments/2051, ip=0:0:0:0:0:0:0:1
 2025-06-16 04:26:48 WARN  [http-nio-8080-exec-3] o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [com.ttasum.memorial.exception.heavenLetter.HeavenLetterCommentMismatchException: 편지 번호와 댓글이 일치하지 않습니다.]
+2025-06-16 04:27:35 INFO  [http-nio-8080-exec-4] c.t.m.a.l.ControllerLoggingAspect - method=DELETE, uri=/heavenLetters/8198/comments/2053, ip=0:0:0:0:0:0:0:1
+2025-06-16 04:27:35 WARN  [http-nio-8080-exec-4] o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [com.ttasum.memorial.exception.heavenLetter.HeavenLetterCommentMismatchException: 편지 번호와 댓글이 일치하지 않습니다.]
+2025-06-16 04:28:13 INFO  [http-nio-8080-exec-8] c.t.m.a.l.ControllerLoggingAspect - method=DELETE, uri=/heavenLetters/8198/comments/2053, ip=0:0:0:0:0:0:0:1
+2025-06-16 04:28:13 WARN  [http-nio-8080-exec-8] o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [com.ttasum.memorial.exception.heavenLetter.HeavenLetterCommentMismatchException: 편지 번호와 댓글이 일치하지 않습니다.]
+2025-06-16 04:28:16 INFO  [http-nio-8080-exec-9] c.t.m.a.l.ControllerLoggingAspect - method=DELETE, uri=/heavenLetters/8198/comments/2053, ip=0:0:0:0:0:0:0:1
+2025-06-16 04:28:16 WARN  [http-nio-8080-exec-9] o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [com.ttasum.memorial.exception.heavenLetter.HeavenLetterCommentMismatchException: 편지 번호와 댓글이 일치하지 않습니다.]
+2025-06-16 04:28:27 INFO  [http-nio-8080-exec-6] c.t.m.a.l.ControllerLoggingAspect - method=DELETE, uri=/heavenLetters/8193/comments/2048, ip=0:0:0:0:0:0:0:1
+2025-06-16 04:28:27 DEBUG [http-nio-8080-exec-6] org.hibernate.SQL - 
+    select
+        heavenlett0_.comment_seq as comment_1_2_0_,
+        heavenlett0_.comment_passcode as comment_2_2_0_,
+        heavenlett0_.comment_writer as comment_3_2_0_,
+        heavenlett0_.contents as contents4_2_0_,
+        heavenlett0_.del_flag as del_flag5_2_0_,
+        heavenlett0_.letter_seq as letter_10_2_0_,
+        heavenlett0_.modifier_id as modifier6_2_0_,
+        heavenlett0_.modify_time as modify_t7_2_0_,
+        heavenlett0_.write_time as write_ti8_2_0_,
+        heavenlett0_.writer_id as writer_i9_2_0_ 
+    from
+        tb25_411_heaven_letter_comment heavenlett0_ 
+    where
+        heavenlett0_.comment_seq=?
+2025-06-16 04:28:27 TRACE [http-nio-8080-exec-6] o.h.type.descriptor.sql.BasicBinder - binding parameter [1] as [INTEGER] - [2048]
+2025-06-16 04:28:27 TRACE [http-nio-8080-exec-6] o.h.t.descriptor.sql.BasicExtractor - extracted value ([comment_2_2_0_] : [VARCHAR]) - [abcd12345]
+2025-06-16 04:28:27 TRACE [http-nio-8080-exec-6] o.h.t.descriptor.sql.BasicExtractor - extracted value ([comment_3_2_0_] : [VARCHAR]) - [댓글수정]
+2025-06-16 04:28:27 TRACE [http-nio-8080-exec-6] o.h.t.descriptor.sql.BasicExtractor - extracted value ([contents4_2_0_] : [CLOB]) - [댓글 수정]
+2025-06-16 04:28:27 TRACE [http-nio-8080-exec-6] o.h.t.descriptor.sql.BasicExtractor - extracted value ([del_flag5_2_0_] : [VARCHAR]) - [Y]
+2025-06-16 04:28:27 TRACE [http-nio-8080-exec-6] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_10_2_0_] : [INTEGER]) - [8193]
+2025-06-16 04:28:27 TRACE [http-nio-8080-exec-6] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modifier6_2_0_] : [VARCHAR]) - [null]
+2025-06-16 04:28:27 TRACE [http-nio-8080-exec-6] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modify_t7_2_0_] : [TIMESTAMP]) - [2025-06-12T16:49:12]
+2025-06-16 04:28:27 TRACE [http-nio-8080-exec-6] o.h.t.descriptor.sql.BasicExtractor - extracted value ([write_ti8_2_0_] : [TIMESTAMP]) - [2025-06-12T14:42:05]
+2025-06-16 04:28:27 TRACE [http-nio-8080-exec-6] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer_i9_2_0_] : [VARCHAR]) - [null]
+2025-06-16 04:28:29 INFO  [http-nio-8080-exec-7] c.t.m.a.l.ControllerLoggingAspect - method=DELETE, uri=/heavenLetters/8193/comments/2048, ip=0:0:0:0:0:0:0:1
+2025-06-16 04:28:29 DEBUG [http-nio-8080-exec-7] org.hibernate.SQL - 
+    select
+        heavenlett0_.comment_seq as comment_1_2_0_,
+        heavenlett0_.comment_passcode as comment_2_2_0_,
+        heavenlett0_.comment_writer as comment_3_2_0_,
+        heavenlett0_.contents as contents4_2_0_,
+        heavenlett0_.del_flag as del_flag5_2_0_,
+        heavenlett0_.letter_seq as letter_10_2_0_,
+        heavenlett0_.modifier_id as modifier6_2_0_,
+        heavenlett0_.modify_time as modify_t7_2_0_,
+        heavenlett0_.write_time as write_ti8_2_0_,
+        heavenlett0_.writer_id as writer_i9_2_0_ 
+    from
+        tb25_411_heaven_letter_comment heavenlett0_ 
+    where
+        heavenlett0_.comment_seq=?
+2025-06-16 04:28:29 TRACE [http-nio-8080-exec-7] o.h.type.descriptor.sql.BasicBinder - binding parameter [1] as [INTEGER] - [2048]
+2025-06-16 04:28:29 TRACE [http-nio-8080-exec-7] o.h.t.descriptor.sql.BasicExtractor - extracted value ([comment_2_2_0_] : [VARCHAR]) - [abcd12345]
+2025-06-16 04:28:29 TRACE [http-nio-8080-exec-7] o.h.t.descriptor.sql.BasicExtractor - extracted value ([comment_3_2_0_] : [VARCHAR]) - [댓글수정]
+2025-06-16 04:28:29 TRACE [http-nio-8080-exec-7] o.h.t.descriptor.sql.BasicExtractor - extracted value ([contents4_2_0_] : [CLOB]) - [댓글 수정]
+2025-06-16 04:28:29 TRACE [http-nio-8080-exec-7] o.h.t.descriptor.sql.BasicExtractor - extracted value ([del_flag5_2_0_] : [VARCHAR]) - [Y]
+2025-06-16 04:28:29 TRACE [http-nio-8080-exec-7] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_10_2_0_] : [INTEGER]) - [8193]
+2025-06-16 04:28:29 TRACE [http-nio-8080-exec-7] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modifier6_2_0_] : [VARCHAR]) - [null]
+2025-06-16 04:28:29 TRACE [http-nio-8080-exec-7] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modify_t7_2_0_] : [TIMESTAMP]) - [2025-06-12T16:49:12]
+2025-06-16 04:28:29 TRACE [http-nio-8080-exec-7] o.h.t.descriptor.sql.BasicExtractor - extracted value ([write_ti8_2_0_] : [TIMESTAMP]) - [2025-06-12T14:42:05]
+2025-06-16 04:28:29 TRACE [http-nio-8080-exec-7] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer_i9_2_0_] : [VARCHAR]) - [null]
+2025-06-16 04:58:22 WARN  [HikariPool-4 housekeeper] com.zaxxer.hikari.pool.HikariPool - HikariPool-4 - Thread starvation or clock leap detected (housekeeper delta=20m59s989ms929µs600ns).
+2025-06-16 06:22:26 WARN  [HikariPool-4 housekeeper] com.zaxxer.hikari.pool.HikariPool - HikariPool-4 - Thread starvation or clock leap detected (housekeeper delta=1h21m3s485ms678µs700ns).
+2025-06-16 06:25:34 WARN  [http-nio-8080-exec-2] o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [0] in public org.springframework.http.ResponseEntity<com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterResponseDto> com.ttasum.memorial.controller.heavenLetter.HeavenLetterController.createLetter(com.ttasum.memorial.dto.heavenLetter.request.HeavenLetterRequestDto) with 3 errors: [Field error in object 'heavenLetterRequestDto' on field 'letterPasscode': rejected value []; codes [NotBlank.heavenLetterRequestDto.letterPasscode,NotBlank.letterPasscode,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [heavenLetterRequestDto.letterPasscode,letterPasscode]; arguments []; default message [letterPasscode]]; default message [필수 입력값이 누락되었습니다.]] [Field error in object 'heavenLetterRequestDto' on field 'letterPasscode': rejected value []; codes [Pattern.heavenLetterRequestDto.letterPasscode,Pattern.letterPasscode,Pattern.java.lang.String,Pattern]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [heavenLetterRequestDto.letterPasscode,letterPasscode]; arguments []; default message [letterPasscode],[Ljavax.validation.constraints.Pattern$Flag;@26e6a6b6,^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$]; default message [비밀번호는 영문과 숫자 포함 8자리 이상입니다]] [Field error in object 'heavenLetterRequestDto' on field 'letterWriter': rejected value []; codes [NotBlank.heavenLetterRequestDto.letterWriter,NotBlank.letterWriter,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [heavenLetterRequestDto.letterWriter,letterWriter]; arguments []; default message [letterWriter]]; default message [필수 입력값이 누락되었습니다.]] ]
+2025-06-16 06:34:58 INFO  [File Watcher] o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 29 class path changes (0 additions, 29 deletions, 0 modifications)
+2025-06-16 06:34:58 INFO  [Thread-15] o.a.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+2025-06-16 06:34:58 INFO  [Thread-15] o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2025-06-16 06:34:58 INFO  [Thread-15] o.a.c.c.C.[Tomcat].[localhost].[/] - Destroying Spring FrameworkServlet 'dispatcherServlet'
+2025-06-16 06:34:58 INFO  [Thread-15] o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+2025-06-16 06:34:58 INFO  [Thread-15] o.a.coyote.http11.Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+2025-06-16 06:34:58 INFO  [Thread-15] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-16 06:34:58 INFO  [Thread-15] com.zaxxer.hikari.HikariDataSource - HikariPool-4 - Shutdown initiated...
+2025-06-16 06:34:58 INFO  [Thread-15] com.zaxxer.hikari.HikariDataSource - HikariPool-4 - Shutdown completed.
+2025-06-16 06:34:58 INFO  [restartedMain] c.t.memorial.MemorialApplication - Starting MemorialApplication using Java 17.0.12 on DESKTOP-JH6PQI3 with PID 18684 (C:\DBE_Final_Project\spring\build\classes\java\main started by user in C:\DBE_Final_Project\spring)
+2025-06-16 06:34:58 INFO  [restartedMain] c.t.memorial.MemorialApplication - No active profile set, falling back to 1 default profile: "default"
+2025-06-16 06:34:58 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-16 06:34:58 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 13 ms. Found 6 JPA repository interfaces.
+2025-06-16 06:34:58 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2025-06-16 06:34:58 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-06-16 06:34:58 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-16 06:34:58 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2025-06-16 06:34:58 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-16 06:34:58 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 378 ms
+2025-06-16 06:34:58 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-16 06:34:58 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-5 - Starting...
+2025-06-16 06:34:58 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-5 - Start completed.
+2025-06-16 06:34:58 INFO  [restartedMain] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2025-06-16 06:34:59 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-06-16 06:34:59 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-16 06:34:59 WARN  [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-16 06:34:59 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-06-16 06:34:59 WARN  [restartedMain] o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-06-16 06:34:59 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-06-16 06:34:59 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2025-06-16 06:34:59 INFO  [restartedMain] c.t.memorial.MemorialApplication - Started MemorialApplication in 1.451 seconds (JVM running for 8408.608)
+2025-06-16 06:34:59 INFO  [restartedMain] o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-06-16 06:35:01 INFO  [File Watcher] o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 29 class path changes (29 additions, 0 deletions, 0 modifications)
+2025-06-16 06:35:01 INFO  [Thread-19] o.a.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+2025-06-16 06:35:01 INFO  [Thread-19] o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2025-06-16 06:35:01 INFO  [Thread-19] o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+2025-06-16 06:35:01 INFO  [Thread-19] o.a.coyote.http11.Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+2025-06-16 06:35:01 INFO  [Thread-19] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-16 06:35:01 INFO  [Thread-19] com.zaxxer.hikari.HikariDataSource - HikariPool-5 - Shutdown initiated...
+2025-06-16 06:35:01 INFO  [Thread-19] com.zaxxer.hikari.HikariDataSource - HikariPool-5 - Shutdown completed.
+2025-06-16 06:35:01 INFO  [restartedMain] c.t.memorial.MemorialApplication - Starting MemorialApplication using Java 17.0.12 on DESKTOP-JH6PQI3 with PID 18684 (C:\DBE_Final_Project\spring\build\classes\java\main started by user in C:\DBE_Final_Project\spring)
+2025-06-16 06:35:01 INFO  [restartedMain] c.t.memorial.MemorialApplication - No active profile set, falling back to 1 default profile: "default"
+2025-06-16 06:35:01 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-16 06:35:01 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 14 ms. Found 6 JPA repository interfaces.
+2025-06-16 06:35:01 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2025-06-16 06:35:01 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-06-16 06:35:01 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-16 06:35:01 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2025-06-16 06:35:01 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-16 06:35:01 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 252 ms
+2025-06-16 06:35:01 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-16 06:35:01 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-6 - Starting...
+2025-06-16 06:35:01 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-6 - Start completed.
+2025-06-16 06:35:01 INFO  [restartedMain] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2025-06-16 06:35:01 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-06-16 06:35:01 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-16 06:35:02 WARN  [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-16 06:35:02 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-06-16 06:35:02 WARN  [restartedMain] o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-06-16 06:35:02 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-06-16 06:35:02 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2025-06-16 06:35:02 INFO  [restartedMain] c.t.memorial.MemorialApplication - Started MemorialApplication in 1.262 seconds (JVM running for 8411.353)
+2025-06-16 06:35:02 INFO  [restartedMain] o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
