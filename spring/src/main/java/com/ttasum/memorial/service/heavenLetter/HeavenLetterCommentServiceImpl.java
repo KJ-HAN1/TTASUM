@@ -52,32 +52,24 @@ public class HeavenLetterCommentServiceImpl implements HeavenLetterCommentServic
     @Override
     public HeavenLetterCommentResponseDto updateComment(Integer commentSeq, Integer letterSeq, CommonCommentRequestDto.UpdateCommentRequest updateCommentRequest) {
 
-//        HeavenLetterComment heavenLetterComment = commentRepository
-//                .findByCommentSeqAndLetterSeq_LetterSeq(commentSeq, letterSeq)
-//                .orElseThrow(HeavenLetterCommentNotFoundException::new);
-//
-//        heavenLetterComment.updateComment(updateCommentRequest);
-//
-//        return HeavenLetterCommentResponseDto.success("편지 댓글이 성공적으로 수정되었습니다.");
-//    }
-        // 1. 댓글 존재 여부 확인
+        //댓글 존재 여부 확인
         HeavenLetterComment comment = commentRepository.findById(commentSeq)
                 .orElseThrow(HeavenLetterCommentNotFoundException::new);
 
-        // 2. 삭제된 댓글인지 확인
+        //삭제된 댓글인지 확인
         if ("Y".equals(comment.getDelFlag())) {
             throw new HeavenLetterCommentNotFoundException();
         }
 
-        // 3. 편지 번호 일치 여부 확인
+        //편지 번호 일치 여부 확인
         if (!comment.getLetterSeq().getLetterSeq().equals(letterSeq)) {
-            throw new HeavenLetterCommentMismatchException();  // ✅ 이름 변경 적용
+            throw new HeavenLetterCommentMismatchException();
         }
 
-        // 4. 댓글 수정
+        //댓글 수정
         comment.updateComment(updateCommentRequest);
 
-        // 5. 응답 반환
+        //응답 반환
         return HeavenLetterCommentResponseDto.success("편지 댓글이 성공적으로 수정되었습니다.");
     }
 
