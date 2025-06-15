@@ -64,13 +64,14 @@ public class HeavenLetterCommentController {
             @PathVariable Integer commentSeq,
             @RequestBody @Valid CommonCommentRequestDto.UpdateCommentRequest updateCommentRequest) {
 
-        //commentSeq 값을 요청 DTO에 직접 주입
-        updateCommentRequest.setCommentSeq(commentSeq);
+        // 실제 편지 번호는 본문에서 추출
+        Integer letterSeq = updateCommentRequest.getLetterSeq();
 
-        HeavenLetterCommentResponseDto updateCommentResponse = heavenLetterCommentService.updateComment(updateCommentRequest);
+        HeavenLetterCommentResponseDto updateCommentResponse = heavenLetterCommentService.updateComment(commentSeq, letterSeq, updateCommentRequest);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(updateCommentResponse);
     }
+
     //댓글 삭제
     @DeleteMapping("/{commentSeq}")
     public ResponseEntity<HeavenLetterCommentResponseDto.CommentVerifyResponse> deleteComment(

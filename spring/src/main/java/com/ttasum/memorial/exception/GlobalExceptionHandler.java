@@ -1,8 +1,11 @@
 package com.ttasum.memorial.exception;
 
 import com.ttasum.memorial.dto.ApiResponse;
+import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterCommentResponseDto;
 import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterResponseDto;
 import com.ttasum.memorial.exception.DonationStory.DonationStoryNotFoundException;
+import com.ttasum.memorial.exception.heavenLetter.HeavenLetterCommentMismatchException;
+import com.ttasum.memorial.exception.heavenLetter.HeavenLetterCommentNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -87,4 +90,19 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(HeavenLetterResponseDto.fail(500,"서버 내부 오류가 발생했습니다"));
     }
+    // HeavenLetter - 댓글과 편지 번호 불일치 (409 Conflict)
+    @ExceptionHandler(HeavenLetterCommentMismatchException.class)
+    public ResponseEntity<HeavenLetterCommentResponseDto> handleCommentMismatch(HeavenLetterCommentMismatchException ex) {
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(HeavenLetterCommentResponseDto.fail(409, ex.getMessage()));
+    }
+    // HeavenLetter - 해당 댓글 없음 (404 Conflict)
+    @ExceptionHandler(HeavenLetterCommentNotFoundException.class)
+    public ResponseEntity<HeavenLetterCommentResponseDto> handleCommentNotFound(HeavenLetterCommentNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(HeavenLetterCommentResponseDto.fail(404, ex.getMessage()));
+    }
+
 }
+

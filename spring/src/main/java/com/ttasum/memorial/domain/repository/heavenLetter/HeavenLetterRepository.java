@@ -14,6 +14,7 @@ public interface HeavenLetterRepository extends JpaRepository<HeavenLetter, Inte
     //기본 전체 조회("N"만 조회), 10개 페이징처리
     Page<HeavenLetter> findAllByDelFlag(String deFlag, Pageable pageable);
 
+    //단건 조회(댓글 포함)
     @EntityGraph(attributePaths = "comments")
     Optional<HeavenLetter> findByLetterSeqAndDelFlag(Integer letterSeq, String delFlag);
 

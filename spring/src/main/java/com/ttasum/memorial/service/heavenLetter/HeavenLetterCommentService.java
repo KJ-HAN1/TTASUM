@@ -12,7 +12,7 @@ public interface HeavenLetterCommentService {
     boolean verifyCommentPasscode(Integer commentSeq, String passcode);
 
     //댓글 수정
-    HeavenLetterCommentResponseDto updateComment(CommonCommentRequestDto.UpdateCommentRequest updateCommentRequest);
+    HeavenLetterCommentResponseDto updateComment(Integer commentSeq, Integer letterSeq, CommonCommentRequestDto.UpdateCommentRequest updateCommentRequest);
 
     //댓글 삭제
     HeavenLetterCommentResponseDto.CommentVerifyResponse deleteComment(CommonCommentRequestDto.DeleteCommentRequest deleteCommentRequest);
