@@ -5,6 +5,7 @@ import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -51,8 +52,9 @@ public class Memorial {
     @Column(name = "writer", length = 150)
     private String writer;
 
+    //VARCHAR(8) 'yyyyMMdd' ↔ LocalDate (converter autoApply)
     @Column(name = "donate_date", length = 8)
-    private String donateDate;
+    private LocalDate donateDate;
 
     @Column(name = "gender_flag", length = 1)
     private String genderFlag;

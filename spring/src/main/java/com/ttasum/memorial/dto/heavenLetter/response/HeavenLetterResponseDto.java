@@ -2,6 +2,7 @@ package com.ttasum.memorial.dto.heavenLetter.response;
 
 import com.ttasum.memorial.domain.entity.heavenLetter.HeavenLetter;
 import com.ttasum.memorial.domain.entity.heavenLetter.Memorial;
+import com.ttasum.memorial.util.NameMaskUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -65,8 +66,14 @@ public class HeavenLetterResponseDto {
             this.areaCode = heavenLetter.getAreaCode();
             this.letterTitle = heavenLetter.getLetterTitle();
             this.letterPasscode = heavenLetter.getLetterPasscode();
-            this.donorName = heavenLetter.getDonorName();
-            this.letterWriter = heavenLetter.getLetterWriter();
+            this.donorName = NameMaskUtil.maskDonorNameIfAnonymous(
+                    heavenLetter.getDonorName(),
+                    heavenLetter.getAnonymityFlag()
+            );
+            this.letterWriter =  NameMaskUtil.maskRecipientNameIfAnonymous(
+                    heavenLetter.getLetterWriter(),
+                    heavenLetter.getAnonymityFlag()
+            );
             this.anonymityFlag = heavenLetter.getAnonymityFlag();
             this.readCount = heavenLetter.getReadCount();
             this.letterContents = heavenLetter.getLetterContents();
@@ -102,8 +109,14 @@ public class HeavenLetterResponseDto {
                     ? memorial.getDonateSeq()
                     : null;
             this.letterTitle = heavenLetter.getLetterTitle();
-            this.donorName = heavenLetter.getDonorName();
-            this.letterWriter = heavenLetter.getLetterWriter();
+            this.donorName = NameMaskUtil.maskDonorNameIfAnonymous(
+                    heavenLetter.getDonorName(),
+                    heavenLetter.getAnonymityFlag()
+            );
+            this.letterWriter =  NameMaskUtil.maskRecipientNameIfAnonymous(
+                    heavenLetter.getLetterWriter(),
+                    heavenLetter.getAnonymityFlag()
+            );
             this.writeTime = heavenLetter.getWriteTime();
             this.readCount = heavenLetter.getReadCount();
         }

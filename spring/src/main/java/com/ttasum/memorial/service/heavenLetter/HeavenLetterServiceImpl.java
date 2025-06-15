@@ -6,10 +6,12 @@ import com.ttasum.memorial.domain.repository.heavenLetter.MemorialRepository;
 import com.ttasum.memorial.dto.heavenLetter.request.HeavenLetterRequestDto;
 import com.ttasum.memorial.dto.heavenLetter.request.HeavenLetterUpdateRequestDto;
 import com.ttasum.memorial.dto.heavenLetter.request.HeavenLetterVerifyRequestDto;
+import com.ttasum.memorial.dto.heavenLetter.request.MemorialSearchRequestDto;
 import com.ttasum.memorial.dto.heavenLetter.response.CommonResultResponseDto;
 import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterResponseDto;
 import com.ttasum.memorial.domain.repository.heavenLetter.HeavenLetterRepository;
 import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterUpdateResponsDto;
+import com.ttasum.memorial.dto.heavenLetter.response.MemorialSearchResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +26,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -33,6 +36,7 @@ public class HeavenLetterServiceImpl implements HeavenLetterService {
 
     private final HeavenLetterRepository heavenLetterRepository;
     private final MemorialRepository memorialRepository;
+    private final Logger log = LoggerFactory.getLogger(HeavenLetterServiceImpl.class);
 
     //등록
     @Transactional
@@ -69,7 +73,7 @@ public class HeavenLetterServiceImpl implements HeavenLetterService {
     @Override
     public HeavenLetterResponseDto.HeavenLetterDetailResponse getLetterById(Integer letterSeq) {
 
-        HeavenLetter heavenLetter = heavenLetterRepository.findByLetterSeqAndDelFlag(letterSeq,"N").get();
+        HeavenLetter heavenLetter = heavenLetterRepository.findByLetterSeqAndDelFlag(letterSeq, "N").get();
 
         //커맨드 메서드 사용
         heavenLetter.increaseReadCount();
@@ -109,10 +113,11 @@ public class HeavenLetterServiceImpl implements HeavenLetterService {
         return HeavenLetterUpdateResponsDto.success();
 
     }
+
     //삭제
     @Transactional
     @Override
-    public CommonResultResponseDto deleteLetter(HeavenLetterVerifyRequestDto deleteRequest){
+    public CommonResultResponseDto deleteLetter(HeavenLetterVerifyRequestDto deleteRequest) {
 
         //편지 조회
         //비밀번호 인증
@@ -126,11 +131,12 @@ public class HeavenLetterServiceImpl implements HeavenLetterService {
 
         return CommonResultResponseDto.success("편지가 정상적으로 삭제 되었습니다.");
     }
+
     //검색
     @Transactional(readOnly = true)
     @Override
     public Page<HeavenLetterResponseDto.HeavenLetterListResponse> searchLetters(String type, String keyword, Pageable pageable) {
-        Logger log = LoggerFactory.getLogger(HeavenLetterServiceImpl.class);
+
 
         log.info("[HeavenLetter 검색] type={}, keyword={}, page={}, size={}",
                 type, keyword, pageable.getPageNumber(), pageable.getPageSize());
@@ -172,6 +178,7 @@ public class HeavenLetterServiceImpl implements HeavenLetterService {
                         cb.like(root.get("letterContents"), "%" + keyword + "%")
                 );
     }
+
     //이미지 업로드
     @Transactional
     @Override
@@ -197,5 +204,37 @@ public class HeavenLetterServiceImpl implements HeavenLetterService {
         }
         return resultList;
     }
-}
+    //기증자 검색
 
+    /**
+     * type:
+     * "name"  → donorName 검색
+     * "from"  → donateDate ≥ keyword (yyyy-MM-dd)
+     * "to"    → donateDate ≤ keyword (yyyy-MM-dd)
+     * "range" → keyword = "yyyy-MM-dd~yyyy-MM-dd"
+     */
+    @Override
+    @Transactional(readOnly = true)
+
+    public Page<MemorialSearchResponseDto> searchDonors(MemorialSearchRequestDto memorialSearchRequest, Pageable pageable) {
+
+
+        Specification<Memorial> spec = (root, q, cb) -> cb.equal(root.get("delFlag"), "N");
+
+        if (memorialSearchRequest.getDonateName() != null && !memorialSearchRequest.getDonateName().isBlank()) {
+            spec = spec.and((root, q, cb) ->
+                    cb.like(cb.lower(root.get("donorName")), "%" + memorialSearchRequest.getDonateName().toLowerCase() + "%"));
+        }
+        if (memorialSearchRequest.getStartDate() != null) {
+            spec = spec.and((root, q, cb) ->
+                    cb.greaterThanOrEqualTo(root.get("donateDate"), memorialSearchRequest.getStartDate()));
+        }
+        if (memorialSearchRequest.getEndDate() != null) {
+            spec = spec.and((root, q, cb) ->
+                    cb.lessThanOrEqualTo(root.get("donateDate"), memorialSearchRequest.getEndDate()));
+        }
+
+        return memorialRepository.findAll(spec, pageable)
+                .map(MemorialSearchResponseDto::of);
+    }
+}

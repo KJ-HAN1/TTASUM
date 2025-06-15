@@ -3,9 +3,11 @@ package com.ttasum.memorial.service.heavenLetter;
 import com.ttasum.memorial.dto.heavenLetter.request.HeavenLetterRequestDto;
 import com.ttasum.memorial.dto.heavenLetter.request.HeavenLetterUpdateRequestDto;
 import com.ttasum.memorial.dto.heavenLetter.request.HeavenLetterVerifyRequestDto;
+import com.ttasum.memorial.dto.heavenLetter.request.MemorialSearchRequestDto;
 import com.ttasum.memorial.dto.heavenLetter.response.CommonResultResponseDto;
 import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterResponseDto;
 import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterUpdateResponsDto;
+import com.ttasum.memorial.dto.heavenLetter.response.MemorialSearchResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
@@ -42,4 +44,7 @@ public interface HeavenLetterService {
 
     //사진 업로드
     List<Map<String, String>> uploadFiles(List<MultipartFile> files, String subFolder) throws IOException;
+
+    //기증자 검색
+    Page<MemorialSearchResponseDto> searchDonors(MemorialSearchRequestDto memorialSearchRequest, Pageable pageable);
 }

@@ -1,12 +1,10 @@
 package com.ttasum.memorial.controller.heavenLetter;
 
-import com.ttasum.memorial.dto.heavenLetter.request.HeavenLetterRequestDto;
-import com.ttasum.memorial.dto.heavenLetter.request.HeavenLetterUpdateRequestDto;
-import com.ttasum.memorial.dto.heavenLetter.request.HeavenLetterVerifyRequestDto;
-import com.ttasum.memorial.dto.heavenLetter.request.PageRequest;
+import com.ttasum.memorial.dto.heavenLetter.request.*;
 import com.ttasum.memorial.dto.heavenLetter.response.CommonResultResponseDto;
 import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterResponseDto;
 import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterUpdateResponsDto;
+import com.ttasum.memorial.dto.heavenLetter.response.MemorialSearchResponseDto;
 import com.ttasum.memorial.service.heavenLetter.HeavenLetterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -133,7 +131,7 @@ public class HeavenLetterController {
             @ModelAttribute PageRequest pageRequest) {
 
         // 한글 타입을 영문으로 매핑
-        String mappedType = switch (type) {
+        type = switch (type) {
             case "제목" -> "title";
             case "내용" -> "contents";
             case "전체" -> "all";
@@ -143,7 +141,7 @@ public class HeavenLetterController {
         Pageable pageable = pageRequest.toPageable("letterSeq");
         Page<HeavenLetterResponseDto.HeavenLetterListResponse> result =
                 heavenLetterService.searchLetters(type, keyword, pageable);
-        return ResponseEntity.status(HttpStatus.OK).body(result);
+        return ResponseEntity.ok(result);
     }
     //사진 업로드
     @PostMapping("/upload-image")
@@ -152,10 +150,20 @@ public class HeavenLetterController {
         List<Map<String, String>> resultList = heavenLetterService.uploadFiles(files, "heavenLetter");
         return ResponseEntity.ok(resultList);
     }
+    //기증자 검색
+    @GetMapping("/donate_pop.do")
+    public ResponseEntity<Page<MemorialSearchResponseDto>> searchDonors(
+            @ModelAttribute MemorialSearchRequestDto memorialSearchRequest,
+            @ModelAttribute PageRequest pageRequest
+    ) {
+        Pageable pageable = pageRequest.toPageable("donateDate");
+        Page<MemorialSearchResponseDto> result =
+                heavenLetterService.searchDonors(memorialSearchRequest, pageable);
 
-
-
+        return ResponseEntity.ok(result);
+    }
 }
+
 
 
 
