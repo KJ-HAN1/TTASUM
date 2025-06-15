@@ -37,4 +37,6 @@ public class HeavenLetterUpdateRequestDto {
 
     private String orgFileName;
 
+    private String fileName;
+
 }

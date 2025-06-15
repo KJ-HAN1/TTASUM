@@ -106,6 +106,7 @@ import java.util.List;
         this.letterContents = heavenLetterUpdateRequestDto.getLetterContents();
         this.anonymityFlag = heavenLetterUpdateRequestDto.getAnonymityFlag();
         this.orgFileName = heavenLetterUpdateRequestDto.getOrgFileName();
+        this.fileName = heavenLetterUpdateRequestDto.getFileName();
         this.modifyTime = LocalDateTime.now();
     }
 

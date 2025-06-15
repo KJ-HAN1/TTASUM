@@ -25,6 +25,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.security.SecureRandom;
 
 @Service
 //final 필드에 대해 생성자 주입 자동 생성
@@ -189,7 +190,8 @@ public class HeavenLetterServiceImpl implements HeavenLetterService {
                 );
     }
 
-    //이미지 업로드
+    //이미지 업로드(
+    // uuid 방식
     @Transactional
     @Override
     public List<Map<String, String>> uploadFiles(List<MultipartFile> files, String subFolder) throws IOException {
@@ -199,23 +201,52 @@ public class HeavenLetterServiceImpl implements HeavenLetterService {
 
         for (MultipartFile file : files) {
             String orgFileName = file.getOriginalFilename();
-            String fileName = orgFileName;
 
+            // 확장자 추출
+            String ext = "";
+            if (orgFileName != null && orgFileName.contains(".")) {
+                ext = orgFileName.substring(orgFileName.lastIndexOf("."));
+            }
+            // [선택 1] UUID 기반 파일명 (기본값)
+            String uuid = UUID.randomUUID().toString();
+            String fileName = uuid + ext; // 저장용 파일명
+
+            // [선택 2] 랜덤 HEX (32자리, 대문자)
+//            String fileName = generateHexFileName(ext);
+
+            //디렉토리 생성
             Path dirPath = Paths.get(uploadDir);
             Files.createDirectories(dirPath);
+
+            //파일 저장
             Path filePath = dirPath.resolve(fileName);
             Files.write(filePath, file.getBytes());
+
+            // 접근 가능한 URL 경로 생성
+            String url = "/images/" + subFolder + "/" + fileName;
 
             Map<String, String> fileMap = new HashMap<>();
             fileMap.put("fileName", fileName);
             fileMap.put("orgFileName", orgFileName);
-            fileMap.put("url", "/images/" + subFolder + "/" + fileName);
+            fileMap.put("url","/images/" + subFolder + "/" + fileName);
             resultList.add(fileMap);
         }
         return resultList;
     }
-    //기증자 검색
+    // HEX 방식
+//    private String generateHexFileName(String ext) {
+//        SecureRandom random = new SecureRandom();
+//        byte[] bytes = new byte[16];
+//        random.nextBytes(bytes);
+//
+//        StringBuilder hex = new StringBuilder();
+//        for (byte b : bytes) {
+//            hex.append(String.format("%02X", b));
+//        }
+//        return hex.toString() + ext;
+//    }
 
+    //기증자 검색
     /**
      * type:
      * "name"  → donorName 검색
