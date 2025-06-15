@@ -1,10 +1,7 @@
 package com.ttasum.memorial.controller.heavenLetter;
 
 import com.ttasum.memorial.dto.heavenLetter.request.*;
-import com.ttasum.memorial.dto.heavenLetter.response.CommonResultResponseDto;
-import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterResponseDto;
-import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterUpdateResponsDto;
-import com.ttasum.memorial.dto.heavenLetter.response.MemorialSearchResponseDto;
+import com.ttasum.memorial.dto.heavenLetter.response.*;
 import com.ttasum.memorial.service.heavenLetter.HeavenLetterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -49,6 +46,12 @@ public class HeavenLetterController {
             status = HttpStatus.BAD_REQUEST;
         }
         return ResponseEntity.status(status).body(createResponse);
+    }
+
+    //추모관에서 등록하는 편지폼
+    @GetMapping("/new/{donateSeq}")
+    public ResponseEntity<HeavenLetterFormResponseDto> getFormWithDonor(@PathVariable Integer donateSeq) {
+        return ResponseEntity.ok(heavenLetterService.getFormWithDonor(donateSeq));
     }
 
     //단건 조회

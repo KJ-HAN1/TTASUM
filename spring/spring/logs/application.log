@@ -350,3 +350,812 @@
 2025-06-15 04:09:23 TRACE [http-nio-8080-exec-1] o.h.t.descriptor.sql.BasicExtractor - extracted value ([write_t22_0_] : [TIMESTAMP]) - [2015-03-20T02:06:05]
 2025-06-15 04:09:23 TRACE [http-nio-8080-exec-1] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer23_0_] : [VARCHAR]) - [운영자]
 2025-06-15 04:09:23 TRACE [http-nio-8080-exec-1] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer_24_0_] : [VARCHAR]) - [운영자]
+2025-06-15 04:11:48 INFO  [http-nio-8080-exec-2] c.t.m.a.l.ControllerLoggingAspect - method=GET, uri=/heavenLetters/donate_pop.do, ip=0:0:0:0:0:0:0:1
+2025-06-15 04:11:48 DEBUG [http-nio-8080-exec-2] org.hibernate.SQL - 
+    select
+        memorial0_.donate_seq as donate_s1_0_,
+        memorial0_.anonymity_flag as anonymit2_0_,
+        memorial0_.area_code as area_cod3_0_,
+        memorial0_.contents as contents4_0_,
+        memorial0_.del_flag as del_flag5_0_,
+        memorial0_.donate_age as donate_a6_0_,
+        memorial0_.donate_date as donate_d7_0_,
+        memorial0_.donate_title as donate_t8_0_,
+        memorial0_.donor_name as donor_na9_0_,
+        memorial0_.file_name as file_na10_0_,
+        memorial0_.flower_count as flower_11_0_,
+        memorial0_.gender_flag as gender_12_0_,
+        memorial0_.hard_count as hard_co13_0_,
+        memorial0_.love_count as love_co14_0_,
+        memorial0_.miss_count as miss_co15_0_,
+        memorial0_.modifier_id as modifie16_0_,
+        memorial0_.modify_time as modify_17_0_,
+        memorial0_.org_file_name as org_fil18_0_,
+        memorial0_.proud_count as proud_c19_0_,
+        memorial0_.sad_count as sad_cou20_0_,
+        memorial0_.see_count as see_cou21_0_,
+        memorial0_.write_time as write_t22_0_,
+        memorial0_.writer as writer23_0_,
+        memorial0_.writer_id as writer_24_0_ 
+    from
+        tb25_400_memorial memorial0_ 
+    where
+        memorial0_.del_flag=? 
+    order by
+        memorial0_.donate_date desc limit ?
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.type.descriptor.sql.BasicBinder - binding parameter [1] as [VARCHAR] - [N]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_s1_0_] : [INTEGER]) - [4411]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([anonymit2_0_] : [VARCHAR]) - [N]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([area_cod3_0_] : [VARCHAR]) - [1]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([contents4_0_] : [CLOB]) - [234234234234sdfdsfdsfdsf]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([del_flag5_0_] : [VARCHAR]) - [N]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_a6_0_] : [INTEGER]) - [23]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_d7_0_] : [VARCHAR]) - [20231014]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_t8_0_] : [VARCHAR]) - [21324]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donor_na9_0_] : [VARCHAR]) - [234234]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([file_na10_0_] : [VARCHAR]) - [null]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([flower_11_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([gender_12_0_] : [VARCHAR]) - [M]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([hard_co13_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([love_co14_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([miss_co15_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modifie16_0_] : [VARCHAR]) - [234234]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modify_17_0_] : [TIMESTAMP]) - [2023-10-25T05:17:08]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([org_fil18_0_] : [VARCHAR]) - [null]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([proud_c19_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([sad_cou20_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([see_cou21_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([write_t22_0_] : [TIMESTAMP]) - [2023-10-25T05:17:08]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer23_0_] : [VARCHAR]) - [234234]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer_24_0_] : [VARCHAR]) - [234234]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_s1_0_] : [INTEGER]) - [4403]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([anonymit2_0_] : [VARCHAR]) - [Y]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([area_cod3_0_] : [VARCHAR]) - [null]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([contents4_0_] : [CLOB]) - [ㅅㄷㄴㅅ]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([del_flag5_0_] : [VARCHAR]) - [N]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_a6_0_] : [INTEGER]) - [50]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_d7_0_] : [VARCHAR]) - [20231011]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_t8_0_] : [VARCHAR]) - [테스트]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donor_na9_0_] : [VARCHAR]) - [테스트]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([file_na10_0_] : [VARCHAR]) - []
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([flower_11_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([gender_12_0_] : [VARCHAR]) - [M]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([hard_co13_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([love_co14_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([miss_co15_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modifie16_0_] : [VARCHAR]) - [테스트]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modify_17_0_] : [TIMESTAMP]) - [2023-10-25T04:21:55]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([org_fil18_0_] : [VARCHAR]) - []
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([proud_c19_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([sad_cou20_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([see_cou21_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([write_t22_0_] : [TIMESTAMP]) - [2023-10-25T04:21:55]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer23_0_] : [VARCHAR]) - [테스트]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer_24_0_] : [VARCHAR]) - [테스트]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_s1_0_] : [INTEGER]) - [4404]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([anonymit2_0_] : [VARCHAR]) - [Y]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([area_cod3_0_] : [VARCHAR]) - [null]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([contents4_0_] : [CLOB]) - [etst]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([del_flag5_0_] : [VARCHAR]) - [N]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_a6_0_] : [INTEGER]) - [32]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_d7_0_] : [VARCHAR]) - [20231011]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_t8_0_] : [VARCHAR]) - [test]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donor_na9_0_] : [VARCHAR]) - [test]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([file_na10_0_] : [VARCHAR]) - []
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([flower_11_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([gender_12_0_] : [VARCHAR]) - [M]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([hard_co13_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([love_co14_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([miss_co15_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modifie16_0_] : [VARCHAR]) - [test]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modify_17_0_] : [TIMESTAMP]) - [2023-10-25T04:22:27]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([org_fil18_0_] : [VARCHAR]) - []
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([proud_c19_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([sad_cou20_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([see_cou21_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([write_t22_0_] : [TIMESTAMP]) - [2023-10-25T04:22:27]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer23_0_] : [VARCHAR]) - [test]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer_24_0_] : [VARCHAR]) - [test]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_s1_0_] : [INTEGER]) - [4408]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([anonymit2_0_] : [VARCHAR]) - [N]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([area_cod3_0_] : [VARCHAR]) - [1]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([contents4_0_] : [CLOB]) - [324]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([del_flag5_0_] : [VARCHAR]) - [N]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_a6_0_] : [INTEGER]) - [50]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_d7_0_] : [VARCHAR]) - [20231011]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_t8_0_] : [VARCHAR]) - [wer]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donor_na9_0_] : [VARCHAR]) - [werw]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([file_na10_0_] : [VARCHAR]) - []
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([flower_11_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([gender_12_0_] : [VARCHAR]) - [M]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([hard_co13_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([love_co14_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([miss_co15_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modifie16_0_] : [VARCHAR]) - [werewr]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modify_17_0_] : [TIMESTAMP]) - [2023-10-25T05:16:29]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([org_fil18_0_] : [VARCHAR]) - []
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([proud_c19_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([sad_cou20_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([see_cou21_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([write_t22_0_] : [TIMESTAMP]) - [2023-10-25T05:16:29]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer23_0_] : [VARCHAR]) - [werewr]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer_24_0_] : [VARCHAR]) - [werewr]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_s1_0_] : [INTEGER]) - [4410]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([anonymit2_0_] : [VARCHAR]) - [N]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([area_cod3_0_] : [VARCHAR]) - [1]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([contents4_0_] : [CLOB]) - [324]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([del_flag5_0_] : [VARCHAR]) - [N]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_a6_0_] : [INTEGER]) - [50]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_d7_0_] : [VARCHAR]) - [20231011]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_t8_0_] : [VARCHAR]) - [wer]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donor_na9_0_] : [VARCHAR]) - [werw]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([file_na10_0_] : [VARCHAR]) - []
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([flower_11_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([gender_12_0_] : [VARCHAR]) - [M]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([hard_co13_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([love_co14_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([miss_co15_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modifie16_0_] : [VARCHAR]) - [werewr]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modify_17_0_] : [TIMESTAMP]) - [2023-10-25T05:16:50]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([org_fil18_0_] : [VARCHAR]) - []
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([proud_c19_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([sad_cou20_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([see_cou21_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([write_t22_0_] : [TIMESTAMP]) - [2023-10-25T05:16:50]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer23_0_] : [VARCHAR]) - [werewr]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer_24_0_] : [VARCHAR]) - [werewr]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_s1_0_] : [INTEGER]) - [4409]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([anonymit2_0_] : [VARCHAR]) - [N]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([area_cod3_0_] : [VARCHAR]) - [1]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([contents4_0_] : [CLOB]) - [2342]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([del_flag5_0_] : [VARCHAR]) - [N]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_a6_0_] : [INTEGER]) - [32]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_d7_0_] : [VARCHAR]) - [20231010]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_t8_0_] : [VARCHAR]) - [emdjkl]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donor_na9_0_] : [VARCHAR]) - [emksldfk]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([file_na10_0_] : [VARCHAR]) - []
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([flower_11_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([gender_12_0_] : [VARCHAR]) - [M]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([hard_co13_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([love_co14_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([miss_co15_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modifie16_0_] : [VARCHAR]) - [sdfs]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modify_17_0_] : [TIMESTAMP]) - [2023-10-25T04:51:13]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([org_fil18_0_] : [VARCHAR]) - []
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([proud_c19_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([sad_cou20_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([see_cou21_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([write_t22_0_] : [TIMESTAMP]) - [2023-10-25T04:51:13]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer23_0_] : [VARCHAR]) - [sdfs]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer_24_0_] : [VARCHAR]) - [sdfs]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_s1_0_] : [INTEGER]) - [4405]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([anonymit2_0_] : [VARCHAR]) - [N]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([area_cod3_0_] : [VARCHAR]) - [null]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([contents4_0_] : [CLOB]) - [234]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([del_flag5_0_] : [VARCHAR]) - [N]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_a6_0_] : [INTEGER]) - [43]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_d7_0_] : [VARCHAR]) - [20231010]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_t8_0_] : [VARCHAR]) - [123]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donor_na9_0_] : [VARCHAR]) - [123]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([file_na10_0_] : [VARCHAR]) - []
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([flower_11_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([gender_12_0_] : [VARCHAR]) - [M]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([hard_co13_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([love_co14_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([miss_co15_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modifie16_0_] : [VARCHAR]) - [123]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modify_17_0_] : [TIMESTAMP]) - [2023-10-25T04:35:46]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([org_fil18_0_] : [VARCHAR]) - []
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([proud_c19_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([sad_cou20_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([see_cou21_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([write_t22_0_] : [TIMESTAMP]) - [2023-10-25T04:35:46]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer23_0_] : [VARCHAR]) - [123]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer_24_0_] : [VARCHAR]) - [123]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_s1_0_] : [INTEGER]) - [4406]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([anonymit2_0_] : [VARCHAR]) - [N]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([area_cod3_0_] : [VARCHAR]) - [null]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([contents4_0_] : [CLOB]) - [234]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([del_flag5_0_] : [VARCHAR]) - [N]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_a6_0_] : [INTEGER]) - [43]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_d7_0_] : [VARCHAR]) - [20231010]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_t8_0_] : [VARCHAR]) - [123]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donor_na9_0_] : [VARCHAR]) - [123]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([file_na10_0_] : [VARCHAR]) - []
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([flower_11_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([gender_12_0_] : [VARCHAR]) - [M]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([hard_co13_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([love_co14_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([miss_co15_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modifie16_0_] : [VARCHAR]) - [123]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modify_17_0_] : [TIMESTAMP]) - [2023-10-25T04:36:40]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([org_fil18_0_] : [VARCHAR]) - []
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([proud_c19_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([sad_cou20_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([see_cou21_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([write_t22_0_] : [TIMESTAMP]) - [2023-10-25T04:36:40]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer23_0_] : [VARCHAR]) - [123]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer_24_0_] : [VARCHAR]) - [123]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_s1_0_] : [INTEGER]) - [4407]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([anonymit2_0_] : [VARCHAR]) - [Y]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([area_cod3_0_] : [VARCHAR]) - [null]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([contents4_0_] : [CLOB]) - [33333]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([del_flag5_0_] : [VARCHAR]) - [N]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_a6_0_] : [INTEGER]) - [33]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_d7_0_] : [VARCHAR]) - [20231003]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_t8_0_] : [VARCHAR]) - [xldru]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donor_na9_0_] : [VARCHAR]) - [dfs]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([file_na10_0_] : [VARCHAR]) - []
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([flower_11_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([gender_12_0_] : [VARCHAR]) - [M]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([hard_co13_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([love_co14_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([miss_co15_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modifie16_0_] : [VARCHAR]) - [sdfs]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modify_17_0_] : [TIMESTAMP]) - [2023-10-25T04:37:07]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([org_fil18_0_] : [VARCHAR]) - []
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([proud_c19_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([sad_cou20_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([see_cou21_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([write_t22_0_] : [TIMESTAMP]) - [2023-10-25T04:37:07]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer23_0_] : [VARCHAR]) - [sdfs]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer_24_0_] : [VARCHAR]) - [sdfs]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_s1_0_] : [INTEGER]) - [4401]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([anonymit2_0_] : [VARCHAR]) - [Y]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([area_cod3_0_] : [VARCHAR]) - [null]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([contents4_0_] : [CLOB]) - [테스트]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([del_flag5_0_] : [VARCHAR]) - [N]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_a6_0_] : [INTEGER]) - [50]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_d7_0_] : [VARCHAR]) - [20231003]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_t8_0_] : [VARCHAR]) - [테스트]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donor_na9_0_] : [VARCHAR]) - [테스트]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([file_na10_0_] : [VARCHAR]) - []
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([flower_11_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([gender_12_0_] : [VARCHAR]) - [M]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([hard_co13_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([love_co14_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([miss_co15_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modifie16_0_] : [VARCHAR]) - [테스트]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modify_17_0_] : [TIMESTAMP]) - [2023-10-25T04:05:29]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([org_fil18_0_] : [VARCHAR]) - []
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([proud_c19_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([sad_cou20_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([see_cou21_0_] : [INTEGER]) - [0]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([write_t22_0_] : [TIMESTAMP]) - [2023-10-25T04:05:29]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer23_0_] : [VARCHAR]) - [테스트]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer_24_0_] : [VARCHAR]) - [테스트]
+2025-06-15 04:11:48 DEBUG [http-nio-8080-exec-2] org.hibernate.SQL - 
+    select
+        count(memorial0_.donate_seq) as col_0_0_ 
+    from
+        tb25_400_memorial memorial0_ 
+    where
+        memorial0_.del_flag=?
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.type.descriptor.sql.BasicBinder - binding parameter [1] as [VARCHAR] - [N]
+2025-06-15 04:11:48 TRACE [http-nio-8080-exec-2] o.h.t.descriptor.sql.BasicExtractor - extracted value ([col_0_0_] : [BIGINT]) - [4411]
+2025-06-15 04:12:15 INFO  [http-nio-8080-exec-4] c.t.m.a.l.ControllerLoggingAspect - method=GET, uri=/heavenLetters/8200, ip=0:0:0:0:0:0:0:1
+2025-06-15 04:12:15 DEBUG [http-nio-8080-exec-4] org.hibernate.SQL - 
+    select
+        heavenlett0_.letter_seq as letter_s1_1_0_,
+        comments1_.comment_seq as comment_1_2_1_,
+        heavenlett0_.anonymity_flag as anonymit2_1_0_,
+        heavenlett0_.area_code as area_cod3_1_0_,
+        heavenlett0_.del_flag as del_flag4_1_0_,
+        heavenlett0_.donate_seq as donate_17_1_0_,
+        heavenlett0_.donor_name as donor_na5_1_0_,
+        heavenlett0_.file_name as file_nam6_1_0_,
+        heavenlett0_.letter_contents as letter_c7_1_0_,
+        heavenlett0_.letter_passcode as letter_p8_1_0_,
+        heavenlett0_.letter_title as letter_t9_1_0_,
+        heavenlett0_.letter_writer as letter_10_1_0_,
+        heavenlett0_.modifier_id as modifie11_1_0_,
+        heavenlett0_.modify_time as modify_12_1_0_,
+        heavenlett0_.org_file_name as org_fil13_1_0_,
+        heavenlett0_.read_count as read_co14_1_0_,
+        heavenlett0_.write_time as write_t15_1_0_,
+        heavenlett0_.writer_id as writer_16_1_0_,
+        comments1_.comment_passcode as comment_2_2_1_,
+        comments1_.comment_writer as comment_3_2_1_,
+        comments1_.contents as contents4_2_1_,
+        comments1_.del_flag as del_flag5_2_1_,
+        comments1_.letter_seq as letter_10_2_1_,
+        comments1_.modifier_id as modifier6_2_1_,
+        comments1_.modify_time as modify_t7_2_1_,
+        comments1_.write_time as write_ti8_2_1_,
+        comments1_.writer_id as writer_i9_2_1_,
+        comments1_.letter_seq as letter_10_2_0__,
+        comments1_.comment_seq as comment_1_2_0__ 
+    from
+        tb25_410_heaven_letter heavenlett0_ 
+    left outer join
+        tb25_411_heaven_letter_comment comments1_ 
+            on heavenlett0_.letter_seq=comments1_.letter_seq 
+            and (
+                comments1_.del_flag = 'N'
+            ) 
+    where
+        heavenlett0_.letter_seq=? 
+        and heavenlett0_.del_flag=?
+2025-06-15 04:12:15 TRACE [http-nio-8080-exec-4] o.h.type.descriptor.sql.BasicBinder - binding parameter [1] as [INTEGER] - [8200]
+2025-06-15 04:12:15 TRACE [http-nio-8080-exec-4] o.h.type.descriptor.sql.BasicBinder - binding parameter [2] as [VARCHAR] - [N]
+2025-06-15 04:12:15 WARN  [http-nio-8080-exec-4] o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [java.util.NoSuchElementException: No value present]
+2025-06-15 04:12:26 INFO  [http-nio-8080-exec-7] c.t.m.a.l.ControllerLoggingAspect - method=GET, uri=/heavenLetters/1111, ip=0:0:0:0:0:0:0:1
+2025-06-15 04:12:26 DEBUG [http-nio-8080-exec-7] org.hibernate.SQL - 
+    select
+        heavenlett0_.letter_seq as letter_s1_1_0_,
+        comments1_.comment_seq as comment_1_2_1_,
+        heavenlett0_.anonymity_flag as anonymit2_1_0_,
+        heavenlett0_.area_code as area_cod3_1_0_,
+        heavenlett0_.del_flag as del_flag4_1_0_,
+        heavenlett0_.donate_seq as donate_17_1_0_,
+        heavenlett0_.donor_name as donor_na5_1_0_,
+        heavenlett0_.file_name as file_nam6_1_0_,
+        heavenlett0_.letter_contents as letter_c7_1_0_,
+        heavenlett0_.letter_passcode as letter_p8_1_0_,
+        heavenlett0_.letter_title as letter_t9_1_0_,
+        heavenlett0_.letter_writer as letter_10_1_0_,
+        heavenlett0_.modifier_id as modifie11_1_0_,
+        heavenlett0_.modify_time as modify_12_1_0_,
+        heavenlett0_.org_file_name as org_fil13_1_0_,
+        heavenlett0_.read_count as read_co14_1_0_,
+        heavenlett0_.write_time as write_t15_1_0_,
+        heavenlett0_.writer_id as writer_16_1_0_,
+        comments1_.comment_passcode as comment_2_2_1_,
+        comments1_.comment_writer as comment_3_2_1_,
+        comments1_.contents as contents4_2_1_,
+        comments1_.del_flag as del_flag5_2_1_,
+        comments1_.letter_seq as letter_10_2_1_,
+        comments1_.modifier_id as modifier6_2_1_,
+        comments1_.modify_time as modify_t7_2_1_,
+        comments1_.write_time as write_ti8_2_1_,
+        comments1_.writer_id as writer_i9_2_1_,
+        comments1_.letter_seq as letter_10_2_0__,
+        comments1_.comment_seq as comment_1_2_0__ 
+    from
+        tb25_410_heaven_letter heavenlett0_ 
+    left outer join
+        tb25_411_heaven_letter_comment comments1_ 
+            on heavenlett0_.letter_seq=comments1_.letter_seq 
+            and (
+                comments1_.del_flag = 'N'
+            ) 
+    where
+        heavenlett0_.letter_seq=? 
+        and heavenlett0_.del_flag=?
+2025-06-15 04:12:26 TRACE [http-nio-8080-exec-7] o.h.type.descriptor.sql.BasicBinder - binding parameter [1] as [INTEGER] - [1111]
+2025-06-15 04:12:26 TRACE [http-nio-8080-exec-7] o.h.type.descriptor.sql.BasicBinder - binding parameter [2] as [VARCHAR] - [N]
+2025-06-15 04:12:26 TRACE [http-nio-8080-exec-7] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_s1_1_0_] : [INTEGER]) - [1111]
+2025-06-15 04:12:26 TRACE [http-nio-8080-exec-7] o.h.t.descriptor.sql.BasicExtractor - extracted value ([comment_1_2_1_] : [INTEGER]) - [null]
+2025-06-15 04:12:26 TRACE [http-nio-8080-exec-7] o.h.t.descriptor.sql.BasicExtractor - extracted value ([anonymit2_1_0_] : [VARCHAR]) - [N]
+2025-06-15 04:12:26 TRACE [http-nio-8080-exec-7] o.h.t.descriptor.sql.BasicExtractor - extracted value ([area_cod3_1_0_] : [VARCHAR]) - [AREA300]
+2025-06-15 04:12:26 TRACE [http-nio-8080-exec-7] o.h.t.descriptor.sql.BasicExtractor - extracted value ([del_flag4_1_0_] : [VARCHAR]) - [N]
+2025-06-15 04:12:26 TRACE [http-nio-8080-exec-7] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_17_1_0_] : [INTEGER]) - [2119]
+2025-06-15 04:12:26 TRACE [http-nio-8080-exec-7] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donor_na5_1_0_] : [VARCHAR]) - [유동호]
+2025-06-15 04:12:26 TRACE [http-nio-8080-exec-7] o.h.t.descriptor.sql.BasicExtractor - extracted value ([file_nam6_1_0_] : [VARCHAR]) - []
+2025-06-15 04:12:26 TRACE [http-nio-8080-exec-7] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_c7_1_0_] : [CLOB]) - [동호야 요즘 너무덥지 우리동호는 더위를많이타서 늘쌍 선풍기옆에 붙어있었는데 어떻게 지내고 있는지 모르겠구나..
+어제는 절에가서 49제중에 5제늘 지내고 왔단다..스님말씀이 하고싶은 얘기 맘속으로 다하면
+동호가 다 들을수 있다고  하셨는데 엄마가 했던말들 다 들은거지? 우리 동호는 착한 아이였으니깐 엄마바램대로 좋은곳에가서 늘 웃으며 지내고있어야된다 알았지? 
+49제도 이제는 두번밖에는 안 남았구나 그래서 엄마는 또 슬퍼 49제가 다 끝나면 우리동호를 더 멀리 보내야되는것만 같아서 맘이 아프구나
+지금도 너무 보고싶고 만지고 싶어서 미치겠는데 어떻게 너를 보낸단 말이니ㅜㅜ
+자식을 먼저 보낸다는데 이렇게 힘들줄이야
+마치 이 엄마가 죄인 같아서 맘껏 울지도 못하겠구나  미안하고 사랑한다 우리아들 동호야~~
+]
+2025-06-15 04:12:26 TRACE [http-nio-8080-exec-7] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_p8_1_0_] : [VARCHAR]) - [8224]
+2025-06-15 04:12:26 TRACE [http-nio-8080-exec-7] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_t9_1_0_] : [VARCHAR]) - [아들아~]
+2025-06-15 04:12:26 TRACE [http-nio-8080-exec-7] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_10_1_0_] : [VARCHAR]) - [엄마]
+2025-06-15 04:12:26 TRACE [http-nio-8080-exec-7] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modifie11_1_0_] : [VARCHAR]) - [null]
+2025-06-15 04:12:26 TRACE [http-nio-8080-exec-7] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modify_12_1_0_] : [TIMESTAMP]) - [2025-03-24T07:21:11]
+2025-06-15 04:12:26 TRACE [http-nio-8080-exec-7] o.h.t.descriptor.sql.BasicExtractor - extracted value ([org_fil13_1_0_] : [VARCHAR]) - []
+2025-06-15 04:12:26 TRACE [http-nio-8080-exec-7] o.h.t.descriptor.sql.BasicExtractor - extracted value ([read_co14_1_0_] : [INTEGER]) - [125]
+2025-06-15 04:12:26 TRACE [http-nio-8080-exec-7] o.h.t.descriptor.sql.BasicExtractor - extracted value ([write_t15_1_0_] : [TIMESTAMP]) - [2017-07-17T07:58:27]
+2025-06-15 04:12:26 TRACE [http-nio-8080-exec-7] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer_16_1_0_] : [VARCHAR]) - [null]
+2025-06-15 04:12:26 TRACE [http-nio-8080-exec-7] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_10_2_0__] : [INTEGER]) - [null]
+2025-06-15 04:12:26 DEBUG [http-nio-8080-exec-7] org.hibernate.SQL - 
+    update
+        tb25_410_heaven_letter 
+    set
+        anonymity_flag=?,
+        area_code=?,
+        del_flag=?,
+        donate_seq=?,
+        donor_name=?,
+        file_name=?,
+        letter_contents=?,
+        letter_passcode=?,
+        letter_title=?,
+        letter_writer=?,
+        modifier_id=?,
+        modify_time=?,
+        org_file_name=?,
+        read_count=?,
+        write_time=?,
+        writer_id=? 
+    where
+        letter_seq=?
+2025-06-15 04:12:26 TRACE [http-nio-8080-exec-7] o.h.type.descriptor.sql.BasicBinder - binding parameter [1] as [VARCHAR] - [N]
+2025-06-15 04:12:26 TRACE [http-nio-8080-exec-7] o.h.type.descriptor.sql.BasicBinder - binding parameter [2] as [VARCHAR] - [AREA300]
+2025-06-15 04:12:26 TRACE [http-nio-8080-exec-7] o.h.type.descriptor.sql.BasicBinder - binding parameter [3] as [VARCHAR] - [N]
+2025-06-15 04:12:26 TRACE [http-nio-8080-exec-7] o.h.type.descriptor.sql.BasicBinder - binding parameter [4] as [INTEGER] - [2119]
+2025-06-15 04:12:26 TRACE [http-nio-8080-exec-7] o.h.type.descriptor.sql.BasicBinder - binding parameter [5] as [VARCHAR] - [유동호]
+2025-06-15 04:12:26 TRACE [http-nio-8080-exec-7] o.h.type.descriptor.sql.BasicBinder - binding parameter [6] as [VARCHAR] - []
+2025-06-15 04:12:26 TRACE [http-nio-8080-exec-7] o.h.type.descriptor.sql.BasicBinder - binding parameter [7] as [CLOB] - [동호야 요즘 너무덥지 우리동호는 더위를많이타서 늘쌍 선풍기옆에 붙어있었는데 어떻게 지내고 있는지 모르겠구나..
+어제는 절에가서 49제중에 5제늘 지내고 왔단다..스님말씀이 하고싶은 얘기 맘속으로 다하면
+동호가 다 들을수 있다고  하셨는데 엄마가 했던말들 다 들은거지? 우리 동호는 착한 아이였으니깐 엄마바램대로 좋은곳에가서 늘 웃으며 지내고있어야된다 알았지? 
+49제도 이제는 두번밖에는 안 남았구나 그래서 엄마는 또 슬퍼 49제가 다 끝나면 우리동호를 더 멀리 보내야되는것만 같아서 맘이 아프구나
+지금도 너무 보고싶고 만지고 싶어서 미치겠는데 어떻게 너를 보낸단 말이니ㅜㅜ
+자식을 먼저 보낸다는데 이렇게 힘들줄이야
+마치 이 엄마가 죄인 같아서 맘껏 울지도 못하겠구나  미안하고 사랑한다 우리아들 동호야~~
+]
+2025-06-15 04:12:26 TRACE [http-nio-8080-exec-7] o.h.type.descriptor.sql.BasicBinder - binding parameter [8] as [VARCHAR] - [8224]
+2025-06-15 04:12:26 TRACE [http-nio-8080-exec-7] o.h.type.descriptor.sql.BasicBinder - binding parameter [9] as [VARCHAR] - [아들아~]
+2025-06-15 04:12:26 TRACE [http-nio-8080-exec-7] o.h.type.descriptor.sql.BasicBinder - binding parameter [10] as [VARCHAR] - [엄마]
+2025-06-15 04:12:26 TRACE [http-nio-8080-exec-7] o.h.type.descriptor.sql.BasicBinder - binding parameter [11] as [VARCHAR] - [null]
+2025-06-15 04:12:26 TRACE [http-nio-8080-exec-7] o.h.type.descriptor.sql.BasicBinder - binding parameter [12] as [TIMESTAMP] - [2025-03-24T07:21:11]
+2025-06-15 04:12:26 TRACE [http-nio-8080-exec-7] o.h.type.descriptor.sql.BasicBinder - binding parameter [13] as [VARCHAR] - []
+2025-06-15 04:12:26 TRACE [http-nio-8080-exec-7] o.h.type.descriptor.sql.BasicBinder - binding parameter [14] as [INTEGER] - [126]
+2025-06-15 04:12:26 TRACE [http-nio-8080-exec-7] o.h.type.descriptor.sql.BasicBinder - binding parameter [15] as [TIMESTAMP] - [2017-07-17T07:58:27]
+2025-06-15 04:12:26 TRACE [http-nio-8080-exec-7] o.h.type.descriptor.sql.BasicBinder - binding parameter [16] as [VARCHAR] - [null]
+2025-06-15 04:12:26 TRACE [http-nio-8080-exec-7] o.h.type.descriptor.sql.BasicBinder - binding parameter [17] as [INTEGER] - [1111]
+2025-06-15 04:13:08 INFO  [http-nio-8080-exec-9] c.t.m.a.l.ControllerLoggingAspect - method=GET, uri=/heavenLetters/16, ip=0:0:0:0:0:0:0:1
+2025-06-15 04:13:08 DEBUG [http-nio-8080-exec-9] org.hibernate.SQL - 
+    select
+        heavenlett0_.letter_seq as letter_s1_1_0_,
+        comments1_.comment_seq as comment_1_2_1_,
+        heavenlett0_.anonymity_flag as anonymit2_1_0_,
+        heavenlett0_.area_code as area_cod3_1_0_,
+        heavenlett0_.del_flag as del_flag4_1_0_,
+        heavenlett0_.donate_seq as donate_17_1_0_,
+        heavenlett0_.donor_name as donor_na5_1_0_,
+        heavenlett0_.file_name as file_nam6_1_0_,
+        heavenlett0_.letter_contents as letter_c7_1_0_,
+        heavenlett0_.letter_passcode as letter_p8_1_0_,
+        heavenlett0_.letter_title as letter_t9_1_0_,
+        heavenlett0_.letter_writer as letter_10_1_0_,
+        heavenlett0_.modifier_id as modifie11_1_0_,
+        heavenlett0_.modify_time as modify_12_1_0_,
+        heavenlett0_.org_file_name as org_fil13_1_0_,
+        heavenlett0_.read_count as read_co14_1_0_,
+        heavenlett0_.write_time as write_t15_1_0_,
+        heavenlett0_.writer_id as writer_16_1_0_,
+        comments1_.comment_passcode as comment_2_2_1_,
+        comments1_.comment_writer as comment_3_2_1_,
+        comments1_.contents as contents4_2_1_,
+        comments1_.del_flag as del_flag5_2_1_,
+        comments1_.letter_seq as letter_10_2_1_,
+        comments1_.modifier_id as modifier6_2_1_,
+        comments1_.modify_time as modify_t7_2_1_,
+        comments1_.write_time as write_ti8_2_1_,
+        comments1_.writer_id as writer_i9_2_1_,
+        comments1_.letter_seq as letter_10_2_0__,
+        comments1_.comment_seq as comment_1_2_0__ 
+    from
+        tb25_410_heaven_letter heavenlett0_ 
+    left outer join
+        tb25_411_heaven_letter_comment comments1_ 
+            on heavenlett0_.letter_seq=comments1_.letter_seq 
+            and (
+                comments1_.del_flag = 'N'
+            ) 
+    where
+        heavenlett0_.letter_seq=? 
+        and heavenlett0_.del_flag=?
+2025-06-15 04:13:08 TRACE [http-nio-8080-exec-9] o.h.type.descriptor.sql.BasicBinder - binding parameter [1] as [INTEGER] - [16]
+2025-06-15 04:13:08 TRACE [http-nio-8080-exec-9] o.h.type.descriptor.sql.BasicBinder - binding parameter [2] as [VARCHAR] - [N]
+2025-06-15 04:13:08 TRACE [http-nio-8080-exec-9] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_s1_1_0_] : [INTEGER]) - [16]
+2025-06-15 04:13:08 TRACE [http-nio-8080-exec-9] o.h.t.descriptor.sql.BasicExtractor - extracted value ([comment_1_2_1_] : [INTEGER]) - [null]
+2025-06-15 04:13:08 TRACE [http-nio-8080-exec-9] o.h.t.descriptor.sql.BasicExtractor - extracted value ([anonymit2_1_0_] : [VARCHAR]) - [Y]
+2025-06-15 04:13:08 TRACE [http-nio-8080-exec-9] o.h.t.descriptor.sql.BasicExtractor - extracted value ([area_cod3_1_0_] : [VARCHAR]) - [AREA100]
+2025-06-15 04:13:08 TRACE [http-nio-8080-exec-9] o.h.t.descriptor.sql.BasicExtractor - extracted value ([del_flag4_1_0_] : [VARCHAR]) - [N]
+2025-06-15 04:13:08 TRACE [http-nio-8080-exec-9] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donate_17_1_0_] : [INTEGER]) - [null]
+2025-06-15 04:13:08 TRACE [http-nio-8080-exec-9] o.h.t.descriptor.sql.BasicExtractor - extracted value ([donor_na5_1_0_] : [VARCHAR]) - [null]
+2025-06-15 04:13:08 TRACE [http-nio-8080-exec-9] o.h.t.descriptor.sql.BasicExtractor - extracted value ([file_nam6_1_0_] : [VARCHAR]) - []
+2025-06-15 04:13:08 TRACE [http-nio-8080-exec-9] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_c7_1_0_] : [CLOB]) - [사랑하는아빠저희백이에요 아빠 저희와같은하늘아래서는 잘놀러다니지도못하시고 고생만하시다가셧잖아요  아빠  근데전아빠가 어쩔땐자랑스럽기도하지만  괴심하기도해요  왜냐하면요  아빠가 저에게가르쳐주실것도많기도 하고    그리고가족들이 아빠때매 슬퍼하기도  하고하는것도 괴심하지만  제일괴심한건요 이것도 괘심하지만막내동생10살짜리아이를 혼자두고 가신게  제일괘심해요  아빠  그리고하늘나라  에서저희엄마  많이도와주세요 아빠  때매20년더늙으신얼굴이에요  저희엄마여  그리고저희엄마 꿈에 나타나셔서  위로랑  칭찬많이해주세요  그리고  하늘나라에서  술이랑담배적당히  하시구  몸생각하셔서일 하시는것도좀 줄이세요  그리고하늘나라  에저나엄마 나 동생들그리고아빠친구 분들 과아빠 와같이일하셧던분들그리고아빠 에가족분들 이하늘나라  에같을때  좋은추억과 좋은경험들 을많이만들고 놀러도많이다니고 맞있는것도많이먹구즐거운추억들을많이만들어요 알겠죠 그리고사랑해요  아빠  그리고하늘나라에서기죽지마시고요  그리고저도많이봐주세요 그리고언젠가하늘나라에서같이뵈요 사랑해요           아빠를엄청사랑하는 이희백올림]
+2025-06-15 04:13:08 TRACE [http-nio-8080-exec-9] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_p8_1_0_] : [VARCHAR]) - [e]
+2025-06-15 04:13:08 TRACE [http-nio-8080-exec-9] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_t9_1_0_] : [VARCHAR]) - [아빠하늘나라에서 일하지말고놀러다니면서기달리세여]
+2025-06-15 04:13:08 TRACE [http-nio-8080-exec-9] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_10_1_0_] : [VARCHAR]) - [이희백]
+2025-06-15 04:13:08 TRACE [http-nio-8080-exec-9] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modifie11_1_0_] : [VARCHAR]) - [null]
+2025-06-15 04:13:08 TRACE [http-nio-8080-exec-9] o.h.t.descriptor.sql.BasicExtractor - extracted value ([modify_12_1_0_] : [TIMESTAMP]) - [2025-03-24T07:15:05]
+2025-06-15 04:13:08 TRACE [http-nio-8080-exec-9] o.h.t.descriptor.sql.BasicExtractor - extracted value ([org_fil13_1_0_] : [VARCHAR]) - []
+2025-06-15 04:13:08 TRACE [http-nio-8080-exec-9] o.h.t.descriptor.sql.BasicExtractor - extracted value ([read_co14_1_0_] : [INTEGER]) - [480]
+2025-06-15 04:13:08 TRACE [http-nio-8080-exec-9] o.h.t.descriptor.sql.BasicExtractor - extracted value ([write_t15_1_0_] : [TIMESTAMP]) - [2013-07-01T12:03:13]
+2025-06-15 04:13:08 TRACE [http-nio-8080-exec-9] o.h.t.descriptor.sql.BasicExtractor - extracted value ([writer_16_1_0_] : [VARCHAR]) - [null]
+2025-06-15 04:13:08 TRACE [http-nio-8080-exec-9] o.h.t.descriptor.sql.BasicExtractor - extracted value ([letter_10_2_0__] : [INTEGER]) - [null]
+2025-06-15 04:13:08 DEBUG [http-nio-8080-exec-9] org.hibernate.SQL - 
+    update
+        tb25_410_heaven_letter 
+    set
+        anonymity_flag=?,
+        area_code=?,
+        del_flag=?,
+        donate_seq=?,
+        donor_name=?,
+        file_name=?,
+        letter_contents=?,
+        letter_passcode=?,
+        letter_title=?,
+        letter_writer=?,
+        modifier_id=?,
+        modify_time=?,
+        org_file_name=?,
+        read_count=?,
+        write_time=?,
+        writer_id=? 
+    where
+        letter_seq=?
+2025-06-15 04:13:08 TRACE [http-nio-8080-exec-9] o.h.type.descriptor.sql.BasicBinder - binding parameter [1] as [VARCHAR] - [Y]
+2025-06-15 04:13:08 TRACE [http-nio-8080-exec-9] o.h.type.descriptor.sql.BasicBinder - binding parameter [2] as [VARCHAR] - [AREA100]
+2025-06-15 04:13:08 TRACE [http-nio-8080-exec-9] o.h.type.descriptor.sql.BasicBinder - binding parameter [3] as [VARCHAR] - [N]
+2025-06-15 04:13:08 TRACE [http-nio-8080-exec-9] o.h.type.descriptor.sql.BasicBinder - binding parameter [4] as [INTEGER] - [null]
+2025-06-15 04:13:08 TRACE [http-nio-8080-exec-9] o.h.type.descriptor.sql.BasicBinder - binding parameter [5] as [VARCHAR] - [null]
+2025-06-15 04:13:08 TRACE [http-nio-8080-exec-9] o.h.type.descriptor.sql.BasicBinder - binding parameter [6] as [VARCHAR] - []
+2025-06-15 04:13:08 TRACE [http-nio-8080-exec-9] o.h.type.descriptor.sql.BasicBinder - binding parameter [7] as [CLOB] - [사랑하는아빠저희백이에요 아빠 저희와같은하늘아래서는 잘놀러다니지도못하시고 고생만하시다가셧잖아요  아빠  근데전아빠가 어쩔땐자랑스럽기도하지만  괴심하기도해요  왜냐하면요  아빠가 저에게가르쳐주실것도많기도 하고    그리고가족들이 아빠때매 슬퍼하기도  하고하는것도 괴심하지만  제일괴심한건요 이것도 괘심하지만막내동생10살짜리아이를 혼자두고 가신게  제일괘심해요  아빠  그리고하늘나라  에서저희엄마  많이도와주세요 아빠  때매20년더늙으신얼굴이에요  저희엄마여  그리고저희엄마 꿈에 나타나셔서  위로랑  칭찬많이해주세요  그리고  하늘나라에서  술이랑담배적당히  하시구  몸생각하셔서일 하시는것도좀 줄이세요  그리고하늘나라  에저나엄마 나 동생들그리고아빠친구 분들 과아빠 와같이일하셧던분들그리고아빠 에가족분들 이하늘나라  에같을때  좋은추억과 좋은경험들 을많이만들고 놀러도많이다니고 맞있는것도많이먹구즐거운추억들을많이만들어요 알겠죠 그리고사랑해요  아빠  그리고하늘나라에서기죽지마시고요  그리고저도많이봐주세요 그리고언젠가하늘나라에서같이뵈요 사랑해요           아빠를엄청사랑하는 이희백올림]
+2025-06-15 04:13:08 TRACE [http-nio-8080-exec-9] o.h.type.descriptor.sql.BasicBinder - binding parameter [8] as [VARCHAR] - [e]
+2025-06-15 04:13:08 TRACE [http-nio-8080-exec-9] o.h.type.descriptor.sql.BasicBinder - binding parameter [9] as [VARCHAR] - [아빠하늘나라에서 일하지말고놀러다니면서기달리세여]
+2025-06-15 04:13:08 TRACE [http-nio-8080-exec-9] o.h.type.descriptor.sql.BasicBinder - binding parameter [10] as [VARCHAR] - [이희백]
+2025-06-15 04:13:08 TRACE [http-nio-8080-exec-9] o.h.type.descriptor.sql.BasicBinder - binding parameter [11] as [VARCHAR] - [null]
+2025-06-15 04:13:08 TRACE [http-nio-8080-exec-9] o.h.type.descriptor.sql.BasicBinder - binding parameter [12] as [TIMESTAMP] - [2025-03-24T07:15:05]
+2025-06-15 04:13:08 TRACE [http-nio-8080-exec-9] o.h.type.descriptor.sql.BasicBinder - binding parameter [13] as [VARCHAR] - []
+2025-06-15 04:13:08 TRACE [http-nio-8080-exec-9] o.h.type.descriptor.sql.BasicBinder - binding parameter [14] as [INTEGER] - [481]
+2025-06-15 04:13:08 TRACE [http-nio-8080-exec-9] o.h.type.descriptor.sql.BasicBinder - binding parameter [15] as [TIMESTAMP] - [2013-07-01T12:03:13]
+2025-06-15 04:13:08 TRACE [http-nio-8080-exec-9] o.h.type.descriptor.sql.BasicBinder - binding parameter [16] as [VARCHAR] - [null]
+2025-06-15 04:13:08 TRACE [http-nio-8080-exec-9] o.h.type.descriptor.sql.BasicBinder - binding parameter [17] as [INTEGER] - [16]
+2025-06-15 04:26:03 WARN  [HikariPool-21 housekeeper] com.zaxxer.hikari.pool.HikariPool - HikariPool-21 - Thread starvation or clock leap detected (housekeeper delta=7m11s640ms946µs300ns).
+2025-06-15 15:22:31 WARN  [HikariPool-21 housekeeper] com.zaxxer.hikari.pool.HikariPool - HikariPool-21 - Thread starvation or clock leap detected (housekeeper delta=10h41m58s160ms894µs800ns).
+2025-06-15 17:02:02 WARN  [HikariPool-21 housekeeper] com.zaxxer.hikari.pool.HikariPool - HikariPool-21 - Thread starvation or clock leap detected (housekeeper delta=1h22m59s49ms665µs).
+2025-06-15 17:56:26 INFO  [File Watcher] o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 21 class path changes (0 additions, 21 deletions, 0 modifications)
+2025-06-15 17:56:26 INFO  [Thread-83] o.a.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+2025-06-15 17:56:26 INFO  [Thread-83] o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2025-06-15 17:56:26 INFO  [Thread-83] o.a.c.c.C.[Tomcat].[localhost].[/] - Destroying Spring FrameworkServlet 'dispatcherServlet'
+2025-06-15 17:56:26 INFO  [Thread-83] o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+2025-06-15 17:56:26 INFO  [Thread-83] o.a.coyote.http11.Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+2025-06-15 17:56:26 INFO  [Thread-83] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-15 17:56:26 INFO  [Thread-83] com.zaxxer.hikari.HikariDataSource - HikariPool-21 - Shutdown initiated...
+2025-06-15 17:56:26 INFO  [Thread-83] com.zaxxer.hikari.HikariDataSource - HikariPool-21 - Shutdown completed.
+2025-06-15 17:56:26 INFO  [restartedMain] c.t.memorial.MemorialApplication - Starting MemorialApplication using Java 17.0.12 on DESKTOP-JH6PQI3 with PID 19820 (C:\DBE_Final_Project\spring\build\classes\java\main started by user in C:\DBE_Final_Project\spring)
+2025-06-15 17:56:26 INFO  [restartedMain] c.t.memorial.MemorialApplication - No active profile set, falling back to 1 default profile: "default"
+2025-06-15 17:56:26 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-15 17:56:26 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 14 ms. Found 3 JPA repository interfaces.
+2025-06-15 17:56:26 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2025-06-15 17:56:26 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-06-15 17:56:26 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-15 17:56:26 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2025-06-15 17:56:26 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-15 17:56:26 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 487 ms
+2025-06-15 17:56:26 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-15 17:56:26 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-22 - Starting...
+2025-06-15 17:56:26 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-22 - Start completed.
+2025-06-15 17:56:26 INFO  [restartedMain] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2025-06-15 17:56:27 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-06-15 17:56:27 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-15 17:56:27 WARN  [restartedMain] o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'heavenLetterCommentController' defined in file [C:\DBE_Final_Project\spring\build\classes\java\main\com\ttasum\memorial\controller\heavenLetter\HeavenLetterCommentController.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.ttasum.memorial.service.heavenLetter.HeavenLetterCommentService' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2025-06-15 17:56:27 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-15 17:56:27 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-22 - Shutdown initiated...
+2025-06-15 17:56:27 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-22 - Shutdown completed.
+2025-06-15 17:56:27 INFO  [restartedMain] o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2025-06-15 17:56:27 INFO  [restartedMain] o.s.b.a.l.ConditionEvaluationReportLoggingListener - 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2025-06-15 17:56:27 ERROR [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of constructor in com.ttasum.memorial.controller.heavenLetter.HeavenLetterCommentController required a bean of type 'com.ttasum.memorial.service.heavenLetter.HeavenLetterCommentService' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'com.ttasum.memorial.service.heavenLetter.HeavenLetterCommentService' in your configuration.
+
+2025-06-15 17:56:28 INFO  [restartedMain] c.t.memorial.MemorialApplication - Starting MemorialApplication using Java 17.0.12 on DESKTOP-JH6PQI3 with PID 19820 (C:\DBE_Final_Project\spring\build\classes\java\main started by user in C:\DBE_Final_Project\spring)
+2025-06-15 17:56:28 INFO  [restartedMain] c.t.memorial.MemorialApplication - No active profile set, falling back to 1 default profile: "default"
+2025-06-15 17:56:29 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-15 17:56:29 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 15 ms. Found 6 JPA repository interfaces.
+2025-06-15 17:56:29 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2025-06-15 17:56:29 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-06-15 17:56:29 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-15 17:56:29 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2025-06-15 17:56:29 INFO  [restartedMain] o.a.c.c.C.[Tomcat-1].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-15 17:56:29 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 266 ms
+2025-06-15 17:56:29 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-15 17:56:29 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-23 - Starting...
+2025-06-15 17:56:29 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-23 - Start completed.
+2025-06-15 17:56:29 INFO  [restartedMain] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2025-06-15 17:56:29 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-06-15 17:56:29 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-15 17:56:29 WARN  [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-15 17:56:30 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-06-15 17:56:30 WARN  [restartedMain] o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-06-15 17:56:30 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-06-15 17:56:30 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2025-06-15 17:56:30 INFO  [restartedMain] c.t.memorial.MemorialApplication - Started MemorialApplication in 1.402 seconds (JVM running for 173888.386)
+2025-06-15 17:56:30 INFO  [restartedMain] o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-06-15 18:14:43 INFO  [File Watcher] o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 3 class path changes (0 additions, 3 deletions, 0 modifications)
+2025-06-15 18:14:43 INFO  [Thread-87] o.a.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+2025-06-15 18:14:43 INFO  [Thread-87] o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2025-06-15 18:14:43 INFO  [Thread-87] o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+2025-06-15 18:14:43 INFO  [Thread-87] o.a.coyote.http11.Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+2025-06-15 18:14:43 INFO  [Thread-87] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-15 18:14:43 INFO  [Thread-87] com.zaxxer.hikari.HikariDataSource - HikariPool-23 - Shutdown initiated...
+2025-06-15 18:14:43 INFO  [Thread-87] com.zaxxer.hikari.HikariDataSource - HikariPool-23 - Shutdown completed.
+2025-06-15 18:14:44 INFO  [restartedMain] c.t.memorial.MemorialApplication - Starting MemorialApplication using Java 17.0.12 on DESKTOP-JH6PQI3 with PID 19820 (C:\DBE_Final_Project\spring\build\classes\java\main started by user in C:\DBE_Final_Project\spring)
+2025-06-15 18:14:44 INFO  [restartedMain] c.t.memorial.MemorialApplication - No active profile set, falling back to 1 default profile: "default"
+2025-06-15 18:14:44 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-15 18:14:44 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 16 ms. Found 6 JPA repository interfaces.
+2025-06-15 18:14:44 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2025-06-15 18:14:44 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-06-15 18:14:44 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-15 18:14:44 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2025-06-15 18:14:44 INFO  [restartedMain] o.a.c.c.C.[Tomcat-1].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-15 18:14:44 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 321 ms
+2025-06-15 18:14:44 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-15 18:14:44 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-24 - Starting...
+2025-06-15 18:14:44 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-24 - Start completed.
+2025-06-15 18:14:44 INFO  [restartedMain] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2025-06-15 18:14:44 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-06-15 18:14:44 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-15 18:14:45 WARN  [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-15 18:14:45 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-06-15 18:14:45 WARN  [restartedMain] o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-06-15 18:14:45 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-06-15 18:14:45 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2025-06-15 18:14:45 INFO  [restartedMain] c.t.memorial.MemorialApplication - Started MemorialApplication in 1.545 seconds (JVM running for 174983.71)
+2025-06-15 18:14:45 INFO  [restartedMain] o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-06-15 18:14:46 INFO  [File Watcher] o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 3 class path changes (3 additions, 0 deletions, 0 modifications)
+2025-06-15 18:14:46 INFO  [Thread-94] o.a.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+2025-06-15 18:14:46 INFO  [Thread-94] o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2025-06-15 18:14:46 INFO  [Thread-94] o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+2025-06-15 18:14:46 INFO  [Thread-94] o.a.coyote.http11.Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+2025-06-15 18:14:46 INFO  [Thread-94] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-15 18:14:46 INFO  [Thread-94] com.zaxxer.hikari.HikariDataSource - HikariPool-24 - Shutdown initiated...
+2025-06-15 18:14:46 INFO  [Thread-94] com.zaxxer.hikari.HikariDataSource - HikariPool-24 - Shutdown completed.
+2025-06-15 18:14:47 INFO  [restartedMain] c.t.memorial.MemorialApplication - Starting MemorialApplication using Java 17.0.12 on DESKTOP-JH6PQI3 with PID 19820 (C:\DBE_Final_Project\spring\build\classes\java\main started by user in C:\DBE_Final_Project\spring)
+2025-06-15 18:14:47 INFO  [restartedMain] c.t.memorial.MemorialApplication - No active profile set, falling back to 1 default profile: "default"
+2025-06-15 18:14:47 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-15 18:14:47 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 17 ms. Found 6 JPA repository interfaces.
+2025-06-15 18:14:47 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2025-06-15 18:14:47 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-06-15 18:14:47 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-15 18:14:47 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2025-06-15 18:14:47 INFO  [restartedMain] o.a.c.c.C.[Tomcat-1].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-15 18:14:47 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 280 ms
+2025-06-15 18:14:47 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-15 18:14:47 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-25 - Starting...
+2025-06-15 18:14:47 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-25 - Start completed.
+2025-06-15 18:14:47 INFO  [restartedMain] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2025-06-15 18:14:47 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-06-15 18:14:47 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-15 18:14:48 WARN  [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-15 18:14:48 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-06-15 18:14:48 WARN  [restartedMain] o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-06-15 18:14:48 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-06-15 18:14:48 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2025-06-15 18:14:48 INFO  [restartedMain] c.t.memorial.MemorialApplication - Started MemorialApplication in 1.669 seconds (JVM running for 174986.877)
+2025-06-15 18:14:48 INFO  [restartedMain] o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-06-15 18:16:36 INFO  [File Watcher] o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 5 class path changes (2 additions, 0 deletions, 3 modifications)
+2025-06-15 18:16:36 INFO  [Thread-98] o.a.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+2025-06-15 18:16:36 INFO  [Thread-98] o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2025-06-15 18:16:36 INFO  [Thread-98] o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+2025-06-15 18:16:36 INFO  [Thread-98] o.a.coyote.http11.Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+2025-06-15 18:16:36 INFO  [Thread-98] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-15 18:16:36 INFO  [Thread-98] com.zaxxer.hikari.HikariDataSource - HikariPool-25 - Shutdown initiated...
+2025-06-15 18:16:36 INFO  [Thread-98] com.zaxxer.hikari.HikariDataSource - HikariPool-25 - Shutdown completed.
+2025-06-15 18:16:37 INFO  [restartedMain] c.t.memorial.MemorialApplication - Starting MemorialApplication using Java 17.0.12 on DESKTOP-JH6PQI3 with PID 19820 (C:\DBE_Final_Project\spring\build\classes\java\main started by user in C:\DBE_Final_Project\spring)
+2025-06-15 18:16:37 INFO  [restartedMain] c.t.memorial.MemorialApplication - No active profile set, falling back to 1 default profile: "default"
+2025-06-15 18:16:37 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-15 18:16:37 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 19 ms. Found 6 JPA repository interfaces.
+2025-06-15 18:16:37 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2025-06-15 18:16:37 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-06-15 18:16:37 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-15 18:16:37 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2025-06-15 18:16:37 INFO  [restartedMain] o.a.c.c.C.[Tomcat-1].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-15 18:16:37 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 311 ms
+2025-06-15 18:16:37 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-15 18:16:37 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-26 - Starting...
+2025-06-15 18:16:37 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-26 - Start completed.
+2025-06-15 18:16:37 INFO  [restartedMain] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2025-06-15 18:16:37 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-06-15 18:16:37 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-15 18:16:38 WARN  [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-15 18:16:38 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-06-15 18:16:38 WARN  [restartedMain] o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-06-15 18:16:38 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-06-15 18:16:38 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2025-06-15 18:16:38 INFO  [restartedMain] c.t.memorial.MemorialApplication - Started MemorialApplication in 1.344 seconds (JVM running for 175096.546)
+2025-06-15 18:16:38 INFO  [restartedMain] o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-06-15 18:19:56 INFO  [File Watcher] o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2025-06-15 18:19:56 INFO  [Thread-102] o.a.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+2025-06-15 18:19:56 INFO  [Thread-102] o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2025-06-15 18:19:56 INFO  [Thread-102] o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+2025-06-15 18:19:56 INFO  [Thread-102] o.a.coyote.http11.Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+2025-06-15 18:19:56 INFO  [Thread-102] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-15 18:19:56 INFO  [Thread-102] com.zaxxer.hikari.HikariDataSource - HikariPool-26 - Shutdown initiated...
+2025-06-15 18:19:56 INFO  [Thread-102] com.zaxxer.hikari.HikariDataSource - HikariPool-26 - Shutdown completed.
+2025-06-15 18:19:56 INFO  [restartedMain] c.t.memorial.MemorialApplication - Starting MemorialApplication using Java 17.0.12 on DESKTOP-JH6PQI3 with PID 19820 (C:\DBE_Final_Project\spring\build\classes\java\main started by user in C:\DBE_Final_Project\spring)
+2025-06-15 18:19:56 INFO  [restartedMain] c.t.memorial.MemorialApplication - No active profile set, falling back to 1 default profile: "default"
+2025-06-15 18:19:57 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-15 18:19:57 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 13 ms. Found 6 JPA repository interfaces.
+2025-06-15 18:19:57 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2025-06-15 18:19:57 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-06-15 18:19:57 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-15 18:19:57 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2025-06-15 18:19:57 INFO  [restartedMain] o.a.c.c.C.[Tomcat-1].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-15 18:19:57 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 224 ms
+2025-06-15 18:19:57 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-15 18:19:57 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-27 - Starting...
+2025-06-15 18:19:57 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-27 - Start completed.
+2025-06-15 18:19:57 INFO  [restartedMain] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2025-06-15 18:19:57 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-06-15 18:19:57 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-15 18:19:57 WARN  [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-15 18:19:57 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-06-15 18:19:57 WARN  [restartedMain] o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-06-15 18:19:57 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-06-15 18:19:57 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2025-06-15 18:19:57 INFO  [restartedMain] c.t.memorial.MemorialApplication - Started MemorialApplication in 1.047 seconds (JVM running for 175296.077)
+2025-06-15 18:19:57 INFO  [restartedMain] o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-06-15 18:20:21 INFO  [File Watcher] o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2025-06-15 18:20:21 INFO  [Thread-106] o.a.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+2025-06-15 18:20:21 INFO  [Thread-106] o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2025-06-15 18:20:21 INFO  [Thread-106] o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+2025-06-15 18:20:21 INFO  [Thread-106] o.a.coyote.http11.Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+2025-06-15 18:20:21 INFO  [Thread-106] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-15 18:20:21 INFO  [Thread-106] com.zaxxer.hikari.HikariDataSource - HikariPool-27 - Shutdown initiated...
+2025-06-15 18:20:21 INFO  [Thread-106] com.zaxxer.hikari.HikariDataSource - HikariPool-27 - Shutdown completed.
+2025-06-15 18:20:22 INFO  [restartedMain] c.t.memorial.MemorialApplication - Starting MemorialApplication using Java 17.0.12 on DESKTOP-JH6PQI3 with PID 19820 (C:\DBE_Final_Project\spring\build\classes\java\main started by user in C:\DBE_Final_Project\spring)
+2025-06-15 18:20:22 INFO  [restartedMain] c.t.memorial.MemorialApplication - No active profile set, falling back to 1 default profile: "default"
+2025-06-15 18:20:22 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-15 18:20:22 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 13 ms. Found 6 JPA repository interfaces.
+2025-06-15 18:20:22 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2025-06-15 18:20:22 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-06-15 18:20:22 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-15 18:20:22 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2025-06-15 18:20:22 INFO  [restartedMain] o.a.c.c.C.[Tomcat-1].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-15 18:20:22 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 227 ms
+2025-06-15 18:20:22 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-15 18:20:22 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-28 - Starting...
+2025-06-15 18:20:22 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-28 - Start completed.
+2025-06-15 18:20:22 INFO  [restartedMain] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2025-06-15 18:20:22 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-06-15 18:20:22 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-15 18:20:22 WARN  [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-15 18:20:22 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-06-15 18:20:22 WARN  [restartedMain] o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-06-15 18:20:23 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-06-15 18:20:23 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2025-06-15 18:20:23 INFO  [restartedMain] c.t.memorial.MemorialApplication - Started MemorialApplication in 1.012 seconds (JVM running for 175321.187)
+2025-06-15 18:20:23 INFO  [restartedMain] o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-06-15 18:21:28 INFO  [File Watcher] o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 5 class path changes (0 additions, 0 deletions, 5 modifications)
+2025-06-15 18:21:28 INFO  [Thread-110] o.a.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+2025-06-15 18:21:28 INFO  [Thread-110] o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2025-06-15 18:21:28 INFO  [Thread-110] o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+2025-06-15 18:21:28 INFO  [Thread-110] o.a.coyote.http11.Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+2025-06-15 18:21:28 INFO  [Thread-110] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-15 18:21:28 INFO  [Thread-110] com.zaxxer.hikari.HikariDataSource - HikariPool-28 - Shutdown initiated...
+2025-06-15 18:21:28 INFO  [Thread-110] com.zaxxer.hikari.HikariDataSource - HikariPool-28 - Shutdown completed.
+2025-06-15 18:21:28 INFO  [restartedMain] c.t.memorial.MemorialApplication - Starting MemorialApplication using Java 17.0.12 on DESKTOP-JH6PQI3 with PID 19820 (C:\DBE_Final_Project\spring\build\classes\java\main started by user in C:\DBE_Final_Project\spring)
+2025-06-15 18:21:28 INFO  [restartedMain] c.t.memorial.MemorialApplication - No active profile set, falling back to 1 default profile: "default"
+2025-06-15 18:21:28 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-15 18:21:28 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 12 ms. Found 6 JPA repository interfaces.
+2025-06-15 18:21:28 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2025-06-15 18:21:28 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-06-15 18:21:28 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-15 18:21:28 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2025-06-15 18:21:28 INFO  [restartedMain] o.a.c.c.C.[Tomcat-1].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-15 18:21:28 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 217 ms
+2025-06-15 18:21:28 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-15 18:21:28 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-29 - Starting...
+2025-06-15 18:21:29 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-29 - Start completed.
+2025-06-15 18:21:29 INFO  [restartedMain] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2025-06-15 18:21:29 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-06-15 18:21:29 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-15 18:21:29 WARN  [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-15 18:21:29 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-06-15 18:21:29 WARN  [restartedMain] o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-06-15 18:21:29 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-06-15 18:21:29 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2025-06-15 18:21:29 INFO  [restartedMain] c.t.memorial.MemorialApplication - Started MemorialApplication in 1.024 seconds (JVM running for 175387.825)
+2025-06-15 18:21:29 INFO  [restartedMain] o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged

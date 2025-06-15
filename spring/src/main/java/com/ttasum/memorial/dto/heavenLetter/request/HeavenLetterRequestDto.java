@@ -27,7 +27,6 @@ private String donorName;
 
 private Integer donateSeq;
 
-@NotBlank(message = "필수 입력값이 누락되었습니다.")
 private String areaCode;
 
 @NotBlank(message = "필수 입력값이 누락되었습니다.")

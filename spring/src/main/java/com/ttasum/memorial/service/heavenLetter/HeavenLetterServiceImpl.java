@@ -7,11 +7,8 @@ import com.ttasum.memorial.dto.heavenLetter.request.HeavenLetterRequestDto;
 import com.ttasum.memorial.dto.heavenLetter.request.HeavenLetterUpdateRequestDto;
 import com.ttasum.memorial.dto.heavenLetter.request.HeavenLetterVerifyRequestDto;
 import com.ttasum.memorial.dto.heavenLetter.request.MemorialSearchRequestDto;
-import com.ttasum.memorial.dto.heavenLetter.response.CommonResultResponseDto;
-import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterResponseDto;
+import com.ttasum.memorial.dto.heavenLetter.response.*;
 import com.ttasum.memorial.domain.repository.heavenLetter.HeavenLetterRepository;
-import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterUpdateResponsDto;
-import com.ttasum.memorial.dto.heavenLetter.response.MemorialSearchResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +43,7 @@ public class HeavenLetterServiceImpl implements HeavenLetterService {
         Memorial memorial = null;
         if (heavenLetterRequestDto.getDonateSeq() != null) {
             memorial = memorialRepository.findById(heavenLetterRequestDto.getDonateSeq())
-                    .orElseThrow(() -> new IllegalArgumentException("해당 기증자 정보가 존재하지 않습니다"));
+                    .orElseThrow(() -> new IllegalArgumentException("기증자 정보를 찾을 수 없습니다."));
         }
 
         HeavenLetter heavenLetter = HeavenLetter.builder()
@@ -66,6 +63,19 @@ public class HeavenLetterServiceImpl implements HeavenLetterService {
         heavenLetterRepository.save(heavenLetter);
 
         return HeavenLetterResponseDto.success();
+    }
+    //추모관에서 등록하는 편지폼
+    @Override
+    @Transactional(readOnly = true)
+    public HeavenLetterFormResponseDto getFormWithDonor(Integer donateSeq) {
+        Memorial memorial = memorialRepository.findById(donateSeq)
+                .orElseThrow(() -> new IllegalArgumentException("기증자 정보를 찾을 수 없습니다."));
+
+        return HeavenLetterFormResponseDto.builder()
+                .donateSeq(memorial.getDonateSeq())
+                .donorName(memorial.getDonorName())
+                .areaCode(memorial.getAreaCode())
+                .build();
     }
 
     //조회 - 단건

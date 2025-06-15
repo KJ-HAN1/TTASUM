@@ -53,7 +53,7 @@ import java.util.List;
     private Integer readCount;
 
     @Lob
-    @Column(name = "letter_contents" , columnDefinition = "LongTEXT")
+    @Column(name = "letter_contents" , columnDefinition = "LONGTEXT")
     private String letterContents;
 
     @Column(name = "file_name", length = 600)

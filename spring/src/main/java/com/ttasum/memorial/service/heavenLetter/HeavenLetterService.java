@@ -4,10 +4,7 @@ import com.ttasum.memorial.dto.heavenLetter.request.HeavenLetterRequestDto;
 import com.ttasum.memorial.dto.heavenLetter.request.HeavenLetterUpdateRequestDto;
 import com.ttasum.memorial.dto.heavenLetter.request.HeavenLetterVerifyRequestDto;
 import com.ttasum.memorial.dto.heavenLetter.request.MemorialSearchRequestDto;
-import com.ttasum.memorial.dto.heavenLetter.response.CommonResultResponseDto;
-import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterResponseDto;
-import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterUpdateResponsDto;
-import com.ttasum.memorial.dto.heavenLetter.response.MemorialSearchResponseDto;
+import com.ttasum.memorial.dto.heavenLetter.response.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +17,9 @@ public interface HeavenLetterService {
 
     //편지 등록
     HeavenLetterResponseDto createLetter(HeavenLetterRequestDto heavenLetterRequestDto);
+
+    //추모관에서 등록하는 편지폼
+    HeavenLetterFormResponseDto getFormWithDonor(Integer donateSeq);
 
     //편지 단건 조회
     HeavenLetterResponseDto.HeavenLetterDetailResponse getLetterById(Integer letterSeq);
