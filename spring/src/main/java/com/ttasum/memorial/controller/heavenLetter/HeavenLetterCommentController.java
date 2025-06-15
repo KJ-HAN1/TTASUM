@@ -2,6 +2,7 @@ package com.ttasum.memorial.controller.heavenLetter;
 
 import com.ttasum.memorial.dto.heavenLetter.request.CommonCommentRequestDto;
 import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterCommentResponseDto;
+import com.ttasum.memorial.exception.heavenLetter.HeavenLetterCommentMismatchException;
 import com.ttasum.memorial.service.heavenLetter.HeavenLetterCommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -64,6 +65,10 @@ public class HeavenLetterCommentController {
             @PathVariable Integer commentSeq,
             @RequestBody @Valid CommonCommentRequestDto.UpdateCommentRequest updateCommentRequest) {
 
+        if (!commentSeq.equals(updateCommentRequest.getCommentSeq())) {
+            throw new HeavenLetterCommentMismatchException();
+        }
+
         // 실제 편지 번호는 본문에서 추출
         Integer letterSeq = updateCommentRequest.getLetterSeq();
 
@@ -75,7 +80,12 @@ public class HeavenLetterCommentController {
     //댓글 삭제
     @DeleteMapping("/{commentSeq}")
     public ResponseEntity<HeavenLetterCommentResponseDto.CommentVerifyResponse> deleteComment(
+            @PathVariable Integer commentSeq,
             @RequestBody CommonCommentRequestDto.DeleteCommentRequest deleteCommentRequest) {
+
+        if (!commentSeq.equals(deleteCommentRequest.getCommentSeq())) {
+            throw new HeavenLetterCommentMismatchException();
+        }
 
         HeavenLetterCommentResponseDto.CommentVerifyResponse deleteCommentResponse = heavenLetterCommentService.deleteComment(deleteCommentRequest);
 

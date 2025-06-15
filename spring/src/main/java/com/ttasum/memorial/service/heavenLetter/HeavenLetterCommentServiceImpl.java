@@ -81,11 +81,18 @@ public class HeavenLetterCommentServiceImpl implements HeavenLetterCommentServic
         if (!this.verifyCommentPasscode(deleteCommentRequest.getCommentSeq(), deleteCommentRequest.getCommentPasscode())) {
             return HeavenLetterCommentResponseDto.CommentVerifyResponse.fail("비밀번호가 일치하지 않습니다.");
         }
-        HeavenLetterComment heavenLetterComment = commentRepository.findById(deleteCommentRequest.getCommentSeq()).get();
+
+        HeavenLetterComment heavenLetterComment = commentRepository.findById(deleteCommentRequest.getCommentSeq())
+                .orElseThrow(HeavenLetterCommentNotFoundException::new);
+
+        // 삭제 여부 확인
+        if ("Y".equals(heavenLetterComment.getDelFlag())) {
+            throw new HeavenLetterCommentNotFoundException();
+        }
+
         //소프트 삭제 커멘드 사용
         heavenLetterComment.softDeleteComment();
 
         return HeavenLetterCommentResponseDto.CommentVerifyResponse.success("편지 댓글이 성공적으로 삭제되었습니다.");
     }
 }
-
