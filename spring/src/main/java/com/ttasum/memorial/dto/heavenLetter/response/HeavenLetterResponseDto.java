@@ -41,7 +41,7 @@ public class HeavenLetterResponseDto {
         private Integer donateSeq;
         private String areaCode;
         private String letterTitle;
-        private String letterPasscode;
+//        private String letterPasscode;
         private String donorName;
         private String letterWriter;
         private String anonymityFlag;
@@ -65,7 +65,7 @@ public class HeavenLetterResponseDto {
                     : null;
             this.areaCode = heavenLetter.getAreaCode();
             this.letterTitle = heavenLetter.getLetterTitle();
-            this.letterPasscode = heavenLetter.getLetterPasscode();
+//            this.letterPasscode = heavenLetter.getLetterPasscode();
             this.donorName = NameMaskUtil.maskDonorNameIfAnonymous(
                     heavenLetter.getDonorName(),
                     heavenLetter.getAnonymityFlag()
