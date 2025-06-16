@@ -112,7 +112,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({ForbiddenWordException.class,
             MissingSentenceException.class,
-            InvalidBlameTextRequestException.class})
+            InvalidBlameTextRequestException.class,
+            BlametextNotDefinitionFiltering.class})
     public ResponseEntity<?> handleForbiddenWordException(RuntimeException e) {
         return ResponseEntity.badRequest().body(
                 ApiResponse.badRequest(e.getMessage()));

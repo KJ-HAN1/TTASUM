@@ -42,6 +42,11 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'io.github.cdimascio:dotenv-java:2.2.4'  //.env
 
+
+    // security 관련 설정
+    implementation('org.springframework.boot:spring-boot-starter-security')  //스프링 시큐리티 스탈터
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE'
+    testImplementation('org.springframework.security:spring-security-test')  //시큐리티 테스트
 }
 
 tasks.named('test') {

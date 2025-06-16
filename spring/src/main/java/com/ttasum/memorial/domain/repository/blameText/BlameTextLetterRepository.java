@@ -1,19 +1,59 @@
 package com.ttasum.memorial.domain.repository.blameText;
 
+import com.ttasum.memorial.domain.entity.DonationStory.DonationStory;
 import com.ttasum.memorial.domain.entity.Story;
 import com.ttasum.memorial.domain.entity.blameText.BlameTextLetter;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
+/*
+    Query 1: 전체 비난글 조회(label == 1)
+        SELECT *
+        FROM blame_text_letter
+        WHERE label = 1
+        ORDER BY update_time DESC;
 
+    Query 2: 전체 글 조회
+        SELECT *
+        FROM blame_text_letter
+        ORDER BY update_time DESC;
+
+    Query 3: 전체 비난이 아닌 글 조회(label == 0)
+        SELECT *
+        FROM blame_text_letter
+        WHERE label = 0
+        ORDER BY update_time DESC;
+
+    Query 4: 기증 후 스토리 관련 비난글 조회(board_type == "donation" AND label == 1)
+        SELECT *
+        FROM blame_text_letter
+        WHERE board_type = "donation" AND label = 1
+        ORDER BY update_time DESC;
+
+    Query 5: 하늘나라 편지 관련 비난글 조회(board_type == "heaven" AND label == 1)
+        SELECT *
+        FROM blame_text_letter
+        WHERE board_type = "heaven" AND label = 1
+        ORDER BY update_time DESC;
+
+    Query 6: 수혜자 편지 관련 비난글 조회(board_type == "recipient" AND label == 1)
+        SELECT *
+        FROM blame_text_letter
+        WHERE board_type = "recipient" AND label = 1
+        ORDER BY update_time DESC;
+    */
 public interface BlameTextLetterRepository extends JpaRepository<BlameTextLetter, Integer> {
     Optional<BlameTextLetter> findByDonationStory_IdAndDeleteFlag(Integer originSeq, int deleteFlag);
-    /*
-    조건
-    1. 페이징(10건씩)
-    2. blame_text_letter의 전체 결과와 원래 테이블(tb25_420_donation_story)의
-                        (story_title, area_code, donor_name, story_writer, anonymity_flag, read_count)를
-                        추가적으로 한꺼번에 조회
-    */
+
+    // Query 1: 전체 비난글 조회
+    Page<BlameTextLetter> findBlameTextLetterByLabelOrderByUpdateTimeDesc(Integer label, Pageable pageable);
+
+    // seq를 통해 비난 글 찾기
+    List<BlameTextLetter> findBlameTextLettersByDonationStoryAndDeleteFlag(DonationStory donationStory, int deleteFlag);
+
+    Page<BlameTextLetter> findBlameTextLettersByDeleteFlag(int deleteFlag, Pageable pageable);
 }

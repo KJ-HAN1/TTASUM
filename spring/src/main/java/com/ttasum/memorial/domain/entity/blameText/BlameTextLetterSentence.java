@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 
+@Getter
 @Entity
 //@IdClass(BlameTextLetterSentenceId.class)
 @Table(name = "blame_text_letter_sentence")
