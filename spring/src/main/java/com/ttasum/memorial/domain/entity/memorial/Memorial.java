@@ -3,6 +3,8 @@ package com.ttasum.memorial.domain.entity.memorial;
 import com.ttasum.memorial.domain.entity.heavenLetter.HeavenLetter;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -63,34 +65,34 @@ public class Memorial {
     private Integer donateAge;
 
     @Column(name = "flower_count")
-    private Integer flowerCount;
+    private Integer flowerCount = 0;
 
     @Column(name = "love_count")
-    private Integer loveCount;
+    private Integer loveCount = 0;
 
     @Column(name = "see_count")
-    private Integer seeCount;
+    private Integer seeCount = 0;
 
     @Column(name = "miss_count")
-    private Integer missCount;
+    private Integer missCount = 0;
 
     @Column(name = "proud_count")
-    private Integer proudCount;
+    private Integer proudCount = 0;
 
     @Column(name = "hard_count")
-    private Integer hardCount;
+    private Integer hardCount = 0;
 
     @Column(name = "sad_count")
-    private Integer sadCount;
+    private Integer sadCount = 0;
 
-    @ColumnDefault("CURRENT_TIMESTAMP")
-    @Column(name = "write_time", nullable = false)
+    @CreationTimestamp
+    @Column(name = "write_time", nullable = false, updatable = false)
     private LocalDateTime writeTime;
 
     @Column(name = "writer_id", nullable = false, length = 60)
     private String writerId;
 
-    @ColumnDefault("CURRENT_TIMESTAMP")
+    @UpdateTimestamp
     @Column(name = "modify_time")
     private LocalDateTime modifyTime;
 
