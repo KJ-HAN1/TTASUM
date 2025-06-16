@@ -1,16 +1,16 @@
 package com.ttasum.memorial.controller.recipientLetter;
 
 import com.ttasum.memorial.domain.repository.recipientLetter.RecipientLetterRepository;
+import com.ttasum.memorial.dto.heavenLetter.request.HeavenLetterUpdateRequestDto;
 import com.ttasum.memorial.dto.heavenLetter.request.HeavenLetterVerifyRequestDto;
 import com.ttasum.memorial.dto.heavenLetter.request.PageRequest;
 import com.ttasum.memorial.dto.heavenLetter.response.CommonResultResponseDto;
 import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterResponseDto;
+import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterUpdateResponsDto;
 import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterRequestDto;
+import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterUpdateRequestDto;
 import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterVerifyRequestDto;
-import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterCommonResponseDto;
-import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterDetailResponse;
-import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterListResponseDto;
-import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterResponseDto;
+import com.ttasum.memorial.dto.recipientLetter.response.*;
 import com.ttasum.memorial.service.recipientLetter.RecipientLetterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -62,6 +62,18 @@ public class RecipientLetterController {
 
         recipientLetterService.verifyPasscode(letterSeq, recipientLetterVerifyRequestDto.getLetterPasscode());
         return ResponseEntity.status(HttpStatus.OK).body(RecipientLetterCommonResponseDto.success("비밀번호가 일치합니다."));
+    }
+    //편지 수정 (letterUpdate.html)
+    @PatchMapping("/{letterSeq}")
+    public ResponseEntity<RecipientLetterUpdateResponseDto> updateLetter(
+            //값을 자바 변수로 맵핑
+            @PathVariable Integer letterSeq,
+            @RequestBody @Valid RecipientLetterUpdateRequestDto recipientLetterUpdateRequestDto) {
+
+        RecipientLetterUpdateResponseDto recipientLetterUpdateResponseDto = recipientLetterService.updateLetter(letterSeq,recipientLetterUpdateRequestDto);
+
+        // return "redirect://";
+        return ResponseEntity.status(HttpStatus.OK).body(recipientLetterUpdateResponseDto);
     }
 
 }

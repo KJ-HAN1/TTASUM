@@ -1,5 +1,6 @@
 package com.ttasum.memorial.domain.entity.recipientLetter;
 
+import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterUpdateRequestDto;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Where;
@@ -94,4 +95,18 @@ public class RecipientLetter {
         if (this.readCount == null) this.readCount = 0;
         this.readCount += 1;
     }
+    //수정 메서드
+    public void updateLetterContents(RecipientLetterUpdateRequestDto recipientLetterUpdateRequestDto) {
+        this.letterWriter = recipientLetterUpdateRequestDto.getLetterWriter();
+        this.anonymityFlag = recipientLetterUpdateRequestDto.getAnonymityFlag();
+        this.letterPasscode = recipientLetterUpdateRequestDto.getLetterPasscode();
+        this.organCode = recipientLetterUpdateRequestDto.getOrganCode();
+        this.organEtc = recipientLetterUpdateRequestDto.getOrganEtc();
+        this.recipientYear = recipientLetterUpdateRequestDto.getRecipientYear();
+        this.storyTitle = recipientLetterUpdateRequestDto.getStoryTitle();
+        this.letterContents = recipientLetterUpdateRequestDto.getLetterContents();
+        this.orgFileName = recipientLetterUpdateRequestDto.getOrgFileName();
+        this.modifyTime = LocalDateTime.now();
+    }
+
 }

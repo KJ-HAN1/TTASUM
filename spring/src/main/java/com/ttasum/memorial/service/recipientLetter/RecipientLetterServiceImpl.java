@@ -5,11 +5,14 @@ import com.ttasum.memorial.domain.entity.heavenLetter.HeavenLetter;
 import com.ttasum.memorial.domain.entity.recipientLetter.RecipientLetter;
 import com.ttasum.memorial.domain.repository.recipientLetter.RecipientLetterRepository;
 import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterRequestDto;
+import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterUpdateRequestDto;
 import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterDetailResponse;
 import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterListResponseDto;
 import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterResponseDto;
+import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterUpdateResponseDto;
 import com.ttasum.memorial.exception.heavenLetter.HeavenLetterNotFoundException;
 import com.ttasum.memorial.exception.heavenLetter.InvalidPasswordException;
+import com.ttasum.memorial.exception.recipientLetter.RecipientLetterMismatchException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -82,4 +85,22 @@ public class RecipientLetterServiceImpl implements RecipientLetterService {
 
         return true;
     }
+    //수정
+    @Transactional
+    @Override
+    public RecipientLetterUpdateResponseDto updateLetter(Integer letterSeq, RecipientLetterUpdateRequestDto recipientLetterUpdateRequestDto) {
+
+        if (!letterSeq.equals(recipientLetterUpdateRequestDto.getLetterSeq())) {
+            throw new RecipientLetterMismatchException();
+        }
+
+        RecipientLetter recipientLetter = recipientLetterRepository.findById(letterSeq)
+                .orElseThrow(RecipientLetterNotFoundException::new);
+
+        // 편지 내용 수정
+        recipientLetter.updateLetterContents(recipientLetterUpdateRequestDto); // 예: 내부에서 title, contents 세팅
+
+        return RecipientLetterUpdateResponseDto.success();
+    }
 }
+
