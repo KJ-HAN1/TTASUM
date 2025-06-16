@@ -1,6 +1,6 @@
 package com.ttasum.memorial.domain.entity.donationStory;
 
-import com.ttasum.memorial.domain.Board;
+import com.ttasum.memorial.domain.type.BoardType;
 import com.ttasum.memorial.domain.entity.Story;
 import com.ttasum.memorial.dto.donationStory.DonationStoryUpdateRequestDto;
 import lombok.*;
@@ -76,7 +76,7 @@ public class DonationStory extends Story {
 
     @Getter
     @Transient
-    private final Board boardType = Board.DONATION;
+    private final BoardType boardType = BoardType.DONATION;
 
     @Builder
     public DonationStory(String areaCode, String title, String donorName,
