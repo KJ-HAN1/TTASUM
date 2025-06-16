@@ -42,7 +42,7 @@ public class HeavenLetterServiceImpl implements HeavenLetterService {
     //등록
     @Transactional
     @Override
-    public HeavenLetterResponseDto createLetter(HeavenLetterRequestDto heavenLetterRequestDto) {
+    public HeavenLetter createLetter(HeavenLetterRequestDto heavenLetterRequestDto) {
 
         Memorial memorial = null;
         if (heavenLetterRequestDto.getDonateSeq() != null) {
@@ -58,15 +58,13 @@ public class HeavenLetterServiceImpl implements HeavenLetterService {
                 .letterPasscode(heavenLetterRequestDto.getLetterPasscode())
                 .letterWriter(heavenLetterRequestDto.getLetterWriter())
                 .anonymityFlag(heavenLetterRequestDto.getAnonymityFlag())
-                .letterContents(heavenLetterRequestDto.getLetterContents())
+                .contents(heavenLetterRequestDto.getLetterContents())
                 .fileName(heavenLetterRequestDto.getFileName())
                 .orgFileName(heavenLetterRequestDto.getOrgFileName())
                 .writerId(heavenLetterRequestDto.getWriterId())
                 .build();
 
-        heavenLetterRepository.save(heavenLetter);
-
-        return HeavenLetterResponseDto.success();
+        return heavenLetterRepository.save(heavenLetter);
     }
     //추모관에서 등록하는 편지폼
     @Override
@@ -87,7 +85,7 @@ public class HeavenLetterServiceImpl implements HeavenLetterService {
     @Override
     public HeavenLetterResponseDto.HeavenLetterDetailResponse getLetterById(Integer letterSeq) {
 
-        HeavenLetter heavenLetter = heavenLetterRepository.findByLetterSeqAndDelFlag(letterSeq, "N")
+        HeavenLetter heavenLetter = heavenLetterRepository.findByIdAndDelFlag(letterSeq, "N")
                 .orElseThrow(HeavenLetterNotFoundException::new);
 
         //커맨드 메서드 사용
@@ -122,16 +120,15 @@ public class HeavenLetterServiceImpl implements HeavenLetterService {
     //수정
     @Transactional
     @Override
-    public HeavenLetterUpdateResponsDto updateLetter(HeavenLetterUpdateRequestDto heavenLetterUpdateRequestDto) {
+    public HeavenLetter updateLetter(HeavenLetterUpdateRequestDto heavenLetterUpdateRequestDto) {
         HeavenLetter heavenLetterUpdate = heavenLetterRepository.findById(heavenLetterUpdateRequestDto.getLetterSeq()).get();
 
         //기증자 외래키 변경(연결만 바꿔줌)
         Memorial memorial = memorialRepository.findById(heavenLetterUpdateRequestDto.getDonateSeq()).get();
 
         //내용수정
-        heavenLetterUpdate.updateLetterContents(heavenLetterUpdateRequestDto, memorial);
         //응답 반환
-        return HeavenLetterUpdateResponsDto.success();
+        return heavenLetterUpdate.updateLetterContents(heavenLetterUpdateRequestDto, memorial);
 
     }
 
