@@ -2,6 +2,7 @@ package com.ttasum.memorial.controller;
 
 
 import com.ttasum.memorial.domain.entity.donationStory.DonationStory;
+import com.ttasum.memorial.domain.type.BoardType;
 import com.ttasum.memorial.dto.ApiResponse;
 import com.ttasum.memorial.dto.donationStory.*;
 import com.ttasum.memorial.exception.blameText.BlameTextException;
@@ -16,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
+import static com.ttasum.memorial.domain.type.BoardType.DONATION;
 
 
 // 기증후 스토리 관련 API (등록, 조회, 목록 조회 등 제공)
@@ -68,19 +71,15 @@ public class DonationStoryController {
      */
     @PostMapping
     public ResponseEntity<ApiResponse> createStory(@RequestBody @Valid DonationStoryCreateRequestDto dto){
-        try {
             log.info("/donationLetters - 등록 요청: {}", dto);
             DonationStory donationStory = donationStoryService.createStory(dto);
 
             // 비난글 AI 필터링 추가
-            testReviewService.saveBoardFromBlameTable(donationStory, true);
+            testReviewService.saveBoardFromBlameTable(donationStory, true, DONATION.getType());
             return ResponseEntity.ok().body(ApiResponse.ok(
                     HttpStatus.CREATED.value(),
                     "스토리가 성공적으로 등록되었습니다."
             ));
-        } catch (BlameTextException e) {
-            throw new BlameTextException("비난하는 의도가 예상되는 글입니다. 관리자가 해당 글을 삭제할 수 있습니다.");
-        }
     }
 
     /**
@@ -91,20 +90,16 @@ public class DonationStoryController {
      */
     @PutMapping("/{storySeq}")
     public ResponseEntity<ApiResponse> updateStory(@PathVariable Integer storySeq, @RequestBody @Valid DonationStoryUpdateRequestDto dto){
-        try {
             log.info("/donationLetters/{} - 스토리 수정 요청", storySeq);
             // 서비스에서 예외 발생시 자동으로 404반환
             DonationStory donationStory = donationStoryService.updateStory(storySeq, dto);
 
             // 비난글 AI 필터링 추가
-            testReviewService.saveBoardFromBlameTable(donationStory, false);
+            testReviewService.saveBoardFromBlameTable(donationStory, false, DONATION.getType());
             return ResponseEntity.ok(ApiResponse.ok(
                     HttpStatus.OK.value(),
                     "스토리가 성공적으로 수정되었습니다."
             ));
-        } catch (BlameTextException e) {
-            throw new BlameTextException("비난하는 의도가 예상되는 글입니다. 관리자가 해당 글을 삭제할 수 있습니다.");
-        }
     }
 
     /**
