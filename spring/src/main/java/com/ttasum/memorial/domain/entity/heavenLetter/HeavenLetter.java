@@ -1,5 +1,6 @@
 package com.ttasum.memorial.domain.entity.heavenLetter;
 
+import com.ttasum.memorial.domain.entity.memorial.Memorial;
 import com.ttasum.memorial.dto.heavenLetter.request.HeavenLetterUpdateRequestDto;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
