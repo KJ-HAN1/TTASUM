@@ -5,8 +5,11 @@ import com.ttasum.memorial.domain.entity.recipientLetter.RecipientLetter;
 import com.ttasum.memorial.domain.repository.recipientLetter.RecipientLetterRepository;
 import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterRequestDto;
 import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterDetailResponse;
+import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterListResponseDto;
 import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.ttasum.memorial.exception.recipientLetter.RecipientLetterNotFoundException;
@@ -56,5 +59,12 @@ public class RecipientLetterServiceImpl implements RecipientLetterService {
         return new RecipientLetterDetailResponse(recipientLetter);
     }
 
+    //페이징처리
+    @Transactional
+    @Override
+    public Page<RecipientLetterListResponseDto> getAllLetters(Pageable pageable) {
+        return recipientLetterRepository.findAllByDelFlag("N", pageable)
+                .map(RecipientLetterListResponseDto::fromEntity);
+    }
 
 }

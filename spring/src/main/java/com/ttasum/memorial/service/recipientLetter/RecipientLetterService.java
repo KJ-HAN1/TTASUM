@@ -2,7 +2,10 @@ package com.ttasum.memorial.service.recipientLetter;
 
 import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterRequestDto;
 import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterDetailResponse;
+import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterListResponseDto;
 import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterResponseDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface RecipientLetterService {
 
@@ -11,4 +14,8 @@ public interface RecipientLetterService {
 
     //편지 단건 조회
     RecipientLetterDetailResponse getLetterById(Integer letterSeq);
+
+    //페이징 처리
+    Page<RecipientLetterListResponseDto> getAllLetters(Pageable pageable);
+
 }

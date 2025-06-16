@@ -1,11 +1,16 @@
 package com.ttasum.memorial.controller.recipientLetter;
 
 import com.ttasum.memorial.domain.repository.recipientLetter.RecipientLetterRepository;
+import com.ttasum.memorial.dto.heavenLetter.request.PageRequest;
+import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterResponseDto;
 import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterRequestDto;
 import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterDetailResponse;
+import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterListResponseDto;
 import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterResponseDto;
 import com.ttasum.memorial.service.recipientLetter.RecipientLetterService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,5 +39,15 @@ public class RecipientLetterController {
             @PathVariable Integer letterSeq) {
         RecipientLetterDetailResponse detailResponse = recipientLetterService.getLetterById(letterSeq);
         return ResponseEntity.status(HttpStatus.OK).body(detailResponse);
+    }
+
+    //목록(페이징 처리)
+    @GetMapping
+    public ResponseEntity<Page<RecipientLetterListResponseDto>> getLetters(
+            @ModelAttribute PageRequest pageRequest) {
+
+        Pageable pageable = pageRequest.toPageable("letterSeq");
+        Page<RecipientLetterListResponseDto> result = recipientLetterService.getAllLetters(pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 }
