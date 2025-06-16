@@ -3,6 +3,7 @@ package com.ttasum.memorial.domain.entity.heavenLetter;
 import com.ttasum.memorial.dto.heavenLetter.request.CommonCommentRequestDto;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Where(clause = "del_flag = 'N'")
 @Table(name = "tb25_411_heaven_letter_comment")
 public class HeavenLetterComment {
 
