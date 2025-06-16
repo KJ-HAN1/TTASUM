@@ -32,6 +32,7 @@ public class DonationStoryCommentController {
      */
     @PostMapping("/{storySeq}/comments")
     public ResponseEntity<ApiResponse> createComment(@PathVariable Integer storySeq, @RequestBody @Valid DonationStoryCommentCreateRequestDto dto) {
+
         try {
             log.info("POST /donationLetters/{}/comments - 댓글 등록 요청", storySeq);
             DonationStoryComment comment = commentService.createComment(storySeq, dto);
@@ -74,7 +75,6 @@ public class DonationStoryCommentController {
         } catch (BlameTextException e){
             throw new BlameTextException("비난하는 의도가 예상되는 글입니다. 관리자가 해당 글을 삭제할 수 있습니다.");
         }
-
     }
 
     /**
@@ -89,7 +89,7 @@ public class DonationStoryCommentController {
             @PathVariable Integer storySeq,
             @PathVariable Integer commentSeq,
             @Valid @RequestBody DonationStoryCommentDeleteRequestDto dto) {
-        log.info("DELETE /donationLetters/{}/comments/{} - 댓글 삭제 요청", storySeq, commentSeq);
+        log.debug("DELETE /donationLetters/{}/comments/{} - 댓글 삭제 요청", storySeq, commentSeq);
         commentService.softDeleteComment(storySeq, commentSeq, dto);
         return ResponseEntity.ok().body(ApiResponse.ok(
                 HttpStatus.OK.value(),

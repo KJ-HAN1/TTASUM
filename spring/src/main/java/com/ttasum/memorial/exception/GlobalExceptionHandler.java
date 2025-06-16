@@ -10,6 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.orm.jpa.JpaSystemException;
 import com.ttasum.memorial.dto.ApiResponse;
+import com.ttasum.memorial.dto.heavenLetter.response.CommonResultResponseDto;
+import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterCommentResponseDto;
+import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterResponseDto;
 import com.ttasum.memorial.exception.DonationStory.DonationStoryNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.FieldError;
@@ -67,6 +70,20 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
+    // HeavenLetter - 편지 조회 실패 (404 Not Found)
+    @ExceptionHandler(HeavenLetterNotFoundException.class)
+    public ResponseEntity<HeavenLetterResponseDto> handleLetterNotFound(HeavenLetterNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(HeavenLetterResponseDto.fail(404, ex.getMessage()));
+    }
+
+    // HeavenLetter - 비밀번호 인증 실패 (400 Bad Request)
+    @ExceptionHandler(InvalidPasswordException.class)
+    public ResponseEntity<CommonResultResponseDto> handleInvalidPassword(InvalidPasswordException ex) {
+        return ResponseEntity.badRequest()
+                .body(CommonResultResponseDto.fail(ex.getMessage()));
+    }
+  
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<?> handleInvalidJsonRequestException(HttpMessageNotReadableException ex) {
         return ResponseEntity.badRequest().body(
@@ -120,12 +137,34 @@ public class GlobalExceptionHandler {
                 ApiResponse.badRequest(e.getMessage())
         );
     }
-
-    // 서버 내부 오류 (500 Internal Server Error)
+  
+    // HeavenLetter - 댓글과 편지 번호 불일치 (409 Conflict)
+    @ExceptionHandler(HeavenLetterCommentMismatchException.class)
+    public ResponseEntity<HeavenLetterCommentResponseDto> handleCommentMismatch(HeavenLetterCommentMismatchException ex) {
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(HeavenLetterCommentResponseDto.fail(409, ex.getMessage()));
+    }
+    // HeavenLetter - 해당 댓글 없음 (404 Conflict)
+    @ExceptionHandler(HeavenLetterCommentNotFoundException.class)
+    public ResponseEntity<HeavenLetterCommentResponseDto> handleCommentNotFound(HeavenLetterCommentNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(HeavenLetterCommentResponseDto.fail(404, ex.getMessage()));
+    }
+    // HeavenLetter - 기증자 정보 없음 (404 Not Found)
+    @ExceptionHandler(MemorialNotFoundException.class)
+    public ResponseEntity<HeavenLetterResponseDto> handleMemorialNotFound(MemorialNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(HeavenLetterResponseDto.fail(404, ex.getMessage()));
+    }
+  
+     // 서버 내부 오류 (500 Internal Server Error)
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse> handleAll(Exception ex) {
         log.error("서버 내부 오류", ex);
         ApiResponse response = ApiResponse.serverError(null);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
+
 }
+
