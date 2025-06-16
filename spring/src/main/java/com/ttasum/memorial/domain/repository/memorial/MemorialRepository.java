@@ -5,13 +5,15 @@ import com.ttasum.memorial.dto.memorial.response.MemorialResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-// 기본 CRUD 기능 제공 JPA 리포지터리
-public interface MemorialRepository extends JpaRepository<Memorial, Integer> {
+@Repository
+public interface MemorialRepository extends JpaRepository<Memorial, Integer>, JpaSpecificationExecutor<Memorial> {
 
     @Query("""
         SELECT new com.ttasum.memorial.dto.memorial.response.MemorialResponseDto(
@@ -38,4 +40,5 @@ public interface MemorialRepository extends JpaRepository<Memorial, Integer> {
             Pageable pageable);
 
     Optional<Memorial> findByDonateSeqAndDelFlag(Integer donateSeq, String delFlag);
+
 }
