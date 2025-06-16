@@ -1,8 +1,11 @@
 package com.ttasum.memorial.controller.heavenLetter;
 
+import com.ttasum.memorial.domain.entity.heavenLetter.HeavenLetterComment;
+import com.ttasum.memorial.dto.ApiResponse;
 import com.ttasum.memorial.dto.heavenLetter.request.CommonCommentRequestDto;
 import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterCommentResponseDto;
 import com.ttasum.memorial.exception.heavenLetter.HeavenLetterCommentMismatchException;
+import com.ttasum.memorial.service.forbiddenWord.TestReviewService;
 import com.ttasum.memorial.service.heavenLetter.HeavenLetterCommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,21 +14,30 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import static com.ttasum.memorial.domain.type.BoardType.DONATION;
+import static com.ttasum.memorial.domain.type.BoardType.HEAVEN;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/heavenLetters/{letterSeq}/comments")
 public class HeavenLetterCommentController {
 
     private final HeavenLetterCommentService heavenLetterCommentService;
+    private final TestReviewService testReviewService;
 
     //등록
     @PostMapping
-    public ResponseEntity<HeavenLetterCommentResponseDto> createComment(
+    public ResponseEntity<?> createComment(
             @RequestBody @Valid CommonCommentRequestDto.CreateCommentRequest createCommentRequest) {
-        HeavenLetterCommentResponseDto createCommentResponse = heavenLetterCommentService.createComment(createCommentRequest);
+        HeavenLetterComment comment = heavenLetterCommentService.createComment(createCommentRequest);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(createCommentResponse);
-    }
+        // 비난글 AI 필터링 추가
+        testReviewService.saveCommentFromBlameTable(comment, true, HEAVEN.getType());
+
+        return ResponseEntity.ok().body(ApiResponse.ok(
+                HttpStatus.CREATED.value(),
+                "편지 댓글이 성공적으로 등록되었습니다."
+        ));    }
 
     // 수정 인증
     @PostMapping("/{commentSeq}/verifyPwd")
@@ -40,7 +52,7 @@ public class HeavenLetterCommentController {
 
     //댓글 수정
     @PatchMapping("/{commentSeq}")
-    public ResponseEntity<HeavenLetterCommentResponseDto> updateComment(
+    public ResponseEntity<?> updateComment(
             //값을 자바 변수로 맵핑
             @PathVariable Integer commentSeq,
             @RequestBody @Valid CommonCommentRequestDto.UpdateCommentRequest updateCommentRequest) {
@@ -52,9 +64,14 @@ public class HeavenLetterCommentController {
         // 실제 편지 번호는 본문에서 추출
         Integer letterSeq = updateCommentRequest.getLetterSeq();
 
-        HeavenLetterCommentResponseDto updateCommentResponse = heavenLetterCommentService.updateComment(commentSeq, letterSeq, updateCommentRequest);
+        HeavenLetterComment comment = heavenLetterCommentService.updateComment(commentSeq, letterSeq, updateCommentRequest);
+        // 비난글 AI 필터링 추가
+        testReviewService.saveCommentFromBlameTable(comment, true, HEAVEN.getType());
 
-        return ResponseEntity.status(HttpStatus.OK).body(updateCommentResponse);
+        return ResponseEntity.ok().body(ApiResponse.ok(
+                HttpStatus.OK.value(),
+                "스토리 댓글이 성공적으로 수정되었습니다."
+        ));
     }
 
     //댓글 삭제

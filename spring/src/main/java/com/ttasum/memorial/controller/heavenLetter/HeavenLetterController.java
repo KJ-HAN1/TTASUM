@@ -1,7 +1,10 @@
 package com.ttasum.memorial.controller.heavenLetter;
 
+import com.ttasum.memorial.domain.entity.heavenLetter.HeavenLetter;
+import com.ttasum.memorial.dto.ApiResponse;
 import com.ttasum.memorial.dto.heavenLetter.request.*;
 import com.ttasum.memorial.dto.heavenLetter.response.*;
+import com.ttasum.memorial.service.forbiddenWord.TestReviewService;
 import com.ttasum.memorial.service.heavenLetter.HeavenLetterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,20 +19,30 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import static com.ttasum.memorial.domain.type.BoardType.DONATION;
+import static com.ttasum.memorial.domain.type.BoardType.HEAVEN;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/heavenLetters")
 public class HeavenLetterController {
 
     private final HeavenLetterService heavenLetterService;
+    private final TestReviewService testReviewService;
 
     //등록
     @PostMapping
-    public ResponseEntity<HeavenLetterResponseDto> createLetter(
+    public ResponseEntity<?> createLetter(
             @RequestBody @Valid HeavenLetterRequestDto creatRequest) {
-        HeavenLetterResponseDto createResponse = heavenLetterService.createLetter(creatRequest);
+        HeavenLetter Story = heavenLetterService.createLetter(creatRequest);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(createResponse);
+        // 비난글 AI 필터링 추가
+        testReviewService.saveBoardFromBlameTable(Story, true, HEAVEN.getType());
+
+        return ResponseEntity.ok().body(ApiResponse.ok(
+                HttpStatus.CREATED.value(),
+                "스토리가 성공적으로 등록되었습니다."
+        ));
     }
 
     //추모관에서 등록하는 편지폼
@@ -68,7 +81,7 @@ public class HeavenLetterController {
 
     //편지 수정 (letterUpdate.html)
     @PatchMapping("/{letterSeq}")
-    public ResponseEntity<HeavenLetterUpdateResponsDto> updateLetter(
+    public ResponseEntity<?> updateLetter(
             //값을 자바 변수로 맵핑
             @PathVariable Integer letterSeq,
             @RequestBody @Valid HeavenLetterUpdateRequestDto heavenLetterUpdateRequestDto) {
@@ -76,10 +89,16 @@ public class HeavenLetterController {
         //letterSeq 값을 요청 DTO에 직접 주입
         heavenLetterUpdateRequestDto.setLetterSeq(letterSeq);
 
-        HeavenLetterUpdateResponsDto heavenLetterUpdateResponsDto = heavenLetterService.updateLetter(heavenLetterUpdateRequestDto);
+        HeavenLetter Story = heavenLetterService.updateLetter(heavenLetterUpdateRequestDto);
+
+        // 비난글 AI 필터링 추가
+        testReviewService.saveBoardFromBlameTable(Story, true, HEAVEN.getType());
 
         // return "redirect://";
-        return ResponseEntity.status(HttpStatus.OK).body(heavenLetterUpdateResponsDto);
+        return ResponseEntity.ok(ApiResponse.ok(
+                HttpStatus.OK.value(),
+                "스토리가 성공적으로 수정되었습니다."
+        ));
     }
 
     //편지 삭제
