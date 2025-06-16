@@ -38,7 +38,7 @@ public class MemorialController {
      */
     @GetMapping
     public ResponseEntity<Page<MemorialResponseDto>> getStories(
-            @RequestParam(defaultValue = "all") String donorName,
+            @RequestParam(required = false) String donorName,
             @RequestParam(required = false) String searchStart,
             @RequestParam(required = false) String searchEnd,
             @RequestParam(defaultValue = "0") int page,

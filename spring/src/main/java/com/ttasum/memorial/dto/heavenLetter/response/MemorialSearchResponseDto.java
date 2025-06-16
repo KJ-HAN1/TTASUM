@@ -1,18 +1,15 @@
 package com.ttasum.memorial.dto.heavenLetter.response;
 
-import com.ttasum.memorial.domain.entity.heavenLetter.Memorial;
+import com.ttasum.memorial.domain.entity.memorial.Memorial;
 import com.ttasum.memorial.util.NameMaskUtil;
 import lombok.*;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
 
 public class MemorialSearchResponseDto {
 
     private String donorName;
-    private LocalDate donateDate;
+    private String donateDate;
     private String genderFlag;
     private Integer donateAge;
 

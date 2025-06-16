@@ -1,10 +1,8 @@
 package com.ttasum.memorial.domain.entity.memorial;
 
-import jdk.jfr.Timestamp;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.ttasum.memorial.domain.entity.heavenLetter.HeavenLetter;
+import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -13,16 +11,23 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity
-@Table(name = "tb25_400_memorial")
 @Getter
+@Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
+@Table(name = "tb25_400_memorial")
 public class Memorial {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "donate_seq")
+    @Column(name = "donate_seq", nullable = false)
     private Integer donateSeq;
+
+    //반대쪽 엔티티의 필드명을 기준으로 연결하는 어노테이션
+    @OneToMany(mappedBy = "donateSeq")
+    //HeavenLetter를 heavenLetters라는 리스트에 담아서 가져옴
+    private List<HeavenLetter> heavenLetter1s;
 
     @Column(name = "donor_name", length = 150)
     private String donorName;
@@ -37,7 +42,7 @@ public class Memorial {
     private String areaCode;
 
     @Lob
-    @Column(name = "contents", columnDefinition = "TEXT")
+    @Column(name = "contents" , columnDefinition = "TEXT")
     private String contents;
 
     @Column(name = "file_name", length = 600)
@@ -49,6 +54,7 @@ public class Memorial {
     @Column(name = "writer", length = 150)
     private String writer;
 
+    //VARCHAR(8) 'yyyyMMdd' ↔ LocalDate (converter autoApply)
     @Column(name = "donate_date", length = 8)
     private String donateDate;
 
@@ -83,18 +89,19 @@ public class Memorial {
     @Column(name = "write_time", nullable = false, updatable = false)
     private LocalDateTime writeTime;
 
-    @Column(name = "writer_id", length = 60, nullable = false)
+    @Column(name = "writer_id", nullable = false, length = 60)
     private String writerId;
 
     @UpdateTimestamp
     @Column(name = "modify_time")
     private LocalDateTime modifyTime;
 
-    @Column(name = "modifier_id", length = 60)
+    @Column(name = "modifier_id", nullable = false, length = 60)
     private String modifierId;
 
-    @Column(name = "del_flag", length = 1, nullable = false)
-    private String delFlag = "N";
+    @ColumnDefault("'N'")
+    @Column(name = "del_flag", nullable = false, length = 1)
+    private String delFlag;
 
     @Column(name = "donor_birthdate")
     private LocalDate donorBirthdate;
@@ -163,4 +170,5 @@ public class Memorial {
                 break;
         }
     }
+
 }
