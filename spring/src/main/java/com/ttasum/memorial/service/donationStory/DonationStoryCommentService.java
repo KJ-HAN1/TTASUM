@@ -1,16 +1,16 @@
-package com.ttasum.memorial.service.DonationStory;
+package com.ttasum.memorial.service.donationStory;
 
-import com.ttasum.memorial.domain.entity.DonationStory.DonationStory;
-import com.ttasum.memorial.domain.entity.DonationStory.DonationStoryComment;
-import com.ttasum.memorial.domain.repository.DonationStory.DonationStoryCommentRepository;
-import com.ttasum.memorial.domain.repository.DonationStory.DonationStoryRepository;
-import com.ttasum.memorial.dto.DonationStoryComment.DonationStoryCommentCreateRequestDto;
-import com.ttasum.memorial.dto.DonationStoryComment.DonationStoryCommentDeleteRequestDto;
-import com.ttasum.memorial.dto.DonationStoryComment.DonationStoryCommentResponseDto;
-import com.ttasum.memorial.dto.DonationStoryComment.DonationStoryCommentUpdateRequestDto;
+import com.ttasum.memorial.domain.entity.donationStory.DonationStory;
+import com.ttasum.memorial.domain.entity.donationStory.DonationStoryComment;
+import com.ttasum.memorial.domain.repository.donationStory.DonationStoryCommentRepository;
+import com.ttasum.memorial.domain.repository.donationStory.DonationStoryRepository;
+import com.ttasum.memorial.dto.donationStoryComment.DonationStoryCommentCreateRequestDto;
+import com.ttasum.memorial.dto.donationStoryComment.DonationStoryCommentDeleteRequestDto;
+import com.ttasum.memorial.dto.donationStoryComment.DonationStoryCommentResponseDto;
+import com.ttasum.memorial.dto.donationStoryComment.DonationStoryCommentUpdateRequestDto;
 import com.ttasum.memorial.exception.CaptchaVerificationFailedException;
-import com.ttasum.memorial.exception.DonationStory.DonationStoryCommentNotFoundException;
-import com.ttasum.memorial.exception.DonationStory.DonationStoryNotFoundException;
+import com.ttasum.memorial.exception.donationStory.DonationStoryCommentNotFoundException;
+import com.ttasum.memorial.exception.donationStory.DonationStoryNotFoundException;
 import com.ttasum.memorial.service.common.CaptchaVerifier;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

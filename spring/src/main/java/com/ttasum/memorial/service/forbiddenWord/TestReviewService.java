@@ -2,11 +2,8 @@
 package com.ttasum.memorial.service.forbiddenWord;
 
 import com.ttasum.memorial.annotation.blameText.CheckBlameText;
-import com.ttasum.memorial.domain.Board;
 import com.ttasum.memorial.domain.entity.Comment;
-import com.ttasum.memorial.domain.entity.DonationStory.DonationStory;
 import com.ttasum.memorial.domain.entity.Story;
-import com.ttasum.memorial.domain.entity.blameText.BlameTextLetter;
 import com.ttasum.memorial.dto.ApiResponse;
 import com.ttasum.memorial.dto.forbiddenWord.ReviewRequestDto;
 import org.springframework.http.HttpStatus;

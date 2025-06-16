@@ -1,4 +1,4 @@
-package com.ttasum.memorial.dto.DonationStoryComment;
+package com.ttasum.memorial.dto.donationStoryComment;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,13 +7,13 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-// 댓글 수정 요청 dto
+// 댓글 등록 요청 dto
 @Getter
 @Setter
-public class DonationStoryCommentUpdateRequestDto {
+public class DonationStoryCommentCreateRequestDto {
 
-    @NotBlank(message = "작성자는 공백일 수 없습니다.")
-    @Size(max = 150, message = "작성자는 최대 150자까지 입력할 수 있습니다.")
+    @NotBlank
+    @Size(max = 150, message = "작성자명은 150자 이하로 입력해주세요.")
     private String commentWriter;
 
     @NotBlank(message = "패스워드는 필수 입력값입니다.")
@@ -24,7 +24,11 @@ public class DonationStoryCommentUpdateRequestDto {
     )
     private String commentPasscode;
 
-    @NotBlank(message = "내용은 공백일 수 없습니다.")
-    @Size(max = 3000, message = "내용은 최대 150자까지 입력할 수 있습니다.")
+    @NotBlank
+    @Size(max = 3000, message = "댓글 내용은 3000자 이하로 입력해주세요.")
     private String contents;
+
+//    @NotBlank(message = "캡차 토큰이 필요합니다.")
+    private String captchaToken;
+
 }

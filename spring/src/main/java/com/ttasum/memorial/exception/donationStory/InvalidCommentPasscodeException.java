@@ -1,4 +1,4 @@
-package com.ttasum.memorial.exception.DonationStory;
+package com.ttasum.memorial.exception.donationStory;
 
 public class InvalidCommentPasscodeException extends RuntimeException {
     public InvalidCommentPasscodeException(Integer commentSeq) {

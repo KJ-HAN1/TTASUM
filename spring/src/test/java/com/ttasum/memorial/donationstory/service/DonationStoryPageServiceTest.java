@@ -1,10 +1,10 @@
 package com.ttasum.memorial.donationstory.service;
 
-import com.ttasum.memorial.domain.entity.DonationStory.DonationStory;
-import com.ttasum.memorial.domain.repository.DonationStory.DonationStoryRepository;
-import com.ttasum.memorial.dto.DonationStory.DonationStoryResponseDto;
-import com.ttasum.memorial.dto.DonationStory.PageResponse;
-import com.ttasum.memorial.service.DonationStory.DonationStoryService;
+import com.ttasum.memorial.domain.entity.donationStory.DonationStory;
+import com.ttasum.memorial.domain.repository.donationStory.DonationStoryRepository;
+import com.ttasum.memorial.dto.donationStory.DonationStoryResponseDto;
+import com.ttasum.memorial.dto.donationStory.PageResponse;
+import com.ttasum.memorial.service.donationStory.DonationStoryService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

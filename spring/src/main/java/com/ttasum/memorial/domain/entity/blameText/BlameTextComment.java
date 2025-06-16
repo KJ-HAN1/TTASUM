@@ -1,7 +1,7 @@
 package com.ttasum.memorial.domain.entity.blameText;
 
 import com.ttasum.memorial.domain.entity.Contents;
-import com.ttasum.memorial.domain.entity.DonationStory.DonationStoryComment;
+import com.ttasum.memorial.domain.entity.donationStory.DonationStoryComment;
 import lombok.*;
 
 import javax.persistence.*;

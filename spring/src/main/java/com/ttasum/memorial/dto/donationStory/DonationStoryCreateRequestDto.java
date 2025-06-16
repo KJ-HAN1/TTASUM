@@ -1,6 +1,6 @@
-package com.ttasum.memorial.dto.DonationStory;
+package com.ttasum.memorial.dto.donationStory;
 
-import com.ttasum.memorial.domain.entity.DonationStory.DonationStory;
+import com.ttasum.memorial.domain.entity.donationStory.DonationStory;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

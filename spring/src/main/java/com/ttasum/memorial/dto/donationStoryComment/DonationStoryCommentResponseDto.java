@@ -1,4 +1,4 @@
-package com.ttasum.memorial.dto.DonationStoryComment;
+package com.ttasum.memorial.dto.donationStoryComment;
 
 import lombok.Builder;
 import lombok.Getter;
