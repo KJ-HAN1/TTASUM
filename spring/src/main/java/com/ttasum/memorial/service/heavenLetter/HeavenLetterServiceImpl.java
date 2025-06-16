@@ -1,8 +1,8 @@
 package com.ttasum.memorial.service.heavenLetter;
 
 import com.ttasum.memorial.domain.entity.heavenLetter.HeavenLetter;
-import com.ttasum.memorial.domain.entity.heavenLetter.Memorial;
-import com.ttasum.memorial.domain.repository.heavenLetter.MemorialRepository;
+import com.ttasum.memorial.domain.entity.memorial.Memorial;
+import com.ttasum.memorial.domain.repository.memorial.MemorialRepository;
 import com.ttasum.memorial.dto.heavenLetter.request.HeavenLetterRequestDto;
 import com.ttasum.memorial.dto.heavenLetter.request.HeavenLetterUpdateRequestDto;
 import com.ttasum.memorial.dto.heavenLetter.request.HeavenLetterVerifyRequestDto;
@@ -26,9 +26,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDateTime;
 import java.util.*;
-import java.security.SecureRandom;
 
 @Service
 //final 필드에 대해 생성자 주입 자동 생성
