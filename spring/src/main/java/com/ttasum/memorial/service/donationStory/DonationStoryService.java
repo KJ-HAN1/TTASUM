@@ -37,16 +37,17 @@ public class DonationStoryService {
     /**
      * 기증후 스토리 등록
      * @param dto 등록 요청용 dto
-     * @return 엔티티 -> dto 변환후 반환
      */
     @Transactional
-    public DonationStoryResponseDto createStory(DonationStoryCreateRequestDto dto){
+    public DonationStory createStory(DonationStoryCreateRequestDto dto){
         if (!captchaVerifier.verifyCaptcha(dto.getCaptchaToken())) {
             throw new CaptchaVerificationFailedException();
         }
+
         DonationStory story = dto.toEntity(); // DB 저장을 위해 Entity로 변환
-        DonationStory saved = donationStoryRepository.save(story);
-        return DonationStoryResponseDto.fromEntity(saved);
+        return donationStoryRepository.save(story);
+
+
     }
 
     /**
@@ -98,14 +99,14 @@ public class DonationStoryService {
      * @param dto 수정 요청 dto
      */
     @Transactional
-    public void updateStory(Integer storySeq, DonationStoryUpdateRequestDto dto) {
+    public DonationStory updateStory(Integer storySeq, DonationStoryUpdateRequestDto dto) {
 
         DonationStory story = donationStoryRepository.findByIdAndDelFlag(storySeq, "N")
                 .orElseThrow(() -> new DonationStoryNotFoundException(storySeq));
 
         // 엔티티 수정 - Dirty Checking 으로 변경 감지
         story.update(dto);
-
+        return story;
         // Dirty Checking 으로 자동 반영
         // donationStoryRepository.save(story);
     }

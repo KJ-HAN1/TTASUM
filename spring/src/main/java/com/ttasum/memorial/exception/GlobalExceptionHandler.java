@@ -2,6 +2,17 @@ package com.ttasum.memorial.exception;
 
 
 import com.ttasum.memorial.dto.common.ApiResponse;
+import com.ttasum.memorial.dto.blameText.ResponseDto;
+import com.ttasum.memorial.exception.blameText.*;
+import com.ttasum.memorial.exception.forbiddenWord.ForbiddenWordException;
+import com.ttasum.memorial.exception.heavenLetter.*;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.orm.jpa.JpaSystemException;
+import com.ttasum.memorial.dto.ApiResponse;
 import com.ttasum.memorial.dto.heavenLetter.response.CommonResultResponseDto;
 import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterCommentResponseDto;
 import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterResponseDto;
@@ -9,6 +20,7 @@ import com.ttasum.memorial.exception.common.badRequest.CaptchaVerificationFailed
 import com.ttasum.memorial.exception.common.notFound.NotFoundException;
 import com.ttasum.memorial.exception.donationStory.DonationStoryNotFoundException;
 import com.ttasum.memorial.exception.heavenLetter.*;
+import com.ttasum.memorial.exception.donationStory.DonationStoryNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
@@ -98,6 +110,61 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest()
                 .body(CommonResultResponseDto.fail(ex.getMessage()));
     }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<?> handleInvalidJsonRequestException(HttpMessageNotReadableException ex) {
+        return ResponseEntity.badRequest().body(
+                ApiResponse.badRequest(ex.getMessage()));
+    }
+
+    // 비난 글, 금칙어 확인 예외 처리 - 사용자에게 추가 메세지 전달
+    @ExceptionHandler(BlameTextException.class)
+    public ResponseEntity<?> handleBlameTextException(RuntimeException e) {
+        return ResponseEntity.ok().body(
+                ResponseDto.ok(e.getMessage()));
+    }
+
+    @ExceptionHandler({ForbiddenWordException.class,
+            MissingSentenceException.class,
+            InvalidBlameTextRequestException.class})
+    public ResponseEntity<?> handleForbiddenWordException(RuntimeException e) {
+        return ResponseEntity.badRequest().body(
+                ApiResponse.badRequest(e.getMessage()));
+    }
+
+    @ExceptionHandler({ExternalServerConnectionException.class,
+            ExternalServerTimeoutException.class,
+            BlameTextApiServerException.class})
+    public ResponseEntity<?> handleExternalServerConnectionException(RuntimeException e) {
+        return ResponseEntity.internalServerError().body(
+                ApiResponse.serverError(e.getMessage()));
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<?> handleIntegrityViolation(DataIntegrityViolationException e) {
+        return ResponseEntity.badRequest().body(
+                ApiResponse.badRequest("제약 조건 위반: 중복 또는 null 값 오류가 발생했습니다."));
+    }
+
+    @ExceptionHandler(JpaSystemException.class)
+    public ResponseEntity<?> handleJpaError(JpaSystemException e) {
+        return ResponseEntity.status(500).body(
+                ApiResponse.serverError("JPA 처리 중 시스템 오류 발생했습니다."));
+    }
+
+    @ExceptionHandler(DataAccessException.class)
+    public ResponseEntity<?> handleDataAccess(DataAccessException e) {
+        return ResponseEntity.status(500).body(
+                ApiResponse.serverError("데이터베이스 접근 중 오류가 발생했습니다."));
+    }
+
+    @ExceptionHandler(InvalidJsonRequestException.class)
+    public ResponseEntity<?> handleInvalidJsonRequestException(InvalidJsonRequestException e) {
+        return ResponseEntity.badRequest().body(
+                ApiResponse.badRequest(e.getMessage())
+        );
+    }
+
     // HeavenLetter - 댓글과 편지 번호 불일치 (409 Conflict)
     @ExceptionHandler(HeavenLetterCommentMismatchException.class)
     public ResponseEntity<HeavenLetterCommentResponseDto> handleCommentMismatch(HeavenLetterCommentMismatchException ex) {
@@ -116,6 +183,14 @@ public class GlobalExceptionHandler {
     public ResponseEntity<HeavenLetterResponseDto> handleMemorialNotFound(MemorialNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(HeavenLetterResponseDto.fail(404, ex.getMessage()));
+    }
+
+     // 서버 내부 오류 (500 Internal Server Error)
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiResponse> handleAll(Exception ex) {
+        log.error("서버 내부 오류", ex);
+        ApiResponse response = ApiResponse.serverError(null);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 
 }
