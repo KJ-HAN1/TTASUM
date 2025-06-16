@@ -10,15 +10,6 @@ import com.ttasum.memorial.dto.donationStoryComment.request.DonationStoryComment
 import com.ttasum.memorial.dto.donationStoryComment.response.DonationStoryCommentResponseDto;
 import com.ttasum.memorial.exception.common.badRequest.CaptchaVerificationFailedException;
 import com.ttasum.memorial.exception.common.badRequest.InvalidCommentPasscodeException;
-import com.ttasum.memorial.domain.entity.donationStory.DonationStory;
-import com.ttasum.memorial.domain.entity.donationStory.DonationStoryComment;
-import com.ttasum.memorial.domain.repository.donationStory.DonationStoryCommentRepository;
-import com.ttasum.memorial.domain.repository.donationStory.DonationStoryRepository;
-import com.ttasum.memorial.dto.donationStoryComment.DonationStoryCommentCreateRequestDto;
-import com.ttasum.memorial.dto.donationStoryComment.DonationStoryCommentDeleteRequestDto;
-import com.ttasum.memorial.dto.donationStoryComment.DonationStoryCommentResponseDto;
-import com.ttasum.memorial.dto.donationStoryComment.DonationStoryCommentUpdateRequestDto;
-import com.ttasum.memorial.exception.CaptchaVerificationFailedException;
 import com.ttasum.memorial.exception.donationStory.DonationStoryCommentNotFoundException;
 import com.ttasum.memorial.exception.donationStory.DonationStoryNotFoundException;
 import com.ttasum.memorial.service.common.CaptchaVerifier;

@@ -4,6 +4,7 @@ package com.ttasum.memorial.exception;
 import com.ttasum.memorial.dto.common.ApiResponse;
 import com.ttasum.memorial.dto.blameText.ResponseDto;
 import com.ttasum.memorial.exception.blameText.*;
+import com.ttasum.memorial.exception.common.badRequest.BadRequestException;
 import com.ttasum.memorial.exception.forbiddenWord.ForbiddenWordException;
 import com.ttasum.memorial.exception.heavenLetter.*;
 import org.springframework.dao.DataAccessException;
@@ -12,19 +13,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.orm.jpa.JpaSystemException;
-import com.ttasum.memorial.dto.ApiResponse;
 import com.ttasum.memorial.dto.heavenLetter.response.CommonResultResponseDto;
 import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterCommentResponseDto;
 import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterResponseDto;
-import com.ttasum.memorial.exception.common.badRequest.CaptchaVerificationFailedException;
 import com.ttasum.memorial.exception.common.notFound.NotFoundException;
-import com.ttasum.memorial.exception.donationStory.DonationStoryNotFoundException;
-import com.ttasum.memorial.exception.heavenLetter.*;
-import com.ttasum.memorial.exception.donationStory.DonationStoryNotFoundException;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.BadRequestException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -90,13 +83,6 @@ public class GlobalExceptionHandler {
                 .body(HeavenLetterResponseDto.fail(400,e.getMessage()));
     }
 
-    //서버 오류
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<HeavenLetterResponseDto> handleException(Exception e){
-        return ResponseEntity
-                .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(HeavenLetterResponseDto.fail(500,"서버 내부 오류가 발생했습니다"));
-    }
     // HeavenLetter - 편지 조회 실패 (404 Not Found)
     @ExceptionHandler(HeavenLetterNotFoundException.class)
     public ResponseEntity<HeavenLetterResponseDto> handleLetterNotFound(HeavenLetterNotFoundException ex) {
