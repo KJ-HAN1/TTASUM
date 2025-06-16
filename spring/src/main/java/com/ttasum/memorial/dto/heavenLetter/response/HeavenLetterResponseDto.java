@@ -57,7 +57,7 @@ public class HeavenLetterResponseDto {
         private List<HeavenLetterCommentResponseDto.CommentListResponse> comments;
 
         public HeavenLetterDetailResponse(HeavenLetter heavenLetter) {
-            this.letterSeq = heavenLetter.getLetterSeq();
+            this.letterSeq = heavenLetter.getId();
 //            this.donateSeq = heavenLetter.getDonateSeq().getDonateSeq() != null ? heavenLetter.getDonateSeq().getDonateSeq() : null;
             Memorial memorial = heavenLetter.getDonateSeq();
             this.donateSeq = (memorial != null && memorial.getDonateSeq() != null)
@@ -76,7 +76,7 @@ public class HeavenLetterResponseDto {
             );
             this.anonymityFlag = heavenLetter.getAnonymityFlag();
             this.readCount = heavenLetter.getReadCount();
-            this.letterContents = heavenLetter.getLetterContents();
+            this.letterContents = heavenLetter.getContents();
             this.fileName = heavenLetter.getFileName();
             this.orgFileName = heavenLetter.getOrgFileName();
             this.writeTime = heavenLetter.getWriteTime();
@@ -102,7 +102,7 @@ public class HeavenLetterResponseDto {
         private Integer readCount;
 
         public HeavenLetterListResponse(HeavenLetter heavenLetter) {
-            this.letterSeq = heavenLetter.getLetterSeq();
+            this.letterSeq = heavenLetter.getId();
 //            this.donateSeq = heavenLetter.getDonateSeq().getDonateSeq() != null ? heavenLetter.getDonateSeq().getDonateSeq() : null;
             Memorial memorial = heavenLetter.getDonateSeq();
             this.donateSeq = (memorial != null && memorial.getDonateSeq() != null)
