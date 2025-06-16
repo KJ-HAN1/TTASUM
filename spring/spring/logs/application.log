@@ -5175,3 +5175,344 @@ com.ttasum.memorial.exception.heavenLetter.HeavenLetterCommentMismatchException:
 2025-06-16 07:56:57 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
 2025-06-16 07:56:57 INFO  [restartedMain] c.t.memorial.MemorialApplication - Started MemorialApplication in 1.244 seconds (JVM running for 13326.506)
 2025-06-16 07:56:57 INFO  [restartedMain] o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-06-16 08:02:34 INFO  [File Watcher] o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2025-06-16 08:02:34 INFO  [Thread-111] o.a.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:02:34 INFO  [Thread-111] o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2025-06-16 08:02:34 INFO  [Thread-111] o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:02:34 INFO  [Thread-111] o.a.coyote.http11.Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:02:34 INFO  [Thread-111] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-16 08:02:34 INFO  [Thread-111] com.zaxxer.hikari.HikariDataSource - HikariPool-28 - Shutdown initiated...
+2025-06-16 08:02:34 INFO  [Thread-111] com.zaxxer.hikari.HikariDataSource - HikariPool-28 - Shutdown completed.
+2025-06-16 08:02:34 INFO  [restartedMain] c.t.memorial.MemorialApplication - Starting MemorialApplication using Java 17.0.12 on DESKTOP-JH6PQI3 with PID 18684 (C:\DBE_Final_Project\spring\build\classes\java\main started by user in C:\DBE_Final_Project\spring)
+2025-06-16 08:02:34 INFO  [restartedMain] c.t.memorial.MemorialApplication - No active profile set, falling back to 1 default profile: "default"
+2025-06-16 08:02:34 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-16 08:02:34 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 15 ms. Found 6 JPA repository interfaces.
+2025-06-16 08:02:34 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2025-06-16 08:02:34 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:02:34 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-16 08:02:34 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2025-06-16 08:02:34 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-16 08:02:34 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 258 ms
+2025-06-16 08:02:34 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-16 08:02:34 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-29 - Starting...
+2025-06-16 08:02:34 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-29 - Start completed.
+2025-06-16 08:02:34 INFO  [restartedMain] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2025-06-16 08:02:34 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-06-16 08:02:34 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-16 08:02:35 WARN  [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-16 08:02:35 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-06-16 08:02:35 WARN  [restartedMain] o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-06-16 08:02:35 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:02:35 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2025-06-16 08:02:35 INFO  [restartedMain] c.t.memorial.MemorialApplication - Started MemorialApplication in 1.172 seconds (JVM running for 13664.238)
+2025-06-16 08:02:35 INFO  [restartedMain] o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-06-16 08:06:25 INFO  [File Watcher] o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 1 deletion, 0 modifications)
+2025-06-16 08:06:25 INFO  [Thread-115] o.a.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:06:25 INFO  [Thread-115] o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2025-06-16 08:06:25 INFO  [Thread-115] o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:06:25 INFO  [Thread-115] o.a.coyote.http11.Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:06:25 INFO  [Thread-115] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-16 08:06:25 INFO  [Thread-115] com.zaxxer.hikari.HikariDataSource - HikariPool-29 - Shutdown initiated...
+2025-06-16 08:06:25 INFO  [Thread-115] com.zaxxer.hikari.HikariDataSource - HikariPool-29 - Shutdown completed.
+2025-06-16 08:06:25 INFO  [restartedMain] c.t.memorial.MemorialApplication - Starting MemorialApplication using Java 17.0.12 on DESKTOP-JH6PQI3 with PID 18684 (C:\DBE_Final_Project\spring\build\classes\java\main started by user in C:\DBE_Final_Project\spring)
+2025-06-16 08:06:25 INFO  [restartedMain] c.t.memorial.MemorialApplication - No active profile set, falling back to 1 default profile: "default"
+2025-06-16 08:06:25 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-16 08:06:25 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 15 ms. Found 6 JPA repository interfaces.
+2025-06-16 08:06:25 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2025-06-16 08:06:25 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:06:25 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-16 08:06:25 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2025-06-16 08:06:25 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-16 08:06:25 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 289 ms
+2025-06-16 08:06:25 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-16 08:06:25 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-30 - Starting...
+2025-06-16 08:06:25 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-30 - Start completed.
+2025-06-16 08:06:25 INFO  [restartedMain] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2025-06-16 08:06:26 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-06-16 08:06:26 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-16 08:06:26 WARN  [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-16 08:06:26 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-06-16 08:06:26 WARN  [restartedMain] o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-06-16 08:06:26 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:06:26 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2025-06-16 08:06:26 INFO  [restartedMain] c.t.memorial.MemorialApplication - Started MemorialApplication in 1.161 seconds (JVM running for 13895.431)
+2025-06-16 08:06:26 INFO  [restartedMain] o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-06-16 08:06:28 INFO  [File Watcher] o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (1 addition, 0 deletions, 0 modifications)
+2025-06-16 08:06:28 INFO  [Thread-119] o.a.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:06:28 INFO  [Thread-119] o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2025-06-16 08:06:28 INFO  [Thread-119] o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:06:28 INFO  [Thread-119] o.a.coyote.http11.Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:06:28 INFO  [Thread-119] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-16 08:06:28 INFO  [Thread-119] com.zaxxer.hikari.HikariDataSource - HikariPool-30 - Shutdown initiated...
+2025-06-16 08:06:28 INFO  [Thread-119] com.zaxxer.hikari.HikariDataSource - HikariPool-30 - Shutdown completed.
+2025-06-16 08:06:28 INFO  [restartedMain] c.t.memorial.MemorialApplication - Starting MemorialApplication using Java 17.0.12 on DESKTOP-JH6PQI3 with PID 18684 (C:\DBE_Final_Project\spring\build\classes\java\main started by user in C:\DBE_Final_Project\spring)
+2025-06-16 08:06:28 INFO  [restartedMain] c.t.memorial.MemorialApplication - No active profile set, falling back to 1 default profile: "default"
+2025-06-16 08:06:28 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-16 08:06:28 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 14 ms. Found 6 JPA repository interfaces.
+2025-06-16 08:06:28 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2025-06-16 08:06:28 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:06:28 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-16 08:06:28 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2025-06-16 08:06:28 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-16 08:06:28 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 226 ms
+2025-06-16 08:06:28 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-16 08:06:28 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-31 - Starting...
+2025-06-16 08:06:28 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-31 - Start completed.
+2025-06-16 08:06:28 INFO  [restartedMain] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2025-06-16 08:06:28 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-06-16 08:06:28 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-16 08:06:29 WARN  [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-16 08:06:29 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-06-16 08:06:29 WARN  [restartedMain] o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-06-16 08:06:29 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:06:29 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2025-06-16 08:06:29 INFO  [restartedMain] c.t.memorial.MemorialApplication - Started MemorialApplication in 1.117 seconds (JVM running for 13898.029)
+2025-06-16 08:06:29 INFO  [restartedMain] o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-06-16 08:22:16 INFO  [File Watcher] o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2025-06-16 08:22:16 INFO  [Thread-123] o.a.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:22:16 INFO  [Thread-123] o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2025-06-16 08:22:16 INFO  [Thread-123] o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:22:16 INFO  [Thread-123] o.a.coyote.http11.Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:22:16 INFO  [Thread-123] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-16 08:22:16 INFO  [Thread-123] com.zaxxer.hikari.HikariDataSource - HikariPool-31 - Shutdown initiated...
+2025-06-16 08:22:16 INFO  [Thread-123] com.zaxxer.hikari.HikariDataSource - HikariPool-31 - Shutdown completed.
+2025-06-16 08:22:16 INFO  [restartedMain] c.t.memorial.MemorialApplication - Starting MemorialApplication using Java 17.0.12 on DESKTOP-JH6PQI3 with PID 18684 (C:\DBE_Final_Project\spring\build\classes\java\main started by user in C:\DBE_Final_Project\spring)
+2025-06-16 08:22:16 INFO  [restartedMain] c.t.memorial.MemorialApplication - No active profile set, falling back to 1 default profile: "default"
+2025-06-16 08:22:16 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-16 08:22:16 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 18 ms. Found 6 JPA repository interfaces.
+2025-06-16 08:22:16 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2025-06-16 08:22:16 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:22:16 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-16 08:22:16 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2025-06-16 08:22:16 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-16 08:22:16 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 246 ms
+2025-06-16 08:22:16 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-16 08:22:16 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-32 - Starting...
+2025-06-16 08:22:16 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-32 - Start completed.
+2025-06-16 08:22:16 INFO  [restartedMain] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2025-06-16 08:22:17 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-06-16 08:22:17 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-16 08:22:17 WARN  [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-16 08:22:17 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-06-16 08:22:17 WARN  [restartedMain] o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-06-16 08:22:17 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:22:17 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2025-06-16 08:22:17 INFO  [restartedMain] c.t.memorial.MemorialApplication - Started MemorialApplication in 1.391 seconds (JVM running for 14846.572)
+2025-06-16 08:22:17 INFO  [restartedMain] o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-06-16 08:25:51 INFO  [File Watcher] o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2025-06-16 08:25:51 INFO  [Thread-127] o.a.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:25:51 INFO  [Thread-127] o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2025-06-16 08:25:51 INFO  [Thread-127] o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:25:51 INFO  [Thread-127] o.a.coyote.http11.Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:25:51 INFO  [Thread-127] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-16 08:25:51 INFO  [Thread-127] com.zaxxer.hikari.HikariDataSource - HikariPool-32 - Shutdown initiated...
+2025-06-16 08:25:51 INFO  [Thread-127] com.zaxxer.hikari.HikariDataSource - HikariPool-32 - Shutdown completed.
+2025-06-16 08:25:52 INFO  [restartedMain] c.t.memorial.MemorialApplication - Starting MemorialApplication using Java 17.0.12 on DESKTOP-JH6PQI3 with PID 18684 (C:\DBE_Final_Project\spring\build\classes\java\main started by user in C:\DBE_Final_Project\spring)
+2025-06-16 08:25:52 INFO  [restartedMain] c.t.memorial.MemorialApplication - No active profile set, falling back to 1 default profile: "default"
+2025-06-16 08:25:52 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-16 08:25:52 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 14 ms. Found 6 JPA repository interfaces.
+2025-06-16 08:25:52 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2025-06-16 08:25:52 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:25:52 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-16 08:25:52 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2025-06-16 08:25:52 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-16 08:25:52 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 239 ms
+2025-06-16 08:25:52 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-16 08:25:52 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-33 - Starting...
+2025-06-16 08:25:52 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-33 - Start completed.
+2025-06-16 08:25:52 INFO  [restartedMain] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2025-06-16 08:25:52 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-06-16 08:25:52 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-16 08:25:52 WARN  [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-16 08:25:53 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-06-16 08:25:53 WARN  [restartedMain] o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-06-16 08:25:53 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:25:53 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2025-06-16 08:25:53 INFO  [restartedMain] c.t.memorial.MemorialApplication - Started MemorialApplication in 1.181 seconds (JVM running for 15062.045)
+2025-06-16 08:25:53 INFO  [restartedMain] o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-06-16 08:27:57 INFO  [File Watcher] o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2025-06-16 08:27:57 INFO  [Thread-131] o.a.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:27:57 INFO  [Thread-131] o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2025-06-16 08:27:57 INFO  [Thread-131] o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:27:57 INFO  [Thread-131] o.a.coyote.http11.Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:27:57 INFO  [Thread-131] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-16 08:27:57 INFO  [Thread-131] com.zaxxer.hikari.HikariDataSource - HikariPool-33 - Shutdown initiated...
+2025-06-16 08:27:57 INFO  [Thread-131] com.zaxxer.hikari.HikariDataSource - HikariPool-33 - Shutdown completed.
+2025-06-16 08:27:57 INFO  [restartedMain] c.t.memorial.MemorialApplication - Starting MemorialApplication using Java 17.0.12 on DESKTOP-JH6PQI3 with PID 18684 (C:\DBE_Final_Project\spring\build\classes\java\main started by user in C:\DBE_Final_Project\spring)
+2025-06-16 08:27:57 INFO  [restartedMain] c.t.memorial.MemorialApplication - No active profile set, falling back to 1 default profile: "default"
+2025-06-16 08:27:57 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-16 08:27:57 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 12 ms. Found 6 JPA repository interfaces.
+2025-06-16 08:27:57 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2025-06-16 08:27:57 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:27:57 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-16 08:27:57 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2025-06-16 08:27:57 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-16 08:27:57 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 228 ms
+2025-06-16 08:27:57 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-16 08:27:57 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-34 - Starting...
+2025-06-16 08:27:58 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-34 - Start completed.
+2025-06-16 08:27:58 INFO  [restartedMain] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2025-06-16 08:27:58 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-06-16 08:27:58 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-16 08:27:58 WARN  [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-16 08:27:58 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-06-16 08:27:58 WARN  [restartedMain] o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-06-16 08:27:58 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:27:58 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2025-06-16 08:27:58 INFO  [restartedMain] c.t.memorial.MemorialApplication - Started MemorialApplication in 1.065 seconds (JVM running for 15187.549)
+2025-06-16 08:27:58 INFO  [restartedMain] o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-06-16 08:28:14 INFO  [File Watcher] o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2025-06-16 08:28:14 INFO  [Thread-135] o.a.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:28:14 INFO  [Thread-135] o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2025-06-16 08:28:14 INFO  [Thread-135] o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:28:14 INFO  [Thread-135] o.a.coyote.http11.Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:28:14 INFO  [Thread-135] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-16 08:28:14 INFO  [Thread-135] com.zaxxer.hikari.HikariDataSource - HikariPool-34 - Shutdown initiated...
+2025-06-16 08:28:14 INFO  [Thread-135] com.zaxxer.hikari.HikariDataSource - HikariPool-34 - Shutdown completed.
+2025-06-16 08:28:14 INFO  [restartedMain] c.t.memorial.MemorialApplication - Starting MemorialApplication using Java 17.0.12 on DESKTOP-JH6PQI3 with PID 18684 (C:\DBE_Final_Project\spring\build\classes\java\main started by user in C:\DBE_Final_Project\spring)
+2025-06-16 08:28:14 INFO  [restartedMain] c.t.memorial.MemorialApplication - No active profile set, falling back to 1 default profile: "default"
+2025-06-16 08:28:14 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-16 08:28:14 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 12 ms. Found 6 JPA repository interfaces.
+2025-06-16 08:28:14 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2025-06-16 08:28:14 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:28:14 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-16 08:28:14 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2025-06-16 08:28:14 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-16 08:28:14 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 237 ms
+2025-06-16 08:28:15 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-16 08:28:15 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-35 - Starting...
+2025-06-16 08:28:15 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-35 - Start completed.
+2025-06-16 08:28:15 INFO  [restartedMain] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2025-06-16 08:28:15 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-06-16 08:28:15 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-16 08:28:15 WARN  [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-16 08:28:15 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-06-16 08:28:15 WARN  [restartedMain] o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-06-16 08:28:15 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:28:15 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2025-06-16 08:28:15 INFO  [restartedMain] c.t.memorial.MemorialApplication - Started MemorialApplication in 1.179 seconds (JVM running for 15204.673)
+2025-06-16 08:28:15 INFO  [restartedMain] o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-06-16 08:41:30 INFO  [File Watcher] o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2025-06-16 08:41:30 INFO  [Thread-139] o.a.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:41:30 INFO  [Thread-139] o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2025-06-16 08:41:30 INFO  [Thread-139] o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:41:30 INFO  [Thread-139] o.a.coyote.http11.Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:41:30 INFO  [Thread-139] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-16 08:41:30 INFO  [Thread-139] com.zaxxer.hikari.HikariDataSource - HikariPool-35 - Shutdown initiated...
+2025-06-16 08:41:30 INFO  [Thread-139] com.zaxxer.hikari.HikariDataSource - HikariPool-35 - Shutdown completed.
+2025-06-16 08:41:30 INFO  [restartedMain] c.t.memorial.MemorialApplication - Starting MemorialApplication using Java 17.0.12 on DESKTOP-JH6PQI3 with PID 18684 (C:\DBE_Final_Project\spring\build\classes\java\main started by user in C:\DBE_Final_Project\spring)
+2025-06-16 08:41:30 INFO  [restartedMain] c.t.memorial.MemorialApplication - No active profile set, falling back to 1 default profile: "default"
+2025-06-16 08:41:30 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-16 08:41:30 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 14 ms. Found 6 JPA repository interfaces.
+2025-06-16 08:41:30 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2025-06-16 08:41:30 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:41:30 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-16 08:41:30 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2025-06-16 08:41:30 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-16 08:41:30 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 256 ms
+2025-06-16 08:41:30 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-16 08:41:30 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-36 - Starting...
+2025-06-16 08:41:31 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-36 - Start completed.
+2025-06-16 08:41:31 INFO  [restartedMain] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2025-06-16 08:41:31 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-06-16 08:41:31 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-16 08:41:31 WARN  [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-16 08:41:31 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-06-16 08:41:31 WARN  [restartedMain] o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-06-16 08:41:31 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:41:31 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2025-06-16 08:41:31 INFO  [restartedMain] c.t.memorial.MemorialApplication - Started MemorialApplication in 1.219 seconds (JVM running for 16000.588)
+2025-06-16 08:41:31 INFO  [restartedMain] o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-06-16 08:51:39 INFO  [File Watcher] o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2025-06-16 08:51:39 INFO  [Thread-143] o.a.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:51:39 INFO  [Thread-143] o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2025-06-16 08:51:39 INFO  [Thread-143] o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:51:39 INFO  [Thread-143] o.a.coyote.http11.Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:51:39 INFO  [Thread-143] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-16 08:51:39 INFO  [Thread-143] com.zaxxer.hikari.HikariDataSource - HikariPool-36 - Shutdown initiated...
+2025-06-16 08:51:39 INFO  [Thread-143] com.zaxxer.hikari.HikariDataSource - HikariPool-36 - Shutdown completed.
+2025-06-16 08:51:39 INFO  [restartedMain] c.t.memorial.MemorialApplication - Starting MemorialApplication using Java 17.0.12 on DESKTOP-JH6PQI3 with PID 18684 (C:\DBE_Final_Project\spring\build\classes\java\main started by user in C:\DBE_Final_Project\spring)
+2025-06-16 08:51:39 INFO  [restartedMain] c.t.memorial.MemorialApplication - No active profile set, falling back to 1 default profile: "default"
+2025-06-16 08:51:39 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-16 08:51:39 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 14 ms. Found 6 JPA repository interfaces.
+2025-06-16 08:51:39 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2025-06-16 08:51:39 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:51:39 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-16 08:51:39 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2025-06-16 08:51:39 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-16 08:51:39 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 253 ms
+2025-06-16 08:51:39 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-16 08:51:39 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-37 - Starting...
+2025-06-16 08:51:39 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-37 - Start completed.
+2025-06-16 08:51:39 INFO  [restartedMain] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2025-06-16 08:51:40 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-06-16 08:51:40 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-16 08:51:40 WARN  [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-16 08:51:40 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-06-16 08:51:40 WARN  [restartedMain] o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-06-16 08:51:40 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:51:40 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2025-06-16 08:51:40 INFO  [restartedMain] c.t.memorial.MemorialApplication - Started MemorialApplication in 1.151 seconds (JVM running for 16609.49)
+2025-06-16 08:51:40 INFO  [restartedMain] o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-06-16 08:52:36 INFO  [File Watcher] o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2025-06-16 08:52:36 INFO  [Thread-147] o.a.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:52:36 INFO  [Thread-147] o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2025-06-16 08:52:36 INFO  [Thread-147] o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:52:36 INFO  [Thread-147] o.a.coyote.http11.Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:52:36 INFO  [Thread-147] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-16 08:52:36 INFO  [Thread-147] com.zaxxer.hikari.HikariDataSource - HikariPool-37 - Shutdown initiated...
+2025-06-16 08:52:36 INFO  [Thread-147] com.zaxxer.hikari.HikariDataSource - HikariPool-37 - Shutdown completed.
+2025-06-16 08:52:37 INFO  [restartedMain] c.t.memorial.MemorialApplication - Starting MemorialApplication using Java 17.0.12 on DESKTOP-JH6PQI3 with PID 18684 (C:\DBE_Final_Project\spring\build\classes\java\main started by user in C:\DBE_Final_Project\spring)
+2025-06-16 08:52:37 INFO  [restartedMain] c.t.memorial.MemorialApplication - No active profile set, falling back to 1 default profile: "default"
+2025-06-16 08:52:37 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-16 08:52:37 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 13 ms. Found 6 JPA repository interfaces.
+2025-06-16 08:52:37 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2025-06-16 08:52:37 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:52:37 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-16 08:52:37 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2025-06-16 08:52:37 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-16 08:52:37 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 234 ms
+2025-06-16 08:52:37 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-16 08:52:37 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-38 - Starting...
+2025-06-16 08:52:37 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-38 - Start completed.
+2025-06-16 08:52:37 INFO  [restartedMain] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2025-06-16 08:52:37 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-06-16 08:52:37 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-16 08:52:38 WARN  [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-16 08:52:38 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-06-16 08:52:38 WARN  [restartedMain] o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-06-16 08:52:38 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:52:38 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2025-06-16 08:52:38 INFO  [restartedMain] c.t.memorial.MemorialApplication - Started MemorialApplication in 1.128 seconds (JVM running for 16667.021)
+2025-06-16 08:52:38 INFO  [restartedMain] o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-06-16 08:55:19 INFO  [File Watcher] o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2025-06-16 08:55:19 INFO  [Thread-151] o.a.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:55:19 INFO  [Thread-151] o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2025-06-16 08:55:19 INFO  [Thread-151] o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:55:19 INFO  [Thread-151] o.a.coyote.http11.Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:55:19 INFO  [Thread-151] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-16 08:55:19 INFO  [Thread-151] com.zaxxer.hikari.HikariDataSource - HikariPool-38 - Shutdown initiated...
+2025-06-16 08:55:19 INFO  [Thread-151] com.zaxxer.hikari.HikariDataSource - HikariPool-38 - Shutdown completed.
+2025-06-16 08:55:19 INFO  [restartedMain] c.t.memorial.MemorialApplication - Starting MemorialApplication using Java 17.0.12 on DESKTOP-JH6PQI3 with PID 18684 (C:\DBE_Final_Project\spring\build\classes\java\main started by user in C:\DBE_Final_Project\spring)
+2025-06-16 08:55:19 INFO  [restartedMain] c.t.memorial.MemorialApplication - No active profile set, falling back to 1 default profile: "default"
+2025-06-16 08:55:19 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-16 08:55:20 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 13 ms. Found 6 JPA repository interfaces.
+2025-06-16 08:55:20 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2025-06-16 08:55:20 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:55:20 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-16 08:55:20 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2025-06-16 08:55:20 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-16 08:55:20 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 230 ms
+2025-06-16 08:55:20 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-16 08:55:20 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-39 - Starting...
+2025-06-16 08:55:20 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-39 - Start completed.
+2025-06-16 08:55:20 INFO  [restartedMain] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2025-06-16 08:55:20 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-06-16 08:55:20 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-16 08:55:20 WARN  [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-16 08:55:20 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-06-16 08:55:20 WARN  [restartedMain] o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-06-16 08:55:20 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-06-16 08:55:20 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2025-06-16 08:55:20 INFO  [restartedMain] c.t.memorial.MemorialApplication - Started MemorialApplication in 1.098 seconds (JVM running for 16829.697)
+2025-06-16 08:55:20 INFO  [restartedMain] o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged

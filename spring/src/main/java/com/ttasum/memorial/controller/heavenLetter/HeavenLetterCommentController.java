@@ -21,45 +21,25 @@ public class HeavenLetterCommentController {
     //등록
     @PostMapping
     public ResponseEntity<HeavenLetterCommentResponseDto> createComment(
-            @RequestBody @Valid CommonCommentRequestDto.CreateCommentRequest createCommentRequest){
+            @RequestBody @Valid CommonCommentRequestDto.CreateCommentRequest createCommentRequest) {
         HeavenLetterCommentResponseDto createCommentResponse = heavenLetterCommentService.createComment(createCommentRequest);
 
-        //상태코드 분기 처리
-        HttpStatus status;
-
-        //등록 성공
-        if(createCommentResponse.getCode() == 201){
-            status = HttpStatus.CREATED;
-        }
-        //등록 실패
-        else if (createCommentResponse.getCode() == 400) {
-            status = HttpStatus.BAD_REQUEST;
-        }else if (createCommentResponse.getCode() == 500) {
-            status = HttpStatus.INTERNAL_SERVER_ERROR;
-        }else{
-            status = HttpStatus.BAD_REQUEST;
-        }
-        return ResponseEntity.status(status).body(createCommentResponse);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createCommentResponse);
     }
+
     // 수정 인증
     @PostMapping("/{commentSeq}/verifyPwd")
     public ResponseEntity<HeavenLetterCommentResponseDto.CommentVerifyResponse> verifyCommentPasscode(
             @PathVariable Integer commentSeq,
             @RequestBody @Valid CommonCommentRequestDto.CommentVerifyRequest commentVerifyRequest) {
-//
-//        commentVerifyRequest.setCommentSeq(commentSeq);
-        //verify -> verified 확인
-        boolean verified = heavenLetterCommentService.verifyCommentPasscode(
-                commentSeq , commentVerifyRequest.getCommentPasscode());
 
-        // 위의 결과에 따른 bad response
-        if(!verified){
-            return ResponseEntity.badRequest().body(HeavenLetterCommentResponseDto.CommentVerifyResponse.fail("비밀번호가 일치하지 않습니다."));
-        }
+        heavenLetterCommentService.verifyCommentPasscode(commentSeq, commentVerifyRequest.getCommentPasscode());
+
         return ResponseEntity.status(HttpStatus.OK).body(HeavenLetterCommentResponseDto.CommentVerifyResponse.success("비밀번호가 일치합니다."));
     }
+
     //댓글 수정
-    @PatchMapping ("/{commentSeq}")
+    @PatchMapping("/{commentSeq}")
     public ResponseEntity<HeavenLetterCommentResponseDto> updateComment(
             //값을 자바 변수로 맵핑
             @PathVariable Integer commentSeq,
@@ -74,7 +54,7 @@ public class HeavenLetterCommentController {
 
         HeavenLetterCommentResponseDto updateCommentResponse = heavenLetterCommentService.updateComment(commentSeq, letterSeq, updateCommentRequest);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(updateCommentResponse);
+        return ResponseEntity.status(HttpStatus.OK).body(updateCommentResponse);
     }
 
     //댓글 삭제

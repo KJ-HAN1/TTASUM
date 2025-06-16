@@ -63,7 +63,7 @@ public class HeavenLetterController {
             @RequestBody @Valid HeavenLetterVerifyRequestDto heavenLetterVerifyRequestDto) {
 
         heavenLetterService.verifyPasscode(letterSeq, heavenLetterVerifyRequestDto.getLetterPasscode());
-        return ResponseEntity.ok(CommonResultResponseDto.success("비밀번호가 일치합니다."));
+        return ResponseEntity.status(HttpStatus.OK).body(CommonResultResponseDto.success("비밀번호가 일치합니다."));
     }
 
     //편지 수정 (letterUpdate.html)
@@ -78,9 +78,8 @@ public class HeavenLetterController {
 
         HeavenLetterUpdateResponsDto heavenLetterUpdateResponsDto = heavenLetterService.updateLetter(heavenLetterUpdateRequestDto);
 
-        //api명세서에 201로 나와있어 201로 지정했으나 코드리뷰 후 200로 바꿀 예정
         // return "redirect://";
-        return ResponseEntity.status(HttpStatus.CREATED).body(heavenLetterUpdateResponsDto);
+        return ResponseEntity.status(HttpStatus.OK).body(heavenLetterUpdateResponsDto);
     }
 
     //편지 삭제

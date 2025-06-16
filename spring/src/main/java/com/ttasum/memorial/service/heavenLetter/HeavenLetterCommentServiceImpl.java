@@ -7,6 +7,8 @@ import com.ttasum.memorial.domain.repository.heavenLetter.HeavenLetterRepository
 import com.ttasum.memorial.dto.heavenLetter.request.CommonCommentRequestDto;
 import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterCommentResponseDto;
 import com.ttasum.memorial.exception.heavenLetter.HeavenLetterCommentMismatchException;
+import com.ttasum.memorial.exception.heavenLetter.InvalidPasswordException;
+import com.ttasum.memorial.exception.heavenLetter.HeavenLetterNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +28,8 @@ public class HeavenLetterCommentServiceImpl implements HeavenLetterCommentServic
     @Transactional
     @Override
     public HeavenLetterCommentResponseDto createComment(CommonCommentRequestDto.CreateCommentRequest createCommentRequest) {
-        HeavenLetter heavenLetter = heavenLetterRepository.findById(createCommentRequest.getLetterSeq()).get();
+        HeavenLetter heavenLetter = heavenLetterRepository.findById(createCommentRequest.getLetterSeq())
+                .orElseThrow(HeavenLetterNotFoundException::new);
 
         HeavenLetterComment letterComment = HeavenLetterComment.builder()
                 .letterSeq(heavenLetter)
@@ -43,8 +46,13 @@ public class HeavenLetterCommentServiceImpl implements HeavenLetterCommentServic
     @Transactional(readOnly = true)
     @Override
     public boolean verifyCommentPasscode(Integer commentSeq, String passcode) {
-        HeavenLetterComment heavenLetterComment = commentRepository.findById(commentSeq).orElseThrow();
-        return heavenLetterComment.getCommentPasscode().equals(passcode);
+        HeavenLetterComment heavenLetterComment = commentRepository.findById(commentSeq)
+                .orElseThrow(HeavenLetterCommentNotFoundException::new);
+
+        if (!heavenLetterComment.getCommentPasscode().equals(passcode)) {
+            throw new InvalidPasswordException();
+        }
+        return true;
     }
 
     //댓글 수정
@@ -78,9 +86,7 @@ public class HeavenLetterCommentServiceImpl implements HeavenLetterCommentServic
     @Override
     public HeavenLetterCommentResponseDto.CommentVerifyResponse deleteComment(CommonCommentRequestDto.DeleteCommentRequest deleteCommentRequest) {
 
-        if (!this.verifyCommentPasscode(deleteCommentRequest.getCommentSeq(), deleteCommentRequest.getCommentPasscode())) {
-            return HeavenLetterCommentResponseDto.CommentVerifyResponse.fail("비밀번호가 일치하지 않습니다.");
-        }
+        this.verifyCommentPasscode(deleteCommentRequest.getCommentSeq(), deleteCommentRequest.getCommentPasscode());
 
         HeavenLetterComment heavenLetterComment = commentRepository.findById(deleteCommentRequest.getCommentSeq())
                 .orElseThrow(HeavenLetterCommentNotFoundException::new);
