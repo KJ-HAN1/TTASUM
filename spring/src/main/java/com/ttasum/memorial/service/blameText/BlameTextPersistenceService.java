@@ -2,16 +2,15 @@ package com.ttasum.memorial.service.blameText;
 
 import com.ttasum.memorial.domain.entity.Comment;
 import com.ttasum.memorial.domain.entity.Contents;
-import com.ttasum.memorial.domain.entity.DonationStory.DonationStory;
-import com.ttasum.memorial.domain.entity.DonationStory.DonationStoryComment;
+import com.ttasum.memorial.domain.entity.donationStory.DonationStory;
+import com.ttasum.memorial.domain.entity.donationStory.DonationStoryComment;
 import com.ttasum.memorial.domain.entity.Story;
 import com.ttasum.memorial.domain.entity.blameText.*;
-import com.ttasum.memorial.domain.repository.DonationStory.DonationStoryCommentRepository;
+import com.ttasum.memorial.domain.repository.donationStory.DonationStoryCommentRepository;
 import com.ttasum.memorial.domain.repository.blameText.BlameTextCommentRepository;
 import com.ttasum.memorial.domain.repository.blameText.BlameTextLetterRepository;
 import com.ttasum.memorial.domain.repository.blameText.BlameTextLetterSentenceRepository;
 import com.ttasum.memorial.dto.blameText.BlameResponseDto;
-import com.ttasum.memorial.exception.blameText.BlameTextException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -20,9 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @Service
 @AllArgsConstructor

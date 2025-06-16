@@ -1,9 +1,9 @@
-package com.ttasum.memorial.dto.DonationStory;
+package com.ttasum.memorial.dto.donationStory;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.ttasum.memorial.domain.entity.DonationStory.DonationStory;
-import com.ttasum.memorial.domain.entity.DonationStory.DonationStoryComment;
-import com.ttasum.memorial.dto.DonationStoryComment.DonationStoryCommentResponseDto;
+import com.ttasum.memorial.domain.entity.donationStory.DonationStory;
+import com.ttasum.memorial.domain.entity.donationStory.DonationStoryComment;
+import com.ttasum.memorial.dto.donationStoryComment.DonationStoryCommentResponseDto;
 import lombok.Builder;
 import lombok.Getter;
 

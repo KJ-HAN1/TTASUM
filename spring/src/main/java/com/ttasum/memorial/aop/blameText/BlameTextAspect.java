@@ -1,7 +1,7 @@
 package com.ttasum.memorial.aop.blameText;
 
 import com.ttasum.memorial.domain.entity.Comment;
-import com.ttasum.memorial.domain.entity.DonationStory.DonationStoryComment;
+import com.ttasum.memorial.domain.entity.donationStory.DonationStoryComment;
 import com.ttasum.memorial.domain.entity.Story;
 import com.ttasum.memorial.dto.blameText.BlameResponseDto;
 import com.ttasum.memorial.exception.blameText.BlameTextException;

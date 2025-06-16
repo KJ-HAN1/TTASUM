@@ -1,9 +1,8 @@
-package com.ttasum.memorial.domain.entity.DonationStory;
+package com.ttasum.memorial.domain.entity.donationStory;
 
 import com.ttasum.memorial.domain.Board;
 import com.ttasum.memorial.domain.entity.Story;
-import com.ttasum.memorial.domain.entity.blameText.BlameTextLetter;
-import com.ttasum.memorial.dto.DonationStory.DonationStoryUpdateRequestDto;
+import com.ttasum.memorial.dto.donationStory.DonationStoryUpdateRequestDto;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;

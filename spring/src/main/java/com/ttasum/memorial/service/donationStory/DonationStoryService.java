@@ -1,23 +1,17 @@
-package com.ttasum.memorial.service.DonationStory;
+package com.ttasum.memorial.service.donationStory;
 
 
-import com.ttasum.memorial.domain.entity.DonationStory.DonationStory;
-import com.ttasum.memorial.domain.entity.DonationStory.DonationStoryComment;
-import com.ttasum.memorial.domain.entity.blameText.BlameTextLetter;
-import com.ttasum.memorial.domain.repository.DonationStory.DonationStoryCommentRepository;
-import com.ttasum.memorial.domain.repository.DonationStory.DonationStoryRepository;
-import com.ttasum.memorial.dto.ApiResponse;
-import com.ttasum.memorial.dto.DonationStory.*;
-import com.ttasum.memorial.dto.forbiddenWord.ReviewRequestDto;
+import com.ttasum.memorial.domain.entity.donationStory.DonationStory;
+import com.ttasum.memorial.domain.entity.donationStory.DonationStoryComment;
+import com.ttasum.memorial.domain.repository.donationStory.DonationStoryCommentRepository;
+import com.ttasum.memorial.domain.repository.donationStory.DonationStoryRepository;
+import com.ttasum.memorial.dto.donationStory.*;
 import com.ttasum.memorial.exception.CaptchaVerificationFailedException;
-import com.ttasum.memorial.exception.DonationStory.DonationStoryNotFoundException;
+import com.ttasum.memorial.exception.donationStory.DonationStoryNotFoundException;
 import com.ttasum.memorial.service.common.CaptchaVerifier;
-import com.ttasum.memorial.service.forbiddenWord.TestReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

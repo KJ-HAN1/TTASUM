@@ -1,12 +1,12 @@
 package com.ttasum.memorial.controller;
 
-import com.ttasum.memorial.domain.entity.DonationStory.DonationStoryComment;
+import com.ttasum.memorial.domain.entity.donationStory.DonationStoryComment;
 import com.ttasum.memorial.dto.ApiResponse;
-import com.ttasum.memorial.dto.DonationStoryComment.DonationStoryCommentCreateRequestDto;
-import com.ttasum.memorial.dto.DonationStoryComment.DonationStoryCommentDeleteRequestDto;
-import com.ttasum.memorial.dto.DonationStoryComment.DonationStoryCommentUpdateRequestDto;
+import com.ttasum.memorial.dto.donationStoryComment.DonationStoryCommentCreateRequestDto;
+import com.ttasum.memorial.dto.donationStoryComment.DonationStoryCommentDeleteRequestDto;
+import com.ttasum.memorial.dto.donationStoryComment.DonationStoryCommentUpdateRequestDto;
 import com.ttasum.memorial.exception.blameText.BlameTextException;
-import com.ttasum.memorial.service.DonationStory.DonationStoryCommentService;
+import com.ttasum.memorial.service.donationStory.DonationStoryCommentService;
 import com.ttasum.memorial.service.forbiddenWord.TestReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package com.ttasum.memorial.exception.DonationStory;
+package com.ttasum.memorial.exception.donationStory;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

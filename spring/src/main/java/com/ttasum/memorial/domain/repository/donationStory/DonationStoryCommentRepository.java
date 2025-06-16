@@ -1,6 +1,6 @@
-package com.ttasum.memorial.domain.repository.DonationStory;
+package com.ttasum.memorial.domain.repository.donationStory;
 
-import com.ttasum.memorial.domain.entity.DonationStory.DonationStoryComment;
+import com.ttasum.memorial.domain.entity.donationStory.DonationStoryComment;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
