@@ -1,9 +1,9 @@
-package com.ttasum.memorial.domain;
+package com.ttasum.memorial.domain.type;
 
 import lombok.Getter;
 
 @Getter
-public enum Board {
+public enum BoardType {
     DONATION("donation"),
     HEAVEN("heaven"),
     RECIPIENT("recipient"),
@@ -12,7 +12,7 @@ public enum Board {
 
     private final String type;
 
-    Board(String type) {
+    BoardType(String type) {
         this.type = type;
     }
 }
