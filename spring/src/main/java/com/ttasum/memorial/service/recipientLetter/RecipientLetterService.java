@@ -18,4 +18,7 @@ public interface RecipientLetterService {
     //페이징 처리
     Page<RecipientLetterListResponseDto> getAllLetters(Pageable pageable);
 
+    //편지 수정 인증(공통)
+    boolean verifyPasscode(Integer letterSeq, String passcode);
+
 }

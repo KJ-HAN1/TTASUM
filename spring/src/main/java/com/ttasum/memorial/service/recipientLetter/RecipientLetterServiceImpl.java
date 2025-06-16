@@ -1,12 +1,15 @@
 package com.ttasum.memorial.service.recipientLetter;
 
 
+import com.ttasum.memorial.domain.entity.heavenLetter.HeavenLetter;
 import com.ttasum.memorial.domain.entity.recipientLetter.RecipientLetter;
 import com.ttasum.memorial.domain.repository.recipientLetter.RecipientLetterRepository;
 import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterRequestDto;
 import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterDetailResponse;
 import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterListResponseDto;
 import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterResponseDto;
+import com.ttasum.memorial.exception.heavenLetter.HeavenLetterNotFoundException;
+import com.ttasum.memorial.exception.heavenLetter.InvalidPasswordException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -66,5 +69,17 @@ public class RecipientLetterServiceImpl implements RecipientLetterService {
         return recipientLetterRepository.findAllByDelFlag("N", pageable)
                 .map(RecipientLetterListResponseDto::fromEntity);
     }
+    //수정 인증 (공통)
+    @Transactional(readOnly = true)
+    @Override
+    public boolean verifyPasscode(Integer letterSeq, String passcode) {
+        RecipientLetter recipientLetter = recipientLetterRepository.findById(letterSeq)
+                .orElseThrow(RecipientLetterNotFoundException::new);
 
+        if (!recipientLetter.getLetterPasscode().equals(passcode)) {
+            throw new InvalidPasswordException();
+        }
+
+        return true;
+    }
 }

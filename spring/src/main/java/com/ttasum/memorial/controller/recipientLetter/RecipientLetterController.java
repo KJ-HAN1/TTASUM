@@ -1,9 +1,13 @@
 package com.ttasum.memorial.controller.recipientLetter;
 
 import com.ttasum.memorial.domain.repository.recipientLetter.RecipientLetterRepository;
+import com.ttasum.memorial.dto.heavenLetter.request.HeavenLetterVerifyRequestDto;
 import com.ttasum.memorial.dto.heavenLetter.request.PageRequest;
+import com.ttasum.memorial.dto.heavenLetter.response.CommonResultResponseDto;
 import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterResponseDto;
 import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterRequestDto;
+import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterVerifyRequestDto;
+import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterCommonResponseDto;
 import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterDetailResponse;
 import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterListResponseDto;
 import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterResponseDto;
@@ -50,4 +54,14 @@ public class RecipientLetterController {
         Page<RecipientLetterListResponseDto> result = recipientLetterService.getAllLetters(pageable);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
+    //편지 수정 인증
+    @PostMapping("/{letterSeq}/verifyPwd")
+    public ResponseEntity<RecipientLetterCommonResponseDto> verifyPasscode(
+            @PathVariable Integer letterSeq,
+            @RequestBody @Valid RecipientLetterVerifyRequestDto recipientLetterVerifyRequestDto) {
+
+        recipientLetterService.verifyPasscode(letterSeq, recipientLetterVerifyRequestDto.getLetterPasscode());
+        return ResponseEntity.status(HttpStatus.OK).body(RecipientLetterCommonResponseDto.success("비밀번호가 일치합니다."));
+    }
+
 }
