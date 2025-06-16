@@ -89,4 +89,9 @@ public class RecipientLetter {
         //조회수 — 처음엔 0으로 초기화
         this.readCount = 0;
     }
+    //조회수 증가
+    public void increaseReadCount() {
+        if (this.readCount == null) this.readCount = 0;
+        this.readCount += 1;
+    }
 }
