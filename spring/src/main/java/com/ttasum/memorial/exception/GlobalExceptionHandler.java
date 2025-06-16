@@ -20,6 +20,13 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
+    // 잘못된 검색 필드 등 BadRequest 계열
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<ApiResponse> handleBadRequest(BadRequestException ex) {
+        log.info("잘못된 요청: {}", ex.getMessage());
+        return ResponseEntity.badRequest()
+                .body(ApiResponse.badRequest(ex.getMessage()));
+    }
 
     // 유효성 검사 실패 (400 Bad Request)
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -32,6 +39,13 @@ public class GlobalExceptionHandler {
         }
         ApiResponse response = ApiResponse.badRequest(msg);
         return ResponseEntity.badRequest().body(response);
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ApiResponse> handleNotFound(NotFoundException ex) {
+        log.info("리소스를 찾을 수 없음: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(ApiResponse.notFound(ex.getMessage()));
     }
 
     // ResponseStatusException 처리

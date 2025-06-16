@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Table(name = "tb25_410_heaven_letter")
-    public class HeavenLetter {
+public class HeavenLetter {
 
     //이 필드가 PK(기본키)라는 의미
     @Id
@@ -96,6 +96,7 @@ import java.util.List;
         //조회수 — 처음엔 0으로 초기화
         this.readCount = 0;
     }
+
     //수정 메서드
     public void updateLetterContents(HeavenLetterUpdateRequestDto heavenLetterUpdateRequestDto, Memorial memorial) {
         this.letterWriter = heavenLetterUpdateRequestDto.getLetterWriter();
@@ -122,4 +123,3 @@ import java.util.List;
         this.readCount += 1;
     }
 }
-
