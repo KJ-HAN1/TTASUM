@@ -1,5 +1,7 @@
 package com.ttasum.memorial.domain.entity.heavenLetter;
 
+import com.ttasum.memorial.domain.entity.Story;
+import com.ttasum.memorial.domain.type.BoardType;
 import com.ttasum.memorial.dto.heavenLetter.request.HeavenLetterUpdateRequestDto;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -12,18 +14,19 @@ import java.util.List;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Table(name = "tb25_410_heaven_letter")
-    public class HeavenLetter {
+public class HeavenLetter extends Story {
 
     //이 필드가 PK(기본키)라는 의미
     @Id
     //DB에서 pk가 자동으로 값이 증가되는 'AUTO_INCREMENT' 컬럼임을 명시
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "letter_seq", nullable = false)
-    private Integer letterSeq;
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     //실제 DB컬럼명
@@ -54,7 +57,7 @@ import java.util.List;
 
     @Lob
     @Column(name = "letter_contents" , columnDefinition = "LONGTEXT")
-    private String letterContents;
+    private String contents;
 
     @Column(name = "file_name", length = 600)
     private String fileName;
@@ -85,6 +88,10 @@ import java.util.List;
     @Where(clause = "del_flag = 'N'")
     private List<HeavenLetterComment> comments = new ArrayList<>();
 
+    @Getter
+    @Transient
+    private final BoardType boardType = BoardType.HEAVEN;
+
     //JPA생명주기 중 하나 : save()로 DB에 insert되기 직전에 실행(기본값 세팅)
     //update할 땐 작동 안 함
     @PrePersist
@@ -97,17 +104,18 @@ import java.util.List;
         this.readCount = 0;
     }
     //수정 메서드
-    public void updateLetterContents(HeavenLetterUpdateRequestDto heavenLetterUpdateRequestDto, Memorial memorial) {
+    public HeavenLetter updateLetterContents(HeavenLetterUpdateRequestDto heavenLetterUpdateRequestDto, Memorial memorial) {
         this.letterWriter = heavenLetterUpdateRequestDto.getLetterWriter();
         this.donorName = heavenLetterUpdateRequestDto.getDonorName();
         this.donateSeq = memorial;
         this.areaCode = heavenLetterUpdateRequestDto.getAreaCode();
         this.letterTitle = heavenLetterUpdateRequestDto.getLetterTitle();
-        this.letterContents = heavenLetterUpdateRequestDto.getLetterContents();
+        this.contents = heavenLetterUpdateRequestDto.getLetterContents();
         this.anonymityFlag = heavenLetterUpdateRequestDto.getAnonymityFlag();
         this.orgFileName = heavenLetterUpdateRequestDto.getOrgFileName();
         this.fileName = heavenLetterUpdateRequestDto.getFileName();
         this.modifyTime = LocalDateTime.now();
+        return this;
     }
 
     //삭제 메서드

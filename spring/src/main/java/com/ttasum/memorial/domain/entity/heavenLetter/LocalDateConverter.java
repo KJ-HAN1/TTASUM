@@ -6,8 +6,7 @@ import javax.persistence.Converter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-@Converter(autoApply = true)
-
+@Converter(autoApply = false)
 public class LocalDateConverter implements AttributeConverter<LocalDate, String> {
 
     private static final DateTimeFormatter DateFormatter = DateTimeFormatter.BASIC_ISO_DATE; // yyyyMMdd

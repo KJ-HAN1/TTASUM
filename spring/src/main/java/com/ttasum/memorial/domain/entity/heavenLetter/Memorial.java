@@ -53,6 +53,7 @@ public class Memorial {
     private String writer;
 
     //VARCHAR(8) 'yyyyMMdd' ↔ LocalDate (converter autoApply)
+    @Convert(converter = LocalDateConverter.class)
     @Column(name = "donate_date", length = 8)
     private LocalDate donateDate;
 
