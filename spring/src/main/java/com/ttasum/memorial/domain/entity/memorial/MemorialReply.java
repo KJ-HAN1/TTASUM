@@ -1,5 +1,6 @@
 package com.ttasum.memorial.domain.entity.memorial;
 
+import com.ttasum.memorial.domain.entity.Comment;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,12 +13,12 @@ import java.time.LocalDateTime;
 @Table(name = "tb25_401_memorial_reply")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MemorialReply {
+public class MemorialReply extends Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "reply_seq")
-    private Integer replySeq;
+    private Integer commentSeq;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "donate_seq", nullable = false)
@@ -33,7 +34,7 @@ public class MemorialReply {
     private String replyWriterId;         // 로그인 사용자 ID (로그인 댓글일 때)
 
     @Column(name = "reply_contents", length = 3000)
-    private String replyContents;         // 댓글 내용
+    private String contents;         // 댓글 내용
 
     @Column(name = "reply_write_time")
     private LocalDateTime replyWriteTime; // 댓글 등록일시
@@ -58,17 +59,18 @@ public class MemorialReply {
         this.replyWriter      = replyWriter;
         this.replyPassword    = replyPassword;
         this.replyWriterId    = replyWriterId;
-        this.replyContents    = replyContents;
+        this.contents    = replyContents;
         this.replyWriteTime   = replyWriteTime;
         this.memorial         = memorial;
         this.delFlag          = delFlag;
     }
 
     /** 댓글 수정 **/
-    public void updateComment(String newContents, String modifierId) {
-        this.replyContents     = newContents;
+    public MemorialReply updateComment(String newContents, String modifierId) {
+        this.contents     = newContents;
         this.replyModifierId   = modifierId;
         this.replyModifyTime   = LocalDateTime.now();
+        return this;
     }
 
     /** 댓글 삭제(소프트) **/

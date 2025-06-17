@@ -66,7 +66,7 @@ public class HeavenLetterCommentController {
 
         HeavenLetterComment comment = heavenLetterCommentService.updateComment(commentSeq, letterSeq, updateCommentRequest);
         // 비난글 AI 필터링 추가
-        testReviewService.saveCommentFromBlameTable(comment, true, HEAVEN.getType());
+        testReviewService.saveCommentFromBlameTable(comment, false, HEAVEN.getType());
 
         return ResponseEntity.ok().body(ApiResponse.ok(
                 HttpStatus.OK.value(),

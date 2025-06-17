@@ -64,26 +64,38 @@ public class Memorial {
     @Column(name = "donate_age")
     private Integer donateAge;
 
+    @Builder.Default
     @Column(name = "flower_count")
     private Integer flowerCount = 0;
 
+    @Builder.Default
     @Column(name = "love_count")
     private Integer loveCount = 0;
 
+    @Builder.Default
     @Column(name = "see_count")
     private Integer seeCount = 0;
 
+    @Builder.Default
     @Column(name = "miss_count")
     private Integer missCount = 0;
 
+    @Builder.Default
     @Column(name = "proud_count")
     private Integer proudCount = 0;
 
+    @Builder.Default
     @Column(name = "hard_count")
     private Integer hardCount = 0;
 
+    @Builder.Default
     @Column(name = "sad_count")
     private Integer sadCount = 0;
+
+    @Builder.Default
+    @ColumnDefault("'N'")
+    @Column(name = "del_flag", nullable = false, length = 1)
+    private String delFlag = "N";
 
     @CreationTimestamp
     @Column(name = "write_time", nullable = false, updatable = false)
@@ -98,10 +110,6 @@ public class Memorial {
 
     @Column(name = "modifier_id", nullable = false, length = 60)
     private String modifierId;
-
-    @ColumnDefault("'N'")
-    @Column(name = "del_flag", nullable = false, length = 1)
-    private String delFlag;
 
     @Column(name = "donor_birthdate")
     private LocalDate donorBirthdate;

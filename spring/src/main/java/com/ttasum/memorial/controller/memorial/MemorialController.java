@@ -1,5 +1,6 @@
 package com.ttasum.memorial.controller.memorial;
 
+import com.ttasum.memorial.domain.entity.memorial.MemorialReply;
 import com.ttasum.memorial.dto.common.ApiResponse;
 import com.ttasum.memorial.dto.memorial.response.MemorialDetailResponseDto;
 import com.ttasum.memorial.dto.memorial.response.MemorialResponseDto;
@@ -7,6 +8,7 @@ import com.ttasum.memorial.dto.memorialComment.request.MemorialReplyCreateReques
 import com.ttasum.memorial.dto.memorialComment.request.MemorialReplyDeleteRequestDto;
 import com.ttasum.memorial.dto.memorialComment.request.MemorialReplyUpdateRequestDto;
 import com.ttasum.memorial.dto.memorialComment.response.MemorialReplyResponseDto;
+import com.ttasum.memorial.service.forbiddenWord.TestReviewService;
 import com.ttasum.memorial.service.memorial.MemorialService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import static com.ttasum.memorial.domain.type.BoardType.REMEMBRANCE;
+
 @RestController
 @RequestMapping("/remembrance")
 @RequiredArgsConstructor
@@ -26,6 +30,7 @@ import javax.validation.Valid;
 public class MemorialController {
 
     private final MemorialService memorialService;
+    private final TestReviewService testReviewService;
 
     /**
      * 기증자 추모관 목록 조회
@@ -96,7 +101,11 @@ public class MemorialController {
             @PathVariable Integer donateSeq,
             @RequestBody @Valid MemorialReplyCreateRequestDto request
     ) {
-        MemorialReplyResponseDto result = memorialService.createReply(donateSeq, request);
+        MemorialReply result = memorialService.createReply(donateSeq, request);
+
+        // 비난글 AI 필터링 추가
+        testReviewService.saveCommentFromBlameTable(result, true, REMEMBRANCE.getType());
+
         return ResponseEntity.ok(ApiResponse.ok(
                 HttpStatus.CREATED.value(),
                 "댓글이 성공적으로 등록되었습니다."
@@ -114,7 +123,11 @@ public class MemorialController {
             @PathVariable Integer replySeq,
             @RequestBody @Valid MemorialReplyUpdateRequestDto dto
     ) {
-        MemorialReplyResponseDto result = memorialService.updateReply(donateSeq, replySeq, dto);
+        MemorialReply result = memorialService.updateReply(donateSeq, replySeq, dto);
+
+        // 비난글 AI 필터링 추가
+        testReviewService.saveCommentFromBlameTable(result, false, REMEMBRANCE.getType());
+
         return ResponseEntity.ok(ApiResponse.ok(
                 HttpStatus.OK.value(),
                 "댓글이 성공적으로 수정되었습니다."

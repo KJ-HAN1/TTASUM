@@ -7,7 +7,6 @@ public enum BoardType {
     DONATION("donation"),
     HEAVEN("heaven"),
     RECIPIENT("recipient"),
-    NOTICE("notice"),
     REMEMBRANCE("remember"),;
 
     private final String type;
