@@ -5,7 +5,9 @@ import com.ttasum.memorial.domain.entity.admin.AdminDepartment;
 import com.ttasum.memorial.domain.entity.admin.AdminPosition;
 import com.ttasum.memorial.domain.entity.admin.User;
 import com.ttasum.memorial.domain.entity.blameText.BlameTextComment;
+import com.ttasum.memorial.domain.entity.blameText.BlameTextCommentSentence;
 import com.ttasum.memorial.domain.entity.blameText.BlameTextLetter;
+import com.ttasum.memorial.domain.type.ContentType;
 import com.ttasum.memorial.dto.blameText.BlameTextCommentDto;
 import com.ttasum.memorial.dto.donationStory.response.PageResponse;
 import com.ttasum.memorial.dto.UserDto;
@@ -32,9 +34,11 @@ public interface AdminService {
 
     ArrayList<BlameTextLetterSentenceDto> getBlameTextLettersSentences(int seq);
 
-    ResponseEntity<?> deleteBlameText(int seq, String boardType);
+    ResponseEntity<?> deleteBlameText(int seq, String boardType, ContentType contentType);
 
     PageRequest setOrderByOptions(int page, int size, String orderBy);
 
     PageResponse<BlameTextCommentDto> getBlameTextComment(String filter, String orderBy, Pageable pageRequest);
+
+    ArrayList<BlameTextCommentSentence> getBlameTextCommentSentence(int seq);
 }

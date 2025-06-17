@@ -1,7 +1,8 @@
 package com.ttasum.memorial.service.admin;
 
+import com.ttasum.memorial.domain.entity.Comment;
 import com.ttasum.memorial.domain.entity.Story;
-import com.ttasum.memorial.domain.entity.donationStory.DonationStory;
+import com.ttasum.memorial.domain.entity.blameText.BlameTextCommentSentence;
 import com.ttasum.memorial.domain.entity.admin.AdminAuthority;
 import com.ttasum.memorial.domain.entity.admin.AdminDepartment;
 import com.ttasum.memorial.domain.entity.admin.AdminPosition;
@@ -9,6 +10,8 @@ import com.ttasum.memorial.domain.entity.admin.User;
 import com.ttasum.memorial.domain.entity.blameText.BlameTextComment;
 import com.ttasum.memorial.domain.entity.blameText.BlameTextLetter;
 import com.ttasum.memorial.domain.repository.blameText.BlameTextCommentRepository;
+import com.ttasum.memorial.domain.repository.blameText.BlameTextCommentSentenceRepository;
+import com.ttasum.memorial.domain.repository.donationStory.DonationStoryCommentRepository;
 import com.ttasum.memorial.domain.repository.donationStory.DonationStoryRepository;
 import com.ttasum.memorial.domain.repository.admin.AdminAuthorityRepository;
 import com.ttasum.memorial.domain.repository.admin.AdminDepartmentRepository;
@@ -16,19 +19,26 @@ import com.ttasum.memorial.domain.repository.admin.AdminEmployeeRepository;
 import com.ttasum.memorial.domain.repository.admin.AdminPositionRepository;
 import com.ttasum.memorial.domain.repository.blameText.BlameTextLetterRepository;
 import com.ttasum.memorial.domain.repository.blameText.BlameTextLetterSentenceRepository;
+import com.ttasum.memorial.domain.repository.heavenLetter.HeavenLetterCommentRepository;
 import com.ttasum.memorial.domain.repository.heavenLetter.HeavenLetterRepository;
+import com.ttasum.memorial.domain.repository.memorial.MemorialReplyRepository;
 import com.ttasum.memorial.domain.type.BoardType;
+import com.ttasum.memorial.domain.type.ContentType;
 import com.ttasum.memorial.dto.common.ApiResponse;
 import com.ttasum.memorial.dto.blameText.BlameTextCommentDto;
 import com.ttasum.memorial.dto.donationStory.response.PageResponse;
 import com.ttasum.memorial.dto.UserDto;
 import com.ttasum.memorial.dto.blameText.BlameTextLetterDto;
 import com.ttasum.memorial.dto.blameText.BlameTextLetterSentenceDto;
+import com.ttasum.memorial.exception.blameText.MissingSentenceException;
+import com.ttasum.memorial.exception.common.notFound.NotFoundException;
+import com.ttasum.memorial.exception.donationStory.DonationStoryCommentNotFoundException;
 import com.ttasum.memorial.exception.donationStory.DonationStoryNotFoundException;
 import com.ttasum.memorial.exception.blameText.BlametextNotDefinitionFiltering;
-import com.ttasum.memorial.service.donationStory.DonationStoryService;
+import com.ttasum.memorial.exception.heavenLetter.HeavenLetterCommentNotFoundException;
+import com.ttasum.memorial.exception.heavenLetter.HeavenLetterNotFoundException;
+import com.ttasum.memorial.exception.memorial.MemorialNotFoundException;
 import com.ttasum.memorial.service.blameText.BlameTextLetterMapper;
-import com.ttasum.memorial.service.blameText.BlameTextPersistenceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -43,12 +53,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 
@@ -57,13 +65,29 @@ import java.util.stream.Collectors;
 public class AdminServiceImpl implements AdminService
         , UserDetailsService {
 //    {
+    // 관리자
     private final AdminEmployeeRepository adminEmployeeRepository;
     private final AdminAuthorityRepository adminAuthorityRepository;
     private final AdminPositionRepository adminPositionRepository;
     private final AdminDepartmentRepository adminDepartmentRepository;
-    private final HeavenLetterRepository heavenLetterRepository;
 
+    // 비난 글
+    private final BlameTextLetterSentenceRepository blameTextLetterSentenceRepository;
+    private final BlameTextCommentRepository blameTextCommentRepository;
+    private final BlameTextCommentSentenceRepository blameTextCommentSentenceRepository;
+
+    // 게시글
+    private final HeavenLetterRepository heavenLetterRepository;
     private final DonationStoryRepository donationStoryRepository;
+
+    // 댓글
+    private final MemorialReplyRepository memorialReplyRepository;
+    private final DonationStoryCommentRepository donationStoryCommentRepository;
+    private final HeavenLetterCommentRepository heavenLetterCommentRepository;
+
+
+
+
 
 
     private final BCryptPasswordEncoder passwordEncoder;
@@ -73,8 +97,7 @@ public class AdminServiceImpl implements AdminService
     public static Integer IS_NOT_BLAME_LABEL = 0;
     public static Integer IS_DELETE = 1;
     public static Integer IS_NOT_DELETE = 0;
-    private final BlameTextLetterSentenceRepository blameTextLetterSentenceRepository;
-    private final BlameTextCommentRepository blameTextCommentRepository;
+
 
     // 관리자 회원가입 시 아이디 중복 확인
     @Override
@@ -178,24 +201,64 @@ public class AdminServiceImpl implements AdminService
 
     @Transactional
     @Override
-    public ResponseEntity<?> deleteBlameText(int seq, String boardType) {
-        Story story = null;
-        if (boardType.equals(BoardType.DONATION.getType())){
-            story = donationStoryRepository.findByIdAndDelFlag(seq, "N")
-                    .orElseThrow(() -> new DonationStoryNotFoundException(seq));
-        } else if (boardType.equals(BoardType.HEAVEN.getType())){
-            story = heavenLetterRepository.findByIdAndDelFlag(seq, "N")
-                    .orElseThrow(() -> new DonationStoryNotFoundException(seq));
+    public ResponseEntity<?> deleteBlameText(int seq, String boardType, ContentType contentType) {
+
+        switch (contentType) {
+            // 게시글
+            case STORY -> {
+                Story story = null;
+                // 원본 게시글을 찾음
+                if (boardType.equals(BoardType.DONATION.getType())){
+                    story = donationStoryRepository.findByIdAndDelFlag(seq, "N")
+                            .orElseThrow(() -> new DonationStoryNotFoundException(seq));
+                } else if (boardType.equals(BoardType.HEAVEN.getType())){
+                    story = heavenLetterRepository.findByIdAndDelFlag(seq, "N")
+                            .orElseThrow(() -> new HeavenLetterNotFoundException(seq));
+                }
+
+                // 비난 글 DB 삭제(boardType, 원본 seq, delete_flag)
+                List<BlameTextLetter> list = blameTextLetterRepository
+                        .findBlameTextLettersByBoardTypeAndOriginSeqAndDeleteFlag(boardType, Objects.requireNonNull(story).getId(), 0);
+                for (BlameTextLetter letter : list) {
+                    letter.setDeleteFlag(1);
+                }
+
+                // 원본 게시글 DB 삭제
+                story.setDelFlag("Y");
+            }
+
+            // 댓글
+            case COMMENT -> {
+                Comment comment = null;
+                // 원본 댓글을 찾음
+                if (boardType.equals(BoardType.DONATION.getType())){
+                    comment = donationStoryCommentRepository.findByCommentSeqAndDelFlag(seq, "N")
+                            .orElseThrow(() -> new DonationStoryCommentNotFoundException(seq));
+                } else if (boardType.equals(BoardType.HEAVEN.getType())){
+                    comment = heavenLetterCommentRepository.findByCommentSeqAndDelFlag(seq, "N")
+                            .orElseThrow(() -> new HeavenLetterCommentNotFoundException(seq));
+                } else if (boardType.equals(BoardType.REMEMBRANCE.getType())){
+                    comment = memorialReplyRepository.findByCommentSeqAndDelFlag(seq, "N")
+                            .orElseThrow(() -> new MemorialNotFoundException(seq));
+                }
+
+                // 비난 댓글 DB 삭제(boardType, 원본 seq, delete_flag)
+                List<BlameTextComment> list = blameTextCommentRepository
+                        .findBlameTextCommentsByBoardTypeAndStorySeqAndOriginSeqAndDeleteFlag(boardType,
+                                Objects.requireNonNull(comment).getLetterSeq().getId(),
+                                Objects.requireNonNull(comment).getCommentSeq(), 0)
+                        .orElseThrow();
+                for (BlameTextComment com : list) {
+                    com.setDeleteFlag(1);
+                }
+
+                // 원본 댓글 DB 삭제
+                comment.setDelFlag("Y");
+            }
+
+            default -> throw new NotFoundException("해당하는 타입을 찾을 수 없습니다.");
         }
 
-        List<BlameTextLetter> list = blameTextLetterRepository
-                .findBlameTextLettersByOriginSeqAndDeleteFlag(Objects.requireNonNull(story).getId(), 0);
-        for (BlameTextLetter letter : list) {
-            letter.setDeleteFlag(1);
-        }
-
-    // 사용자 단도 비공개 처리
-        story.setDelFlag("Y");
         return ResponseEntity.ok().body(new ApiResponse(true, 200, "비공개 처리 완료"));
     }
 
@@ -224,6 +287,12 @@ public class AdminServiceImpl implements AdminService
                 page.getTotalElements(),
                 page.getTotalPages()
         );
+    }
+
+    @Override
+    public ArrayList<BlameTextCommentSentence> getBlameTextCommentSentence(int seq) {
+        return blameTextCommentSentenceRepository.getBlameTextCommentSentenceByIdLetterSeq(seq)
+                .orElseThrow(MissingSentenceException::new);
     }
 
     // Security 구현 메서드
