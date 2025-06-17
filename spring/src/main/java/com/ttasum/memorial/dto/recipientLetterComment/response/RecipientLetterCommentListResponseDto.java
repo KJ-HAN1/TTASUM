@@ -15,14 +15,14 @@ import java.time.LocalDateTime;
 
 // 댓글 편지 조회
 
-public class RecipientLetterCommentListResponse {
+public class RecipientLetterCommentListResponseDto {
 
         private Integer commentSeq;
         private String commentWriter;
         private String contents;
         private LocalDateTime writeTime;
 
-        public RecipientLetterCommentListResponse(RecipientLetterComment recipientLetterComment) {
+        public RecipientLetterCommentListResponseDto(RecipientLetterComment recipientLetterComment) {
             this.commentSeq = recipientLetterComment.getCommentSeq();
             this.commentWriter = recipientLetterComment.getCommentWriter();
             this.contents = recipientLetterComment.getContents();

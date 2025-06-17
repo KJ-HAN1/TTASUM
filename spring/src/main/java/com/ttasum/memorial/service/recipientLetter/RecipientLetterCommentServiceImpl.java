@@ -1,12 +1,15 @@
 package com.ttasum.memorial.service.recipientLetter;
 
+import com.ttasum.memorial.domain.entity.heavenLetter.HeavenLetterComment;
 import com.ttasum.memorial.domain.entity.recipientLetter.RecipientLetter;
 import com.ttasum.memorial.domain.entity.recipientLetter.RecipientLetterComment;
 import com.ttasum.memorial.domain.repository.recipientLetter.RecipientLetterCommentRepository;
 import com.ttasum.memorial.domain.repository.recipientLetter.RecipientLetterRepository;
 import com.ttasum.memorial.dto.common.ApiResponse;
 import com.ttasum.memorial.dto.recipientLetterComment.request.RecipientLetterCommentRequestDto;
+import com.ttasum.memorial.dto.recipientLetterComment.request.RecipientLetterCommentVerifyRequestDto;
 import com.ttasum.memorial.exception.common.Conflict.AlreadyDeletedException;
+import com.ttasum.memorial.exception.common.badRequest.InvalidPasscodeException;
 import com.ttasum.memorial.exception.common.badRequest.PathVariableMismatchException;
 import com.ttasum.memorial.exception.common.notFound.NotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -55,4 +58,28 @@ public class RecipientLetterCommentServiceImpl implements RecipientLetterComment
 
             recipientLetterCommentRepository.save(letterComment);
     }
+    //수정 인증(공통)
+    @Transactional(readOnly = true)
+    @Override
+    public boolean verifyCommentPasscode(RecipientLetterCommentVerifyRequestDto commentVerifyRequestDto, Integer commentSeq) {
+
+        if (!commentSeq.equals(commentVerifyRequestDto.getCommentSeq())) {
+            throw new PathVariableMismatchException("수혜자 편지 댓글 번호와 요청 번호가 일치하지 않습니다.");
+        }
+
+        RecipientLetterComment recipientLetterComment = recipientLetterCommentRepository.findById(commentSeq)
+                .orElseThrow(() -> new NotFoundException("수혜자 편지의 댓글을 찾을 수 없습니다."));
+
+        // 이미 삭제된 리소스에 대한 요청 (409 Conflict)
+        if ("Y".equals(recipientLetterComment.getDelFlag())) {
+            throw new AlreadyDeletedException();
+        }
+
+        // 비밀번호 인증 실패 시 예외 발생(400)
+        if (!recipientLetterComment.getCommentPasscode().equals(commentVerifyRequestDto.getCommentPasscode())) {
+            throw new InvalidPasscodeException();
+        }
+        return true;
+    }
+
 }
