@@ -22,7 +22,7 @@ public interface MemorialRepository extends JpaRepository<Memorial, Integer>, Jp
             m.genderFlag,
             m.donateAge,
             m.donateDate,
-            COUNT(r.replySeq),
+            COUNT(r.commentSeq),
             m.donorBirthdate
         )
         FROM Memorial m

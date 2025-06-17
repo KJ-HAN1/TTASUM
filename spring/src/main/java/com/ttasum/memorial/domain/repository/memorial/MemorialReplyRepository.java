@@ -13,5 +13,5 @@ public interface MemorialReplyRepository extends JpaRepository<MemorialReply, In
             String delFlag
     );
 
-    Optional<MemorialReply> findByMemorialDonateSeqAndReplySeqAndDelFlag(Integer donateSeq, Integer replySeq, String delFlag);
+    Optional<MemorialReply> findByMemorialDonateSeqAndCommentSeqAndDelFlag(Integer donateSeq, Integer replySeq, String delFlag);
 }
