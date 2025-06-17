@@ -103,7 +103,7 @@ public class MemorialService {
                 .findByDonateSeqAndDelFlagOrderByWriteTimeDesc(memorial, "N")
                 .stream()
                 .map(letter -> new HeavenLetterSummaryDto(
-                        letter.getLetterSeq(),
+                        letter.getId(),
                         letter.getLetterTitle(),
                         letter.getWriteTime(),
                         letter.getReadCount()))

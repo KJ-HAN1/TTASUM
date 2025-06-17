@@ -33,20 +33,26 @@ public class BlameTextAspect {
     @Around("@annotation(com.ttasum.memorial.annotation.blameText.CheckBlameText)")
     public Object checkBlameText(ProceedingJoinPoint joinPoint) throws Throwable {
         boolean isCreated = false;
+        String boardType = "";
+
         for (Object arg : joinPoint.getArgs()) {
             if(arg instanceof Boolean)
                 isCreated = (Boolean) arg;
+            if(arg instanceof String)
+                boardType = (String) arg;
         }
         BlameResponseDto response;
-        // 메서드의 인자 중 DonationStory 타입이 있는지 확인
+        System.out.println("boardType = " + boardType);
+
+        // 메서드의 인자 중 Story 타입이 있는지 확인
         for (Object arg : joinPoint.getArgs()) {
             // 게시글
             if(arg instanceof Story req) {
                 // 문장을 분석하고 결과를 가져옴
                 if(isCreated) {
-                    response = checkerService.analyzeAndSave(req);
+                    response = checkerService.analyzeAndSave(req, boardType);
                 }else{
-                    response = checkerService.analyzeAndUpdate(req);
+                    response = checkerService.analyzeAndUpdate(req, boardType);
                 }
 
                 // 비난 의도로 판단되면 예외 발생시켜 흐름 중단
@@ -60,17 +66,15 @@ public class BlameTextAspect {
 
             // 댓글
             if(arg instanceof Comment comment) {
-                if(comment instanceof DonationStoryComment){
-                    if(isCreated) {
-                        response = checkerService.analyzeAndSave(comment);
-                    }else {
-                        response = checkerService.analyzeAndUpdate(comment);
-                    }
+                if(isCreated) {
+                    response = checkerService.analyzeAndSave(comment, boardType);
+                }else {
+                    response = checkerService.analyzeAndUpdate(comment, boardType);
+                }
 
-                    // 비난 글 판단
-                    if(response.getLabel() == 1) {
-                        throw new BlameTextException("비난하는 의도가 예상되는 댓글입니다. 관리자가 해당 댓글을 삭제할 수 있습니다.");
-                    }
+                // 비난 글 판단
+                if(response.getLabel() == 1) {
+                    throw new BlameTextException("비난하는 의도가 예상되는 댓글입니다. 관리자가 해당 댓글을 삭제할 수 있습니다.");
                 }
             }
         }

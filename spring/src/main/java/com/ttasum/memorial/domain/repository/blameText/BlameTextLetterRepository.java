@@ -1,6 +1,6 @@
 package com.ttasum.memorial.domain.repository.blameText;
 
-import com.ttasum.memorial.domain.entity.DonationStory.DonationStory;
+import com.ttasum.memorial.domain.entity.donationStory.DonationStory;
 import com.ttasum.memorial.domain.entity.Story;
 import com.ttasum.memorial.domain.entity.blameText.BlameTextLetter;
 import org.springframework.data.domain.Page;
@@ -47,13 +47,15 @@ import java.util.Optional;
         ORDER BY update_time DESC;
     */
 public interface BlameTextLetterRepository extends JpaRepository<BlameTextLetter, Integer> {
-    Optional<BlameTextLetter> findByDonationStory_IdAndDeleteFlag(Integer originSeq, int deleteFlag);
+    Optional<BlameTextLetter> findByOriginSeqAndDeleteFlag(Integer originSeq, int deleteFlag);
 
     // Query 1: 전체 비난글 조회
     Page<BlameTextLetter> findBlameTextLetterByLabelOrderByUpdateTimeDesc(Integer label, Pageable pageable);
 
     // seq를 통해 비난 글 찾기
-    List<BlameTextLetter> findBlameTextLettersByDonationStoryAndDeleteFlag(DonationStory donationStory, int deleteFlag);
+    List<BlameTextLetter> findBlameTextLettersByOriginSeqAndDeleteFlag(Integer originSeq, int deleteFlag);
 
     Page<BlameTextLetter> findBlameTextLettersByDeleteFlag(int deleteFlag, Pageable pageable);
+
+    Page<BlameTextLetter> findBlameTextLettersByLabel(Integer label, Pageable pageable);
 }
