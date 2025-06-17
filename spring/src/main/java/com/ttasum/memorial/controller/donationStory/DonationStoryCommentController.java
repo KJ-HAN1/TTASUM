@@ -30,10 +30,6 @@ public class DonationStoryCommentController {
     public ResponseEntity<ApiResponse> createComment(@PathVariable Integer storySeq, @RequestBody @Valid DonationStoryCommentCreateRequestDto dto) {
         log.debug("POST /donationLetters/{}/comments - 댓글 등록 요청", storySeq);
         commentService.createComment(storySeq, dto);
-        // 201 Created -> location 다음 동작(조회 등)을 위한 URI를 제공
-//        int commentSeq = commentService.createComment(storySeq, dto);
-//        URI location = URI.create(String.format("/donationLetters/%d/comments/%d", storySeq, commentSeq));
-//        return ResponseEntity.created(location).build();
         return ResponseEntity.ok().body(ApiResponse.ok(
                 HttpStatus.CREATED.value(),
                 "편지 댓글이 성공적으로 등록되었습니다."

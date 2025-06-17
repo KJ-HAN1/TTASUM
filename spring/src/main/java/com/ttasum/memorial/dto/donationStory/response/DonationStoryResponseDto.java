@@ -23,7 +23,6 @@ public class DonationStoryResponseDto {
     private String anonymityFlag;
     private String areaCode;
     private String storyTitle;
-    private String storyPasscode;
     private String storyWriter;
     private String storyContents;
     private Integer readCount;
@@ -48,7 +47,6 @@ public class DonationStoryResponseDto {
                 .anonymityFlag(entity.getAnonymityFlag())
                 .areaCode(entity.getAreaCode())
                 .storyTitle(entity.getTitle())
-                .storyPasscode(entity.getPasscode())
                 .storyWriter(entity.getWriter())
                 .storyContents(entity.getContents())
                 .readCount(entity.getReadCount())
@@ -86,7 +84,6 @@ public class DonationStoryResponseDto {
                 .anonymityFlag(entity.getAnonymityFlag())
                 .areaCode(entity.getAreaCode())
                 .storyTitle(entity.getTitle())
-                .storyPasscode(entity.getPasscode())
                 .storyWriter(entity.getWriter())
                 .storyContents(entity.getContents())
                 .readCount(entity.getReadCount())
