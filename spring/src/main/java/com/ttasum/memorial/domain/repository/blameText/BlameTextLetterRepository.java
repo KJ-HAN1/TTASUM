@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 /*
@@ -53,9 +54,13 @@ public interface BlameTextLetterRepository extends JpaRepository<BlameTextLetter
     Page<BlameTextLetter> findBlameTextLetterByLabelOrderByUpdateTimeDesc(Integer label, Pageable pageable);
 
     // seq를 통해 비난 글 찾기
-    List<BlameTextLetter> findBlameTextLettersByOriginSeqAndDeleteFlag(Integer originSeq, int deleteFlag);
+    List<BlameTextLetter> findBlameTextLettersByBoardTypeAndOriginSeqAndDeleteFlag(String boardType, Integer originSeq, int deleteFlag);
 
     Page<BlameTextLetter> findBlameTextLettersByDeleteFlag(int deleteFlag, Pageable pageable);
 
     Page<BlameTextLetter> findBlameTextLettersByLabel(Integer label, Pageable pageable);
+
+//    Optional<BlameTextLetter> findBlameTextByBoardTypeAndSeqAndDeleteFlag(String boardType, int seq, int i);
+
+    Optional<ArrayList<BlameTextLetter>> findBlameTextsByBoardTypeAndOriginSeqAndDeleteFlag(String boardType, int seq, int i);
 }
