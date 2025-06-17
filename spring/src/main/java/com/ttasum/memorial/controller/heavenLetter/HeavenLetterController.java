@@ -1,7 +1,7 @@
 package com.ttasum.memorial.controller.heavenLetter;
 
 import com.ttasum.memorial.domain.entity.heavenLetter.HeavenLetter;
-import com.ttasum.memorial.dto.ApiResponse;
+import com.ttasum.memorial.dto.common.ApiResponse;
 import com.ttasum.memorial.dto.heavenLetter.request.*;
 import com.ttasum.memorial.dto.heavenLetter.response.*;
 import com.ttasum.memorial.service.forbiddenWord.TestReviewService;

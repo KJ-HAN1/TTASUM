@@ -7,7 +7,7 @@ import com.ttasum.memorial.domain.entity.admin.User;
 import com.ttasum.memorial.domain.entity.blameText.BlameTextComment;
 import com.ttasum.memorial.domain.entity.blameText.BlameTextLetter;
 import com.ttasum.memorial.dto.blameText.BlameTextCommentDto;
-import com.ttasum.memorial.dto.donationStory.PageResponse;
+import com.ttasum.memorial.dto.donationStory.response.PageResponse;
 import com.ttasum.memorial.dto.UserDto;
 import com.ttasum.memorial.dto.admin.AdminRequestDto;
 import com.ttasum.memorial.dto.blameText.BlameTextLetterDto;

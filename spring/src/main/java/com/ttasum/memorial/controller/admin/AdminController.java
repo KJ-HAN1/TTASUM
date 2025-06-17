@@ -1,7 +1,7 @@
 package com.ttasum.memorial.controller.admin;
 
-import com.ttasum.memorial.dto.ApiResponse;
-import com.ttasum.memorial.dto.donationStory.PageResponse;
+import com.ttasum.memorial.dto.common.ApiResponse;
+import com.ttasum.memorial.dto.donationStory.response.PageResponse;
 import com.ttasum.memorial.dto.UserDto;
 import com.ttasum.memorial.dto.blameText.BlameTextLetterDto;
 import com.ttasum.memorial.service.admin.AdminService;

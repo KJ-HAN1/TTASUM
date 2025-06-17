@@ -48,7 +48,10 @@ public class SecurityConfig {
                                 new AntPathRequestMatcher("/admin/checkId"),
                                 new AntPathRequestMatcher("/"),
                                 new AntPathRequestMatcher("/donationLetters/**"),
-                                new AntPathRequestMatcher("/heavenLetters/**")
+                                new AntPathRequestMatcher("/heavenLetters/**"),
+                                new AntPathRequestMatcher("/notices/**"),
+                                new AntPathRequestMatcher("/remembrance/**"),
+                                new AntPathRequestMatcher("/admin/flowers/**")
                         )
                         .permitAll() // 익명 접근 허용
                         .requestMatchers(

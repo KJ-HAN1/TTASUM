@@ -12,7 +12,7 @@ import com.ttasum.memorial.dto.donationStory.response.PageResponse;
 import com.ttasum.memorial.service.donationStory.DonationStoryService;
 import com.ttasum.memorial.domain.entity.donationStory.DonationStory;
 import com.ttasum.memorial.domain.type.BoardType;
-import com.ttasum.memorial.dto.ApiResponse;
+import com.ttasum.memorial.dto.common.ApiResponse;
 import com.ttasum.memorial.dto.donationStory.*;
 import com.ttasum.memorial.exception.blameText.BlameTextException;
 import com.ttasum.memorial.service.forbiddenWord.TestReviewService;

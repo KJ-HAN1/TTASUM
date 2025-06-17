@@ -18,9 +18,9 @@ import com.ttasum.memorial.domain.repository.blameText.BlameTextLetterRepository
 import com.ttasum.memorial.domain.repository.blameText.BlameTextLetterSentenceRepository;
 import com.ttasum.memorial.domain.repository.heavenLetter.HeavenLetterRepository;
 import com.ttasum.memorial.domain.type.BoardType;
-import com.ttasum.memorial.dto.ApiResponse;
+import com.ttasum.memorial.dto.common.ApiResponse;
 import com.ttasum.memorial.dto.blameText.BlameTextCommentDto;
-import com.ttasum.memorial.dto.donationStory.PageResponse;
+import com.ttasum.memorial.dto.donationStory.response.PageResponse;
 import com.ttasum.memorial.dto.UserDto;
 import com.ttasum.memorial.dto.blameText.BlameTextLetterDto;
 import com.ttasum.memorial.dto.blameText.BlameTextLetterSentenceDto;

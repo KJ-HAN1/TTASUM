@@ -1,7 +1,7 @@
 package com.ttasum.memorial.controller.heavenLetter;
 
 import com.ttasum.memorial.domain.entity.heavenLetter.HeavenLetterComment;
-import com.ttasum.memorial.dto.ApiResponse;
+import com.ttasum.memorial.dto.common.ApiResponse;
 import com.ttasum.memorial.dto.heavenLetter.request.CommonCommentRequestDto;
 import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterCommentResponseDto;
 import com.ttasum.memorial.exception.heavenLetter.HeavenLetterCommentMismatchException;
