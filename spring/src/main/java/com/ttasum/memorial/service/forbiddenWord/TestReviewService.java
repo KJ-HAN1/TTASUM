@@ -4,7 +4,7 @@ package com.ttasum.memorial.service.forbiddenWord;
 import com.ttasum.memorial.annotation.blameText.CheckBlameText;
 import com.ttasum.memorial.domain.entity.Comment;
 import com.ttasum.memorial.domain.entity.Story;
-import com.ttasum.memorial.dto.ApiResponse;
+import com.ttasum.memorial.dto.common.ApiResponse;
 import com.ttasum.memorial.dto.forbiddenWord.ReviewRequestDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

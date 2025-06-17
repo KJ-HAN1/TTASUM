@@ -2,7 +2,7 @@
 //
 //import com.ttasum.memorial.domain.entity.donationStory.DonationStory;
 //import com.ttasum.memorial.domain.repository.donationStory.DonationStoryRepository;
-//import com.ttasum.memorial.dto.donationStory.DonationStoryUpdateRequestDto;
+//import com.ttasum.memorial.dto.donationStory.request.DonationStoryUpdateRequestDto;
 //import com.ttasum.memorial.exception.donationStory.DonationStoryNotFoundException;
 //import com.ttasum.memorial.service.donationStory.DonationStoryService;
 //import org.junit.jupiter.api.BeforeEach;

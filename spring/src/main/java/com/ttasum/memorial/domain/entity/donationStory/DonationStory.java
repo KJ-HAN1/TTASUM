@@ -2,7 +2,7 @@ package com.ttasum.memorial.domain.entity.donationStory;
 
 import com.ttasum.memorial.domain.type.BoardType;
 import com.ttasum.memorial.domain.entity.Story;
-import com.ttasum.memorial.dto.donationStory.DonationStoryUpdateRequestDto;
+import com.ttasum.memorial.dto.donationStory.request.DonationStoryUpdateRequestDto;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;

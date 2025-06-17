@@ -2,6 +2,7 @@ package com.ttasum.memorial.domain.entity.heavenLetter;
 
 import com.ttasum.memorial.domain.entity.Story;
 import com.ttasum.memorial.domain.type.BoardType;
+import com.ttasum.memorial.domain.entity.memorial.Memorial;
 import com.ttasum.memorial.dto.heavenLetter.request.HeavenLetterUpdateRequestDto;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -103,6 +104,7 @@ public class HeavenLetter extends Story {
         //조회수 — 처음엔 0으로 초기화
         this.readCount = 0;
     }
+
     //수정 메서드
     public HeavenLetter updateLetterContents(HeavenLetterUpdateRequestDto heavenLetterUpdateRequestDto, Memorial memorial) {
         this.letterWriter = heavenLetterUpdateRequestDto.getLetterWriter();
@@ -130,4 +132,3 @@ public class HeavenLetter extends Story {
         this.readCount += 1;
     }
 }
-

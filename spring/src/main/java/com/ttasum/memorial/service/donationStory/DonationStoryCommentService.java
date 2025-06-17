@@ -4,11 +4,12 @@ import com.ttasum.memorial.domain.entity.donationStory.DonationStory;
 import com.ttasum.memorial.domain.entity.donationStory.DonationStoryComment;
 import com.ttasum.memorial.domain.repository.donationStory.DonationStoryCommentRepository;
 import com.ttasum.memorial.domain.repository.donationStory.DonationStoryRepository;
-import com.ttasum.memorial.dto.donationStoryComment.DonationStoryCommentCreateRequestDto;
-import com.ttasum.memorial.dto.donationStoryComment.DonationStoryCommentDeleteRequestDto;
-import com.ttasum.memorial.dto.donationStoryComment.DonationStoryCommentResponseDto;
-import com.ttasum.memorial.dto.donationStoryComment.DonationStoryCommentUpdateRequestDto;
-import com.ttasum.memorial.exception.CaptchaVerificationFailedException;
+import com.ttasum.memorial.dto.donationStoryComment.request.DonationStoryCommentCreateRequestDto;
+import com.ttasum.memorial.dto.donationStoryComment.request.DonationStoryCommentDeleteRequestDto;
+import com.ttasum.memorial.dto.donationStoryComment.request.DonationStoryCommentUpdateRequestDto;
+import com.ttasum.memorial.dto.donationStoryComment.response.DonationStoryCommentResponseDto;
+import com.ttasum.memorial.exception.common.badRequest.CaptchaVerificationFailedException;
+import com.ttasum.memorial.exception.common.badRequest.InvalidCommentPasscodeException;
 import com.ttasum.memorial.exception.donationStory.DonationStoryCommentNotFoundException;
 import com.ttasum.memorial.exception.donationStory.DonationStoryNotFoundException;
 import com.ttasum.memorial.service.common.CaptchaVerifier;
@@ -31,8 +32,7 @@ public class DonationStoryCommentService {
     /**
      * 댓글 등록
      * @param storySeq 스토리 id
-     * @param dto 댓글 등록 요청 dto
-     * @return 댓글 id 반환
+     * @param dto      댓글 등록 요청 dto
      */
     @Transactional
     public DonationStoryComment createComment(Integer storySeq, DonationStoryCommentCreateRequestDto dto) {
@@ -85,10 +85,13 @@ public class DonationStoryCommentService {
     public DonationStoryComment updateComment(Integer storySeq, Integer commentSeq, DonationStoryCommentUpdateRequestDto dto) {
         DonationStoryComment comment = commentRepository.findByStory_IdAndCommentSeqAndDelFlag(storySeq, commentSeq,"N")
                 .orElseThrow(() -> new DonationStoryCommentNotFoundException(commentSeq));
+        // 비밀번호 검증
+        if (!comment.getPasscode().equals(dto.getCommentPasscode())) {
+            throw new InvalidCommentPasscodeException(commentSeq);
+        }
 
         // String modifierId = getUserIdFromToken(request); // 비회원이면 anonymous 반환
-        // 로그인 연동 시 수정자 ID로 교체
-        return comment.updateIfPasscodeMatches(dto.getCommentPasscode(), dto.getContents(),null);
+        return comment.updateComment(dto.getContents(),dto.getCommentWriter()); // 로그인 연동 시 수정자 ID로 교체
     }
 
     // eGov 환경 -> Spring Security + JWT 필터 사용
@@ -112,7 +115,12 @@ public class DonationStoryCommentService {
         DonationStoryComment comment = commentRepository.findByStory_IdAndCommentSeqAndDelFlag(storySeq, commentSeq,"N")
                 .orElseThrow(() -> new DonationStoryCommentNotFoundException(commentSeq));
 
-        comment.deleteIfPasscodeMatches(dto.getCommentPasscode(),null);
+        // 비밀번호 검증
+        if (!comment.getPasscode().equals(dto.getCommentPasscode())) {
+            throw new InvalidCommentPasscodeException(commentSeq);
+        }
+
+        comment.deleteComment(dto.getCommentWriter());
     }
 
 
