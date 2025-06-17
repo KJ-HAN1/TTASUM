@@ -1,10 +1,7 @@
 package com.ttasum.memorial.domain.entity.memorial;
 
 import com.ttasum.memorial.domain.entity.Comment;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -12,6 +9,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "tb25_401_memorial_reply")
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemorialReply extends Comment {
 
@@ -22,7 +20,7 @@ public class MemorialReply extends Comment {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "donate_seq", nullable = false)
-    private Memorial memorial;
+    private Memorial letterSeq;
 
     @Column(name = "reply_writer", length = 150)
     private String replyWriter;           // 댓글 작성자 이름
@@ -61,7 +59,7 @@ public class MemorialReply extends Comment {
         this.replyWriterId    = replyWriterId;
         this.contents    = replyContents;
         this.replyWriteTime   = replyWriteTime;
-        this.memorial         = memorial;
+        this.letterSeq         = memorial;
         this.delFlag          = delFlag;
     }
 
