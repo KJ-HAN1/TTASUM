@@ -1,7 +1,7 @@
 package com.ttasum.memorial.domain.entity.blameText;
 
 import com.ttasum.memorial.domain.entity.Contents;
-import com.ttasum.memorial.domain.entity.DonationStory.DonationStoryComment;
+import com.ttasum.memorial.domain.entity.donationStory.DonationStoryComment;
 import lombok.*;
 
 import javax.persistence.*;
@@ -31,7 +31,7 @@ public class BlameTextComment extends Contents {
     private String boardType;
 
     @Column(name = "confidence", nullable = false)
-    private Double blameConfidence;
+    private Double confidence;
 
     @NotNull
     @Column(name = "regulation", nullable = false)
@@ -45,9 +45,10 @@ public class BlameTextComment extends Contents {
     @Column(name = "story_seq", nullable = false)
     private Integer storySeq;
 
-    @NotNull
-    @Lob
-    @Column(name = "contents", nullable = false)
+//    @NotNull
+//    @Lob
+//    @Column(name = "contents", nullable = false)
+    @Column(name = "contents", columnDefinition = "TEXT", nullable = false)
     private String contents;
 
     @NotNull
@@ -59,15 +60,17 @@ public class BlameTextComment extends Contents {
     private Integer deleteFlag;
 
     @NotNull
-    @Column(name = "blame_label", nullable = false)
-    private Integer blameLabel;
+    @Column(name = "label", nullable = false)
+    private Integer label;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "origin_seq", referencedColumnName = "comment_seq")
-    private DonationStoryComment comment;
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "origin_seq", referencedColumnName = "comment_seq")
+//    private DonationStoryComment comment;
 
     @OneToMany(mappedBy = "comment", cascade = CascadeType.PERSIST)
     @Builder.Default
     private List<BlameTextCommentSentence> comments = new ArrayList<>();
 
+    @Column(name = "origin_seq", nullable = false)
+    private Integer originSeq;
 }

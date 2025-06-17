@@ -12,7 +12,7 @@
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_FILE}</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-    <!--롤링 기간 14일-->
+            <!--롤링 기간 14일-->
             <fileNamePattern>application.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>14</maxHistory>
         </rollingPolicy>
@@ -23,7 +23,7 @@
 
     <!-- Logstash TCP 어펜더 -->
     <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-<!--        <destination>localhost:5000</destination> &lt;!&ndash; Logstash 서버 주소와 포트 local용&ndash;&gt;-->
+        <!--        <destination>localhost:5000</destination> &lt;!&ndash; Logstash 서버 주소와 포트 local용&ndash;&gt;-->
         <destination>logstash:5000</destination> <!--docker환경용-->
         <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
     </appender>
@@ -31,9 +31,9 @@
     <!-- Logger 설정 -->
     <root level="info">
         <appender-ref ref="CONSOLE" />
-    <!-- 확인용 파일로 저장 /logs-->
+        <!-- 확인용 파일로 저장 /logs-->
         <appender-ref ref="FILE" />
-    <!-- logstash로 전송부분-->
+        <!-- logstash로 전송부분-->
         <appender-ref ref="LOGSTASH"/>
     </root>
 </configuration>

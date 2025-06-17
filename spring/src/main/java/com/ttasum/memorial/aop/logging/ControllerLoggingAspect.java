@@ -29,12 +29,14 @@ public class ControllerLoggingAspect {
         HttpServletRequest request =
                 ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
 
+
         String method = request.getMethod();        // GET, POST ....
         String uri = request.getRequestURI();       // 요청 URL
         String handler = joinPoint.getSignature().toShortString();  // 클래스명.메서드명()
         String clientIp = request.getRemoteAddr(); // client ip addr -> 프록시나 로드밸런서 사용하게 되면 변경 해야함
 
         log.info("Type={} - request={} - clientIp=[{}] methodCall={}", method, uri, clientIp,handler);
+
     }
 
 }
