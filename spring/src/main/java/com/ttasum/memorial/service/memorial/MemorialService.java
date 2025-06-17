@@ -88,12 +88,12 @@ public class MemorialService {
      */
     @Transactional(readOnly = true)
     public MemorialDetailResponseDto getMemorialDetail(Integer donateSeq) {
-        Memorial memorial = memorialRepository.findByDonateSeqAndDelFlag(donateSeq, "N")
+        Memorial memorial = memorialRepository.findByIdAndDelFlag(donateSeq, "N")
                 .orElseThrow(() -> new MemorialNotFoundException(donateSeq));
 
         // 댓글 목록 조회
         List<MemorialReplyResponseDto> replyDtoList = memorialReplyRepository
-                .findByMemorialDonateSeqAndDelFlagOrderByReplyWriteTimeAsc(donateSeq, "N")
+                .findByCommentSeqAndDelFlagOrderByReplyWriteTimeAsc(donateSeq, "N")
                 .stream()
                 .map(MemorialReplyResponseDto::of)
                 .toList();
@@ -119,7 +119,7 @@ public class MemorialService {
      */
     @Transactional
     public void incrementEmoji(Integer donateSeq, String emoji) {
-        Memorial memorial = memorialRepository.findByDonateSeqAndDelFlag(donateSeq, "N")
+        Memorial memorial = memorialRepository.findByIdAndDelFlag(donateSeq, "N")
                 .orElseThrow(() -> new MemorialNotFoundException(donateSeq));
 
         memorial.incrementEmojiCount(emoji);
@@ -138,7 +138,7 @@ public class MemorialService {
             throw new CaptchaVerificationFailedException();
         }
 
-        Memorial memorial = memorialRepository.findByDonateSeqAndDelFlag(donateSeq, "N")
+        Memorial memorial = memorialRepository.findByIdAndDelFlag(donateSeq, "N")
                 .orElseThrow(() -> new MemorialNotFoundException(donateSeq));
 
         MemorialReply reply = MemorialReply.builder()
@@ -162,7 +162,7 @@ public class MemorialService {
      */
     @Transactional
     public MemorialReply updateReply(Integer donateSeq, Integer replySeq, MemorialReplyUpdateRequestDto dto) {
-        MemorialReply reply = memorialReplyRepository.findByMemorialDonateSeqAndReplySeqAndDelFlag(donateSeq, replySeq, "N")
+        MemorialReply reply = memorialReplyRepository.findByCommentSeqAndCommentSeqAndDelFlag(donateSeq, replySeq, "N")
                 .orElseThrow(() -> new MemorialReplyNotFoundException(replySeq));
 
         // 비밀번호 검증
@@ -186,7 +186,7 @@ public class MemorialService {
             MemorialReplyDeleteRequestDto dto
     ) {
         MemorialReply reply = memorialReplyRepository
-                .findByMemorialDonateSeqAndReplySeqAndDelFlag(donateSeq, replySeq, "N")
+                .findByCommentSeqAndCommentSeqAndDelFlag(donateSeq, replySeq, "N")
                 .orElseThrow(() -> new MemorialReplyNotFoundException(replySeq));
 
         // 비밀번호 검증 (익명 댓글의 경우)

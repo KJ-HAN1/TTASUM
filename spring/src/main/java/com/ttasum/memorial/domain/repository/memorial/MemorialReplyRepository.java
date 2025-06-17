@@ -8,10 +8,12 @@ import java.util.Optional;
 
 public interface MemorialReplyRepository extends JpaRepository<MemorialReply, Integer> {
     // 특정 기증자 게시글 댓글 목록 조회
-    List<MemorialReply> findByMemorialDonateSeqAndDelFlagOrderByReplyWriteTimeAsc(
+    List<MemorialReply> findByCommentSeqAndDelFlagOrderByReplyWriteTimeAsc(
             Integer donateSeq,
             String delFlag
     );
 
-    Optional<MemorialReply> findByMemorialDonateSeqAndCommentSeqAndDelFlag(Integer donateSeq, Integer replySeq, String delFlag);
+    Optional<MemorialReply> findByCommentSeqAndCommentSeqAndDelFlag(Integer donateSeq, Integer replySeq, String delFlag);
+
+    Optional<MemorialReply> findByCommentSeqAndDelFlag(int seq, String n);
 }

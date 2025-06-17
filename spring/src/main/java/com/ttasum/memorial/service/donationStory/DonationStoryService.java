@@ -61,7 +61,7 @@ public class DonationStoryService {
                 .orElseThrow(() -> new DonationStoryNotFoundException(storySeq));
 
         List<DonationStoryComment> comments = commentRepository
-                .findByStory_IdAndDelFlagOrderByWriteTimeAsc(storySeq, "N");
+                .findByCommentSeqAndDelFlagOrderByWriteTimeAsc(storySeq, "N");
 
         story.increaseReadCount();
 

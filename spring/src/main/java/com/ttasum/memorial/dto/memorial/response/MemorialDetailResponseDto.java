@@ -83,7 +83,7 @@ public class MemorialDetailResponseDto {
         boolean isNew = memorial.getWriteTime().isAfter(threeDaysAgo);
 
         return MemorialDetailResponseDto.builder()
-                .donateSeq(memorial.getDonateSeq())
+                .donateSeq(memorial.getId())
                 .donorName(memorial.getDonorName())
                 .donateDate(memorial.getDonateDate())
                 .contents(memorial.getContents())

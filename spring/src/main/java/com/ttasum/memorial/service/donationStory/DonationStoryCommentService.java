@@ -60,7 +60,7 @@ public class DonationStoryCommentService {
     @Transactional(readOnly = true)
     public List<DonationStoryCommentResponseDto> getComments(Integer storySeq) {
         // 스토리 id로 게시글 찾고
-        List<DonationStoryComment> comments = commentRepository.findByStory_IdAndDelFlagOrderByWriteTimeAsc(storySeq, "N");
+        List<DonationStoryComment> comments = commentRepository.findByCommentSeqAndDelFlagOrderByWriteTimeAsc(storySeq, "N");
 
         // 해당 게시글의 댓글들을 dto형태로 변환 후 리스트에 저장
         List<DonationStoryCommentResponseDto> dtos = new ArrayList<>();
@@ -83,7 +83,9 @@ public class DonationStoryCommentService {
      */
     @Transactional
     public DonationStoryComment updateComment(Integer storySeq, Integer commentSeq, DonationStoryCommentUpdateRequestDto dto) {
-        DonationStoryComment comment = commentRepository.findByStory_IdAndCommentSeqAndDelFlag(storySeq, commentSeq,"N")
+        DonationStoryComment comment = commentRepository.findByCommentSeqAndLetterSeqAndDelFlag(commentSeq,
+                        storyRepository.findByIdAndDelFlag(storySeq, "N").orElseThrow(),
+                        "N")
                 .orElseThrow(() -> new DonationStoryCommentNotFoundException(commentSeq));
         // 비밀번호 검증
         if (!comment.getPasscode().equals(dto.getCommentPasscode())) {
@@ -112,16 +114,23 @@ public class DonationStoryCommentService {
      */
     @Transactional
     public void softDeleteComment(Integer storySeq, Integer commentSeq, DonationStoryCommentDeleteRequestDto dto) {
-        DonationStoryComment comment = commentRepository.findByStory_IdAndCommentSeqAndDelFlag(storySeq, commentSeq,"N")
+        System.out.println("story =" + storySeq);
+        System.out.println("commentSeq = " + commentSeq);
+        System.out.println("dto.getCommentPasscode() = " + dto.getCommentPasscode());
+
+        DonationStory story = storyRepository.findByIdAndDelFlag(storySeq, "N")
+                .orElseThrow(() -> new DonationStoryNotFoundException(storySeq));
+
+        DonationStoryComment comment = commentRepository.findByCommentSeqAndLetterSeqAndDelFlag(commentSeq, story, "N")
                 .orElseThrow(() -> new DonationStoryCommentNotFoundException(commentSeq));
 
-        // 비밀번호 검증
         if (!comment.getPasscode().equals(dto.getCommentPasscode())) {
             throw new InvalidCommentPasscodeException(commentSeq);
         }
 
-        comment.deleteComment(dto.getCommentWriter());
+        comment.deleteComment(dto.getCommentSeq());
     }
+
 
 
 }

@@ -1,10 +1,7 @@
 package com.ttasum.memorial.domain.entity.donationStory;
 
 import com.ttasum.memorial.domain.entity.Comment;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -13,6 +10,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "tb25_421_donation_story_comment")
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // JPA 접근, 외부 생성 제한
 public class DonationStoryComment extends Comment {
 
@@ -23,7 +21,7 @@ public class DonationStoryComment extends Comment {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "story_seq")
-    private DonationStory story;
+    private DonationStory letterSeq;
 
     @Column(name = "comment_writer", length = 150)
     private String writer;
@@ -53,7 +51,7 @@ public class DonationStoryComment extends Comment {
     @Builder
     public DonationStoryComment(DonationStory story, String writer, String passcode, String contents,
                                 String writerId, String modifierId) {
-        this.story = story;
+        this.letterSeq = story;
         this.writer = writer;
         this.passcode = passcode;
         this.contents = contents;
@@ -77,9 +75,9 @@ public class DonationStoryComment extends Comment {
     }
 
     // 비밀번호가 일치하는 경우 댓글 삭제(소프트 삭제)
-    public DonationStoryComment deleteComment(String modifierId) {
+    public DonationStoryComment deleteComment(int commentSeq) {
         this.delFlag = "Y";
-        this.modifierId = modifierId;
+        this.commentSeq = commentSeq;
         this.modifyTime = LocalDateTime.now();
         return this;
     }

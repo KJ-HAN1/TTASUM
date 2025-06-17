@@ -4,6 +4,7 @@ import com.ttasum.memorial.dto.common.ApiResponse;
 import com.ttasum.memorial.dto.donationStoryComment.request.DonationStoryCommentCreateRequestDto;
 import com.ttasum.memorial.dto.donationStoryComment.request.DonationStoryCommentDeleteRequestDto;
 import com.ttasum.memorial.dto.donationStoryComment.request.DonationStoryCommentUpdateRequestDto;
+import com.ttasum.memorial.service.blameText.BlameTextPersistenceService;
 import com.ttasum.memorial.service.donationStory.DonationStoryCommentService;
 import com.ttasum.memorial.domain.entity.donationStory.DonationStoryComment;
 
@@ -27,6 +28,7 @@ public class DonationStoryCommentController {
 
     private final DonationStoryCommentService commentService;
     private final TestReviewService testReviewService;
+    private final BlameTextPersistenceService blameTextPersistenceService;
 
     /**
      * 댓글 등록
@@ -84,7 +86,10 @@ public class DonationStoryCommentController {
             @PathVariable Integer commentSeq,
             @Valid @RequestBody DonationStoryCommentDeleteRequestDto dto) {
         log.debug("DELETE /donationLetters/{}/comments/{} - 댓글 삭제 요청", storySeq, commentSeq);
+
         commentService.softDeleteComment(storySeq, commentSeq, dto);
+
+        blameTextPersistenceService.deleteBlameTextComment(storySeq, commentSeq, DONATION.getType());
         return ResponseEntity.ok().body(ApiResponse.ok(
                 HttpStatus.OK.value(),
                 "스토리 댓글이 성공적으로 삭제되었습니다."

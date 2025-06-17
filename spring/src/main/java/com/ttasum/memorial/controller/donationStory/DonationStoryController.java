@@ -9,6 +9,7 @@ import com.ttasum.memorial.dto.donationStory.request.DonationStoryUpdateRequestD
 import com.ttasum.memorial.dto.donationStory.response.DonationStoryPasswordVerifyResponseDto;
 import com.ttasum.memorial.dto.donationStory.response.DonationStoryResponseDto;
 import com.ttasum.memorial.dto.donationStory.response.PageResponse;
+import com.ttasum.memorial.service.blameText.BlameTextPersistenceService;
 import com.ttasum.memorial.service.donationStory.DonationStoryService;
 import com.ttasum.memorial.domain.entity.donationStory.DonationStory;
 import com.ttasum.memorial.domain.type.BoardType;
@@ -38,6 +39,7 @@ public class DonationStoryController {
 
     private final DonationStoryService donationStoryService;
     private final TestReviewService testReviewService;
+    private final BlameTextPersistenceService blameTextPersistenceService;
 
 
     /**
@@ -148,7 +150,9 @@ public class DonationStoryController {
      * @return 200 or 404
      */
     @DeleteMapping("/{storySeq}")
-    public ResponseEntity<ApiResponse> softDeleteStory(@PathVariable Integer storySeq, @RequestBody @Valid DonationStoryDeleteRequestDto dto){
+    public ResponseEntity<ApiResponse> softDeleteStory(
+            @PathVariable Integer storySeq,
+            @RequestBody @Valid DonationStoryDeleteRequestDto dto){
         log.debug("/donationLetters/{} - 스토리 삭제(소프트) 요청", storySeq);
 
         boolean isDeleted = donationStoryService.softDeleteStory(storySeq, dto.getStoryPasscode(), dto.getModifierId());
@@ -162,6 +166,8 @@ public class DonationStoryController {
                     .badRequest()
                     .body(ApiResponse.badRequest("비밀번호가 일치하지 않습니다."));
         }
+
+        blameTextPersistenceService.deleteBlameTextLetter(storySeq, DONATION.getType());
 
         return ResponseEntity.ok(
                 ApiResponse.ok(

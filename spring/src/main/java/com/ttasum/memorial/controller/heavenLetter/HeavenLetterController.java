@@ -4,6 +4,7 @@ import com.ttasum.memorial.domain.entity.heavenLetter.HeavenLetter;
 import com.ttasum.memorial.dto.common.ApiResponse;
 import com.ttasum.memorial.dto.heavenLetter.request.*;
 import com.ttasum.memorial.dto.heavenLetter.response.*;
+import com.ttasum.memorial.service.blameText.BlameTextPersistenceService;
 import com.ttasum.memorial.service.forbiddenWord.TestReviewService;
 import com.ttasum.memorial.service.heavenLetter.HeavenLetterService;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,7 @@ public class HeavenLetterController {
 
     private final HeavenLetterService heavenLetterService;
     private final TestReviewService testReviewService;
+    private final BlameTextPersistenceService blameTextPersistenceService;
 
     //등록
     @PostMapping
@@ -107,6 +109,9 @@ public class HeavenLetterController {
             @RequestBody HeavenLetterVerifyRequestDto deleteRequest) {
 
         CommonResultResponseDto deleteResponse = heavenLetterService.deleteLetter(deleteRequest);
+
+        blameTextPersistenceService.deleteBlameTextLetter(deleteRequest.getLetterSeq(), HEAVEN.getType());
+
         return ResponseEntity.ok(deleteResponse);
     }
 

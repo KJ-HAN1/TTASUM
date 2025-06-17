@@ -24,7 +24,7 @@ public class MemorialReplyResponseDto {
     public static MemorialReplyResponseDto of(MemorialReply reply) {
         return new MemorialReplyResponseDto(
                 reply.getCommentSeq(),
-                reply.getMemorial().getDonateSeq(),
+                reply.getLetterSeq().getId(),
                 reply.getReplyWriter(),
                 reply.getReplyWriterId(),
                 reply.getContents(),

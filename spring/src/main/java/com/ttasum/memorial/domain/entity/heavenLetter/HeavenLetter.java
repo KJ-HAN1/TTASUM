@@ -87,7 +87,7 @@ public class HeavenLetter extends Story {
     //댓글 엔티티
     @OneToMany(mappedBy = "letterSeq")
     @Where(clause = "del_flag = 'N'")
-    private List<HeavenLetterComment> comments = new ArrayList<>();
+    private List<HeavenLetterComment> comments;
 
     @Getter
     @Transient

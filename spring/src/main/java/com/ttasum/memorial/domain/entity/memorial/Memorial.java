@@ -1,6 +1,8 @@
 package com.ttasum.memorial.domain.entity.memorial;
 
+import com.ttasum.memorial.domain.entity.Story;
 import com.ttasum.memorial.domain.entity.heavenLetter.HeavenLetter;
+import com.ttasum.memorial.domain.type.BoardType;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
@@ -12,17 +14,18 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
+@Setter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
 @Table(name = "tb25_400_memorial")
-public class Memorial {
+public class Memorial extends Story {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "donate_seq", nullable = false)
-    private Integer donateSeq;
+    private Integer id;
 
     //반대쪽 엔티티의 필드명을 기준으로 연결하는 어노테이션
     @OneToMany(mappedBy = "donateSeq")
@@ -115,8 +118,12 @@ public class Memorial {
     private LocalDate donorBirthdate;
 
     // 기증관 댓글과 일대다 연관관계 맺기
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "memorial")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "letterSeq")
     private List<MemorialReply> replies;
+
+    @Getter
+    @Transient
+    private final BoardType boardType = BoardType.REMEMBRANCE;
 
     // 불필요한 필드(카운트 컬럼들) 제외를 위해 생성자에 빌더 설정
     @Builder
@@ -126,7 +133,7 @@ public class Memorial {
                      Integer flowerCount, Integer loveCount, Integer seeCount,
                      Integer missCount, Integer proudCount, Integer hardCount, Integer sadCount,
                      String writerId, LocalDate donorBirthdate) {
-        this.donateSeq = donateSeq;
+        this.id = donateSeq;
         this.donorName = donorName;
         this.anonymityFlag = anonymityFlag;
         this.donateTitle = donateTitle;

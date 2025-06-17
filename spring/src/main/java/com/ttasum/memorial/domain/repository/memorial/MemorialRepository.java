@@ -17,7 +17,7 @@ public interface MemorialRepository extends JpaRepository<Memorial, Integer>, Jp
 
     @Query("""
         SELECT new com.ttasum.memorial.dto.memorial.response.MemorialResponseDto(
-            m.donateSeq,
+            m.id,
             m.donorName,
             m.genderFlag,
             m.donateAge,
@@ -31,7 +31,7 @@ public interface MemorialRepository extends JpaRepository<Memorial, Integer>, Jp
           AND (:donorName IS NULL OR :donorName = '' OR m.donorName LIKE %:donorName%)
           AND (:startDate IS NULL OR :endDate IS NULL 
                OR (m.donateDate >= :startDate AND m.donateDate <= :endDate))
-        GROUP BY m.donateSeq, m.donorName, m.genderFlag, m.donateAge, m.donateDate, m.donorBirthdate
+        GROUP BY m.id, m.donorName, m.genderFlag, m.donateAge, m.donateDate, m.donorBirthdate
         """)
     Page<MemorialResponseDto> findByFilter(
             @Param("donorName") String donorName,
@@ -39,6 +39,6 @@ public interface MemorialRepository extends JpaRepository<Memorial, Integer>, Jp
             @Param("endDate") String endDate,
             Pageable pageable);
 
-    Optional<Memorial> findByDonateSeqAndDelFlag(Integer donateSeq, String delFlag);
+    Optional<Memorial> findByIdAndDelFlag(Integer donateSeq, String delFlag);
 
 }
