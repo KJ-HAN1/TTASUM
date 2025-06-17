@@ -60,8 +60,8 @@ public class HeavenLetterResponseDto {
             this.letterSeq = heavenLetter.getId();
 //            this.donateSeq = heavenLetter.getDonateSeq().getDonateSeq() != null ? heavenLetter.getDonateSeq().getDonateSeq() : null;
             Memorial memorial = heavenLetter.getDonateSeq();
-            this.donateSeq = (memorial != null && memorial.getDonateSeq() != null)
-                    ? memorial.getDonateSeq()
+            this.donateSeq = (memorial != null && memorial.getId() != null)
+                    ? memorial.getId()
                     : null;
             this.areaCode = heavenLetter.getAreaCode();
             this.letterTitle = heavenLetter.getLetterTitle();
@@ -105,8 +105,8 @@ public class HeavenLetterResponseDto {
             this.letterSeq = heavenLetter.getId();
 //            this.donateSeq = heavenLetter.getDonateSeq().getDonateSeq() != null ? heavenLetter.getDonateSeq().getDonateSeq() : null;
             Memorial memorial = heavenLetter.getDonateSeq();
-            this.donateSeq = (memorial != null && memorial.getDonateSeq() != null)
-                    ? memorial.getDonateSeq()
+            this.donateSeq = (memorial != null && memorial.getId() != null)
+                    ? memorial.getId()
                     : null;
             this.letterTitle = heavenLetter.getLetterTitle();
             this.donorName = NameMaskUtil.maskDonorNameIfAnonymous(
