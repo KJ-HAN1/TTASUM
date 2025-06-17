@@ -1,5 +1,5 @@
 <configuration>
-    <property name="LOG_FILE" value="spring/logs/application.log"/>
+    <property name="LOG_FILE" value="logs/application.log"/>
 
     <!-- 콘솔 출력 -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
@@ -13,7 +13,7 @@
         <file>${LOG_FILE}</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!--롤링 기간 14일-->
-            <fileNamePattern>application.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>logs/application.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>14</maxHistory>
         </rollingPolicy>
         <encoder>
