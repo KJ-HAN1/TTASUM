@@ -59,19 +59,16 @@ public class DonationStoryCommentController {
      */
     @PatchMapping("/{storySeq}/comments/{commentSeq}")
     public ResponseEntity<ApiResponse> updateComment(@PathVariable Integer storySeq, @PathVariable Integer commentSeq, @RequestBody @Valid DonationStoryCommentUpdateRequestDto dto) {
+        log.debug("PUT /donationLetters/{}/comments/{} - 댓글 수정 요청", storySeq, commentSeq);
+        DonationStoryComment comment = commentService.updateComment(storySeq, commentSeq, dto);
 
-        try {
-            log.debug("PUT /donationLetters/{}/comments/{} - 댓글 수정 요청", storySeq, commentSeq);
+        // 비난글 AI 필터링 추가
+        testReviewService.saveCommentFromBlameTable(comment, false, DONATION.getType());
 
-            DonationStoryComment comment = commentService.updateComment(storySeq, commentSeq, dto);
-
-            // 비난글 AI 필터링 추가
-            testReviewService.saveCommentFromBlameTable(comment, false, DONATION.getType());
-
-            return ResponseEntity.ok().body(ApiResponse.ok(
-                    HttpStatus.OK.value(),
-                    "스토리 댓글이 성공적으로 수정되었습니다."
-            ));
+        return ResponseEntity.ok().body(ApiResponse.ok(
+                HttpStatus.OK.value(),
+                "스토리 댓글이 성공적으로 수정되었습니다."
+        ));
     }
 
     /**
