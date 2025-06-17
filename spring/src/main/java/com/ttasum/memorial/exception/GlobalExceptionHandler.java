@@ -5,16 +5,17 @@ import com.ttasum.memorial.dto.common.ApiResponse;
 import com.ttasum.memorial.dto.heavenLetter.response.CommonResultResponseDto;
 import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterCommentResponseDto;
 import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterResponseDto;
+import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterCommonResponseDto;
 import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterResponseDto;
 import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterUpdateResponseDto;
+import com.ttasum.memorial.exception.common.Conflict.AlreadyDeletedException;
 import com.ttasum.memorial.exception.common.badRequest.CaptchaVerificationFailedException;
 import com.ttasum.memorial.exception.common.notFound.NotFoundException;
 import com.ttasum.memorial.exception.donationStory.DonationStoryNotFoundException;
 import com.ttasum.memorial.exception.heavenLetter.*;
-import com.ttasum.memorial.exception.recipientLetter.RecipientLetterMismatchException;
 import com.ttasum.memorial.exception.recipientLetter.RecipientLetterNotFoundException;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.BadRequestException;
+import com.ttasum.memorial.exception.common.badRequest.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -127,14 +128,13 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(RecipientLetterResponseDto.fail(404, ex.getMessage()));
     }
-    // RecipientLetter - 편지 번호 url과 불일치 (409 Conflict)
-    @ExceptionHandler(RecipientLetterMismatchException.class)
-    public ResponseEntity<RecipientLetterUpdateResponseDto> handleRecipientMismatch(RecipientLetterMismatchException ex) {
-        return ResponseEntity
-                .status(HttpStatus.CONFLICT)
-                .body(RecipientLetterUpdateResponseDto.fail(409, ex.getMessage()));
-    }
 
+    @ExceptionHandler(AlreadyDeletedException.class)
+    public ResponseEntity<ApiResponse> handleAlreadyDeleted(AlreadyDeletedException ex) {
+        log.info("이미 삭제된 리소스 요청: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(ApiResponse.fail(409, ex.getMessage()));
+    }
 
 }
 

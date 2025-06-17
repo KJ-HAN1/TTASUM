@@ -109,4 +109,11 @@ public class RecipientLetter {
         this.modifyTime = LocalDateTime.now();
     }
 
+    //삭제 메서드
+    public void softDelete() {
+        this.delFlag = "Y";
+        this.modifyTime = LocalDateTime.now();
+    }
+
+
 }

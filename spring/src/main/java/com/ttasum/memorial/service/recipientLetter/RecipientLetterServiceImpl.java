@@ -1,18 +1,18 @@
 package com.ttasum.memorial.service.recipientLetter;
 
 
-import com.ttasum.memorial.domain.entity.heavenLetter.HeavenLetter;
 import com.ttasum.memorial.domain.entity.recipientLetter.RecipientLetter;
 import com.ttasum.memorial.domain.repository.recipientLetter.RecipientLetterRepository;
+import com.ttasum.memorial.dto.common.ApiResponse;
 import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterRequestDto;
 import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterUpdateRequestDto;
-import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterDetailResponse;
-import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterListResponseDto;
-import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterResponseDto;
-import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterUpdateResponseDto;
-import com.ttasum.memorial.exception.heavenLetter.HeavenLetterNotFoundException;
+import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterVerifyRequestDto;
+import com.ttasum.memorial.dto.recipientLetter.response.*;
+import com.ttasum.memorial.exception.common.Conflict.AlreadyDeletedException;
+import com.ttasum.memorial.exception.common.badRequest.InvalidPasscodeException;
+import com.ttasum.memorial.exception.common.badRequest.PathVariableMismatchException;
+import com.ttasum.memorial.exception.common.notFound.NotFoundException;
 import com.ttasum.memorial.exception.heavenLetter.InvalidPasswordException;
-import com.ttasum.memorial.exception.recipientLetter.RecipientLetterMismatchException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -50,6 +50,7 @@ public class RecipientLetterServiceImpl implements RecipientLetterService {
 
         return RecipientLetterResponseDto.success();
     }
+
     //조회 - 단건
     @Transactional
     @Override
@@ -72,6 +73,7 @@ public class RecipientLetterServiceImpl implements RecipientLetterService {
         return recipientLetterRepository.findAllByDelFlag("N", pageable)
                 .map(RecipientLetterListResponseDto::fromEntity);
     }
+
     //수정 인증 (공통)
     @Transactional(readOnly = true)
     @Override
@@ -85,13 +87,14 @@ public class RecipientLetterServiceImpl implements RecipientLetterService {
 
         return true;
     }
+
     //수정
     @Transactional
     @Override
     public RecipientLetterUpdateResponseDto updateLetter(Integer letterSeq, RecipientLetterUpdateRequestDto recipientLetterUpdateRequestDto) {
 
         if (!letterSeq.equals(recipientLetterUpdateRequestDto.getLetterSeq())) {
-            throw new RecipientLetterMismatchException();
+            throw new PathVariableMismatchException("수혜자 편지 번호와 요청 번호가 일치하지 않습니다.");
         }
 
         RecipientLetter recipientLetter = recipientLetterRepository.findById(letterSeq)
@@ -102,5 +105,35 @@ public class RecipientLetterServiceImpl implements RecipientLetterService {
 
         return RecipientLetterUpdateResponseDto.success();
     }
+
+    //삭제
+    @Transactional
+    @Override
+    public void deleteLetter(Integer letterSeq, RecipientLetterVerifyRequestDto deleteRequest) {
+
+        // 요청 경로(letterSeq)와 본문 값이 다르면 예외(400)
+        if (!letterSeq.equals(deleteRequest.getLetterSeq())) {
+            throw new PathVariableMismatchException("수혜자 편지 번호와 요청 번호가 일치하지 않습니다.");
+        }
+
+        // 편지 조회 (없으면 NotFoundException 발생)(404)
+        RecipientLetter recipientLetter = recipientLetterRepository.findById(letterSeq)
+                .orElseThrow(() -> new NotFoundException("해당 수혜자 편지를 찾을 수 없습니다."));
+
+        // 비밀번호 인증 실패 시 예외 발생(400)
+        if (!verifyPasscode(letterSeq, deleteRequest.getLetterPasscode())) {
+            throw new InvalidPasscodeException();
+        }
+
+        // 이미 삭제된 편지라면 예외(409)
+        if ("Y".equals(recipientLetter.getDelFlag())) {
+            throw new AlreadyDeletedException();
+        }
+
+        // 5. 삭제 처리
+        recipientLetter.softDelete();
+    }
 }
+
+
 

@@ -1,6 +1,7 @@
 package com.ttasum.memorial.controller.recipientLetter;
 
 import com.ttasum.memorial.domain.repository.recipientLetter.RecipientLetterRepository;
+import com.ttasum.memorial.dto.common.ApiResponse;
 import com.ttasum.memorial.dto.heavenLetter.request.HeavenLetterUpdateRequestDto;
 import com.ttasum.memorial.dto.heavenLetter.request.HeavenLetterVerifyRequestDto;
 import com.ttasum.memorial.dto.heavenLetter.request.PageRequest;
@@ -74,6 +75,18 @@ public class RecipientLetterController {
 
         // return "redirect://";
         return ResponseEntity.status(HttpStatus.OK).body(recipientLetterUpdateResponseDto);
+    }
+    //편지 삭제
+    @DeleteMapping("/{letterSeq}")
+    public ResponseEntity<ApiResponse> deleteLetter(
+            @PathVariable Integer letterSeq,
+            @RequestBody @Valid RecipientLetterVerifyRequestDto deleteRequest) {
+
+        recipientLetterService.deleteLetter(letterSeq, deleteRequest);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ApiResponse.ok(HttpStatus.OK.value(), "편지가 정상적으로 삭제 되었습니다."));
     }
 
 }

@@ -11,10 +11,10 @@ import javax.validation.constraints.NotNull;
 
 public class RecipientLetterVerifyRequestDto {
 
-    @NotNull(message = "편지 번호는 필수입니다.")
+    @NotNull(message = "필수 입력값이 누락되었습니다.")
     private Integer letterSeq;
 
-    @NotBlank(message = "비밀번호는 필수입니다")
+    @NotBlank(message = "필수 입력값이 누락되었습니다.")
     private String letterPasscode;
 }
 

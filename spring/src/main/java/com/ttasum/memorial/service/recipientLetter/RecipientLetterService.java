@@ -2,10 +2,8 @@ package com.ttasum.memorial.service.recipientLetter;
 
 import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterRequestDto;
 import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterUpdateRequestDto;
-import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterDetailResponse;
-import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterListResponseDto;
-import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterResponseDto;
-import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterUpdateResponseDto;
+import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterVerifyRequestDto;
+import com.ttasum.memorial.dto.recipientLetter.response.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -25,5 +23,9 @@ public interface RecipientLetterService {
 
     //편지 수정
     RecipientLetterUpdateResponseDto updateLetter(Integer letterSeq, RecipientLetterUpdateRequestDto recipientLetterUpdateRequestDto);
+
+    //편지 삭제
+//    RecipientLetterCommonResponseDto deleteLetter(RecipientLetterVerifyRequestDto deleteRequest);
+    void deleteLetter(Integer letterSeq, RecipientLetterVerifyRequestDto deleteRequest);
 
 }

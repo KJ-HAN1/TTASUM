@@ -10,6 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 
+//수정&인증
 // 1: 성공, 0: 실패
 public class RecipientLetterCommonResponseDto {
     private int result;
