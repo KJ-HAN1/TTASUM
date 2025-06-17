@@ -72,7 +72,7 @@ public class HeavenLetterServiceImpl implements HeavenLetterService {
                 .orElseThrow(MemorialNotFoundException::new);
 
         return HeavenLetterFormResponseDto.builder()
-                .donateSeq(memorial.getDonateSeq())
+                .donateSeq(memorial.getId())
                 .donorName(memorial.getDonorName())
                 .areaCode(memorial.getAreaCode())
                 .build();
