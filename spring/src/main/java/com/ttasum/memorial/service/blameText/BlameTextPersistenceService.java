@@ -13,6 +13,7 @@ import com.ttasum.memorial.domain.repository.blameText.BlameTextLetterRepository
 import com.ttasum.memorial.domain.repository.blameText.BlameTextLetterSentenceRepository;
 import com.ttasum.memorial.domain.repository.heavenLetter.HeavenLetterCommentRepository;
 import com.ttasum.memorial.dto.blameText.BlameResponseDto;
+import com.ttasum.memorial.exception.blameText.BlameTextException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -52,30 +54,26 @@ public class BlameTextPersistenceService {
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)  //호출자가 트랜잭션 중이더라도 기존 트랜잭션을 분리
     public void updateToDb(BlameResponseDto response, Contents contents, String boardType) {
-        if(contents instanceof Story) {
-            if(contents instanceof DonationStory story) {
-                BlameTextLetter existing =
-                        blameTextLetterRepository.findByOriginSeqAndDeleteFlag(story.getId(), 0)
-                                .orElseThrow(() -> new EntityNotFoundException("기존 비난 텍스트 없음"));
-                // 기존 데이터 삭제 delete_flag (text, sentence 모두)
-                existing.setDeleteFlag(1);
-                existing.setUpdateTime(LocalDateTime.now());
-                blameTextLetterRepository.save(existing);
-                // 다시 저장
-                this.saveToDb(response, story, boardType);
-            }
-        } else if(contents instanceof Comment) {
-            if(contents instanceof DonationStoryComment comment) {
-                BlameTextComment existing =
-                        blameTextCommentRepository.findByOriginSeqAndDeleteFlag(comment.getCommentSeq(), 0)
-                                .orElseThrow(() -> new EntityNotFoundException("기존 비난 텍스트 없음"));
-                // 기존 데이터 삭제 delete_flag (text, sentence 모두)
-                existing.setDeleteFlag(1);
-                existing.setUpdateTime(LocalDateTime.now());
-                blameTextCommentRepository.save(existing);
-                // 다시 저장
-                this.saveToDb(response, comment, boardType);
-            }
+        if(contents instanceof Story story) {
+            BlameTextLetter existing =
+                    blameTextLetterRepository.findByOriginSeqAndDeleteFlag(story.getId(), 0)
+                            .orElseThrow(() -> new EntityNotFoundException("기존 비난 텍스트 없음"));
+            // 기존 데이터 삭제 delete_flag (text, sentence 모두)
+            existing.setDeleteFlag(1);
+            existing.setUpdateTime(LocalDateTime.now());
+            blameTextLetterRepository.save(existing);
+            // 다시 저장
+            this.saveToDb(response, story, boardType);
+        } else if(contents instanceof Comment comment) {
+            BlameTextComment existing =
+                    blameTextCommentRepository.findByOriginSeqAndDeleteFlag(comment.getCommentSeq(), 0)
+                            .orElseThrow(() -> new EntityNotFoundException("기존 비난 텍스트 없음"));
+            // 기존 데이터 삭제 delete_flag (text, sentence 모두)
+            existing.setDeleteFlag(1);
+            existing.setUpdateTime(LocalDateTime.now());
+            blameTextCommentRepository.save(existing);
+            // 다시 저장
+            this.saveToDb(response, comment, boardType);
         }
 
     }
@@ -95,16 +93,16 @@ public class BlameTextPersistenceService {
     }
 
     private BlameTextComment setBlameComment(BlameResponseDto response, Comment comment, String boardType) {
-        // 1. Comment 저장 (영속 상태로 만들어야 함)
-        if (comment instanceof DonationStoryComment donation) {
-            donationStoryCommentRepository.save(donation);
-        } else if(comment instanceof HeavenLetterComment heaven) {
-            heavenLetterCommentRepository.save(heaven);
-        }
+//        // 1. Comment 저장 (영속 상태로 만들어야 함)
+//        if (comment instanceof DonationStoryComment donation) {
+//            donationStoryCommentRepository.save(donation);
+//        } else if(comment instanceof HeavenLetterComment heaven) {
+//            heavenLetterCommentRepository.save(heaven);
+//        }
 
         // 2. 이후 BlameTextComment에 연결
         return BlameTextComment.builder()
-                .storySeq(comment.getCommentSeq())
+                .storySeq(comment.getLetterSeq().getId())
                 .contents(response.getSentence())
                 .label(response.getLabel())
                 .confidence(response.getConfidence())
@@ -147,6 +145,26 @@ public class BlameTextPersistenceService {
                 list.add(blameTextCommentSentence);
             }
             saved.setComments(list);  //부모만 save()해도 자식들이 자동 저장
+        }
+    }
+
+    @Transactional
+    public void deleteBlameTextLetter(int seq, String boardType) {
+        ArrayList<BlameTextLetter> letter = blameTextLetterRepository.findBlameTextsByBoardTypeAndOriginSeqAndDeleteFlag(boardType, seq, 0)
+                .orElseThrow(BlameTextException::new);
+        for(BlameTextLetter blameTextLetter : letter){
+            blameTextLetter.setDeleteFlag(1);
+        }
+    }
+
+    @Transactional
+    public void deleteBlameTextComment(int letterSeq, int commentSeq, String boardType) {
+        List<BlameTextComment> comment = blameTextCommentRepository
+                .findBlameTextCommentsByBoardTypeAndStorySeqAndOriginSeqAndDeleteFlag(boardType, letterSeq, commentSeq, 0)
+                .orElseThrow(BlameTextException::new);
+
+        for(BlameTextComment blameTextComment : comment) {
+            blameTextComment.setDeleteFlag(1);
         }
     }
 }

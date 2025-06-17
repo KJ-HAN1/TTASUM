@@ -5,6 +5,7 @@ import com.ttasum.memorial.domain.entity.Story;
 import com.ttasum.memorial.dto.blameText.BlameResponseDto;
 import com.ttasum.memorial.exception.blameText.*;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -21,6 +22,7 @@ import java.util.Map;
 
 @Service
 @AllArgsConstructor
+@NoArgsConstructor
 public class BlameTextCheckerService {
     private final RestTemplate restTemplate = new RestTemplate();
     private BlameTextPersistenceService persistenceService;
