@@ -13,6 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import static com.ttasum.memorial.domain.type.ContentType.COMMENT;
+import static com.ttasum.memorial.domain.type.ContentType.STORY;
+
 @Controller
 @RequestMapping("/admin")
 @RequiredArgsConstructor
@@ -98,7 +101,7 @@ public class AdminController {
             @PathVariable int originSeq,
             @PathVariable String boardType) {
         // 삭제
-        return adminService.deleteBlameText(originSeq, boardType);
+        return adminService.deleteBlameText(originSeq, boardType, STORY);
     }
 
     @GetMapping("/blameText/comment")
@@ -111,5 +114,21 @@ public class AdminController {
         PageRequest pageRequest = adminService.setOrderByOptions(page, size, filter);
         model.addAttribute("pageResponse", adminService.getBlameTextComment(filter, orderBy, pageRequest));
         return "/admin/blameText_comment";
+    }
+
+    @GetMapping("/blameText/comment/detail")
+    public String getComment(
+            @RequestParam(name = "seq") int seq,
+            Model model){
+        model.addAttribute("blameDetail", adminService.getBlameTextCommentSentence(seq));
+        return "/admin/blameText_comment_detail";
+    }
+
+    @DeleteMapping("/blameText/comment/{originSeq}/{boardType}")
+    @ResponseBody
+    public ResponseEntity<?> deleteComment(
+            @PathVariable(name = "originSeq") int originSeq,
+            @PathVariable String boardType){
+        return adminService.deleteBlameText(originSeq, boardType,COMMENT);
     }
 }
