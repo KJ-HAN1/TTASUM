@@ -111,12 +111,12 @@ public class RecipientLetterServiceImpl implements RecipientLetterService {
     @Override
     public void deleteLetter(Integer letterSeq, RecipientLetterVerifyRequestDto deleteRequest) {
 
-        // 요청 경로(letterSeq)와 본문 값이 다르면 예외(400)
+        // 경로와 본문 값 불일치 (400 Bad Request)
         if (!letterSeq.equals(deleteRequest.getLetterSeq())) {
             throw new PathVariableMismatchException("수혜자 편지 번호와 요청 번호가 일치하지 않습니다.");
         }
 
-        // 편지 조회 (없으면 NotFoundException 발생)(404)
+        // 리소스를 찾을 수 없음 (404 Not Found)
         RecipientLetter recipientLetter = recipientLetterRepository.findById(letterSeq)
                 .orElseThrow(() -> new NotFoundException("해당 수혜자 편지를 찾을 수 없습니다."));
 
@@ -125,7 +125,7 @@ public class RecipientLetterServiceImpl implements RecipientLetterService {
             throw new InvalidPasscodeException();
         }
 
-        // 이미 삭제된 편지라면 예외(409)
+        // 이미 삭제된 리소스에 대한 요청 (409 Conflict)
         if ("Y".equals(recipientLetter.getDelFlag())) {
             throw new AlreadyDeletedException();
         }

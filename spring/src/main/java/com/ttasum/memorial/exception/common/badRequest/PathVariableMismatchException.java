@@ -1,6 +1,6 @@
 package com.ttasum.memorial.exception.common.badRequest;
 
-//요청한 URL과 BODY 편지의 번호가 맞지 않을 때 발생하는 예외
+//경로와 본문 값 불일치 (400 Bad Request)
 public class PathVariableMismatchException extends BadRequestException {
     public PathVariableMismatchException(String message) {
         super(message);
