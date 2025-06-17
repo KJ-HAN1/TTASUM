@@ -1,6 +1,8 @@
 package com.ttasum.memorial.dto.recipientLetter.response;
 
 import com.ttasum.memorial.domain.entity.recipientLetter.RecipientLetter;
+import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterCommentResponseDto;
+import com.ttasum.memorial.dto.recipientLetterComment.response.RecipientLetterCommentListResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +14,7 @@ import java.util.stream.Collectors;
 
 //조회 단건
 @Getter
+@Setter
 @NoArgsConstructor
 
 public class RecipientLetterDetailResponse {
@@ -32,6 +35,7 @@ public class RecipientLetterDetailResponse {
     private LocalDateTime modifyTime;
     private String modifierId;
     private String delFlag;
+    private List<RecipientLetterCommentListResponse> comments;
 
     public RecipientLetterDetailResponse(RecipientLetter recipientLetter) {
         this.letterSeq = recipientLetter.getLetterSeq();
@@ -51,8 +55,11 @@ public class RecipientLetterDetailResponse {
         this.modifyTime = recipientLetter.getModifyTime();
         this.modifierId = recipientLetter.getModifierId();
         this.delFlag = recipientLetter.getDelFlag();
-
+        this.comments =  recipientLetter.getComments().stream()
+                .map(RecipientLetterCommentListResponse::new)
+                .collect(Collectors.toList());
     }
+
 }
 
 

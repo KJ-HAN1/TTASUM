@@ -1,5 +1,6 @@
 package com.ttasum.memorial.domain.entity.recipientLetter;
 
+import com.ttasum.memorial.domain.entity.heavenLetter.HeavenLetterComment;
 import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterUpdateRequestDto;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -78,6 +79,11 @@ public class RecipientLetter {
     @ColumnDefault("'N'")
     @Column(name = "del_flag", nullable = false, length = 1)
     private String delFlag;
+
+    //댓글 엔티티
+    @OneToMany(mappedBy = "letterSeq")
+    @Where(clause = "del_flag = 'N'")
+    private List<RecipientLetterComment> comments = new ArrayList<>();
 
     //JPA생명주기 중 하나 : save()로 DB에 insert되기 직전에 실행(기본값 세팅)
     //update할 땐 작동 안 함

@@ -1,17 +1,21 @@
 package com.ttasum.memorial.service.recipientLetter;
 
 
+import com.ttasum.memorial.domain.entity.heavenLetter.HeavenLetter;
 import com.ttasum.memorial.domain.entity.recipientLetter.RecipientLetter;
 import com.ttasum.memorial.domain.repository.recipientLetter.RecipientLetterRepository;
 import com.ttasum.memorial.dto.common.ApiResponse;
+import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterResponseDto;
 import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterRequestDto;
 import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterUpdateRequestDto;
 import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterVerifyRequestDto;
 import com.ttasum.memorial.dto.recipientLetter.response.*;
+import com.ttasum.memorial.dto.recipientLetterComment.response.RecipientLetterCommentListResponse;
 import com.ttasum.memorial.exception.common.Conflict.AlreadyDeletedException;
 import com.ttasum.memorial.exception.common.badRequest.InvalidPasscodeException;
 import com.ttasum.memorial.exception.common.badRequest.PathVariableMismatchException;
 import com.ttasum.memorial.exception.common.notFound.NotFoundException;
+import com.ttasum.memorial.exception.heavenLetter.HeavenLetterNotFoundException;
 import com.ttasum.memorial.exception.heavenLetter.InvalidPasswordException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,6 +23,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.ttasum.memorial.exception.recipientLetter.RecipientLetterNotFoundException;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -55,9 +62,10 @@ public class RecipientLetterServiceImpl implements RecipientLetterService {
     @Transactional
     @Override
     public RecipientLetterDetailResponse getLetterById(Integer letterSeq) {
-        // findById: JPA 제공 메서드. Optional로 반환
-        RecipientLetter recipientLetter = recipientLetterRepository.findById(letterSeq)
-                .orElseThrow(RecipientLetterNotFoundException::new);
+
+        RecipientLetter recipientLetter = recipientLetterRepository
+                .findByLetterSeqAndDelFlag(letterSeq, "N")
+                .orElseThrow(() -> new NotFoundException("해당 수혜자 편지를 찾을 수 없습니다."));
 
         //커맨드 메서드 사용
         recipientLetter.increaseReadCount();
