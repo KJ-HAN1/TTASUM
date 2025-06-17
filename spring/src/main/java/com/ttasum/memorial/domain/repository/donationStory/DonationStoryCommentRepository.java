@@ -1,5 +1,6 @@
 package com.ttasum.memorial.domain.repository.donationStory;
 
+import com.ttasum.memorial.domain.entity.donationStory.DonationStory;
 import com.ttasum.memorial.domain.entity.donationStory.DonationStoryComment;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -10,9 +11,10 @@ import java.util.Optional;
 public interface DonationStoryCommentRepository extends JpaRepository<DonationStoryComment, Integer> {
 
     // 특정 스토리에 대한 댓글 목록 조회 (삭제되지 않은 것만)
-    List<DonationStoryComment> findByStory_IdAndDelFlagOrderByWriteTimeAsc(Integer storySeq, String delFlag);
+    List<DonationStoryComment> findByCommentSeqAndDelFlagOrderByWriteTimeAsc(Integer storySeq, String delFlag);
 
     // 댓글 ID와 비밀번호 일치 여부 확인
-    Optional<DonationStoryComment> findByStory_IdAndCommentSeqAndDelFlag(Integer storySeq, Integer commentSeq, String delFlag);
+    Optional<DonationStoryComment> findByCommentSeqAndLetterSeqAndDelFlag(Integer commentSeq, DonationStory storySeq, String delFlag);
 
+    Optional<DonationStoryComment> findByCommentSeqAndDelFlag(int seq, String n);
 }
