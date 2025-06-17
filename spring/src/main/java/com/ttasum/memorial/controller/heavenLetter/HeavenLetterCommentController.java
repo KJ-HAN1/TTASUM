@@ -5,6 +5,7 @@ import com.ttasum.memorial.dto.common.ApiResponse;
 import com.ttasum.memorial.dto.heavenLetter.request.CommonCommentRequestDto;
 import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterCommentResponseDto;
 import com.ttasum.memorial.exception.heavenLetter.HeavenLetterCommentMismatchException;
+import com.ttasum.memorial.service.blameText.BlameTextPersistenceService;
 import com.ttasum.memorial.service.forbiddenWord.TestReviewService;
 import com.ttasum.memorial.service.heavenLetter.HeavenLetterCommentService;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class HeavenLetterCommentController {
 
     private final HeavenLetterCommentService heavenLetterCommentService;
     private final TestReviewService testReviewService;
+    private final BlameTextPersistenceService blameTextPersistenceService;
 
     //등록
     @PostMapping
@@ -77,7 +79,8 @@ public class HeavenLetterCommentController {
     //댓글 삭제
     @DeleteMapping("/{commentSeq}")
     public ResponseEntity<HeavenLetterCommentResponseDto.CommentVerifyResponse> deleteComment(
-            @PathVariable Integer commentSeq,
+            @PathVariable(name = "commentSeq") Integer commentSeq,
+            @PathVariable(name = "letterSeq") Short letterSeq,
             @RequestBody CommonCommentRequestDto.DeleteCommentRequest deleteCommentRequest) {
 
         if (!commentSeq.equals(deleteCommentRequest.getCommentSeq())) {
@@ -86,6 +89,7 @@ public class HeavenLetterCommentController {
 
         HeavenLetterCommentResponseDto.CommentVerifyResponse deleteCommentResponse = heavenLetterCommentService.deleteComment(deleteCommentRequest);
 
+        blameTextPersistenceService.deleteBlameTextComment(letterSeq, commentSeq, HEAVEN.getType());
         // 결과에 따라 상태코드 분기
         if (deleteCommentResponse.getResult() == 1) {
             return ResponseEntity.ok(deleteCommentResponse);

@@ -8,6 +8,7 @@ import com.ttasum.memorial.dto.memorialComment.request.MemorialReplyCreateReques
 import com.ttasum.memorial.dto.memorialComment.request.MemorialReplyDeleteRequestDto;
 import com.ttasum.memorial.dto.memorialComment.request.MemorialReplyUpdateRequestDto;
 import com.ttasum.memorial.dto.memorialComment.response.MemorialReplyResponseDto;
+import com.ttasum.memorial.service.blameText.BlameTextPersistenceService;
 import com.ttasum.memorial.service.forbiddenWord.TestReviewService;
 import com.ttasum.memorial.service.memorial.MemorialService;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,7 @@ public class MemorialController {
 
     private final MemorialService memorialService;
     private final TestReviewService testReviewService;
+    private final BlameTextPersistenceService blameTextPersistenceService;
 
     /**
      * 기증자 추모관 목록 조회
@@ -145,6 +147,8 @@ public class MemorialController {
             @Valid @RequestBody MemorialReplyDeleteRequestDto dto
     ) {
         memorialService.softDeleteReply(donateSeq,replySeq, dto);
+
+        blameTextPersistenceService.deleteBlameTextComment(donateSeq, replySeq, REMEMBRANCE.getType());
         return ResponseEntity.ok(
                 ApiResponse.ok(
                         HttpStatus.OK.value(),
