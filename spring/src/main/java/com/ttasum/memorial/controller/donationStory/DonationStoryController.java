@@ -67,7 +67,9 @@ public class DonationStoryController {
     @GetMapping("/{storySeq}")
     public ResponseEntity<DonationStoryResponseDto> getStory(@PathVariable Integer storySeq){
         log.debug("/donationLetters/storySeq={} - 단건 조회", storySeq);
+
         return ResponseEntity.ok(donationStoryService.getStory(storySeq));
+
     }
 
     /**

@@ -7,11 +7,9 @@ package com.ttasum.memorial.aop.logging;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
-import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -31,19 +29,14 @@ public class ControllerLoggingAspect {
         HttpServletRequest request =
                 ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
 
-        MDC.put("url_name", request.getRequestURI());   // 요청 들어온 uri
-        MDC.put("crud_code", request.getMethod());      // 메서드 타입(get,post,...)
-        MDC.put("ip_addr", request.getRemoteAddr());   // client ip addr -> 프록시나 로드밸런서 사용하게 되면 변경 해야함
 
-        String logText = String.format("method=%s, uri=%s, ip=%s", request.getMethod(), request.getRequestURI(), request.getRemoteAddr());
-        MDC.put("log_text", logText);
+        String method = request.getMethod();        // GET, POST ....
+        String uri = request.getRequestURI();       // 요청 URL
+        String handler = joinPoint.getSignature().toShortString();  // 클래스명.메서드명()
+        String clientIp = request.getRemoteAddr(); // client ip addr -> 프록시나 로드밸런서 사용하게 되면 변경 해야함
 
-        log.info(logText);
-    }
+        log.info("Type={} - request={} - clientIp=[{}] methodCall={}", method, uri, clientIp,handler);
 
-    @After("controllerMethods()")
-    public void clearMDC() {
-        MDC.clear(); // Thread 재사용 방지
     }
 
 }
