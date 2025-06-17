@@ -1,124 +1,97 @@
-//package com.ttasum.memorial.donationstory.controller;
-//
-//import com.fasterxml.jackson.databind.ObjectMapper;
-//import com.ttasum.memorial.controller.donationStory.DonationStoryCommentController;
-//import com.ttasum.memorial.dto.donationStory.DonationStoryUpdateRequestDto;
-//import com.ttasum.memorial.dto.donationStoryComment.DonationStoryCommentCreateRequestDto;
-//import com.ttasum.memorial.service.donationStory.DonationStoryCommentService;
-//import org.junit.jupiter.api.DisplayName;
-//import org.junit.jupiter.api.Nested;
-//import org.junit.jupiter.api.Test;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-//import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-//import org.springframework.boot.test.mock.mockito.MockBean;
-//import org.springframework.http.MediaType;
-//import org.springframework.test.web.servlet.MockMvc;
-//
-//import static org.mockito.ArgumentMatchers.any;
-//import static org.mockito.ArgumentMatchers.eq;
-//import static org.mockito.BDDMockito.given;
-//import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
-//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-//
-//@WebMvcTest(DonationStoryCommentController.class)
-//@AutoConfigureMockMvc
-//public class DonationStoryCommentControllerTest {
-//
-//    @Autowired
-//    private MockMvc mockMvc;
-//
-//    @MockBean
-//    private DonationStoryCommentService commentService;
-//
-//    @Autowired
-//    private ObjectMapper objectMapper;
-//
-//    @Test
-//    @DisplayName("댓글 생성 성공 시 201 Created와 Location 헤더 반환")
-//    void createComment_success() throws Exception {
-//        // given
-//        Integer storySeq = 1;
-//        Integer commentSeq = 10;
-//
-//        DonationStoryCommentCreateRequestDto dto = new DonationStoryCommentCreateRequestDto();
-//        dto.setCommentWriter("테스트 코디");
-//        dto.setCommentPasscode("123456");
-//        dto.setContents("테스트 내용");
-//
-//        // void 반환 -> doNothing
-//        given(commentService.createComment(eq(storySeq), any())).willReturn(commentSeq);
-//
-//        mockMvc.perform(post("/donationLetters/{storySeq}/comments", storySeq)
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(objectMapper.writeValueAsString(dto))) // DTO → JSON 문자열로 변환
-//                .andExpect(status().isCreated())
-//                .andExpect(header().string("Location", String.format("/donationLetters/%d/comments/%d", storySeq, commentSeq)));
-//    }
-//
-//    @Nested
-//    @DisplayName("댓글 생성 실패 테스트")
-//    class CreateCommentFailTests {
-//
-//        @Test
-//        @DisplayName("작성자 미입력 시 400")
-//        void createComment_fail_noWriter() throws Exception {
-//            DonationStoryCommentCreateRequestDto dto = new DonationStoryCommentCreateRequestDto();
-//            dto.setCommentWriter(""); // 유효하지 않음
-//            dto.setCommentPasscode("abcd1234");
-//            dto.setContents("댓글 내용");
-//
-//            mockMvc.perform(post("/donationLetters/1/comments")
-//                            .contentType(MediaType.APPLICATION_JSON)
-//                            .content(objectMapper.writeValueAsString(dto)))
-//                    .andExpect(status().isBadRequest());
-//        }
-//
-//        @Test
-//        @DisplayName("비밀번호 미입력 시 400")
-//        void createComment_fail_noPasscode() throws Exception {
-//            DonationStoryCommentCreateRequestDto dto = new DonationStoryCommentCreateRequestDto();
-//            dto.setCommentWriter("홍길동");
-//            dto.setCommentPasscode(""); // 유효하지 않음
-//            dto.setContents("댓글 내용");
-//
-//            mockMvc.perform(post("/donationLetters/1/comments")
-//                            .contentType(MediaType.APPLICATION_JSON)
-//                            .content(objectMapper.writeValueAsString(dto)))
-//                    .andExpect(status().isBadRequest());
-//        }
-//
-//        @Test
-//        @DisplayName("내용 미입력 시 400")
-//        void createComment_fail_noContents() throws Exception {
-//            DonationStoryCommentCreateRequestDto dto = new DonationStoryCommentCreateRequestDto();
-//            dto.setCommentWriter("홍길동");
-//            dto.setCommentPasscode("abcd1234");
-//            dto.setContents(""); // 유효하지 않음
-//
-//            mockMvc.perform(post("/donationLetters/1/comments")
-//                            .contentType(MediaType.APPLICATION_JSON)
-//                            .content(objectMapper.writeValueAsString(dto)))
-//                    .andExpect(status().isBadRequest());
-//        }
-//
-//    }
-//
-//    @Nested
-//    @DisplayName("댓글 수정 테스트")
-//    class UpdateCommentTests {
-//
-//        @Test
-//        @DisplayName("정상 수정 시 200 OK")
-//        void updateComment_success() throws Exception {
-//            DonationStoryUpdateRequestDto dto = new DonationStoryUpdateRequestDto();
-//            dto.setStoryPasscode("123456");
-//            dto.setStoryContents("수정된 댓글");
-//
-//
-//
-//        }
-//    }
-//
-//}
+package com.ttasum.memorial.donationstory.controller;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ttasum.memorial.controller.donationStory.DonationStoryCommentController;
+import com.ttasum.memorial.dto.donationStoryComment.request.*;
+import com.ttasum.memorial.service.donationStory.DonationStoryCommentService;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.mockito.BDDMockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+
+import static org.hamcrest.Matchers.containsString;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doNothing;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+@WebMvcTest(DonationStoryCommentController.class)
+class DonationStoryCommentControllerTest {
+
+    @Autowired
+    private MockMvc mvc;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @MockBean
+    private DonationStoryCommentService commentService;
+
+    @Test
+    @DisplayName("댓글 등록 요청 성공 시 200 OK + 메시지 반환")
+    void createComment_Success() throws Exception {
+        DonationStoryCommentCreateRequestDto req = new DonationStoryCommentCreateRequestDto();
+        req.setCommentWriter("홍길동");
+        req.setCommentPasscode("password1");    // 8자 이상, 영문자 포함
+        req.setContents("댓글입니다.");
+
+        // void 메서드 stub: createComment(3, any) → doNothing
+        doNothing()
+                .when(commentService)
+                .createComment(eq(3), any(DonationStoryCommentCreateRequestDto.class));
+
+        mvc.perform(post("/donationLetters/3/comments")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(req)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message", containsString("등록되었습니다")));
+    }
+
+    @Test
+    @DisplayName("댓글 수정 요청 성공 시 200 OK 반환")
+    void updateComment_Success() throws Exception {
+        // 1) 유효한 패스코드 + 내용 세팅
+        DonationStoryCommentUpdateRequestDto req = new DonationStoryCommentUpdateRequestDto();
+        req.setCommentPasscode("password1");    // 8자 이상, 영문자 포함
+        req.setContents("수정된 댓글");
+
+        // 2) 서비스는 void 메서드이므로 doNothing()으로 stub
+        doNothing()
+                .when(commentService)
+                .updateComment(3, 5, req);
+
+        // 3) PATCH 요청, JSON 바디엔 commentPasscode, contents 만 포함
+        mvc.perform(patch("/donationLetters/3/comments/5")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(req)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message", containsString("수정되었습니다")));
+    }
+
+
+    @Test
+    @DisplayName("댓글 삭제 요청 성공 시 200 OK 반환")
+    void deleteComment_Success() throws Exception {
+        // 1) 유효한 패스코드만 세팅 (8~16자, 영문자 포함)
+        DonationStoryCommentDeleteRequestDto req = new DonationStoryCommentDeleteRequestDto();
+        req.setCommentPasscode("password1");
+
+        // 2) 서비스는 void 이므로 doNothing() 으로 stub
+        doNothing()
+                .when(commentService)
+                .softDeleteComment(3, 7, req);
+
+        // 3) DELETE 요청, JSON 바디에는 오직 commentPasscode만
+        mvc.perform(delete("/donationLetters/3/comments/7")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(req)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message", containsString("삭제되었습니다")));
+    }
+
+}

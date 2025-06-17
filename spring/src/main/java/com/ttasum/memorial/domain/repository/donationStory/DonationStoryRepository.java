@@ -17,7 +17,7 @@ public interface DonationStoryRepository extends JpaRepository<DonationStory, In
 
     /**
      * 삭제되지 않은 스토리만 조회 (del_flag = 'N')
-     * SELECT * FROM tb25_420_donation_story
+     * SELECT * FROM tb25  _420_donation_story
      * WHERE del_flag = 'N'
      * ORDER BY write_time DESC
      * LIMIT ?, ?

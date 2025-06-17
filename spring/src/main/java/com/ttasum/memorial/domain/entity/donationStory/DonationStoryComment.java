@@ -66,7 +66,6 @@ public class DonationStoryComment {
 
     /**
      * 비밀번호가 일치하는 경우 댓글 내용을 수정
-     * @param inputPasscode 요청자가 입력한 비밀번호
      * @param newContents 수정할 내용
      * @param modifierId 수정자 ID (로그인 사용자 또는 null)
      */
