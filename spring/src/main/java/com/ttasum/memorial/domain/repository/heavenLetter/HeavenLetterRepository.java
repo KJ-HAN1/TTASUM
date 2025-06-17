@@ -19,7 +19,7 @@ public interface HeavenLetterRepository extends JpaRepository<HeavenLetter, Inte
 
     //단건 조회(댓글 포함)
     @EntityGraph(attributePaths = "comments")
-    Optional<HeavenLetter> findByLetterSeqAndDelFlag(Integer letterSeq, String delFlag);
+    Optional<HeavenLetter> findByIdAndDelFlag(Integer id, String delFlag);
 
     List<HeavenLetter> findByDonateSeqAndDelFlagOrderByWriteTimeDesc(Memorial memorial, String delFlag);
 }

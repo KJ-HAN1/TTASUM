@@ -26,27 +26,27 @@ public class BlameTextCheckerService {
     private BlameTextPersistenceService persistenceService;
 
 
-    public BlameResponseDto analyzeAndSave(Story story) {
+    public BlameResponseDto analyzeAndSave(Story story, String boardType) {
         BlameResponseDto response = analyze(story.getContents());
-        persistenceService.saveToDb(response, story); // 트랜잭션 분리됨
+        persistenceService.saveToDb(response, story, boardType); // 트랜잭션 분리됨
         return response;
     }
 
-    public BlameResponseDto analyzeAndSave(Comment comment) {
+    public BlameResponseDto analyzeAndSave(Comment comment, String boardType) {
         BlameResponseDto response = analyze(comment.getContents());
-        persistenceService.saveToDb(response, comment); // 트랜잭션 분리됨
+        persistenceService.saveToDb(response, comment, boardType); // 트랜잭션 분리됨
         return response;
     }
 
-    public BlameResponseDto analyzeAndUpdate(Story story) {
+    public BlameResponseDto analyzeAndUpdate(Story story, String boardType) {
         BlameResponseDto response = analyze(story.getContents());
-        persistenceService.updateToDb(response, story); // 트랜잭션 분리됨
+        persistenceService.updateToDb(response, story, boardType); // 트랜잭션 분리됨
         return response;
     }
 
-    public BlameResponseDto analyzeAndUpdate(Comment comment) {
+    public BlameResponseDto analyzeAndUpdate(Comment comment, String boardType) {
         BlameResponseDto response = analyze(comment.getContents());
-        persistenceService.updateToDb(response, comment); // 트랜잭션 분리됨
+        persistenceService.updateToDb(response, comment, boardType); // 트랜잭션 분리됨
         return response;
     }
 

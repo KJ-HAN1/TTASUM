@@ -27,7 +27,7 @@ public class HeavenLetterCommentServiceImpl implements HeavenLetterCommentServic
     //댓글 등록
     @Transactional
     @Override
-    public HeavenLetterCommentResponseDto createComment(CommonCommentRequestDto.CreateCommentRequest createCommentRequest) {
+    public HeavenLetterComment createComment(CommonCommentRequestDto.CreateCommentRequest createCommentRequest) {
         HeavenLetter heavenLetter = heavenLetterRepository.findById(createCommentRequest.getLetterSeq())
                 .orElseThrow(HeavenLetterNotFoundException::new);
 
@@ -38,9 +38,7 @@ public class HeavenLetterCommentServiceImpl implements HeavenLetterCommentServic
                 .contents(createCommentRequest.getContents())
                 .build();
 
-        commentRepository.save(letterComment);
-
-        return HeavenLetterCommentResponseDto.success("편지 댓글이 성공적으로 등록되었습니다.");
+        return commentRepository.save(letterComment);
     }
     //수정 인증(공통)
     @Transactional(readOnly = true)
@@ -58,7 +56,7 @@ public class HeavenLetterCommentServiceImpl implements HeavenLetterCommentServic
     //댓글 수정
     @Transactional
     @Override
-    public HeavenLetterCommentResponseDto updateComment(Integer commentSeq, Integer letterSeq, CommonCommentRequestDto.UpdateCommentRequest updateCommentRequest) {
+    public HeavenLetterComment updateComment(Integer commentSeq, Integer letterSeq, CommonCommentRequestDto.UpdateCommentRequest updateCommentRequest) {
 
         //댓글 존재 여부 확인
         HeavenLetterComment comment = commentRepository.findById(commentSeq)
@@ -70,15 +68,13 @@ public class HeavenLetterCommentServiceImpl implements HeavenLetterCommentServic
         }
 
         //편지 번호 일치 여부 확인
-        if (!comment.getLetterSeq().getLetterSeq().equals(letterSeq)) {
+        if (!comment.getLetterSeq().getId().equals(letterSeq)) {
             throw new HeavenLetterCommentMismatchException();
         }
 
         //댓글 수정
-        comment.updateComment(updateCommentRequest);
-
         //응답 반환
-        return HeavenLetterCommentResponseDto.success("편지 댓글이 성공적으로 수정되었습니다.");
+        return  comment.updateComment(updateCommentRequest);
     }
 
     //댓글 삭제

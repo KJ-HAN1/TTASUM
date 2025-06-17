@@ -17,7 +17,7 @@ import java.util.Map;
 public interface HeavenLetterService {
 
     //편지 등록
-    HeavenLetterResponseDto createLetter(HeavenLetterRequestDto heavenLetterRequestDto);
+    HeavenLetter createLetter(HeavenLetterRequestDto heavenLetterRequestDto);
 
     //추모관에서 등록하는 편지폼
     HeavenLetterFormResponseDto getFormWithDonor(Integer donateSeq);
@@ -35,7 +35,7 @@ public interface HeavenLetterService {
    boolean verifyPasscode(Integer letterSeq, String passcode);
 
     //편지 수정
-    HeavenLetterUpdateResponsDto updateLetter(HeavenLetterUpdateRequestDto heavenLetterUpdateRequestDto);
+    HeavenLetter updateLetter(HeavenLetterUpdateRequestDto heavenLetterUpdateRequestDto);
 
     //편지 삭제
     CommonResultResponseDto deleteLetter(HeavenLetterVerifyRequestDto deleteRequest);

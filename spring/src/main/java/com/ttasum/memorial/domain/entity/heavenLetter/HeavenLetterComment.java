@@ -1,5 +1,6 @@
 package com.ttasum.memorial.domain.entity.heavenLetter;
 
+import com.ttasum.memorial.domain.entity.Comment;
 import com.ttasum.memorial.dto.heavenLetter.request.CommonCommentRequestDto;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -16,7 +17,7 @@ import java.time.LocalDateTime;
 @Builder
 @Where(clause = "del_flag = 'N'")
 @Table(name = "tb25_411_heaven_letter_comment")
-public class HeavenLetterComment {
+public class HeavenLetterComment extends Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -67,7 +68,7 @@ public class HeavenLetterComment {
         this.delFlag = "N";
     }
     //수정 메서드
-    public void updateComment(CommonCommentRequestDto.UpdateCommentRequest updateCommentRequest) {
+    public HeavenLetterComment updateComment(CommonCommentRequestDto.UpdateCommentRequest updateCommentRequest) {
 //        this.commentSeq = updateCommentRequest.getCommentSeq();
 //        this.letterSeq = heavenLetter;
         this.commentWriter = updateCommentRequest.getCommentWriter();
@@ -76,6 +77,7 @@ public class HeavenLetterComment {
         this.contents = updateCommentRequest.getContents();
         this.modifyTime = LocalDateTime.now();
 
+        return this;
     }
     //삭제 메서드
     public void softDeleteComment() {
