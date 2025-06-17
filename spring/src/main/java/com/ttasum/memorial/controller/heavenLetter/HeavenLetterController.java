@@ -92,7 +92,7 @@ public class HeavenLetterController {
         HeavenLetter Story = heavenLetterService.updateLetter(heavenLetterUpdateRequestDto);
 
         // 비난글 AI 필터링 추가
-        testReviewService.saveBoardFromBlameTable(Story, true, HEAVEN.getType());
+        testReviewService.saveBoardFromBlameTable(Story, false, HEAVEN.getType());
 
         // return "redirect://";
         return ResponseEntity.ok(ApiResponse.ok(

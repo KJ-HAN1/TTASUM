@@ -133,7 +133,7 @@ public class MemorialService {
      * @return 엔티티 -> DTO 변환 후 반환
      */
     @Transactional
-    public MemorialReplyResponseDto createReply(Integer donateSeq, MemorialReplyCreateRequestDto dto) {
+    public MemorialReply createReply(Integer donateSeq, MemorialReplyCreateRequestDto dto) {
         if (!captchaVerifier.verifyCaptcha(dto.getCaptchaToken())) {
             throw new CaptchaVerificationFailedException();
         }
@@ -152,7 +152,7 @@ public class MemorialService {
                 .build();
 
         MemorialReply saved = memorialReplyRepository.save(reply);
-        return MemorialReplyResponseDto.of(saved);
+        return memorialReplyRepository.save(reply);
     }
 
     /**
@@ -161,7 +161,7 @@ public class MemorialService {
      * @return 엔티티 -> DTO 변환 후 반환
      */
     @Transactional
-    public MemorialReplyResponseDto updateReply(Integer donateSeq, Integer replySeq, MemorialReplyUpdateRequestDto dto) {
+    public MemorialReply updateReply(Integer donateSeq, Integer replySeq, MemorialReplyUpdateRequestDto dto) {
         MemorialReply reply = memorialReplyRepository.findByMemorialDonateSeqAndReplySeqAndDelFlag(donateSeq, replySeq, "N")
                 .orElseThrow(() -> new MemorialReplyNotFoundException(replySeq));
 
@@ -170,8 +170,7 @@ public class MemorialService {
             throw new InvalidCommentPasscodeException(replySeq);
         }
 
-        reply.updateComment(dto.getReplyContents(), dto.getModifierId()); // 로그인 연동 시 수정자 ID로 교체
-        return MemorialReplyResponseDto.of(reply);
+        return reply.updateComment(dto.getReplyContents(), dto.getModifierId()); // 로그인 연동 시 수정자 ID로 교체
     }
 
     /**

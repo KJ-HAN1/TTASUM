@@ -23,11 +23,11 @@ public class MemorialReplyResponseDto {
     // 엔티티 -> DTO 변환
     public static MemorialReplyResponseDto of(MemorialReply reply) {
         return new MemorialReplyResponseDto(
-                reply.getReplySeq(),
+                reply.getCommentSeq(),
                 reply.getMemorial().getDonateSeq(),
                 reply.getReplyWriter(),
                 reply.getReplyWriterId(),
-                reply.getReplyContents(),
+                reply.getContents(),
                 reply.getReplyWriteTime(),
                 reply.getReplyModifyTime(),
                 reply.getReplyModifierId()
