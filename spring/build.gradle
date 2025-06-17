@@ -23,6 +23,10 @@ repositories {
     mavenCentral()
 }
 
+springBoot {
+    mainClass = 'com.ttasum.memorial.MemorialApplication'
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-jdbc' // JDBC를 통한 DB 연결 (MyBatis 등과 함께 사용 가능)
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // JPA 기반 ORM 사용을 위한 의존성
@@ -40,6 +44,7 @@ dependencies {
     implementation 'io.springfox:springfox-boot-starter:3.0.0'  // Swagger (springfox)
     testImplementation 'com.h2database:h2' // 인메모리 DB
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'net.logstash.logback:logstash-logback-encoder:6.6' //logstash
     implementation 'io.github.cdimascio:dotenv-java:2.2.4'  //.env
 
 
