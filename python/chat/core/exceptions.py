@@ -49,6 +49,29 @@ class BadRequestError(CustomBaseError):
 		)
 
 
+class JsonParsingError(CustomBaseError):
+	"""JSON 형식의 사용자 입력 요약 결과를 파싱 실패할 때 발생하는 오류입니다."""
+
+	def __init__(self):
+		super().__init__(
+			code=500,
+			user_message="사용자 입력을 처리하는 과정에서 예상치 못한 오류가 발생했습니다.",
+			developer_message="사용자 입력 요약 결과 역직렬화 실패",
+		)
+
+
+class InvalidTypeReturnError(CustomBaseError):
+	"""사용자 입력에서 키워드와 타입을 추출하는 LLM이 정의되지 않은 타입 유형을 반환할 때 발생합니다."""
+
+	def __init__(self, details):
+		super().__init__(
+			code=500,
+			user_message="사용자 입력을 처리하는 과정에서 예상치 못한 오류가 발생했습니다.",
+			developer_message="키워드/타입 추출 LLM이 정의되지 않은 타입 유형 반환",
+			details=details
+		)
+
+
 class DocumentNotFoundError(CustomBaseError):
 	"""사용자 질의와 관련된 문서를 찾지 못할 때 발생하는 오류입니다."""
 
