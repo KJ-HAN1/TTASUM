@@ -88,5 +88,26 @@ public class RecipientLetterController {
                 .status(HttpStatus.OK)
                 .body(ApiResponse.ok(HttpStatus.OK.value(), "편지가 정상적으로 삭제 되었습니다."));
     }
+    //검색
+    @GetMapping("/search")
+    public ResponseEntity<Page<RecipientLetterListResponseDto>> searchLetters(
+            @RequestParam(defaultValue = "전체") String type,
+            @RequestParam(defaultValue = "") String keyword,
+            @ModelAttribute PageRequest pageRequest) {
+
+        // 한글 타입을 영문으로 매핑
+        String mappedType = switch (type) {
+            case "제목" -> "title";
+            case "내용" -> "contents";
+            case "전체" -> "all";
+            default -> "all";
+        };
+
+        Pageable pageable = pageRequest.toPageable("letterSeq");
+        Page<RecipientLetterListResponseDto> result =
+                recipientLetterService.searchLetters(type, keyword, pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+
 
 }

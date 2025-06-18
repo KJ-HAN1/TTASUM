@@ -1,5 +1,6 @@
 package com.ttasum.memorial.service.recipientLetter;
 
+import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterResponseDto;
 import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterRequestDto;
 import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterUpdateRequestDto;
 import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterVerifyRequestDto;
@@ -27,5 +28,9 @@ public interface RecipientLetterService {
     //편지 삭제
 //    RecipientLetterCommonResponseDto deleteLetter(RecipientLetterVerifyRequestDto deleteRequest);
     void deleteLetter(Integer letterSeq, RecipientLetterVerifyRequestDto deleteRequest);
+
+    //편지 검색
+    Page<RecipientLetterListResponseDto> searchLetters(String type, String keyword, Pageable pageable);
+
 
 }

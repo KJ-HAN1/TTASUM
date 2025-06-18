@@ -2,6 +2,7 @@ package com.ttasum.memorial.service.heavenLetter;
 
 import com.ttasum.memorial.domain.entity.heavenLetter.HeavenLetter;
 import com.ttasum.memorial.domain.entity.memorial.Memorial;
+import com.ttasum.memorial.domain.repository.heavenLetter.HeavenLetterCommentRepository;
 import com.ttasum.memorial.domain.repository.memorial.MemorialRepository;
 import com.ttasum.memorial.dto.heavenLetter.request.HeavenLetterRequestDto;
 import com.ttasum.memorial.dto.heavenLetter.request.HeavenLetterUpdateRequestDto;
@@ -35,6 +36,7 @@ public class HeavenLetterServiceImpl implements HeavenLetterService {
 
     private final HeavenLetterRepository heavenLetterRepository;
     private final MemorialRepository memorialRepository;
+    private final HeavenLetterCommentRepository heavenLetterCommentRepository;
     private final Logger log = LoggerFactory.getLogger(HeavenLetterServiceImpl.class);
 
     //등록
@@ -100,9 +102,11 @@ public class HeavenLetterServiceImpl implements HeavenLetterService {
     @Override
     public Page<HeavenLetterResponseDto.HeavenLetterListResponse> getAllLetters(Pageable pageable) {
         return heavenLetterRepository.findAllByDelFlag("N", pageable)
-                .map(HeavenLetterResponseDto.HeavenLetterListResponse::fromEntity);
+                .map(letter -> {
+                    Long commentCount = heavenLetterCommentRepository.countByLetterSeq_LetterSeqAndDelFlag(letter.getLetterSeq(), "N");
+                    return HeavenLetterResponseDto.HeavenLetterListResponse.fromEntity(letter, commentCount);
+                });
     }
-
     //수정 인증 (공통)
     @Transactional(readOnly = true)
     @Override

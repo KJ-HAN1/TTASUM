@@ -14,6 +14,7 @@ import com.ttasum.memorial.exception.common.notFound.NotFoundException;
 import com.ttasum.memorial.exception.donationStory.DonationStoryNotFoundException;
 import com.ttasum.memorial.exception.heavenLetter.*;
 import com.ttasum.memorial.exception.recipientLetter.RecipientLetterNotFoundException;
+import com.ttasum.memorial.exception.recipientLetter.RecipientOrganNameEmptyException;
 import lombok.extern.slf4j.Slf4j;
 import com.ttasum.memorial.exception.common.badRequest.BadRequestException;
 import org.springframework.http.HttpStatus;
@@ -55,6 +56,13 @@ public class GlobalExceptionHandler {
         log.info("리소스를 찾을 수 없음: {}", ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(ApiResponse.notFound(ex.getMessage()));
+    }
+    // 직접입력 시 장기명 누락 예외 (400)
+    @ExceptionHandler(RecipientOrganNameEmptyException.class)
+    public ResponseEntity<ApiResponse> handleOrganNameEmpty(RecipientOrganNameEmptyException ex) {
+        log.info("직접입력 장기명 누락 예외: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ApiResponse.badRequest(ex.getMessage()));
     }
 
     // ResponseStatusException 처리

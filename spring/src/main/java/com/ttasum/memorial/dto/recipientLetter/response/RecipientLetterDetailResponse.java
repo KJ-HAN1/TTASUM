@@ -2,6 +2,7 @@ package com.ttasum.memorial.dto.recipientLetter.response;
 
 import com.ttasum.memorial.domain.entity.recipientLetter.RecipientLetter;
 import com.ttasum.memorial.dto.recipientLetterComment.response.RecipientLetterCommentListResponseDto;
+//import com.ttasum.memorial.util.OrganCodeUtil;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,6 +34,7 @@ public class RecipientLetterDetailResponse {
     private LocalDateTime modifyTime;
     private String modifierId;
     private String delFlag;
+//    private String organName;
     private List<RecipientLetterCommentListResponseDto> comments;
 
     public RecipientLetterDetailResponse(RecipientLetter recipientLetter) {
@@ -53,10 +55,16 @@ public class RecipientLetterDetailResponse {
         this.modifyTime = recipientLetter.getModifyTime();
         this.modifierId = recipientLetter.getModifierId();
         this.delFlag = recipientLetter.getDelFlag();
+//        this.organName = resolveOrganName(recipientLetter);
         this.comments =  recipientLetter.getComments().stream()
                 .map(RecipientLetterCommentListResponseDto::new)
                 .collect(Collectors.toList());
     }
+//    private String resolveOrganName(RecipientLetter recipientLetter) {
+//        return "ORGAN000".equals(recipientLetter.getOrganCode())
+//                ? recipientLetter.getOrganEtc()
+//                : OrganCodeUtil.resolveNameByCode(recipientLetter.getOrganCode());
+//    }
 
 }
 

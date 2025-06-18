@@ -1,8 +1,10 @@
 package com.ttasum.memorial.service.recipientLetter;
 
 
+import com.ttasum.memorial.domain.entity.heavenLetter.HeavenLetter;
 import com.ttasum.memorial.domain.entity.recipientLetter.RecipientLetter;
 import com.ttasum.memorial.domain.repository.recipientLetter.RecipientLetterRepository;
+import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterResponseDto;
 import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterRequestDto;
 import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterUpdateRequestDto;
 import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterVerifyRequestDto;
@@ -12,13 +14,20 @@ import com.ttasum.memorial.exception.common.badRequest.InvalidPasscodeException;
 import com.ttasum.memorial.exception.common.badRequest.PathVariableMismatchException;
 import com.ttasum.memorial.exception.common.notFound.NotFoundException;
 import com.ttasum.memorial.exception.heavenLetter.InvalidPasswordException;
-import com.ttasum.memorial.util.OrganCodeUtil;
+//import com.ttasum.memorial.util.OrganCodeUtil;
+//import com.ttasum.memorial.util.OrganResult;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.ttasum.memorial.exception.recipientLetter.RecipientLetterNotFoundException;
+
+import java.util.Locale;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,25 +40,22 @@ public class RecipientLetterServiceImpl implements RecipientLetterService {
     @Override
     public RecipientLetterResponseDto createLetter(RecipientLetterRequestDto recipientLetterRequestDto) {
 
-        //OrganCode & OrganEtc 처리
-        String code = recipientLetterRequestDto.getOrganCode();
-        String etc = recipientLetterRequestDto.getOrganEtc();
+//        // OrganCode 변환 처리
+//        String input = recipientLetterRequestDto.getOrganCode(); // ex: "신장"
+//        String resolvedCode = OrganCodeUtil.resolveCodeByName(input);
+//        String organEtc = null;
+//        if ("ORGAN000".equals(resolvedCode)) {
+//            organEtc = input;
+//        }
 
-        if ("ORGAN000".equals(code)) {
-            String resolved = OrganCodeUtil.resolveCodeByName(etc);
-            if (!"ORGAN000".equals(resolved)) {
-                code = resolved;
-                etc = null;
-            }
-        } else {
-            etc = null;
-        }
+//        OrganResult organResult = OrganCodeUtil.resolveCodeAndEtc(recipientLetterRequestDto.getOrganCode());
+
         RecipientLetter recipientLetter = RecipientLetter.builder()
                 .letterWriter(recipientLetterRequestDto.getLetterWriter())
                 .anonymityFlag(recipientLetterRequestDto.getAnonymityFlag())
                 .letterPasscode(recipientLetterRequestDto.getLetterPasscode())
-                .organCode(code)
-                .organEtc(etc)
+//                .organCode(organResult.getCode())
+//                .organEtc(organResult.getEtc())
                 .recipientYear(recipientLetterRequestDto.getRecipientYear())
                 .storyTitle(recipientLetterRequestDto.getStoryTitle())
                 .letterContents(recipientLetterRequestDto.getLetterContents())
@@ -145,6 +151,63 @@ public class RecipientLetterServiceImpl implements RecipientLetterService {
 
         // 5. 삭제 처리
         recipientLetter.softDelete();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Page<RecipientLetterListResponseDto> searchLetters(String type, String keyword, Pageable pageable) {
+        Logger log = LoggerFactory.getLogger(RecipientLetterServiceImpl.class);
+
+        log.info("[HeavenLetter 검색] type={}, keyword={}, page={}, size={}",
+                type, keyword, pageable.getPageNumber(), pageable.getPageSize());
+
+        Specification<RecipientLetter> spec = notDeleted();
+
+        if ("title".equalsIgnoreCase(type)) {
+            spec = spec.and(titleContains(keyword));
+        } else if ("contents".equalsIgnoreCase(type)) {
+            spec = spec.and(contentsContains(keyword));
+        } else if ("all".equalsIgnoreCase(type)) {
+            spec = spec.and(allFieldsContains(keyword));
+        }
+
+        Page<RecipientLetter> result = recipientLetterRepository.findAll(spec, pageable);
+        log.info("[검색 결과] 총 건수: {}", result.getTotalElements());
+
+        return result.map(RecipientLetterListResponseDto::fromEntity);
+    }
+
+    private Specification<RecipientLetter> notDeleted() {
+        return (root, query, cb) -> cb.equal(root.get("delFlag"), "N");
+    }
+
+    private Specification<RecipientLetter> titleContains(String keyword) {
+        return (root, query, cb) ->
+                cb.like(cb.lower(root.get("storyTitle")), "%" + (keyword == null ? "" : keyword.trim().toLowerCase(Locale.ROOT)) + "%");
+    }
+
+    private Specification<RecipientLetter> contentsContains(String keyword) {
+        return (root, query, cb) ->
+                cb.like(root.get("letterContents"), "%" + (keyword == null ? "" : keyword.trim()) + "%");
+    }
+
+    private Specification<RecipientLetter> allFieldsContains(String keyword) {
+
+        String raw = (keyword == null ? "" : keyword.trim());
+        String lower = raw.toLowerCase(Locale.ROOT);
+
+        // 한글 장기명 매핑 시도
+//        Optional<OrganCode> organCodeName = OrganCode.fromName(raw);
+
+
+        return (root, query, cb) ->
+                cb.or(
+                        cb.like(cb.lower(root.get("storyTitle")), "%" + keyword.toLowerCase(Locale.ROOT) + "%"),
+                        cb.like(root.get("letterContents"), "%" + keyword + "%"),
+//                        cb.like(cb.lower(root.get("organCode")), "%" + keyword.toLowerCase(Locale.ROOT) + "%"),
+//                        cb.like(cb.lower(root.get("organEtc")), "%" + keyword.toLowerCase(Locale.ROOT) + "%"),
+                        cb.like(cb.lower(root.get("recipientYear")), "%" + keyword.toLowerCase(Locale.ROOT) + "%")
+                );
     }
 }
 

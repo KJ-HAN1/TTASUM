@@ -10,10 +10,10 @@ import org.springframework.data.domain.Sort;
 @Setter
 public class PageRequest {
 
-    private int currentPage = 0;
+    private int page = 0;
     private int size = 10;
 
     public Pageable toPageable(String sortField) {
-        return org.springframework.data.domain.PageRequest.of(currentPage , size, Sort.by(Sort.Direction.DESC,sortField));
+        return org.springframework.data.domain.PageRequest.of(page , size, Sort.by(Sort.Direction.DESC,sortField));
     }
 }
