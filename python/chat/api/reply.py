@@ -1,10 +1,12 @@
+import json
 import logging
 from http import HTTPStatus
 
 from fastapi import APIRouter, Request
 from starlette.responses import JSONResponse
 
-from ..core.exceptions import BadRequestError, DocumentNotFoundError
+from ..core.exceptions import (BadRequestError, DocumentNotFoundError,
+							   JsonParsingError, InvalidTypeReturnError)
 from ..models.chat import ChatInput
 from ..schemas.response import ApiResponse
 
@@ -42,38 +44,74 @@ async def reply(chat: ChatInput, request: Request):
 
 	Raises:
 		BadRequestError: 사용자 입력 유효성 검사 실패할 경우.
+		InvalidTypeReturnError: 사용자 입력 유형 반환 시 미리 정의하지 않은 값으로 반환될 경우.
+		JsonParsingError: LLM 응답 결과 역직렬화 실패할 경우.
 		DocumentNotFoundError: 사용자 질의와 관련된 문서를 찾지 못할 경우.
 							   사용자 질의로 검색 시 반환 결과가 없는 경우.
-							   검색 결과로 반환된 문서의 원본 문서를 탐색하지 못할 경우.
 	"""
 
 	# 서버 로딩 때 저장한 값 가져오기
 	retriever = request.app.state.retriever
-	docs = request.app.state.docs
+	summarize_chain = request.app.state.summarize_chain
 	chain = request.app.state.chain
 
 	question = chat.question
 	# 1. 입력 유효성 검사
 	if not question or not question.strip():
 		raise BadRequestError(details={'question': question})
-	logger.info(f"[INPUT_VALIDATION_SUCCESS] 챗봇 입력 유효성 검사 성공: \"{question}\"")
+	logger.info(f"[INPUT_CHECK_OK] 챗봇 입력 유효성 검사 성공: \"{question}\"")
 
-	# 2. 컨텍스트 검색
-	context = retriever.invoke(question)
+	# 2. 입력 요약
+	summarized_question = summarize_chain.invoke({'question': question})
+	try:
+		parsed_data = json.loads(summarized_question.content)
+		summary = parsed_data['summary']
+		question_type = parsed_data['type']
+		logger.info(f"[INPUT_SUMMARIZED] 챗봇 입력 요약 결과: [{question_type}]"
+					f" {summary}")
+
+		if question_type != '일반':
+			response = get_fixed_response_for(question_type)
+			if not response:
+				raise InvalidTypeReturnError({'type': question_type})
+			return JSONResponse(
+				status_code=HTTPStatus.OK,
+				content=ApiResponse.ok({'message': response}).model_dump()
+			)
+	except:
+		raise JsonParsingError()
+
+	# 3. 벡터 DB에 검색
+	context = retriever.invoke(summary)
 	if not context:
 		raise DocumentNotFoundError(details={'reason': '검색 반환 결과 없음'})
 	logger.info('[DB DOCS] 챗봇 문서 불러오기 성공')
 
-	# 3. 원본 문서 가져오기
-	for og_doc in docs:
-		if og_doc.metadata['doc_id'] == context[0].metadata['doc_id']:
-			post_context = og_doc.page_content
-			result = chain.invoke(
-				{'question': question, 'context': post_context})
-			return JSONResponse(
-				status_code=HTTPStatus.OK,
-				content=ApiResponse.ok(
-					{"message": result.content}).model_dump()
-			)
-	raise DocumentNotFoundError(
-		details={'reason': 'untouchable 오류 발생, 원본 문서 탐색 실패'})
+	# 4. 실제 입력 반환
+	result = chain.invoke({'question': summary, 'question_type':
+		question_type, 'context': context})
+	return JSONResponse(
+		status_code=HTTPStatus.OK,
+		content=ApiResponse.ok(
+			{"message": result.content}).model_dump()
+	)
+
+
+def get_fixed_response_for(question_type):
+	match question_type:
+		case '인사말_시작':
+			return '안녕하세요, 한국장기조직기증원(KODA)입니다. 무엇을 도와드릴까요? '
+		case '인사말_종료':
+			return '도움이 되셨길 바랍니다! 또 궁금한 점이 있으시면 언제든 편하게 물어봐 주세요!'
+		case '부정어/비속어':
+			return '죄송합니다, 질문을 이해하지 못 했습니다. 다시 질문해 주세요.'
+		case '업무 무관':
+			return ('안녕하세요! 한국장기조직기증원(KODA)입니다. 문의해 주셔서 '
+					'감사합니다. 현재 문의 주신 내용은 저희 챗봇이 답변할 수 있는 분야와 '
+					'다소 거리가 있어 자세한 안내가 어렵습니다. 장기 기증과 관련된 '
+					'일반적인 문의가 있으시다면, KODA 홈페이지를 방문하시거나, '
+					'대표 전화번호(02-3447-5632) 또는 채널톡, '
+					'카카오톡/인스타그램을 통해 문의해 주시면 친절하게 안내해 드리겠습니다. '
+					'감사합니다.')
+		case _:
+			return None
