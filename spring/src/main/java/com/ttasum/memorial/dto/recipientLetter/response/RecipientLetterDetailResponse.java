@@ -23,7 +23,7 @@ public class RecipientLetterDetailResponse {
     private String organEtc;
     private String storyTitle;
     private String recipientYear;
-    private String letterPasscode;
+//    private String letterPasscode;
     private String letterWriter;
     private String anonymityFlag;
     private Integer readCount;
@@ -44,7 +44,7 @@ public class RecipientLetterDetailResponse {
         this.organEtc = recipientLetter.getOrganEtc();
         this.storyTitle = recipientLetter.getStoryTitle();
         this.recipientYear = recipientLetter.getRecipientYear();
-        this.letterPasscode = recipientLetter.getLetterPasscode();
+//        this.letterPasscode = recipientLetter.getLetterPasscode();
         this.letterWriter = NameMaskUtil.maskRecipientNameIfAnonymous(
                 recipientLetter.getLetterWriter(),
                 recipientLetter.getAnonymityFlag()
