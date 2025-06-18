@@ -1,5 +1,7 @@
 package com.ttasum.memorial.domain.entity.recipientLetter;
 
+import com.ttasum.memorial.dto.heavenLetter.request.CommonCommentRequestDto;
+import com.ttasum.memorial.dto.recipientLetterComment.request.RecipientLetterCommentUpdateRequestDto;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -33,7 +35,7 @@ public class RecipientLetterComment {
     private String commentPasscode;
 
     @Lob
-    @Column(name = "contents" , columnDefinition = "TEXT")
+    @Column(name = "contents", columnDefinition = "TEXT")
     private String contents;
 
     @ColumnDefault("CURRENT_TIMESTAMP")
@@ -55,9 +57,19 @@ public class RecipientLetterComment {
     private String delFlag;
 
     @PrePersist
-    public void prepersist(){
+    public void prepersist() {
         writeTime = LocalDateTime.now();
         this.delFlag = "N";
     }
 
+    //수정 메서드
+    public void updateComment(RecipientLetterCommentUpdateRequestDto commentUpdateRequestDto) {
+
+        this.commentWriter = commentUpdateRequestDto.getCommentWriter();
+        //현재는 비밀번호를 바꿀 순 없지만 일단 넣어둠
+        this.commentPasscode = commentUpdateRequestDto.getCommentPasscode();
+        this.contents = commentUpdateRequestDto.getContents();
+        this.modifyTime = LocalDateTime.now();
+
+    }
 }

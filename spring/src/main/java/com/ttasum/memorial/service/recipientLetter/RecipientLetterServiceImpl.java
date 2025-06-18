@@ -127,7 +127,7 @@ public class RecipientLetterServiceImpl implements RecipientLetterService {
 
         // 이미 삭제된 리소스에 대한 요청 (409 Conflict)
         if ("Y".equals(recipientLetter.getDelFlag())) {
-            throw new AlreadyDeletedException();
+            throw new AlreadyDeletedException("이미 삭제된 수혜자 편지입니다.");
         }
 
         // 5. 삭제 처리

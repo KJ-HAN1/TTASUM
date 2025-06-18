@@ -4,7 +4,9 @@ import com.ttasum.memorial.dto.common.ApiResponse;
 import com.ttasum.memorial.dto.heavenLetter.request.CommonCommentRequestDto;
 import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterCommentResponseDto;
 import com.ttasum.memorial.dto.recipientLetterComment.request.RecipientLetterCommentRequestDto;
+import com.ttasum.memorial.dto.recipientLetterComment.request.RecipientLetterCommentUpdateRequestDto;
 import com.ttasum.memorial.dto.recipientLetterComment.request.RecipientLetterCommentVerifyRequestDto;
+import com.ttasum.memorial.exception.heavenLetter.HeavenLetterCommentMismatchException;
 import com.ttasum.memorial.service.heavenLetter.HeavenLetterCommentService;
 import com.ttasum.memorial.service.recipientLetter.RecipientLetterCommentService;
 import lombok.RequiredArgsConstructor;
@@ -47,4 +49,15 @@ public class RecipientLetterCommentController {
         return ResponseEntity.ok(ApiResponse.ok(HttpStatus.OK.value(), "비밀번호가 일치합니다."));
     }
 
+    //댓글 수정
+    @PatchMapping("/{commentSeq}")
+    public ResponseEntity<ApiResponse> updateComment(
+            //값을 자바 변수로 맵핑
+            @PathVariable Integer commentSeq,
+            @RequestBody @Valid RecipientLetterCommentUpdateRequestDto updateCommentRequest) {
+
+        recipientLetterCommentService.updateComment(updateCommentRequest, commentSeq);
+
+        return ResponseEntity.ok(ApiResponse.ok(HttpStatus.OK.value(), "편지 댓글이 성공적으로 수정되었습니다."));
+    }
 }
