@@ -3,10 +3,13 @@ package com.ttasum.memorial.service.donationStory;
 
 import com.ttasum.memorial.domain.entity.donationStory.DonationStory;
 import com.ttasum.memorial.domain.entity.donationStory.DonationStoryComment;
+import com.ttasum.memorial.domain.repository.donationStory.CommentCount;
 import com.ttasum.memorial.domain.repository.donationStory.DonationStoryCommentRepository;
 import com.ttasum.memorial.domain.repository.donationStory.DonationStoryRepository;
+import com.ttasum.memorial.domain.repository.donationStory.DonationStoryRepositoryCustom;
 import com.ttasum.memorial.dto.donationStory.request.DonationStoryCreateRequestDto;
 import com.ttasum.memorial.dto.donationStory.request.DonationStoryUpdateRequestDto;
+import com.ttasum.memorial.dto.donationStory.response.DonationStoryListResponseDto;
 import com.ttasum.memorial.dto.donationStory.response.DonationStoryPasswordVerifyResponseDto;
 import com.ttasum.memorial.dto.donationStory.response.DonationStoryResponseDto;
 import com.ttasum.memorial.exception.common.badRequest.InvalidKeywordLengthException;
@@ -21,9 +24,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 기증후 스토리 게시글의 저장 및 조회 로직을 처리하는 서비스 클래스
@@ -48,30 +49,47 @@ public class DonationStoryService {
      * @return 엔티티 -> DTO 변환 후 반환
      */
     @Transactional(readOnly = true)
-    public Page<DonationStoryResponseDto> searchStories(String searchField, String keyword, Pageable pageable) {
-        // 페이지 번호/크기 방어
+    public Page<DonationStoryListResponseDto> searchStories(String searchField, String keyword, Pageable pageable) {
+        // 1. 페이지 방어
         if (pageable.getPageNumber() < 0 || pageable.getPageSize() < 1) {
-            throw new InvalidPaginationParameterException("유효하지 않은 페이지 번호 또는 크기입니다. page >= 0, size >= 1 이어야 합니다.");
+            throw new InvalidPaginationParameterException("유효하지 않은 페이지 번호 또는 크기입니다.");
         }
 
-        // searchField 검증
+        // 2. 검색 필드 검증
         if (searchField != null && !ALLOWED_SEARCH_FIELDS.contains(searchField)) {
             throw new InvalidSearchFieldException("유효하지 않은 검색 대상입니다: " + searchField);
         }
 
-        // keyword 검증
+        // 3. 검색어 길이 검증 및 trim 처리
         if (keyword != null && !keyword.isBlank()) {
-            String trimmed = keyword.trim();
-            if (trimmed.length() < MIN_KEYWORD_LENGTH || trimmed.length() > MAX_KEYWORD_LENGTH) {
+            keyword = keyword.trim();
+            if (keyword.length() < MIN_KEYWORD_LENGTH || keyword.length() > MAX_KEYWORD_LENGTH) {
                 throw new InvalidKeywordLengthException("검색어는 " + MIN_KEYWORD_LENGTH + "자 이상 " + MAX_KEYWORD_LENGTH + "자 이하로 입력해야 합니다.");
             }
-            keyword = trimmed;
         }
-        // 커스텀 리포지터리 메서드를 호출하여 Page<> 반환
+
+        // 1. 스토리 목록 조회
         Page<DonationStory> page = donationStoryRepository.searchStories(searchField, keyword, pageable);
 
-        // 엔티티 -> DTO 변환
-        return page.map(DonationStoryResponseDto::fromEntity);
+        // 2. 스토리 ID 목록 추출
+        List<Integer> storyIds = page.getContent().stream()
+                .map(DonationStory::getId)
+                .toList();
+
+        // 3. 댓글 수 조회 (Projection 기반)
+        List<CommentCount> result = commentRepository.countCommentsByStoryIds(storyIds);
+        Map<Integer, Integer> commentCountMap = new HashMap<>();
+        for (CommentCount cc : result) {
+            commentCountMap.put(cc.getStoryId(), cc.getCount().intValue());
+        }
+
+        // 4. 엔티티 → DTO 변환 (댓글 수 포함)
+        return page.map(story ->
+                DonationStoryListResponseDto.fromEntity(
+                        story,
+                        commentCountMap.getOrDefault(story.getId(), 0)
+                )
+        );
     }
 
     /**
