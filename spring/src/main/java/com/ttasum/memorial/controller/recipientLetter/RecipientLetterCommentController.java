@@ -3,6 +3,7 @@ package com.ttasum.memorial.controller.recipientLetter;
 import com.ttasum.memorial.dto.common.ApiResponse;
 import com.ttasum.memorial.dto.heavenLetter.request.CommonCommentRequestDto;
 import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterCommentResponseDto;
+import com.ttasum.memorial.dto.recipientLetterComment.request.RecipientLetterCommentDeleteRequestDto;
 import com.ttasum.memorial.dto.recipientLetterComment.request.RecipientLetterCommentRequestDto;
 import com.ttasum.memorial.dto.recipientLetterComment.request.RecipientLetterCommentUpdateRequestDto;
 import com.ttasum.memorial.dto.recipientLetterComment.request.RecipientLetterCommentVerifyRequestDto;
@@ -60,4 +61,15 @@ public class RecipientLetterCommentController {
 
         return ResponseEntity.ok(ApiResponse.ok(HttpStatus.OK.value(), "편지 댓글이 성공적으로 수정되었습니다."));
     }
+    // 댓글 삭제
+    @DeleteMapping("/{commentSeq}")
+    public ResponseEntity<ApiResponse> deleteComment(
+            @PathVariable Integer commentSeq,
+            @RequestBody @Valid RecipientLetterCommentDeleteRequestDto deleteRequestDto
+    ) {
+        recipientLetterCommentService.deleteComment(deleteRequestDto, commentSeq);
+
+        return ResponseEntity.ok(ApiResponse.ok(HttpStatus.OK.value(), "편지 댓글이 성공적으로 삭제되었습니다."));
+    }
+
 }

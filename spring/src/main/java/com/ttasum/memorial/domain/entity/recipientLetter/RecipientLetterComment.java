@@ -70,6 +70,11 @@ public class RecipientLetterComment {
         this.commentPasscode = commentUpdateRequestDto.getCommentPasscode();
         this.contents = commentUpdateRequestDto.getContents();
         this.modifyTime = LocalDateTime.now();
+    }
 
+    //삭제 메서드
+    public void softDeleteComment() {
+        this.delFlag = "Y";
+        this.modifyTime = LocalDateTime.now();
     }
 }

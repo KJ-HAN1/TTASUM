@@ -8,6 +8,7 @@ import com.ttasum.memorial.domain.repository.recipientLetter.RecipientLetterRepo
 import com.ttasum.memorial.dto.common.ApiResponse;
 import com.ttasum.memorial.dto.heavenLetter.request.CommonCommentRequestDto;
 import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterCommentResponseDto;
+import com.ttasum.memorial.dto.recipientLetterComment.request.RecipientLetterCommentDeleteRequestDto;
 import com.ttasum.memorial.dto.recipientLetterComment.request.RecipientLetterCommentRequestDto;
 import com.ttasum.memorial.dto.recipientLetterComment.request.RecipientLetterCommentUpdateRequestDto;
 import com.ttasum.memorial.dto.recipientLetterComment.request.RecipientLetterCommentVerifyRequestDto;
@@ -74,7 +75,7 @@ public class RecipientLetterCommentServiceImpl implements RecipientLetterComment
         }
         // 리소스를 찾을 수 없음 (404 Not Found)
         RecipientLetterComment recipientLetterComment = recipientLetterCommentRepository.findById(commentSeq)
-                .filter(recipientComment -> recipientComment.getLetterSeq().getLetterSeq()
+                .filter(recipientVerifyComment -> recipientVerifyComment.getLetterSeq().getLetterSeq()
                         .equals(commentVerifyRequestDto.getLetterSeq()))
                 .orElseThrow(() -> new NotFoundException("수혜자 편지의 댓글을 찾을 수 없습니다."));
 
@@ -105,7 +106,7 @@ public class RecipientLetterCommentServiceImpl implements RecipientLetterComment
         }
         // 리소스를 찾을 수 없음 (404 Not Found)
         RecipientLetterComment recipientLetterComment = recipientLetterCommentRepository.findById(commentSeq)
-                .filter(recipientComment -> recipientComment.getLetterSeq().getLetterSeq()
+                .filter(recipientUpdateComment -> recipientUpdateComment.getLetterSeq().getLetterSeq()
                         .equals(commentUpdateRequestDto.getLetterSeq()))
                 .orElseThrow(() -> new NotFoundException("수혜자 편지의 댓글을 찾을 수 없습니다."));
 
@@ -125,6 +126,33 @@ public class RecipientLetterCommentServiceImpl implements RecipientLetterComment
 
         // 실제 댓글 내용 수정
         recipientLetterComment.updateComment(commentUpdateRequestDto);
+    }
+    @Transactional
+    @Override
+    public void deleteComment(RecipientLetterCommentDeleteRequestDto deleteRequestDto, Integer commentSeq) {
+
+        if (!commentSeq.equals(deleteRequestDto.getCommentSeq())) {
+            throw new PathVariableMismatchException("댓글 번호가 일치하지 않습니다.");
+        }
+
+        RecipientLetterComment recipientLetterComment = recipientLetterCommentRepository.findById(commentSeq)
+                .filter(recipientDeleteComment -> recipientDeleteComment.getLetterSeq().getLetterSeq()
+                        .equals(deleteRequestDto.getLetterSeq()))
+                .orElseThrow(() -> new NotFoundException("해당 편지에 댓글이 존재하지 않습니다."));
+
+        if ("Y".equals(recipientLetterComment.getDelFlag())) {
+            throw new AlreadyDeletedException("이미 삭제된 수혜자 편지 댓글입니다.");
+        }
+
+        if ("Y".equals(recipientLetterComment.getLetterSeq().getDelFlag())) {
+            throw new AlreadyDeletedException("이미 삭제된 수혜자 편지입니다.");
+        }
+
+        if (!recipientLetterComment.getCommentPasscode().equals(deleteRequestDto.getCommentPasscode())) {
+            throw new InvalidPasscodeException();
+        }
+
+        recipientLetterComment.softDeleteComment();
     }
 
 }
