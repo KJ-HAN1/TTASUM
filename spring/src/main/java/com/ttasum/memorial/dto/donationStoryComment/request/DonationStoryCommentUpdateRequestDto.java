@@ -27,6 +27,4 @@ public class DonationStoryCommentUpdateRequestDto {
     @NotBlank(message = "내용은 공백일 수 없습니다.")
     @Size(max = 3000, message = "내용은 최대 150자까지 입력할 수 있습니다.")
     private String contents;
-
-
 }
