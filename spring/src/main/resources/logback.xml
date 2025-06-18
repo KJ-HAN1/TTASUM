@@ -1,5 +1,5 @@
 <configuration>
-    <property name="LOG_FILE" value="spring/logs/application.log"/>
+    <property name="LOG_FILE" value="logs/application.log"/>
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -11,7 +11,7 @@
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_FILE}</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>application.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>logs/application.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>15</maxHistory>
         </rollingPolicy>
         <encoder>
