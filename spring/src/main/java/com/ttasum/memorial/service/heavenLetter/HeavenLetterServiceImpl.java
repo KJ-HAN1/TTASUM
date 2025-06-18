@@ -197,7 +197,7 @@ public class HeavenLetterServiceImpl implements HeavenLetterService {
                 );
     }
 
-    //이미지 업로드(
+    //이미지 업로드
     // uuid 방식
     @Transactional
     @Override

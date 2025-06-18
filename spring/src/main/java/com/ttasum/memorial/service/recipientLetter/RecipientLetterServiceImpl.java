@@ -12,6 +12,7 @@ import com.ttasum.memorial.exception.common.badRequest.InvalidPasscodeException;
 import com.ttasum.memorial.exception.common.badRequest.PathVariableMismatchException;
 import com.ttasum.memorial.exception.common.notFound.NotFoundException;
 import com.ttasum.memorial.exception.heavenLetter.InvalidPasswordException;
+import com.ttasum.memorial.util.OrganCodeUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,12 +31,25 @@ public class RecipientLetterServiceImpl implements RecipientLetterService {
     @Override
     public RecipientLetterResponseDto createLetter(RecipientLetterRequestDto recipientLetterRequestDto) {
 
+        //OrganCode & OrganEtc 처리
+        String code = recipientLetterRequestDto.getOrganCode();
+        String etc = recipientLetterRequestDto.getOrganEtc();
+
+        if ("ORGAN000".equals(code)) {
+            String resolved = OrganCodeUtil.resolveCodeByName(etc);
+            if (!"ORGAN000".equals(resolved)) {
+                code = resolved;
+                etc = null;
+            }
+        } else {
+            etc = null;
+        }
         RecipientLetter recipientLetter = RecipientLetter.builder()
                 .letterWriter(recipientLetterRequestDto.getLetterWriter())
                 .anonymityFlag(recipientLetterRequestDto.getAnonymityFlag())
                 .letterPasscode(recipientLetterRequestDto.getLetterPasscode())
-                .organCode(recipientLetterRequestDto.getOrganCode())
-                .organEtc(recipientLetterRequestDto.getOrganEtc())
+                .organCode(code)
+                .organEtc(etc)
                 .recipientYear(recipientLetterRequestDto.getRecipientYear())
                 .storyTitle(recipientLetterRequestDto.getStoryTitle())
                 .letterContents(recipientLetterRequestDto.getLetterContents())
@@ -43,7 +57,6 @@ public class RecipientLetterServiceImpl implements RecipientLetterService {
                 .fileName(recipientLetterRequestDto.getFileName())
                 .writerId(recipientLetterRequestDto.getWriterId())
                 .build();
-
 
         recipientLetterRepository.save(recipientLetter);
 
