@@ -3,6 +3,7 @@ package com.ttasum.memorial.dto.recipientLetter.response;
 import com.ttasum.memorial.domain.entity.recipientLetter.RecipientLetter;
 import com.ttasum.memorial.dto.recipientLetterComment.response.RecipientLetterCommentListResponseDto;
 //import com.ttasum.memorial.util.OrganCodeUtil;
+import com.ttasum.memorial.util.NameMaskUtil;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -44,7 +45,10 @@ public class RecipientLetterDetailResponse {
         this.storyTitle = recipientLetter.getStoryTitle();
         this.recipientYear = recipientLetter.getRecipientYear();
         this.letterPasscode = recipientLetter.getLetterPasscode();
-        this.letterWriter = recipientLetter.getLetterWriter();
+        this.letterWriter = NameMaskUtil.maskRecipientNameIfAnonymous(
+                recipientLetter.getLetterWriter(),
+                recipientLetter.getAnonymityFlag()
+        );
         this.anonymityFlag = recipientLetter.getAnonymityFlag();
         this.readCount = recipientLetter.getReadCount();
         this.letterContents = recipientLetter.getLetterContents();

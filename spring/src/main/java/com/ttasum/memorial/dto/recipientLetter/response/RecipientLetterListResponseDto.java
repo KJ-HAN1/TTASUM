@@ -1,6 +1,7 @@
 package com.ttasum.memorial.dto.recipientLetter.response;
 
 import com.ttasum.memorial.domain.entity.recipientLetter.RecipientLetter;
+import com.ttasum.memorial.util.NameMaskUtil;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,12 +19,15 @@ public class RecipientLetterListResponseDto {
     private LocalDateTime writeTime;
     private Integer readCount;
 
-    public RecipientLetterListResponseDto (RecipientLetter recipientletter) {
-        this.letterSeq = recipientletter.getLetterSeq();
-        this.storyTitle = recipientletter.getStoryTitle();
-        this.letterWriter = recipientletter.getLetterWriter();
-        this.writeTime = recipientletter.getWriteTime();
-        this.readCount = recipientletter.getReadCount();
+    public RecipientLetterListResponseDto (RecipientLetter recipientLetter) {
+        this.letterSeq = recipientLetter.getLetterSeq();
+        this.storyTitle = recipientLetter.getStoryTitle();
+        this.letterWriter = NameMaskUtil.maskRecipientNameIfAnonymous(
+                recipientLetter.getLetterWriter(),
+                recipientLetter.getAnonymityFlag()
+        );
+        this.writeTime = recipientLetter.getWriteTime();
+        this.readCount = recipientLetter.getReadCount();
     }
     public static RecipientLetterListResponseDto fromEntity(RecipientLetter recipientLetterEntity) {
         return new RecipientLetterListResponseDto(recipientLetterEntity);
