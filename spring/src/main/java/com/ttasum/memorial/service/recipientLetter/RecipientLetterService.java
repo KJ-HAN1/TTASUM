@@ -7,6 +7,11 @@ import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterVerifyRequ
 import com.ttasum.memorial.dto.recipientLetter.response.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 public interface RecipientLetterService {
 
@@ -31,6 +36,9 @@ public interface RecipientLetterService {
 
     //편지 검색
     Page<RecipientLetterListResponseDto> searchLetters(String type, String keyword, Pageable pageable);
+
+    //사진 업로드
+    List<Map<String, String>> uploadFiles(List<MultipartFile> files, String subFolder) throws IOException;
 
 
 }

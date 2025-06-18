@@ -19,8 +19,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -107,6 +111,13 @@ public class RecipientLetterController {
         Page<RecipientLetterListResponseDto> result =
                 recipientLetterService.searchLetters(type, keyword, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+    //사진 업로드
+    @PostMapping("/upload-image")
+    public ResponseEntity<List<Map<String, String>>> uploadFiles(
+            @RequestParam("files") List<MultipartFile> files) throws IOException {
+        List<Map<String, String>> resultList = recipientLetterService.uploadFiles(files, "recipientLetter");
+        return ResponseEntity.ok(resultList);
     }
 
 

@@ -25,9 +25,13 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.ttasum.memorial.exception.recipientLetter.RecipientLetterNotFoundException;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Locale;
-import java.util.Optional;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -208,8 +212,65 @@ public class RecipientLetterServiceImpl implements RecipientLetterService {
 //                        cb.like(cb.lower(root.get("organEtc")), "%" + keyword.toLowerCase(Locale.ROOT) + "%"),
                         cb.like(cb.lower(root.get("recipientYear")), "%" + keyword.toLowerCase(Locale.ROOT) + "%")
                 );
+
     }
-}
+        //이미지 업로드
+        // uuid 방식
+        @Transactional
+        @Override
+        public List<Map<String, String>> uploadFiles(List<MultipartFile> files, String subFolder) throws IOException {
+            String baseDir = System.getProperty("user.dir") + "/src/main/resources/static/images/";
+            String uploadDir = baseDir + subFolder + "/";
+            List<Map<String, String>> resultList = new ArrayList<>();
+
+            for (MultipartFile file : files) {
+                String orgFileName = file.getOriginalFilename();
+
+                // 확장자 추출
+                String ext = "";
+                if (orgFileName != null && orgFileName.contains(".")) {
+                    ext = orgFileName.substring(orgFileName.lastIndexOf("."));
+                }
+                // [선택 1] UUID 기반 파일명 (기본값)
+                String uuid = UUID.randomUUID().toString();
+                String fileName = uuid + ext; // 저장용 파일명
+
+                // [선택 2] 랜덤 HEX (32자리, 대문자)
+    //            String fileName = generateHexFileName(ext);
+
+                //디렉토리 생성
+                Path dirPath = Paths.get(uploadDir);
+                Files.createDirectories(dirPath);
+
+                //파일 저장
+                Path filePath = dirPath.resolve(fileName);
+                Files.write(filePath, file.getBytes());
+
+                // 접근 가능한 URL 경로 생성
+                String url = "/images/" + subFolder + "/" + fileName;
+
+                Map<String, String> fileMap = new HashMap<>();
+                fileMap.put("fileName", fileName);
+                fileMap.put("orgFileName", orgFileName);
+                fileMap.put("url","/images/" + subFolder + "/" + fileName);
+                resultList.add(fileMap);
+            }
+            return resultList;
+        }
+        // HEX 방식
+    //    private String generateHexFileName(String ext) {
+    //        SecureRandom random = new SecureRandom();
+    //        byte[] bytes = new byte[16];
+    //        random.nextBytes(bytes);
+    //
+    //        StringBuilder hex = new StringBuilder();
+    //        for (byte b : bytes) {
+    //            hex.append(String.format("%02X", b));
+    //        }
+    //        return hex.toString() + ext;
+    //    }
+
+    }
 
 
 
