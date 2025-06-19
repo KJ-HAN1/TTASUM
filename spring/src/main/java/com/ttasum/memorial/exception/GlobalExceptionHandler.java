@@ -9,6 +9,7 @@ import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterCommonRes
 import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterResponseDto;
 import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterUpdateResponseDto;
 import com.ttasum.memorial.exception.common.Conflict.AlreadyDeletedException;
+import com.ttasum.memorial.exception.common.badRequest.BadRequestException;
 import com.ttasum.memorial.exception.common.badRequest.CaptchaVerificationFailedException;
 import com.ttasum.memorial.exception.common.notFound.NotFoundException;
 import com.ttasum.memorial.exception.donationStory.DonationStoryNotFoundException;
