@@ -22,4 +22,5 @@ public interface HeavenLetterRepository extends JpaRepository<HeavenLetter, Inte
     Optional<HeavenLetter> findByLetterSeqAndDelFlag(Integer letterSeq, String delFlag);
 
     List<HeavenLetter> findByDonateSeqAndDelFlagOrderByWriteTimeDesc(Memorial memorial, String delFlag);
+
 }

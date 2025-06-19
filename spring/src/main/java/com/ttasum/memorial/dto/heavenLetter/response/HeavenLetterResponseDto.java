@@ -100,8 +100,9 @@ public class HeavenLetterResponseDto {
         private String letterWriter;
         private LocalDateTime writeTime;
         private Integer readCount;
+        private Long commentCount;
 
-        public HeavenLetterListResponse(HeavenLetter heavenLetter) {
+        public HeavenLetterListResponse(HeavenLetter heavenLetter, Long commentCount) {
             this.letterSeq = heavenLetter.getLetterSeq();
 //            this.donateSeq = heavenLetter.getDonateSeq().getDonateSeq() != null ? heavenLetter.getDonateSeq().getDonateSeq() : null;
             Memorial memorial = heavenLetter.getDonateSeq();
@@ -119,9 +120,18 @@ public class HeavenLetterResponseDto {
             );
             this.writeTime = heavenLetter.getWriteTime();
             this.readCount = heavenLetter.getReadCount();
+            this.commentCount = commentCount;
+
         }
+        // 댓글 수 있는 정적 팩토리 메서드
+        public static HeavenLetterListResponse fromEntity(HeavenLetter heavenLetterEntity, Long commentCount) {
+            return new HeavenLetterListResponse(heavenLetterEntity, commentCount);
+        }
+
+        // 댓글 수 없는 기본 팩토리 메서드
         public static HeavenLetterListResponse fromEntity(HeavenLetter heavenLetterEntity) {
-            return new HeavenLetterListResponse(heavenLetterEntity);
+            return new HeavenLetterListResponse(heavenLetterEntity, 0L);
+
         }
     }
 
