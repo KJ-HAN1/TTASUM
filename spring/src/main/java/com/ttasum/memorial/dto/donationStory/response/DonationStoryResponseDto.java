@@ -1,6 +1,7 @@
 package com.ttasum.memorial.dto.donationStory.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ttasum.memorial.annotation.MaskNameIfAnonymous;
 import com.ttasum.memorial.domain.entity.donationStory.DonationStory;
 import com.ttasum.memorial.domain.entity.donationStory.DonationStoryComment;
 import com.ttasum.memorial.dto.donationStoryComment.response.DonationStoryCommentResponseDto;
@@ -37,7 +38,9 @@ public class DonationStoryResponseDto {
     private String modifierId;
     private String delFlag;
 
+    @MaskNameIfAnonymous
     private String donorName;
+
     private String writerId;
 
     private List<DonationStoryCommentResponseDto> comments;
@@ -51,7 +54,7 @@ public class DonationStoryResponseDto {
                 .anonymityFlag(entity.getAnonymityFlag())
                 .areaCode(entity.getAreaCode())
                 .storyTitle(entity.getTitle())
-                .storyWriter(isAnonymous ? maskName(entity.getWriter()) : entity.getWriter())
+                .storyWriter(entity.getWriter())
                 .storyContents(entity.getContents())
                 .readCount(entity.getReadCount())
                 .fileName(entity.getFileName())
@@ -61,7 +64,7 @@ public class DonationStoryResponseDto {
                 .modifyTime(entity.getModifyTime())
                 .modifierId(entity.getModifierId())
                 .delFlag(entity.getDelFlag())
-                .donorName(isAnonymous ? maskName(entity.getDonorName()) : entity.getDonorName())
+                .donorName(entity.getDonorName())
                 .comments(null)
                 .build();
     }
@@ -71,7 +74,7 @@ public class DonationStoryResponseDto {
         List<DonationStoryCommentResponseDto> commentDtos = commentEntities.stream()
                 .map(comment -> DonationStoryCommentResponseDto.builder()
                         .id(comment.getCommentSeq())
-                        .writer(maskName(comment.getWriter()))
+                        .writer(comment.getWriter())
                         .contents(comment.getContents())
                         .writeTime(comment.getWriteTime())
                         .build())
@@ -84,7 +87,7 @@ public class DonationStoryResponseDto {
                 .anonymityFlag(entity.getAnonymityFlag())
                 .areaCode(entity.getAreaCode())
                 .storyTitle(entity.getTitle())
-                .storyWriter(isAnonymous ? maskName(entity.getWriter()) : entity.getWriter())
+                .storyWriter(entity.getWriter())
                 .storyContents(entity.getContents())
                 .readCount(entity.getReadCount())
                 .fileName(entity.getFileName())
@@ -94,16 +97,9 @@ public class DonationStoryResponseDto {
                 .modifyTime(entity.getModifyTime())
                 .modifierId(entity.getModifierId())
                 .delFlag(entity.getDelFlag())
-                .donorName(isAnonymous ? maskName(entity.getDonorName()) : entity.getDonorName())
+                .donorName(entity.getDonorName())
                 .comments(commentDtos)
                 .build();
     }
 
-    /**
-     * 이름 마스킹 (예: 홍길동 → 홍*동)
-     */
-    private static String maskName(String name) {
-        if (name == null || name.length() < 2) return name;
-        return name.charAt(0) + "*" + name.substring(2);
-    }
 }
