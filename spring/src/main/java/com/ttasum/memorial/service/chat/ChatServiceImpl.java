@@ -34,13 +34,13 @@ public class ChatServiceImpl implements ChatService {
      */
     @Override
     public Mono<ResponseEntity<ChatApiResponse>> getLLMResponse(ChatDto inputMsg) {
-        log.info("[LLM_API_RESPONSE_INIT] 파이썬 챗봇 API 호출 시작: \"{}\"", inputMsg.getQuestion());
+        log.info("[LLM_API_INIT] 파이썬 챗봇 API 호출 시작: \"{}\"", inputMsg.getQuestion());
         try {
             return webClient.post()
                     .uri("/chat/")
                     .bodyValue(objectMapper.writeValueAsString(inputMsg))
                     .exchangeToMono(ChatServiceImpl::getCustomResponseFromPython)
-                    .doOnSuccess(response -> log.info("[LLM_API_RESPONSE_RECEIVED] 파이썬 챗봇 API 응답 수신 완료: {}", response.getStatusCode()))
+                    .doOnSuccess(response -> log.info("[LLM_API_RECEIVED] 파이썬 챗봇 API 응답 수신: {}", response.getStatusCode()))
                     .onErrorResume(ChatServiceImpl::getDefaultErrorResponse);
         } catch (JsonProcessingException e) {
             return getJsonProcessingError();
@@ -55,8 +55,8 @@ public class ChatServiceImpl implements ChatService {
     }
 
     private static Mono<ResponseEntity<ChatApiResponse>> getDefaultErrorResponse(Throwable e) {
-        // 그 외 Exception (WebClientRequestException) 처리
-        log.error("[WEBCLIENT_COMMUNICATION_ERROR] 파이썬 챗봇 API 통신 중 에러 발생: {}", e.getMessage(), e);
+        // 그 외 Exception (WebClientRequestException 등) 처리
+        log.error("[WEBCLIENT_COMM_ERROR] 파이썬 챗봇 API 통신 중 에러 발생: {}", e.getMessage(), e);
         return Mono.just(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(ChatApiResponse.error()));
@@ -74,7 +74,7 @@ public class ChatServiceImpl implements ChatService {
     private static Mono<ResponseEntity<ChatApiResponse>> getErrorResponse(ClientResponse response) {
         return response.bodyToMono(ChatApiResponse.class)
                 .map(errorBody -> {
-                            log.error("[PYTHON_ERROR_BODY_PARSING] 파이썬 챗봇 API 에러 응답 본문 파싱 완료");
+                            log.error("[PY_ERR_BODY_PARSING] 파이썬 챗봇 API 에러 응답 본문 파싱 성공");
                             return ResponseEntity.status(response.statusCode())
                                     .contentType(MediaType.APPLICATION_JSON)
                                     .body(ChatApiResponse.error(errorBody.getCode(), errorBody.getMessage()));
@@ -83,10 +83,9 @@ public class ChatServiceImpl implements ChatService {
     }
 
     private static Mono<ResponseEntity<ChatApiResponse>> getSuccessResponse(ClientResponse response) {
-        log.info("[PYTHON_SUCCESS_BODY_PARSING] 파이썬 챗봇 API 성공 응답 본문 파싱 완료");
+        log.info("[PY_OK_BODY_PARSING] 파이썬 챗봇 API 성공 응답 본문 파싱 성공");
         return response.bodyToMono(ChatApiResponse.class)
                 .map(result -> {
-                    System.out.println("ChatServiceImpl.getSuccessResponse");
                     return ResponseEntity.status(HttpStatus.OK)
                             .contentType(MediaType.APPLICATION_JSON)
                             .body(ChatApiResponse.ok(result.getData()));

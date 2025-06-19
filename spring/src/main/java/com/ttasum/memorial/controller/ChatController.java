@@ -22,23 +22,23 @@ public class ChatController {
     }
 
     /**
-     * @apiNote LLM 모델을 사용하여 챗봇 응답을 받는 API 엔드포인트
      * @param inputMsg 사용자 입력 메시지 DTO
      * @return {@code Mono<ResponseEntity<ChatApiResponse>>} 챗봇 응답 DTO
+     * @apiNote LLM 모델을 사용하여 챗봇 응답을 받는 API 엔드포인트
      */
     @PostMapping("/chat")
     public Mono<ResponseEntity<ChatApiResponse>> getChatResponse(@RequestBody ChatDto inputMsg) {
-        // 입력 유효성 검사: null, 빈 공백만 입력할 경우
+        // 입력 유효성 검사: 빈 문자열 여부 확인
         String question = inputMsg.getQuestion();
         if (question == null || question.trim().isEmpty()) {
             return getValidationCheckError(question);
         }
-        log.info("[INPUT_VALIDATION_SUCCESS] OK 입력 유효성 검사 성공: \"{}\"", question);
+        log.info("[INPUT_CHECK_OK] 입력 유효성 검사 성공: \"{}\"", question);
         return chatService.getLLMResponse(inputMsg);
     }
 
     private static Mono<ResponseEntity<ChatApiResponse>> getValidationCheckError(String question) {
-        log.warn("[INPUT_VALIDATION_FAILED] ERROR 사용자 입력 유효성 검사 실패: \"{}\"", question);
+        log.warn("[INPUT_CHECK_FAILED] 사용자 입력 유효성 검사 실패: \"{}\"", question);
         return Mono.just(
                 ResponseEntity
                         .status(HttpStatus.BAD_REQUEST)
