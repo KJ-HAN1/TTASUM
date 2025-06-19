@@ -1,7 +1,5 @@
 package com.ttasum.memorial.service.chat;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ttasum.memorial.dto.chat.ChatApiResponse;
 import com.ttasum.memorial.dto.chat.ChatDto;
 import lombok.extern.slf4j.Slf4j;
@@ -18,11 +16,9 @@ import reactor.core.publisher.Mono;
 public class ChatServiceImpl implements ChatService {
 
     private final WebClient webClient;
-    private final ObjectMapper objectMapper;
 
     public ChatServiceImpl(WebClient webClient) {
         this.webClient = webClient;
-        objectMapper = new ObjectMapper();
     }
 
     /**
@@ -35,23 +31,12 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public Mono<ResponseEntity<ChatApiResponse>> getLLMResponse(ChatDto inputMsg) {
         log.info("[LLM_API_INIT] 파이썬 챗봇 API 호출 시작: \"{}\"", inputMsg.getQuestion());
-        try {
-            return webClient.post()
-                    .uri("/chat/")
-                    .bodyValue(objectMapper.writeValueAsString(inputMsg))
-                    .exchangeToMono(ChatServiceImpl::getCustomResponseFromPython)
-                    .doOnSuccess(response -> log.info("[LLM_API_RECEIVED] 파이썬 챗봇 API 응답 수신: {}", response.getStatusCode()))
-                    .onErrorResume(ChatServiceImpl::getDefaultErrorResponse);
-        } catch (JsonProcessingException e) {
-            return getJsonProcessingError();
-        }
-    }
-
-    private static Mono<ResponseEntity<ChatApiResponse>> getJsonProcessingError() {
-        log.warn("[JSON_SERIALIZATION_ERROR] 입력 메시지 직렬화 실패");
-        return Mono.just(ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(ChatApiResponse.error(HttpStatus.BAD_REQUEST.value(), "사용자의 입력을 처리하는 과정에서 문제가 발생했습니다.")));
+        return webClient.post()
+                .uri("/chat/")
+                .bodyValue(inputMsg)
+                .exchangeToMono(ChatServiceImpl::getCustomResponseFromPython)
+                .doOnSuccess(response -> log.info("[LLM_API_RECEIVED] 파이썬 챗봇 API 응답 수신: {}", response.getStatusCode()))
+                .onErrorResume(ChatServiceImpl::getDefaultErrorResponse);
     }
 
     private static Mono<ResponseEntity<ChatApiResponse>> getDefaultErrorResponse(Throwable e) {
@@ -73,22 +58,22 @@ public class ChatServiceImpl implements ChatService {
 
     private static Mono<ResponseEntity<ChatApiResponse>> getErrorResponse(ClientResponse response) {
         return response.bodyToMono(ChatApiResponse.class)
-                .map(errorBody -> {
+                .map(result -> {
                             log.error("[PY_ERR_BODY_PARSING] 파이썬 챗봇 API 에러 응답 본문 파싱 성공");
                             return ResponseEntity.status(response.statusCode())
                                     .contentType(MediaType.APPLICATION_JSON)
-                                    .body(ChatApiResponse.error(errorBody.getCode(), errorBody.getMessage()));
+                                    .body(result);
                         }
                 );
     }
 
     private static Mono<ResponseEntity<ChatApiResponse>> getSuccessResponse(ClientResponse response) {
-        log.info("[PY_OK_BODY_PARSING] 파이썬 챗봇 API 성공 응답 본문 파싱 성공");
         return response.bodyToMono(ChatApiResponse.class)
                 .map(result -> {
+                    log.info("[PY_OK_BODY_PARSING] 파이썬 챗봇 API 성공 응답 본문 파싱 성공");
                     return ResponseEntity.status(HttpStatus.OK)
                             .contentType(MediaType.APPLICATION_JSON)
-                            .body(ChatApiResponse.ok(result.getData()));
+                            .body(result);
                 });
     }
 }
