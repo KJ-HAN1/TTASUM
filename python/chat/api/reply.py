@@ -44,10 +44,9 @@ async def reply(chat: ChatInput, request: Request):
 
 	Raises:
 		BadRequestError: 사용자 입력 유효성 검사 실패할 경우.
-		InvalidTypeReturnError: 사용자 입력 유형 반환 시 미리 정의하지 않은 값으로 반환될 경우.
+		InvalidTypeReturnError: 사용자 입력 유형 반환 시 미리 정의하지 않은 값으로 반환할 경우.
 		JsonParsingError: LLM 응답 결과 역직렬화 실패할 경우.
 		DocumentNotFoundError: 사용자 질의와 관련된 문서를 찾지 못할 경우.
-							   사용자 질의로 검색 시 반환 결과가 없는 경우.
 	"""
 
 	# 서버 로딩 때 저장한 값 가져오기
@@ -56,12 +55,12 @@ async def reply(chat: ChatInput, request: Request):
 	chain = request.app.state.chain
 
 	question = chat.question
-	# 1. 입력 유효성 검사
+	# 1. 입력 유효성 검사: 빈 문자열 여부 확인
 	if not question or not question.strip():
 		raise BadRequestError(details={'question': question})
 	logger.info(f"[INPUT_CHECK_OK] 챗봇 입력 유효성 검사 성공: \"{question}\"")
 
-	# 2. 입력 요약
+	# 2. 입력 요약 및 유형 분류 (1차 LLM 호출)
 	summarized_question = summarize_chain.invoke({'question': question})
 	try:
 		parsed_data = json.loads(summarized_question.content)
@@ -79,15 +78,16 @@ async def reply(chat: ChatInput, request: Request):
 				content=ApiResponse.ok({'message': response}).model_dump()
 			)
 	except:
-		raise JsonParsingError()
+		raise JsonParsingError(
+			{'summarized_result': summarized_question.content})
 
-	# 3. 벡터 DB에 검색
+	# 3. 요약된 질문으로 벡터 DB에서 관련 문서 검색 (2차 LLM 호출)
 	context = retriever.invoke(summary)
 	if not context:
-		raise DocumentNotFoundError(details={'reason': '검색 반환 결과 없음'})
+		raise DocumentNotFoundError()
 	logger.info('[DB DOCS] 챗봇 문서 불러오기 성공')
 
-	# 4. 실제 입력 반환
+	# 4. 최종 응답 생성
 	result = chain.invoke({'question': summary, 'question_type':
 		question_type, 'context': context})
 	return JSONResponse(
@@ -98,20 +98,27 @@ async def reply(chat: ChatInput, request: Request):
 
 
 def get_fixed_response_for(question_type):
+	""" 요약된 질문 유형에 따라 미리 정의한 답변을 반환합니다.
+
+	Args:
+		question_type(str): 요약된 질문 유형.
+
+	Returns:
+		str | None: 유형에 따라 미리 정의한 답변. 없으면 None.
+	"""
+
 	match question_type:
 		case '인사말_시작':
 			return '안녕하세요, 한국장기조직기증원(KODA)입니다. 무엇을 도와드릴까요? '
 		case '인사말_종료':
-			return '도움이 되셨길 바랍니다! 또 궁금한 점이 있으시면 언제든 편하게 물어봐 주세요!'
+			return '도움이 되셨길 바랍니다! 또 궁금한 점이 있으시면 언제든 편하게 물어봐 주세요! 감사합니다.'
 		case '부정어/비속어':
 			return '죄송합니다, 질문을 이해하지 못 했습니다. 다시 질문해 주세요.'
 		case '업무 무관':
-			return ('안녕하세요! 한국장기조직기증원(KODA)입니다. 문의해 주셔서 '
-					'감사합니다. 현재 문의 주신 내용은 저희 챗봇이 답변할 수 있는 분야와 '
-					'다소 거리가 있어 자세한 안내가 어렵습니다. 장기 기증과 관련된 '
-					'일반적인 문의가 있으시다면, KODA 홈페이지를 방문하시거나, '
-					'대표 전화번호(02-3447-5632) 또는 채널톡, '
-					'카카오톡/인스타그램을 통해 문의해 주시면 친절하게 안내해 드리겠습니다. '
-					'감사합니다.')
+			return (
+				'안녕하세요! 한국장기조직기증원(KODA)입니다. 문의해 주셔서 감사합니다. 현재 문의 주신 내용은 저희 '
+				'챗봇이 답변할 수 있는 분야와 다소 거리가 있어 자세한 안내가 어렵습니다. 장기 기증과 관련된 '
+				'일반적인 문의가 있으시다면, KODA 홈페이지를 방문하시거나, 대표 전화번호(02-3447-5632) 또는 '
+				'채널톡, 카카오톡/인스타그램을 통해 문의해 주시면 친절하게 안내해 드리겠습니다. 감사합니다.')
 		case _:
 			return None

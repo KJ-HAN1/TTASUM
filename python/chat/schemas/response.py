@@ -7,10 +7,10 @@ class ApiResponse(BaseModel):
 	""" 챗봇 응답에 사용할 데이터를 가집니다.
 
 	Attributes:
-		success(bool): LLM 메시지 반환 여부.
+		success(bool): 오류가 발생하지 않으면 True, 발생하면 False.
 		code(int): 상태 코드.
 		message(str): 성공 시 응답 결과 메시지 및 실패 시 사용자에게 표시할 오류 메시지.
-		data(Optional[Dict[str, Any]]=None): 챗봇 실제 응답 메시지.
+		data(Optional[Dict[str, Any]]): 챗봇 응답 메시지.
 	"""
 
 	success: bool

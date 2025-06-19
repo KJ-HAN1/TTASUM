@@ -18,17 +18,16 @@ httpx_logger.setLevel(logging.WARNING)  # 임베딩 로깅 감추기
 
 
 async def prepare_chat_data(app: FastAPI):
-	""" 조직도 데이터를 미리 준비하여 LLM 체인을 생성합니다.
+	""" 응답에 참고할 데이터를 벡터 DB에 적재하고 LLM 체인을 생성합니다.
 
-	RDB에서 데이터를 로드하여 개별 Document로 변환하고, 이를 작은 청크로 분할합니다.
-	분할된 청크는 벡터 DB에 임베딩하여 저장되며, 이 데이터를 기반으로 LLM 프롬프트와 연결된
-	전체 LLM 체인이 생성됩니다.
+	DB에서 데이터를 로드하여 개별 Document로 변환하고, 변환된 데이터를 벡터 DB에 임베딩하여 저장합니다.
+	사용자 입력을 요약하고 유형을 반환하는 프롬프트와 최종 응답을 생성하는 프롬프트를 각각 LLM과 결합하여 체인을 생성합니다.
 
 	Args:
 		app: FastAPI 인스턴스.
 
 	Raises:
-		DBConnectionError: 데이터베이스 연결에 실패하거나, 쿼리 실행 중 MySQL 오류가 발생할 경우.
+		DBConnectionError: DB 연결에 실패하거나 쿼리 실행 중 MySQL 오류가 발생할 경우.
 		GeneralError: MySQL 관련 오류 외의 예상치 못한 일반적인 오류가 발생할 경우.
 					  (예: 환경 변수 설정 오류 등)
 
@@ -44,7 +43,7 @@ async def prepare_chat_data(app: FastAPI):
 
 
 async def create_chain(app):
-	""" 언어 모델을 생성하고 프롬프트와 결합하여 LLM 체인을 생성합니다.
+	""" LLM과 프롬프트를 결합하여 LLM 체인을 생성합니다.
 
 	Args:
 		 app: FastAPI 인스턴스.
@@ -82,11 +81,11 @@ async def create_chain(app):
 		요약: 유가족 자조 모임 문의
 		유형: 일반
 		
-		예시 4) 사용자: 안녕하세요!
+		예시 3) 사용자: 안녕하세요!
 		요약: 인사말
 		유형: 인사말_시작
 		
-		예시 5) 사용자: 감사합니다
+		예시 4) 사용자: 감사합니다
 		요약: 인사말
 		유형: 인사말_종료
 		
@@ -124,10 +123,12 @@ async def create_chain(app):
 		   1. [컨텍스트] 내 "본부명: 권역별 지부"인 내용이 포함되어 있지 않다면, [컨텍스트]에서 가장 관련도 높은 
 		   부서 하나의 정보만 응답합니다.
 		   
-		   2. [컨텍스트] 내 "본부명: 권역별 지부"인 내용이 명시적으로 포함되어 있고, 동시에 [사용자 질문]에 특정 권역 및 지역이 
+		   2. [컨텍스트] 내 "본부명: 권역별 지부"인 내용이 명시적으로 포함되어 있고, 동시에 [사용자 질문]에 특정 권역 
+		   및 지역이 
 		   명시되어 있지 않을 경우, 다음 내용을 따릅니다:
 		   - 컨텍스트 내용을 모두 참고하여 ** 세 개의 단락으로 구성합니다. **
-		   - 업무 소개는 처음 한 번만 간략히 설명하고, 각 지부 설명은 ** 관할 지역을 반드시 생략한 채 ** 전화번호를 응답합니다. 
+		   - 업무 소개는 처음 한 번만 간략히 설명하고, 각 지부 설명은 ** 관할 지역을 반드시 생략한 채 ** 전화번호를 
+		   응답합니다. 
 		   - 지부 순서는 중부, 충청·호남, 영남 지부 순서를 따릅니다.
 		    
 		   ** 단, 특정 권역 및 지역이 명시되어 있다면 가장 관련도 높은 부서 하나의 정보만 응답합니다. 이때 부서는 아래 
@@ -167,7 +168,7 @@ async def embed_and_store(app, documents):
 
 	Args:
 		app: FastAPI 인스턴스.
-		documents(list): 벡터 DB에 저장할 Document 객체들의 리스트.
+		documents(list): Document 객체 리스트.
 
 	"""
 	# 데이터 임베딩 설정
@@ -195,7 +196,7 @@ async def create_documents(app, data):
 		data(list): DB 테이블에서 전체 조회한 데이터.
 
 	Returns:
-		docs(list): 테이블 레코드의 정보를 담아 벡터 DB에 저장될 Document 객체들의 리스트.
+		list[Document]: 개별 레코드를 Document로 변환한 객체 리스트.
 
 	"""
 	docs = []
@@ -212,18 +213,17 @@ async def create_documents(app, data):
 						 f"2차 하위부서/직급: {dept2_name}, 담당 업무: {job_desc}, "
 						 f"전화번호: {tel_no}"
 		))
-	app.state.docs = docs
 	return docs
 
 
 async def connect_database():
-	""" MySQL 데이터베이스를 연결하고 데이터를 로드합니다.
+	""" MySQL DB를 연결하고 데이터를 로드합니다.
 
 	Returns:
-		data(list): DB 테이블에서 전체 조회한 데이터.
+		list: DB 테이블에서 전체 조회한 데이터.
 
 	Raises:
-		DBConnectionError: 데이터베이스 연결에 실패하거나, 쿼리 실행 중 MySQL 오류가 발생할 경우.
+		DBConnectionError: DB 연결에 실패하거나, 쿼리 실행 중 MySQL 오류가 발생할 경우.
 		GeneralError: MySQL 관련 오류 외의 예상치 못한 일반적인 오류가 발생할 경우.
 					  (예: 환경 변수 설정 오류 등)
 
@@ -232,7 +232,7 @@ async def connect_database():
 	chart_table = os.getenv('TBL_ORG_CHART')
 	stmt = f"SELECT * FROM {chart_table}"  # 테이블 데이터 전체 조회
 	try:
-		# MySQL 데이터베이스 연결 및 예외 처리
+		# MySQL DB 연결 및 예외 처리
 		conn = pymysql.connect(
 			host=os.getenv('DB_HOST'),
 			user=os.getenv('DB_USER'),
@@ -256,6 +256,6 @@ async def connect_database():
 		raise GeneralError()
 	finally:
 		if conn:
-			logger.info('[DB DISCONNECT] 데이터베이스 연결 닫기 성공')
+			logger.info('[DB DISCONNECT] DB 연결 닫기 성공')
 			conn.close()
 	return data
