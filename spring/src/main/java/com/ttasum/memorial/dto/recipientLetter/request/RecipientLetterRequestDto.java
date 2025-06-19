@@ -1,5 +1,6 @@
 package com.ttasum.memorial.dto.recipientLetter.request;
 
+
 import lombok.Getter;
 import lombok.Setter;
 

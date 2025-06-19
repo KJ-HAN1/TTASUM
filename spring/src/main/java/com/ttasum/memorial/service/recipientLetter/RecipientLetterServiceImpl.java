@@ -3,6 +3,8 @@ package com.ttasum.memorial.service.recipientLetter;
 
 import com.ttasum.memorial.domain.entity.heavenLetter.HeavenLetter;
 import com.ttasum.memorial.domain.entity.recipientLetter.RecipientLetter;
+import com.ttasum.memorial.domain.enums.OrganCode;
+import com.ttasum.memorial.domain.repository.recipientLetter.RecipientLetterCommentRepository;
 import com.ttasum.memorial.domain.repository.recipientLetter.RecipientLetterRepository;
 import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterResponseDto;
 import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterRequestDto;
@@ -32,12 +34,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class RecipientLetterServiceImpl implements RecipientLetterService {
 
     private final RecipientLetterRepository recipientLetterRepository;
+    private final RecipientLetterCommentRepository recipientLetterCommentRepository;
 
     //등록
     @Transactional
@@ -90,13 +94,19 @@ public class RecipientLetterServiceImpl implements RecipientLetterService {
     }
 
     //페이징처리
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public Page<RecipientLetterListResponseDto> getAllLetters(Pageable pageable) {
-        return recipientLetterRepository.findAllByDelFlag("N", pageable)
-                .map(RecipientLetterListResponseDto::fromEntity);
-    }
+        return recipientLetterRepository
+                .findAllByDelFlag("N", pageable)
+                .map(recipientLetter -> {
+                    Long commentCount = recipientLetterCommentRepository
+                            .countByLetterSeq_LetterSeqAndDelFlag(
+                                    recipientLetter.getLetterSeq(),"N");
+                    return  RecipientLetterListResponseDto.fromEntity(recipientLetter, commentCount);
+        });
 
+     }
     //수정 인증 (공통)
     @Transactional(readOnly = true)
     @Override
@@ -200,20 +210,28 @@ public class RecipientLetterServiceImpl implements RecipientLetterService {
         String raw = (keyword == null ? "" : keyword.trim());
         String lower = raw.toLowerCase(Locale.ROOT);
 
-        // 한글 장기명 매핑 시도
-//        Optional<OrganCode> organCodeName = OrganCode.fromName(raw);
+//        // 한글 장기명 매핑 시도
+//        Optional<OrganCode> organCode = OrganCode.fromName(raw);
 
-
-        return (root, query, cb) ->
-                cb.or(
-                        cb.like(cb.lower(root.get("storyTitle")), "%" + keyword.toLowerCase(Locale.ROOT) + "%"),
-                        cb.like(root.get("letterContents"), "%" + keyword + "%"),
+//        return (root, query, cb) ->
+//                cb.or(
+//                        cb.like(cb.lower(root.get("storyTitle")), "%" + keyword.toLowerCase(Locale.ROOT) + "%"),
+//                        cb.like(root.get("letterContents"), "%" + keyword + "%"),
 //                        cb.like(cb.lower(root.get("organCode")), "%" + keyword.toLowerCase(Locale.ROOT) + "%"),
 //                        cb.like(cb.lower(root.get("organEtc")), "%" + keyword.toLowerCase(Locale.ROOT) + "%"),
-                        cb.like(cb.lower(root.get("recipientYear")), "%" + keyword.toLowerCase(Locale.ROOT) + "%")
-                );
+//                        cb.like(cb.lower(root.get("recipientYear")), "%" + keyword.toLowerCase(Locale.ROOT) + "%")
+//                );
 
+        return (root, query, cb) -> cb.or(
+                cb.like(cb.lower(root.get("storyTitle")),    "%" + lower + "%"),
+                cb.like(cb.lower(root.get("letterContents")), "%" + lower + "%"),
+                cb.like(cb.lower(root.get("organCode")),      "%" + lower + "%"),
+                cb.like(cb.lower(root.get("organEtc")),       "%" + lower + "%"),
+                cb.like(cb.lower(root.get("recipientYear")),  "%" + lower + "%")
+        );
     }
+
+
         //이미지 업로드
         // uuid 방식
         @Transactional
