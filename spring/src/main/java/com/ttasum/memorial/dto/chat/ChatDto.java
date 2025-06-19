@@ -1,15 +1,20 @@
 package com.ttasum.memorial.dto.chat;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.ToString;
 
 /**
  * 사용자 입력과 관련된 데이터를 담는 DTO
  */
 @Getter
-@Setter
 @ToString
-@NoArgsConstructor
-@AllArgsConstructor
 public class ChatDto {
-    private String question;
+    private final String question;
+
+    @JsonCreator
+    public ChatDto(@JsonProperty("question") String question) {
+        this.question = question;
+    }
 }
