@@ -28,7 +28,7 @@ public class RecipientLetterListResponseDto {
     public RecipientLetterListResponseDto(RecipientLetter recipientLetter, Long commentCount) {
         this.letterSeq = recipientLetter.getLetterSeq();
         this.storyTitle = recipientLetter.getStoryTitle();
-        this.letterWriter = NameMaskUtil.maskRecipientNameIfAnonymous(
+        this.letterWriter = NameMaskUtil.maskNameIfAnonymous(
                 recipientLetter.getLetterWriter(),
                 recipientLetter.getAnonymityFlag()
         );

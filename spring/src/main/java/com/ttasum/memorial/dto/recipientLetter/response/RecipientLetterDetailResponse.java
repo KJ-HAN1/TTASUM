@@ -45,7 +45,7 @@ public class RecipientLetterDetailResponse {
         this.storyTitle = recipientLetter.getStoryTitle();
         this.recipientYear = recipientLetter.getRecipientYear();
 //        this.letterPasscode = recipientLetter.getLetterPasscode();
-        this.letterWriter = NameMaskUtil.maskRecipientNameIfAnonymous(
+        this.letterWriter = NameMaskUtil.maskNameIfAnonymous(
                 recipientLetter.getLetterWriter(),
                 recipientLetter.getAnonymityFlag()
         );

@@ -35,5 +35,17 @@ public class NameMaskUtil {
                 return recipientName;
         }
     }
+    //기증자 마스킹 (두 번째 글자만 마스킹 처리)
+    public static String maskNameIfAnonymous(String name, String anonymityFlag){
+        if("Y".equalsIgnoreCase(anonymityFlag)
+                && name != null
+                && name.length() >= 2) {
+            String first = String.valueOf(name.charAt(0));
+            String rest = name.length() > 2 ? name.substring(2) : "";
+            return first + "*" + rest;
+        }else{
+            return name;
+        }
+    }
 }
 
