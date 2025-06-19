@@ -1,5 +1,6 @@
 package com.ttasum.memorial.controller.heavenLetter;
 
+import com.ttasum.memorial.dto.common.CommonPageRequest;
 import com.ttasum.memorial.dto.heavenLetter.request.*;
 import com.ttasum.memorial.dto.heavenLetter.response.*;
 import com.ttasum.memorial.service.heavenLetter.HeavenLetterService;
@@ -49,9 +50,9 @@ public class HeavenLetterController {
     //목록(페이징 처리)
     @GetMapping
     public ResponseEntity<Page<HeavenLetterResponseDto.HeavenLetterListResponse>> getLetters(
-            @ModelAttribute PageRequest pageRequest) {
+            @ModelAttribute CommonPageRequest commonPageRequest) {
 
-        Pageable pageable = pageRequest.toPageable("letterSeq");
+        Pageable pageable = commonPageRequest.toPageable("letterSeq");
         Page<HeavenLetterResponseDto.HeavenLetterListResponse> result = heavenLetterService.getAllLetters(pageable);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
@@ -96,7 +97,7 @@ public class HeavenLetterController {
     public ResponseEntity<Page<HeavenLetterResponseDto.HeavenLetterListResponse>> searchLetters(
             @RequestParam(defaultValue = "전체") String type,
             @RequestParam(defaultValue = "") String keyword,
-            @ModelAttribute PageRequest pageRequest) {
+            @ModelAttribute CommonPageRequest commonPageRequest) {
 
         // 한글 타입을 영문으로 매핑
         type = switch (type) {
@@ -106,7 +107,7 @@ public class HeavenLetterController {
             default -> "all";
         };
 
-        Pageable pageable = pageRequest.toPageable("letterSeq");
+        Pageable pageable = commonPageRequest.toPageable("letterSeq");
         Page<HeavenLetterResponseDto.HeavenLetterListResponse> result =
                 heavenLetterService.searchLetters(type, keyword, pageable);
         return ResponseEntity.ok(result);
@@ -119,12 +120,12 @@ public class HeavenLetterController {
         return ResponseEntity.ok(resultList);
     }
     //기증자 검색
-    @GetMapping("/donate_pop.do")
+    @GetMapping("/donorSearch")
     public ResponseEntity<Page<MemorialSearchResponseDto>> searchDonors(
             @ModelAttribute MemorialSearchRequestDto memorialSearchRequest,
-            @ModelAttribute PageRequest pageRequest
+            @ModelAttribute CommonPageRequest commonPageRequest
     ) {
-        Pageable pageable = pageRequest.toPageable("donateDate");
+        Pageable pageable = commonPageRequest.toPageable("donorSearch");
         Page<MemorialSearchResponseDto> result =
                 heavenLetterService.searchDonors(memorialSearchRequest, pageable);
 

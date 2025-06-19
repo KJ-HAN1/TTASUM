@@ -1,6 +1,7 @@
 package com.ttasum.memorial.dto.recipientLetter.response;
 
 import com.ttasum.memorial.domain.entity.recipientLetter.RecipientLetter;
+import com.ttasum.memorial.domain.enums.OrganCode;
 import com.ttasum.memorial.dto.recipientLetterComment.response.RecipientLetterCommentListResponseDto;
 //import com.ttasum.memorial.util.OrganCodeUtil;
 import com.ttasum.memorial.util.NameMaskUtil;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 public class RecipientLetterDetailResponse {
     private Integer letterSeq;
     private String organCode;
+    private String organName;
     private String organEtc;
     private String storyTitle;
     private String recipientYear;
@@ -35,12 +38,12 @@ public class RecipientLetterDetailResponse {
     private LocalDateTime modifyTime;
     private String modifierId;
     private String delFlag;
-//    private String organName;
     private List<RecipientLetterCommentListResponseDto> comments;
 
     public RecipientLetterDetailResponse(RecipientLetter recipientLetter) {
         this.letterSeq = recipientLetter.getLetterSeq();
         this.organCode = recipientLetter.getOrganCode();
+        this.organName = resolveOrganName(recipientLetter);
         this.organEtc = recipientLetter.getOrganEtc();
         this.storyTitle = recipientLetter.getStoryTitle();
         this.recipientYear = recipientLetter.getRecipientYear();
@@ -59,17 +62,21 @@ public class RecipientLetterDetailResponse {
         this.modifyTime = recipientLetter.getModifyTime();
         this.modifierId = recipientLetter.getModifierId();
         this.delFlag = recipientLetter.getDelFlag();
-//        this.organName = resolveOrganName(recipientLetter);
         this.comments =  recipientLetter.getComments().stream()
                 .map(RecipientLetterCommentListResponseDto::new)
                 .collect(Collectors.toList());
     }
-//    private String resolveOrganName(RecipientLetter recipientLetter) {
-//        return "ORGAN000".equals(recipientLetter.getOrganCode())
-//                ? recipientLetter.getOrganEtc()
-//                : OrganCodeUtil.resolveNameByCode(recipientLetter.getOrganCode());
-//    }
+    private String resolveOrganName(RecipientLetter recipientLetter) {
+        if ("ORGAN000".equals(recipientLetter.getOrganCode())) {
+            return recipientLetter.getOrganEtc();
+        }
 
+            return Arrays.stream(OrganCode.values())
+                    .filter(code -> code.getCode().equalsIgnoreCase(recipientLetter.getOrganCode()))
+                    .findFirst()
+                    .map(OrganCode::getName)
+                    .orElse(null); //
+
+    }
 }
-
 

@@ -1,24 +1,26 @@
 package com.ttasum.memorial.domain.entity.recipientLetter;
 
-import com.ttasum.memorial.domain.entity.heavenLetter.HeavenLetterComment;
 import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterUpdateRequestDto;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 수혜자 편지 엔티티
+ * - 테이블: tb25_430_recipient_letter
+ * - 주요 기능: soft delete, 댓글 연관, 생성/수정/삭제 로직 포함
+ */
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 @Builder
+@Where(clause = "del_flag = 'N'")
+@Entity
 @Table(name = "tb25_430_recipient_letter")
 
 public class RecipientLetter {
@@ -80,28 +82,33 @@ public class RecipientLetter {
     @Column(name = "del_flag", nullable = false, length = 1)
     private String delFlag;
 
-    //댓글 엔티티
+    /* 댓글 연관 매핑 */
     @OneToMany(mappedBy = "letterSeq")
-    @Where(clause = "del_flag = 'N'")
     private List<RecipientLetterComment> comments = new ArrayList<>();
 
-    //JPA생명주기 중 하나 : save()로 DB에 insert되기 직전에 실행(기본값 세팅)
-    //update할 땐 작동 안 함
+    /**
+     * JPA 생명주기
+     * insert 직전에 실행(기본값 세팅)
+     * update 할 땐 작동 안 함
+     */
     @PrePersist
     public void prePersist() {
-        //편지 작성 시간 — 저장 전에 현재 시간으로 자동 설정
         this.writeTime = LocalDateTime.now();
-        //삭제 여부 — 기본값 'N'으로 설정 (삭제 안 됨)
         this.delFlag = "N";
-        //조회수 — 처음엔 0으로 초기화
         this.readCount = 0;
     }
-    //조회수 증가
+
+    /**
+     * 조회수 증가 로직
+     */
     public void increaseReadCount() {
         if (this.readCount == null) this.readCount = 0;
         this.readCount += 1;
     }
-    //수정 메서드
+
+    /**
+     * 편지 내용 수정
+     */
     public void updateLetterContents(RecipientLetterUpdateRequestDto recipientLetterUpdateRequestDto) {
         this.letterWriter = recipientLetterUpdateRequestDto.getLetterWriter();
         this.anonymityFlag = recipientLetterUpdateRequestDto.getAnonymityFlag();
@@ -115,11 +122,11 @@ public class RecipientLetter {
         this.modifyTime = LocalDateTime.now();
     }
 
-    //삭제 메서드
+    /**
+     * 소프트 삭제 처리
+     */
     public void softDelete() {
         this.delFlag = "Y";
         this.modifyTime = LocalDateTime.now();
     }
-
-
 }

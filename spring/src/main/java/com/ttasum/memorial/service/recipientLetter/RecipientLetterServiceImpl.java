@@ -6,6 +6,7 @@ import com.ttasum.memorial.domain.entity.recipientLetter.RecipientLetter;
 import com.ttasum.memorial.domain.enums.OrganCode;
 import com.ttasum.memorial.domain.repository.recipientLetter.RecipientLetterCommentRepository;
 import com.ttasum.memorial.domain.repository.recipientLetter.RecipientLetterRepository;
+import com.ttasum.memorial.dto.common.ApiResponse;
 import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterResponseDto;
 import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterRequestDto;
 import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterUpdateRequestDto;
@@ -19,6 +20,8 @@ import com.ttasum.memorial.exception.common.serverError.FileStorageException;
 import com.ttasum.memorial.exception.heavenLetter.InvalidPasswordException;
 //import com.ttasum.memorial.util.OrganCodeUtil;
 //import com.ttasum.memorial.util.OrganResult;
+import com.ttasum.memorial.exception.recipientLetter.RecipientInvalidOrganCodeException;
+import com.ttasum.memorial.exception.recipientLetter.RecipientOrganNameEmptyException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ttasum.memorial.exception.recipientLetter.RecipientLetterNotFoundException;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.criteria.Predicate;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -39,67 +43,68 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+
 public class RecipientLetterServiceImpl implements RecipientLetterService {
 
     private final RecipientLetterRepository recipientLetterRepository;
     private final RecipientLetterCommentRepository recipientLetterCommentRepository;
 
-    //등록
+    /* 편지 등록 */
     @Transactional
     @Override
-    public RecipientLetterResponseDto createLetter(RecipientLetterRequestDto recipientLetterRequestDto) {
+    public void createLetter(RecipientLetterRequestDto createRequestDto) {
 
-//        // OrganCode 변환 처리
-//        String input = recipientLetterRequestDto.getOrganCode(); // ex: "신장"
-//        String resolvedCode = OrganCodeUtil.resolveCodeByName(input);
-//        String organEtc = null;
-//        if ("ORGAN000".equals(resolvedCode)) {
-//            organEtc = input;
-//        }
+        boolean isValidOrganCode = Arrays.stream(OrganCode.values())
+                .anyMatch(code -> code.getCode().equalsIgnoreCase(createRequestDto.getOrganCode()));
 
-//        OrganResult organResult = OrganCodeUtil.resolveCodeAndEtc(recipientLetterRequestDto.getOrganCode());
+        if (!isValidOrganCode) {
+            throw new RecipientInvalidOrganCodeException();
+        }
+
+        if ("ORGAN000".equals(createRequestDto.getOrganCode())
+                && (createRequestDto.getOrganEtc() == null || createRequestDto.getOrganEtc().isBlank())) {
+            throw new RecipientOrganNameEmptyException();
+        }
 
         RecipientLetter recipientLetter = RecipientLetter.builder()
-                .letterWriter(recipientLetterRequestDto.getLetterWriter())
-                .anonymityFlag(recipientLetterRequestDto.getAnonymityFlag())
-                .letterPasscode(recipientLetterRequestDto.getLetterPasscode())
-//                .organCode(organResult.getCode())
-//                .organEtc(organResult.getEtc())
-                .recipientYear(recipientLetterRequestDto.getRecipientYear())
-                .storyTitle(recipientLetterRequestDto.getStoryTitle())
-                .letterContents(recipientLetterRequestDto.getLetterContents())
-                .orgFileName(recipientLetterRequestDto.getOrgFileName())
-                .fileName(recipientLetterRequestDto.getFileName())
-                .writerId(recipientLetterRequestDto.getWriterId())
+                .letterWriter(createRequestDto.getLetterWriter())
+                .anonymityFlag(createRequestDto.getAnonymityFlag())
+                .letterPasscode(createRequestDto.getLetterPasscode())
+                .organCode(createRequestDto.getOrganCode())
+                .organEtc(createRequestDto.getOrganEtc())
+                .recipientYear(createRequestDto.getRecipientYear())
+                .storyTitle(createRequestDto.getStoryTitle())
+                .letterContents(createRequestDto.getLetterContents())
+                .orgFileName(createRequestDto.getOrgFileName())
+                .fileName(createRequestDto.getFileName())
+                .writerId(createRequestDto.getWriterId())
                 .build();
 
         recipientLetterRepository.save(recipientLetter);
-
-        return RecipientLetterResponseDto.success();
     }
 
-    //조회 - 단건
+    /* 편지 상세 조회 (댓글 포함) */
     @Transactional
     @Override
     public RecipientLetterDetailResponse getLetterById(Integer letterSeq) {
 
-        RecipientLetter recipientLetter = recipientLetterRepository
-                .findByLetterSeqAndDelFlag(letterSeq, "N")
-                .orElseThrow(() -> new NotFoundException("해당 수혜자 편지를 찾을 수 없습니다."));
+            RecipientLetter recipientLetter = recipientLetterRepository
+                    .findWithCommentsByLetterSeq(letterSeq)
+                    .orElseThrow(() -> new NotFoundException("해당 수혜자 편지를 찾을 수 없습니다."));
 
-        //커맨드 메서드 사용
-        recipientLetter.increaseReadCount();
+            //커맨드 메서드 사용
+            recipientLetter.increaseReadCount();
 
-        //엔티티 -> DTO
-        return new RecipientLetterDetailResponse(recipientLetter);
-    }
+            //엔티티 -> DTO
+            return new RecipientLetterDetailResponse(recipientLetter);
+        }
 
-    //페이징처리
+    /* 편지 전체 조회 */
     @Transactional(readOnly = true)
     @Override
     public Page<RecipientLetterListResponseDto> getAllLetters(Pageable pageable) {
         return recipientLetterRepository
-                .findAllByDelFlag("N", pageable)
+                .findAll(pageable)
                 .map(recipientLetter -> {
                     Long commentCount = recipientLetterCommentRepository
                             .countByLetterSeq_LetterSeqAndDelFlag(
@@ -108,12 +113,15 @@ public class RecipientLetterServiceImpl implements RecipientLetterService {
         });
 
      }
-    //수정 인증 (공통)
+    /* 편지 수정/삭제 전 비밀번호 검증 */
     @Transactional(readOnly = true)
     @Override
     public boolean verifyPasscode(Integer letterSeq, String passcode) {
+
+//        // 리소스(수혜자 편지)를 찾을 수 없음 (404 Not Found)
         RecipientLetter recipientLetter = recipientLetterRepository.findById(letterSeq)
                 .orElseThrow(RecipientLetterNotFoundException::new);
+
 
         if (!recipientLetter.getLetterPasscode().equals(passcode)) {
             throw new InvalidPasswordException();
@@ -122,7 +130,7 @@ public class RecipientLetterServiceImpl implements RecipientLetterService {
         return true;
     }
 
-    //수정
+    /* 편지 수정*/
     @Transactional
     @Override
     public RecipientLetterUpdateResponseDto updateLetter(Integer letterSeq, RecipientLetterUpdateRequestDto recipientLetterUpdateRequestDto) {
@@ -131,8 +139,14 @@ public class RecipientLetterServiceImpl implements RecipientLetterService {
             throw new PathVariableMismatchException("수혜자 편지 번호와 요청 번호가 일치하지 않습니다.");
         }
 
+        // 리소스(수혜자 편지)를 찾을 수 없음 (404 Not Found)
         RecipientLetter recipientLetter = recipientLetterRepository.findById(letterSeq)
                 .orElseThrow(RecipientLetterNotFoundException::new);
+
+        // 비밀번호 인증 실패 시 예외 발생(400)
+        if (!verifyPasscode(letterSeq, recipientLetterUpdateRequestDto.getLetterPasscode())) {
+            throw new InvalidPasscodeException();
+        }
 
         // 편지 내용 수정
         recipientLetter.updateLetterContents(recipientLetterUpdateRequestDto); // 예: 내부에서 title, contents 세팅
@@ -140,7 +154,7 @@ public class RecipientLetterServiceImpl implements RecipientLetterService {
         return RecipientLetterUpdateResponseDto.success();
     }
 
-    //삭제
+    /* 편지 삭제(soft delete) */
     @Transactional
     @Override
     public void deleteLetter(Integer letterSeq, RecipientLetterVerifyRequestDto deleteRequest) {
@@ -150,9 +164,9 @@ public class RecipientLetterServiceImpl implements RecipientLetterService {
             throw new PathVariableMismatchException("수혜자 편지 번호와 요청 번호가 일치하지 않습니다.");
         }
 
-        // 리소스를 찾을 수 없음 (404 Not Found)
+        // 리소스(수혜자 편지)를 찾을 수 없음 (404 Not Found)
         RecipientLetter recipientLetter = recipientLetterRepository.findById(letterSeq)
-                .orElseThrow(() -> new NotFoundException("해당 수혜자 편지를 찾을 수 없습니다."));
+                .orElseThrow(RecipientLetterNotFoundException::new);
 
         // 비밀번호 인증 실패 시 예외 발생(400)
         if (!verifyPasscode(letterSeq, deleteRequest.getLetterPasscode())) {
@@ -168,6 +182,7 @@ public class RecipientLetterServiceImpl implements RecipientLetterService {
         recipientLetter.softDelete();
     }
 
+    /* 편지 검색 */
     @Transactional(readOnly = true)
     @Override
     public Page<RecipientLetterListResponseDto> searchLetters(String type, String keyword, Pageable pageable) {
@@ -211,29 +226,28 @@ public class RecipientLetterServiceImpl implements RecipientLetterService {
         String raw = (keyword == null ? "" : keyword.trim());
         String lower = raw.toLowerCase(Locale.ROOT);
 
-//        // 한글 장기명 매핑 시도
-//        Optional<OrganCode> organCode = OrganCode.fromName(raw);
+        // 한글 장기명 매핑 시도
+        Optional<OrganCode> organCode = OrganCode.findByName(raw);
 
-//        return (root, query, cb) ->
-//                cb.or(
-//                        cb.like(cb.lower(root.get("storyTitle")), "%" + keyword.toLowerCase(Locale.ROOT) + "%"),
-//                        cb.like(root.get("letterContents"), "%" + keyword + "%"),
-//                        cb.like(cb.lower(root.get("organCode")), "%" + keyword.toLowerCase(Locale.ROOT) + "%"),
-//                        cb.like(cb.lower(root.get("organEtc")), "%" + keyword.toLowerCase(Locale.ROOT) + "%"),
-//                        cb.like(cb.lower(root.get("recipientYear")), "%" + keyword.toLowerCase(Locale.ROOT) + "%")
-//                );
+        return (root, query, cb) -> {
+            Predicate title = cb.like(cb.lower(root.get("storyTitle")), "%" + lower + "%");
+            Predicate contents = cb.like(cb.lower(root.get("letterContents")), "%" + lower + "%");
+            Predicate etc = cb.like(cb.lower(root.get("organEtc")), "%" + lower + "%");
+            Predicate year = cb.like(cb.lower(root.get("recipientYear")), "%" + lower + "%");
 
-        return (root, query, cb) -> cb.or(
-                cb.like(cb.lower(root.get("storyTitle")),    "%" + lower + "%"),
-                cb.like(cb.lower(root.get("letterContents")), "%" + lower + "%"),
-                cb.like(cb.lower(root.get("organCode")),      "%" + lower + "%"),
-                cb.like(cb.lower(root.get("organEtc")),       "%" + lower + "%"),
-                cb.like(cb.lower(root.get("recipientYear")),  "%" + lower + "%")
-        );
+            // 장기명 → 코드로 변환되었으면 해당 코드도 포함하여 검색
+            if (organCode.isPresent()) {
+                String code = organCode.get().getCode();
+                Predicate organCodeMatch = cb.like(cb.lower(root.get("organCode")), "%" + code.toLowerCase() + "%");
+                return cb.or(title, contents, organCodeMatch, etc, year);
+            } else {
+                // 장기명 매핑 실패 시 organCode 조건 제외
+                return cb.or(title, contents, etc, year);
+            }
+        };
     }
 
-
-        //이미지 업로드
+        /* 파일 업로드 */
         // uuid 방식
         @Transactional
         @Override

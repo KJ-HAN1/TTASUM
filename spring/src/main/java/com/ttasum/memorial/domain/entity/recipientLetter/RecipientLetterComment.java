@@ -4,6 +4,7 @@ import com.ttasum.memorial.dto.heavenLetter.request.CommonCommentRequestDto;
 import com.ttasum.memorial.dto.recipientLetterComment.request.RecipientLetterCommentUpdateRequestDto;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Where(clause = "del_flag = 'N'")
 @Builder
 @Table(name = "tb25_431_recipient_letter_comment")
 public class RecipientLetterComment {

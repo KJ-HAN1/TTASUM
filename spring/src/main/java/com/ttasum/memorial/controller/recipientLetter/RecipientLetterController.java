@@ -1,13 +1,7 @@
 package com.ttasum.memorial.controller.recipientLetter;
 
-import com.ttasum.memorial.domain.repository.recipientLetter.RecipientLetterRepository;
 import com.ttasum.memorial.dto.common.ApiResponse;
-import com.ttasum.memorial.dto.heavenLetter.request.HeavenLetterUpdateRequestDto;
-import com.ttasum.memorial.dto.heavenLetter.request.HeavenLetterVerifyRequestDto;
-import com.ttasum.memorial.dto.heavenLetter.request.PageRequest;
-import com.ttasum.memorial.dto.heavenLetter.response.CommonResultResponseDto;
-import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterResponseDto;
-import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterUpdateResponsDto;
+import com.ttasum.memorial.dto.common.CommonPageRequest;
 import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterRequestDto;
 import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterUpdateRequestDto;
 import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterVerifyRequestDto;
@@ -36,12 +30,13 @@ public class RecipientLetterController {
 
     //등록
     @PostMapping
-    public ResponseEntity<RecipientLetterResponseDto> createLetter(
-            @RequestBody @Valid RecipientLetterRequestDto createRequest) {
-        RecipientLetterResponseDto createResponse = recipientLetterService.createLetter(createRequest);
+    public ResponseEntity<ApiResponse> createLetter(
+            @RequestBody @Valid RecipientLetterRequestDto createRequestDto) {
+        recipientLetterService.createLetter(createRequestDto);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(createResponse);
+        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.ok(HttpStatus.CREATED.value(), "편지가 성공적으로 등록되었습니다."));
     }
+
     //단건 조회
     @GetMapping("/{letterSeq}")
     public ResponseEntity<RecipientLetterDetailResponse> getLetterById(
@@ -53,9 +48,9 @@ public class RecipientLetterController {
     //목록(페이징 처리)
     @GetMapping
     public ResponseEntity<Page<RecipientLetterListResponseDto>> getLetters(
-            @ModelAttribute PageRequest pageRequest) {
+            @ModelAttribute CommonPageRequest commonPageRequest) {
 
-        Pageable pageable = pageRequest.toPageable("letterSeq");
+        Pageable pageable = commonPageRequest.toPageable("letterSeq");
         Page<RecipientLetterListResponseDto> result = recipientLetterService.getAllLetters(pageable);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
@@ -97,17 +92,17 @@ public class RecipientLetterController {
     public ResponseEntity<Page<RecipientLetterListResponseDto>> searchLetters(
             @RequestParam(defaultValue = "전체") String type,
             @RequestParam(defaultValue = "") String keyword,
-            @ModelAttribute PageRequest pageRequest) {
+            @ModelAttribute CommonPageRequest commonPageRequest) {
 
         // 한글 타입을 영문으로 매핑
-        String mappedType = switch (type) {
+        type = switch (type) {
             case "제목" -> "title";
             case "내용" -> "contents";
             case "전체" -> "all";
             default -> "all";
         };
 
-        Pageable pageable = pageRequest.toPageable("letterSeq");
+        Pageable pageable = commonPageRequest.toPageable("letterSeq");
         Page<RecipientLetterListResponseDto> result =
                 recipientLetterService.searchLetters(type, keyword, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(result);
