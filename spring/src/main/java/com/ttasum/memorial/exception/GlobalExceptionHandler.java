@@ -12,6 +12,7 @@ import com.ttasum.memorial.exception.common.Conflict.AlreadyDeletedException;
 import com.ttasum.memorial.exception.common.badRequest.BadRequestException;
 import com.ttasum.memorial.exception.common.badRequest.CaptchaVerificationFailedException;
 import com.ttasum.memorial.exception.common.notFound.NotFoundException;
+import com.ttasum.memorial.exception.common.serverError.FileStorageException;
 import com.ttasum.memorial.exception.donationStory.DonationStoryNotFoundException;
 import com.ttasum.memorial.exception.heavenLetter.*;
 import com.ttasum.memorial.exception.recipientLetter.RecipientLetterNotFoundException;
@@ -150,6 +151,13 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body(ApiResponse.conflict(ex.getMessage()));
     }
+    //파일 저장 중 예외 발생
+    @ExceptionHandler(FileStorageException.class)
+    public ResponseEntity<ApiResponse> handleFileStorageException(FileStorageException ex){
+        log.info("파일 저장 오류: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(ApiResponse.fail(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage()));
+    }
 
     //예측하지 못한 예외 처리 (500 Internal Server Error)
     @ExceptionHandler(Exception.class)
@@ -157,7 +165,6 @@ public class GlobalExceptionHandler {
         log.error("서버 내부 오류 발생: {}", ex.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ApiResponse.serverError());
-
 
     }
 

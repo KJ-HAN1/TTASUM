@@ -15,6 +15,7 @@ import com.ttasum.memorial.exception.common.Conflict.AlreadyDeletedException;
 import com.ttasum.memorial.exception.common.badRequest.InvalidPasscodeException;
 import com.ttasum.memorial.exception.common.badRequest.PathVariableMismatchException;
 import com.ttasum.memorial.exception.common.notFound.NotFoundException;
+import com.ttasum.memorial.exception.common.serverError.FileStorageException;
 import com.ttasum.memorial.exception.heavenLetter.InvalidPasswordException;
 //import com.ttasum.memorial.util.OrganCodeUtil;
 //import com.ttasum.memorial.util.OrganResult;
@@ -241,6 +242,7 @@ public class RecipientLetterServiceImpl implements RecipientLetterService {
             String uploadDir = baseDir + subFolder + "/";
             List<Map<String, String>> resultList = new ArrayList<>();
 
+        try{
             for (MultipartFile file : files) {
                 String orgFileName = file.getOriginalFilename();
 
@@ -274,6 +276,9 @@ public class RecipientLetterServiceImpl implements RecipientLetterService {
                 resultList.add(fileMap);
             }
             return resultList;
+        }catch (IOException e){
+            throw new FileStorageException();
+        }
         }
         // HEX 방식
     //    private String generateHexFileName(String ext) {
