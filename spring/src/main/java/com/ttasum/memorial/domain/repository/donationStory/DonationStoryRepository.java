@@ -13,6 +13,7 @@ import java.util.Optional;
  */
 public interface DonationStoryRepository extends JpaRepository<DonationStory, Integer>,
         DonationStoryRepositoryCustom {
+
     Optional<DonationStory> findByIdAndDelFlag(Integer id, String delFlag);
 
     /**

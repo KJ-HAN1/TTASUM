@@ -113,8 +113,4 @@ public class DonationStory {
         this.modifyTime = LocalDateTime.now();
     }
 
-    // 테스트용으로만 열어두는 패키지 가시성 세터
-    void setStorySeq(Integer storySeq) {
-        this.id = storySeq;
-    }
 }
