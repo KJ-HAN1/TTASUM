@@ -4,9 +4,12 @@ import os
 import pymysql
 from dotenv import load_dotenv
 from fastapi import FastAPI
+from langchain.retrievers import ParentDocumentRetriever
 from langchain_chroma import Chroma
 from langchain_core.documents import Document
 from langchain_core.prompts import PromptTemplate
+from langchain_core.stores import InMemoryStore
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_upstage import UpstageEmbeddings, ChatUpstage
 from pymysql.cursors import DictCursor
 
@@ -38,7 +41,7 @@ async def prepare_chat_data(app: FastAPI):
 
 	data = await connect_database()
 	docs = await create_documents(app, data)
-	await embed_and_store(app, docs)
+	await create_retriever(app, docs)
 	await create_chain(app)
 
 
@@ -121,7 +124,7 @@ async def create_chain(app):
 		- [권역 및 지역 설명]은 지부 판별을 위한 참고 용일 뿐이며, **답변에 관할 지역명을 나열하는 일은 절대 없어야 
 		합니다.**
 		- **정중하고 친절한 태도로** 사용자의 질문에 답변합니다.
-		- 본부, 부서, 팀/직책, 전화번호는 **100% 절대 가공하지 않고 정확하게** 답변합니다.
+		- 본부, 부서, 팀/직책, 전화번호는 **컨텍스트의 문장을 단 한 글자도 바꾸지 않고, 그대로 복사하여** 답변합니다.
 		- 답변은 최대 150~300자 내외로 유지합니다.
 		
 		## 답변 생성 규칙
@@ -166,29 +169,44 @@ async def create_chain(app):
 	app.state.chain = chain
 
 
-async def embed_and_store(app, documents):
-	""" Document 객체를 벡터 DB에 임베딩하여 저장합니다.
+async def create_retriever(app, documents):
+	""" 자식 청크로 검색한 뒤 부모 문서를 반환하는 Parent Document Retriever를 사용해 검색기를 생성합니다.
 
 	Args:
 		app: FastAPI 인스턴스.
 		documents(list): Document 객체 리스트.
 
 	"""
+	# 자식 청크 더 작게 분할할 splitter 설정
+	child_splitter = RecursiveCharacterTextSplitter(
+		chunk_size=33, # 33 이하가 최적
+		chunk_overlap=0,
+		separators=[", ", ": ", "\r\n", "\n", "\t", "·"],
+		is_separator_regex=False
+	)
+
 	# 데이터 임베딩 설정
 	embeddings = UpstageEmbeddings(
 		api_key=os.getenv('UPSTAGE_API_KEY'),
 		model=os.getenv('EMBEDDING_MODEL_NAME')
 	)
-	vector_store = Chroma(embedding_function=embeddings)
 
-	# 벡터 DB에 저장
-	logger.info('[DB EMBEDDING] 벡터 DB에 데이터 임베딩 및 저장 중 ...')
-	vector_store.add_documents(documents)
-	logger.info('[DB LOAD] 벡터 DB에 데이터 저장 완료')
-	app.state.retriever = vector_store.as_retriever(
-		search_type="similarity",
+	# 자식 청크 저장할 저장소 설정
+	vector_store = Chroma(embedding_function=embeddings)
+	# 부모 문서 저장할 저장소 설정
+	store = InMemoryStore()
+
+	retriever = ParentDocumentRetriever(
+		vectorstore=vector_store,
+		docstore=store,
+		child_splitter=child_splitter,
 		search_kwargs={"k": 3}
 	)
+
+	logger.info('[DB EMBEDDING] 벡터 DB에 데이터 임베딩 및 저장 중 ...')
+	retriever.add_documents(documents)
+	logger.info('[DB LOAD] 벡터 DB에 데이터 저장 완료')
+	app.state.retriever = retriever
 
 
 async def create_documents(app, data):
@@ -238,6 +256,7 @@ async def connect_database():
 		# MySQL DB 연결 및 예외 처리
 		conn = pymysql.connect(
 			host=os.getenv('DB_HOST'),
+			port=int(os.getenv('DB_PORT')),
 			user=os.getenv('DB_USER'),
 			password=os.getenv('DB_PASSWORD'),
 			database=os.getenv('DB_DATABASE'),
