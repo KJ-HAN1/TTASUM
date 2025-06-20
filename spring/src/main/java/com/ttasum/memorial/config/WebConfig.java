@@ -9,7 +9,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**") // 또는 특정 경로
-                .allowedOrigins("http://localhost:5173", "https://koda.elementsoft.biz")
+                .allowedOrigins("http://localhost:5173", "http://koda.elementsoft.biz")
                 // 프론트 주소
                 .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS") // 꼭 PATCH, OPTIONS 포함
                 .allowedHeaders("*")

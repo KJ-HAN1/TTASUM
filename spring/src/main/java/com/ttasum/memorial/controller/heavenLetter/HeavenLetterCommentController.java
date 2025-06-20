@@ -21,6 +21,7 @@ public class HeavenLetterCommentController {
     //등록
     @PostMapping
     public ResponseEntity<HeavenLetterCommentResponseDto> createComment(
+            @PathVariable("letterSeq") int letterSeq,
             @RequestBody @Valid CommonCommentRequestDto.CreateCommentRequest createCommentRequest) {
         HeavenLetterCommentResponseDto createCommentResponse = heavenLetterCommentService.createComment(createCommentRequest);
 
@@ -30,6 +31,7 @@ public class HeavenLetterCommentController {
     // 수정 인증
     @PostMapping("/{commentSeq}/verifyPwd")
     public ResponseEntity<HeavenLetterCommentResponseDto.CommentVerifyResponse> verifyCommentPasscode(
+            @PathVariable("letterSeq") int letterSeq,
             @PathVariable Integer commentSeq,
             @RequestBody @Valid CommonCommentRequestDto.CommentVerifyRequest commentVerifyRequest) {
 
@@ -42,6 +44,7 @@ public class HeavenLetterCommentController {
     @PatchMapping("/{commentSeq}")
     public ResponseEntity<HeavenLetterCommentResponseDto> updateComment(
             //값을 자바 변수로 맵핑
+            @PathVariable("letterSeq") int letterSeq,
             @PathVariable Integer commentSeq,
             @RequestBody @Valid CommonCommentRequestDto.UpdateCommentRequest updateCommentRequest) {
 
@@ -50,7 +53,7 @@ public class HeavenLetterCommentController {
         }
 
         // 실제 편지 번호는 본문에서 추출
-        Integer letterSeq = updateCommentRequest.getLetterSeq();
+//        Integer letterSeq = updateCommentRequest.getLetterSeq();
 
         HeavenLetterCommentResponseDto updateCommentResponse = heavenLetterCommentService.updateComment(commentSeq, letterSeq, updateCommentRequest);
 
@@ -60,6 +63,7 @@ public class HeavenLetterCommentController {
     //댓글 삭제
     @DeleteMapping("/{commentSeq}")
     public ResponseEntity<HeavenLetterCommentResponseDto.CommentVerifyResponse> deleteComment(
+            @PathVariable("letterSeq") int letterSeq,
             @PathVariable Integer commentSeq,
             @RequestBody CommonCommentRequestDto.DeleteCommentRequest deleteCommentRequest) {
 
