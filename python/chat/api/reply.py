@@ -88,8 +88,7 @@ async def reply(chat: ChatInput, request: Request):
 	logger.info('[DB DOCS] 챗봇 문서 불러오기 성공')
 
 	# 4. 최종 응답 생성
-	result = chain.invoke({'question': summary, 'question_type':
-		question_type, 'context': context})
+	result = chain.invoke({'question': summary, 'context': context})
 	return JSONResponse(
 		status_code=HTTPStatus.OK,
 		content=ApiResponse.ok(
@@ -109,9 +108,10 @@ def get_fixed_response_for(question_type):
 
 	match question_type:
 		case '인사말_시작':
-			return '안녕하세요, 한국장기조직기증원(KODA)입니다. 무엇을 도와드릴까요? '
+			return ('안녕하세요, 한국장기조직기증원(KODA)입니다. 무엇을 도와드릴까요? 궁금한 점을 구체적으로 말씀해 '
+					'주시면 해당 부서와 업무를 안내해 드리겠습니다!')
 		case '인사말_종료':
-			return '도움이 되셨길 바랍니다! 또 궁금한 점이 있으시면 언제든 편하게 물어봐 주세요! 감사합니다.'
+			return '도움이 되셨길 바랍니다! 또 궁금한 점이 있으시면 언제든 편하게 물어봐 주세요. 감사합니다.'
 		case '부정어/비속어':
 			return '죄송합니다, 질문을 이해하지 못 했습니다. 다시 질문해 주세요.'
 		case '업무 무관':
