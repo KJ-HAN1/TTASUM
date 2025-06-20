@@ -6,6 +6,7 @@ import com.ttasum.memorial.dto.donationStory.request.DonationStoryCreateRequestD
 import com.ttasum.memorial.dto.donationStory.request.DonationStoryDeleteRequestDto;
 import com.ttasum.memorial.dto.donationStory.request.DonationStoryPasswordVerifyDto;
 import com.ttasum.memorial.dto.donationStory.request.DonationStoryUpdateRequestDto;
+import com.ttasum.memorial.dto.donationStory.response.DonationStoryListResponseDto;
 import com.ttasum.memorial.dto.donationStory.response.DonationStoryPasswordVerifyResponseDto;
 import com.ttasum.memorial.dto.donationStory.response.DonationStoryResponseDto;
 import com.ttasum.memorial.service.donationStory.DonationStoryService;
@@ -42,23 +43,27 @@ class DonationStoryControllerTest {
     @DisplayName("기증후 스토리 목록 조회 성공")
     void getStories_Success() throws Exception {
         // given
-        DonationStoryResponseDto dto1 = DonationStoryResponseDto.builder()
+        DonationStoryListResponseDto dto1 = DonationStoryListResponseDto.builder()
                 .storySeq(1)
-                .storyTitle("제목1")         // 필드명이 storyTitle, setter 아님
+                .storyTitle("제목1")
+                .storyWriter("코디네이터 김*연")
                 .donorName("기증자1")
-                .storyContents("내용1")
                 .writeTime(LocalDateTime.now())
+                .readCount(100)
+                .commentCount(3)
                 .build();
 
-        DonationStoryResponseDto dto2 = DonationStoryResponseDto.builder()
+        DonationStoryListResponseDto dto2 = DonationStoryListResponseDto.builder()
                 .storySeq(2)
-                .storyTitle("제목2")         // 필드명이 storyTitle, setter 아님
+                .storyTitle("제목2")
+                .storyWriter("코디네이터 이*희")
                 .donorName("기증자2")
-                .storyContents("내용2")
                 .writeTime(LocalDateTime.now())
+                .readCount(200)
+                .commentCount(5)
                 .build();
 
-        Page<DonationStoryResponseDto> page =
+        Page<DonationStoryListResponseDto> page =
                 new PageImpl<>(List.of(dto1, dto2), PageRequest.of(0, 2), 2);
 
         BDDMockito.given(donationStoryService.searchStories(
@@ -74,7 +79,9 @@ class DonationStoryControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content", hasSize(2)))
                 .andExpect(jsonPath("$.content[0].storySeq", is(1)))
-                .andExpect(jsonPath("$.content[1].storySeq", is(2)));
+                .andExpect(jsonPath("$.content[0].storyTitle", is("제목1")))
+                .andExpect(jsonPath("$.content[1].storySeq", is(2)))
+                .andExpect(jsonPath("$.content[1].storyTitle", is("제목2")));
     }
 
     @Test
