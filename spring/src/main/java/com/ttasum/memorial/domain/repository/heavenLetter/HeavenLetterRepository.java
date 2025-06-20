@@ -30,4 +30,5 @@ public interface HeavenLetterRepository extends JpaRepository<HeavenLetter, Inte
             "WHERE h.delFlag = 'N' " +
             "ORDER BY h.writeTime DESC")
     List<HeavenLetterMainDto> findRecentHeavenLetters(Pageable pageable);
+
 }
