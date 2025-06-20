@@ -6,6 +6,7 @@ import com.ttasum.memorial.domain.repository.donationStory.DonationStoryCommentR
 import com.ttasum.memorial.domain.repository.donationStory.DonationStoryRepository;
 import com.ttasum.memorial.dto.donationStory.request.DonationStoryCreateRequestDto;
 import com.ttasum.memorial.dto.donationStory.request.DonationStoryUpdateRequestDto;
+import com.ttasum.memorial.dto.donationStory.response.DonationStoryListResponseDto;
 import com.ttasum.memorial.dto.donationStory.response.DonationStoryPasswordVerifyResponseDto;
 import com.ttasum.memorial.dto.donationStory.response.DonationStoryResponseDto;
 import com.ttasum.memorial.exception.common.badRequest.*;
@@ -90,7 +91,7 @@ class DonationStoryServiceTest {
         given(donationStoryRepository.searchStories("title", "test", page))
                 .willReturn(mockPage);
 
-        Page<DonationStoryResponseDto> result =
+        Page<DonationStoryListResponseDto> result =
                 donationStoryService.searchStories("title", "test", page);
 
         assertThat(result.getTotalElements()).isEqualTo(1);
