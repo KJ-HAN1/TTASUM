@@ -19,14 +19,14 @@ public class WebClientConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("http://127.0.0.1:5501") // TODO: 프론트엔드 서버 추가해야 함
-                .allowedMethods("POST", "OPTIONS")
+                .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .maxAge(3600); // 초
     }
 
     // 최대 대기 시간 설정
     private final HttpClient httpClient = HttpClient.create()
-            .responseTimeout(Duration.ofSeconds(60));
+            .responseTimeout(Duration.ofSeconds(20));
 
     @Bean
     public WebClient getWebClient() {
@@ -34,6 +34,7 @@ public class WebClientConfig implements WebMvcConfigurer {
                 .baseUrl("http://127.0.0.1:8000") // FastAPI 서버 주소
                 .clientConnector(new ReactorClientHttpConnector(httpClient))
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
                 .build();
     }
 }
