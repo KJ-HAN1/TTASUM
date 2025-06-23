@@ -1,5 +1,8 @@
 package com.ttasum.memorial.dto.memorial.response;
 
+import com.ttasum.memorial.annotation.ConvertGender;
+import com.ttasum.memorial.annotation.FormatDate;
+import com.ttasum.memorial.annotation.MaskNameIfAnonymous;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -11,10 +14,21 @@ import java.time.LocalDate;
 public class MemorialResponseDto {
 
     private Integer donateSeq;
+
+    @MaskNameIfAnonymous
     private String donorName;
+
+    private String anonymityFlag;
+
+    @ConvertGender
     private String genderFlag;
+
     private Integer donateAge;
+
+    @FormatDate(pattern = "yyyyMMdd", output = "yyyy. MM. dd")
     private String donateDate;
+
     private Long commentCount;
-    private LocalDate donorBirthDate;
+
+    private LocalDate donorBirthdate;
 }

@@ -6,16 +6,18 @@ import com.ttasum.memorial.dto.donationStory.request.DonationStoryCreateRequestD
 import com.ttasum.memorial.dto.donationStory.request.DonationStoryDeleteRequestDto;
 import com.ttasum.memorial.dto.donationStory.request.DonationStoryPasswordVerifyDto;
 import com.ttasum.memorial.dto.donationStory.request.DonationStoryUpdateRequestDto;
+import com.ttasum.memorial.dto.donationStory.response.DonationStoryListResponseDto;
 import com.ttasum.memorial.dto.donationStory.response.DonationStoryPasswordVerifyResponseDto;
 import com.ttasum.memorial.dto.donationStory.response.DonationStoryResponseDto;
-import com.ttasum.memorial.service.donationStory.DonationStoryService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -24,7 +26,8 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(DonationStoryController.class)
 class DonationStoryControllerTest {
@@ -36,29 +39,33 @@ class DonationStoryControllerTest {
     private ObjectMapper objectMapper;
 
     @MockBean
-    private DonationStoryService donationStoryService;
+    private com.ttasum.memorial.service.donationStory.DonationStoryService donationStoryService;
 
     @Test
     @DisplayName("기증후 스토리 목록 조회 성공")
     void getStories_Success() throws Exception {
         // given
-        DonationStoryResponseDto dto1 = DonationStoryResponseDto.builder()
+        DonationStoryListResponseDto dto1 = DonationStoryListResponseDto.builder()
                 .storySeq(1)
-                .storyTitle("제목1")         // 필드명이 storyTitle, setter 아님
+                .storyTitle("제목1")
+                .storyWriter("코디네이터 김*연")
                 .donorName("기증자1")
-                .storyContents("내용1")
                 .writeTime(LocalDateTime.now())
+                .readCount(100)
+                .commentCount(3)
                 .build();
 
-        DonationStoryResponseDto dto2 = DonationStoryResponseDto.builder()
+        DonationStoryListResponseDto dto2 = DonationStoryListResponseDto.builder()
                 .storySeq(2)
-                .storyTitle("제목2")         // 필드명이 storyTitle, setter 아님
+                .storyTitle("제목2")
+                .storyWriter("코디네이터 이*희")
                 .donorName("기증자2")
-                .storyContents("내용2")
                 .writeTime(LocalDateTime.now())
+                .readCount(200)
+                .commentCount(5)
                 .build();
 
-        Page<DonationStoryResponseDto> page =
+        Page<DonationStoryListResponseDto> page =
                 new PageImpl<>(List.of(dto1, dto2), PageRequest.of(0, 2), 2);
 
         BDDMockito.given(donationStoryService.searchStories(
@@ -74,7 +81,9 @@ class DonationStoryControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content", hasSize(2)))
                 .andExpect(jsonPath("$.content[0].storySeq", is(1)))
-                .andExpect(jsonPath("$.content[1].storySeq", is(2)));
+                .andExpect(jsonPath("$.content[0].storyTitle", is("제목1")))
+                .andExpect(jsonPath("$.content[1].storySeq", is(2)))
+                .andExpect(jsonPath("$.content[1].storyTitle", is("제목2")));
     }
 
     @Test
@@ -116,6 +125,8 @@ class DonationStoryControllerTest {
         req.setFileName("test.jpg");
         req.setOrgFileName("test.jpg");
         req.setCaptchaToken("token");
+        req.setLetterFont(1);
+        req.setLetterPaper(1);
 
         // 서비스 동작 스텁 (컨트롤러는 반환값을 응답하지 않습니다)
         BDDMockito.given(donationStoryService.createStory(
@@ -140,6 +151,8 @@ class DonationStoryControllerTest {
         req.setStoryTitle("수정된 제목");
         req.setStoryWriter("test");
         req.setStoryContents("test");
+        req.setLetterFont(1);
+        req.setLetterPaper(1);
 
 
         BDDMockito.doNothing()

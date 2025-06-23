@@ -6,6 +6,7 @@ import com.ttasum.memorial.dto.donationStory.request.DonationStoryCreateRequestD
 import com.ttasum.memorial.dto.donationStory.request.DonationStoryDeleteRequestDto;
 import com.ttasum.memorial.dto.donationStory.request.DonationStoryPasswordVerifyDto;
 import com.ttasum.memorial.dto.donationStory.request.DonationStoryUpdateRequestDto;
+import com.ttasum.memorial.dto.donationStory.response.DonationStoryListResponseDto;
 import com.ttasum.memorial.dto.donationStory.response.DonationStoryPasswordVerifyResponseDto;
 import com.ttasum.memorial.dto.donationStory.response.DonationStoryResponseDto;
 import com.ttasum.memorial.service.donationStory.DonationStoryService;
@@ -36,7 +37,7 @@ public class DonationStoryController {
      * @return DTO로 매핑된 스토리의 페이징된 목록
      */
     @GetMapping
-    public ResponseEntity<Page<DonationStoryResponseDto>> getStories(
+    public ResponseEntity<Page<DonationStoryListResponseDto>> getStories(
             @RequestParam(defaultValue = "all") String searchField,
             @RequestParam(required = false) String keyword,
             @RequestParam(defaultValue = "0") int page,

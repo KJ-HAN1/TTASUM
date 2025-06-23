@@ -30,6 +30,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // JPA 기반 ORM 사용을 위한 의존성
 //    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf' // 서버 사이드 렌더링을 위한 Thymeleaf 템플릿 엔진
     implementation 'org.springframework.boot:spring-boot-starter-web' // MVC 기반 REST API 웹 애플리케이션
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    testImplementation 'io.projectreactor:reactor-test'
     compileOnly 'org.projectlombok:lombok' // 컴파일 시 Lombok 어노테이션 지원 (getter/setter 등)
 //    developmentOnly 'org.springframework.boot:spring-boot-devtools' // 핫 리로딩 등 개발 편의 기능 제공
     runtimeOnly 'com.mysql:mysql-connector-j' // MySQL 데이터베이스 연동용 드라이버
@@ -40,7 +42,7 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher' // (중복) JUnit 플랫폼 런처
     implementation 'org.springframework.boot:spring-boot-starter-mail' // 이메일 발송 기능 (인증 메일 등)
     implementation 'io.springfox:springfox-boot-starter:3.0.0'  // Swagger (springfox)
-    testImplementation 'com.h2database:h2' // 인메모리 DB
+//    testImplementation 'com.h2database:h2' // 인메모리 DB
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'io.github.cdimascio:dotenv-java:2.2.4'  //.env
 

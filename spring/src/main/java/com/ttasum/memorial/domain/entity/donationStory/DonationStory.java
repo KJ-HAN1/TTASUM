@@ -68,11 +68,18 @@ public class DonationStory {
             columnDefinition = "varchar(1) default 'N'", nullable = false)
     private String delFlag = "N";
 
+    @Column(name = "letter_paper", nullable = false)
+    private Integer letterPaper;
+
+    @Column(name = "letter_font", nullable = false)
+    private Integer letterFont;
+
     @Builder
     public DonationStory(String areaCode, String title, String donorName,
                          String passcode, String writer, String anonymityFlag,
                          Integer readCount, String contents, String fileName,
-                         String originalFileName, String writerId, String modifierId) {
+                         String originalFileName, String writerId, String modifierId,
+                         Integer letterPaper, Integer letterFont) {
         this.areaCode = areaCode;
         this.title = title;
         this.donorName = donorName;
@@ -86,6 +93,8 @@ public class DonationStory {
         this.writerId = writerId;
         this.modifierId = modifierId;
         this.delFlag = "N";
+        this.letterPaper = letterPaper != null ? letterPaper : 0;
+        this.letterFont = letterFont != null ? letterFont : 0;
     }
 
     public void increaseReadCount() {
@@ -105,6 +114,8 @@ public class DonationStory {
         this.originalFileName = dto.getOrgFileName();
         this.modifierId = dto.getModifierId();
         this.passcode = dto.getStoryPasscode();
+        this.letterPaper = dto.getLetterPaper();
+        this.letterFont = dto.getLetterFont();
     }
 
     public void delete(String modifierId) {
@@ -113,8 +124,4 @@ public class DonationStory {
         this.modifyTime = LocalDateTime.now();
     }
 
-    // 테스트용으로만 열어두는 패키지 가시성 세터
-    void setStorySeq(Integer storySeq) {
-        this.id = storySeq;
-    }
 }

@@ -2,13 +2,11 @@ package com.ttasum.memorial.exception;
 
 
 import com.ttasum.memorial.dto.common.ApiResponse;
-import com.ttasum.memorial.dto.heavenLetter.response.CommonResultResponseDto;
-import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterCommentResponseDto;
+import com.ttasum.memorial.dto.heavenLetterComment.response.HeavenLetterCommentListResponseDto;
 import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterResponseDto;
 import com.ttasum.memorial.exception.common.badRequest.BadRequestException;
-import com.ttasum.memorial.exception.common.badRequest.CaptchaVerificationFailedException;
+import com.ttasum.memorial.exception.common.conflict.AlreadyDeletedException;
 import com.ttasum.memorial.exception.common.notFound.NotFoundException;
-import com.ttasum.memorial.exception.donationStory.DonationStoryNotFoundException;
 import com.ttasum.memorial.exception.heavenLetter.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -72,51 +70,27 @@ public class GlobalExceptionHandler {
 //    }
     //잘못된 값 전달(비밀번호)
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<HeavenLetterResponseDto> handleIllegalArgumentException(IllegalArgumentException e){
+    public ResponseEntity<HeavenLetterResponseDto> handleIllegalArgumentException(IllegalArgumentException e) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
-                .body(HeavenLetterResponseDto.fail(400,e.getMessage()));
+                .body(HeavenLetterResponseDto.fail(400, e.getMessage()));
+    }
+    // 이미 삭제된 리소스 요청 (409 Conflict)
+    @ExceptionHandler(AlreadyDeletedException.class)
+    public ResponseEntity<ApiResponse> handleAlreadyDeleted(AlreadyDeletedException ex) {
+        log.info("이미 삭제된 리소스 요청: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(ApiResponse.conflict(ex.getMessage()));
     }
 
     //서버 오류
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<HeavenLetterResponseDto> handleException(Exception e){
+    public ResponseEntity<HeavenLetterResponseDto> handleException(Exception e) {
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(HeavenLetterResponseDto.fail(500,"서버 내부 오류가 발생했습니다"));
-    }
-    // HeavenLetter - 편지 조회 실패 (404 Not Found)
-    @ExceptionHandler(HeavenLetterNotFoundException.class)
-    public ResponseEntity<HeavenLetterResponseDto> handleLetterNotFound(HeavenLetterNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(HeavenLetterResponseDto.fail(404, ex.getMessage()));
+                .body(HeavenLetterResponseDto.fail(500, "서버 내부 오류가 발생했습니다"));
+
     }
 
-    // HeavenLetter - 비밀번호 인증 실패 (400 Bad Request)
-    @ExceptionHandler(InvalidPasswordException.class)
-    public ResponseEntity<CommonResultResponseDto> handleInvalidPassword(InvalidPasswordException ex) {
-        return ResponseEntity.badRequest()
-                .body(CommonResultResponseDto.fail(ex.getMessage()));
-    }
-    // HeavenLetter - 댓글과 편지 번호 불일치 (409 Conflict)
-    @ExceptionHandler(HeavenLetterCommentMismatchException.class)
-    public ResponseEntity<HeavenLetterCommentResponseDto> handleCommentMismatch(HeavenLetterCommentMismatchException ex) {
-        return ResponseEntity
-                .status(HttpStatus.CONFLICT)
-                .body(HeavenLetterCommentResponseDto.fail(409, ex.getMessage()));
-    }
-    // HeavenLetter - 해당 댓글 없음 (404 Conflict)
-    @ExceptionHandler(HeavenLetterCommentNotFoundException.class)
-    public ResponseEntity<HeavenLetterCommentResponseDto> handleCommentNotFound(HeavenLetterCommentNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(HeavenLetterCommentResponseDto.fail(404, ex.getMessage()));
-    }
-    // HeavenLetter - 기증자 정보 없음 (404 Not Found)
-    @ExceptionHandler(MemorialNotFoundException.class)
-    public ResponseEntity<HeavenLetterResponseDto> handleMemorialNotFound(MemorialNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(HeavenLetterResponseDto.fail(404, ex.getMessage()));
-    }
 
 }
-

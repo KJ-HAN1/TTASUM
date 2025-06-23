@@ -44,6 +44,7 @@ public class DbLogAppender extends AppenderBase<ILoggingEvent> {
             addError("DB 연결 실패", e);
         }
     }
+
     //db 데이터 삽입
 
     @Override
