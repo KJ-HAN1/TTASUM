@@ -25,7 +25,7 @@
     <!-- 모든로그는 console, file 저장   -->
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="FILE"/>
+<!--        <appender-ref ref="FILE"/>-->
     </root>
 
     <!-- AOP 관련 로그만 DB로 저장 -->

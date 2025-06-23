@@ -5,12 +5,17 @@ import com.ttasum.memorial.dto.common.ApiResponse;
 import com.ttasum.memorial.dto.heavenLetter.response.CommonResultResponseDto;
 import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterCommentResponseDto;
 import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterResponseDto;
+import com.ttasum.memorial.exception.common.conflict.AlreadyDeletedException;
 import com.ttasum.memorial.exception.common.badRequest.BadRequestException;
 import com.ttasum.memorial.exception.common.badRequest.CaptchaVerificationFailedException;
 import com.ttasum.memorial.exception.common.notFound.NotFoundException;
+import com.ttasum.memorial.exception.common.serverError.FileStorageException;
 import com.ttasum.memorial.exception.donationStory.DonationStoryNotFoundException;
 import com.ttasum.memorial.exception.heavenLetter.*;
+import com.ttasum.memorial.exception.recipientLetter.RecipientLetterNotFoundException;
+import com.ttasum.memorial.exception.recipientLetter.RecipientOrganNameEmptyException;
 import lombok.extern.slf4j.Slf4j;
+import com.ttasum.memorial.exception.common.badRequest.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -72,19 +77,20 @@ public class GlobalExceptionHandler {
 //    }
     //잘못된 값 전달(비밀번호)
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<HeavenLetterResponseDto> handleIllegalArgumentException(IllegalArgumentException e){
+    public ResponseEntity<HeavenLetterResponseDto> handleIllegalArgumentException(IllegalArgumentException e) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
-                .body(HeavenLetterResponseDto.fail(400,e.getMessage()));
+                .body(HeavenLetterResponseDto.fail(400, e.getMessage()));
     }
 
-    //서버 오류
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<HeavenLetterResponseDto> handleException(Exception e){
-        return ResponseEntity
-                .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(HeavenLetterResponseDto.fail(500,"서버 내부 오류가 발생했습니다"));
-    }
+//    //서버 오류
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<HeavenLetterResponseDto> handleException(Exception e) {
+//        return ResponseEntity
+//                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                .body(HeavenLetterResponseDto.fail(500, "서버 내부 오류가 발생했습니다"));
+//    }
+
     // HeavenLetter - 편지 조회 실패 (404 Not Found)
     @ExceptionHandler(HeavenLetterNotFoundException.class)
     public ResponseEntity<HeavenLetterResponseDto> handleLetterNotFound(HeavenLetterNotFoundException ex) {
@@ -98,6 +104,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest()
                 .body(CommonResultResponseDto.fail(ex.getMessage()));
     }
+
     // HeavenLetter - 댓글과 편지 번호 불일치 (409 Conflict)
     @ExceptionHandler(HeavenLetterCommentMismatchException.class)
     public ResponseEntity<HeavenLetterCommentResponseDto> handleCommentMismatch(HeavenLetterCommentMismatchException ex) {
@@ -105,12 +112,14 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.CONFLICT)
                 .body(HeavenLetterCommentResponseDto.fail(409, ex.getMessage()));
     }
+
     // HeavenLetter - 해당 댓글 없음 (404 Conflict)
     @ExceptionHandler(HeavenLetterCommentNotFoundException.class)
     public ResponseEntity<HeavenLetterCommentResponseDto> handleCommentNotFound(HeavenLetterCommentNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(HeavenLetterCommentResponseDto.fail(404, ex.getMessage()));
     }
+
     // HeavenLetter - 기증자 정보 없음 (404 Not Found)
     @ExceptionHandler(MemorialNotFoundException.class)
     public ResponseEntity<HeavenLetterResponseDto> handleMemorialNotFound(MemorialNotFoundException ex) {
@@ -118,5 +127,28 @@ public class GlobalExceptionHandler {
                 .body(HeavenLetterResponseDto.fail(404, ex.getMessage()));
     }
 
-}
+    // 이미 삭제된 리소스 요청 (409 Conflict)
+    @ExceptionHandler(AlreadyDeletedException.class)
+    public ResponseEntity<ApiResponse> handleAlreadyDeleted(AlreadyDeletedException ex) {
+        log.info("이미 삭제된 리소스 요청: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(ApiResponse.conflict(ex.getMessage()));
+    }
+    //파일 저장 중 예외 발생
+    @ExceptionHandler(FileStorageException.class)
+    public ResponseEntity<ApiResponse> handleFileStorageException(FileStorageException ex){
+        log.info("파일 저장 오류: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(ApiResponse.fail(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage()));
+    }
 
+    //예측하지 못한 예외 처리 (500 Internal Server Error)
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiResponse> handleUnexpectedException(Exception ex) {
+        log.error("서버 내부 오류 발생: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(ApiResponse.serverError());
+
+    }
+
+}

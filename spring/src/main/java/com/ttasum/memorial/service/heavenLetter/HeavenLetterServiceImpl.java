@@ -101,10 +101,13 @@ public class HeavenLetterServiceImpl implements HeavenLetterService {
     @Transactional
     @Override
     public Page<HeavenLetterResponseDto.HeavenLetterListResponse> getAllLetters(Pageable pageable) {
-        return heavenLetterRepository.findAllByDelFlag("N", pageable)
-                .map(letter -> {
-                    Long commentCount = heavenLetterCommentRepository.countByLetterSeq_LetterSeqAndDelFlag(letter.getLetterSeq(), "N");
-                    return HeavenLetterResponseDto.HeavenLetterListResponse.fromEntity(letter, commentCount);
+        return heavenLetterRepository.findAllByDelFlag("N", pageable)  // 1. 존재하는(delflag != false) 인 게시글 모두 찾음
+                .map(heavenLetter -> {  // 찾은 게시글을 돌림(for)
+                    // 2. 돌면서 각각 해당하는 댓글의 개수를 찾음
+                    // countByLetterSeq_LetterSeqAndDelFlag: select count(letter_seq) from table where delFlag == "N"
+                    Long commentCount = heavenLetterCommentRepository.countByLetterSeq_LetterSeqAndDelFlag(heavenLetter.getLetterSeq(), "N");
+                    // 3. 찾은 댓글 카운트 수를 반환하고 다음 HeavenLetter 로 들어가서 반복
+                    return HeavenLetterResponseDto.HeavenLetterListResponse.fromEntity(heavenLetter, commentCount);
                 });
     }
     //수정 인증 (공통)
@@ -201,7 +204,7 @@ public class HeavenLetterServiceImpl implements HeavenLetterService {
                 );
     }
 
-    //이미지 업로드(
+    //이미지 업로드
     // uuid 방식
     @Transactional
     @Override
