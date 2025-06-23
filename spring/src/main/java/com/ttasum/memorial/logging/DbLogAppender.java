@@ -17,16 +17,25 @@ import java.util.Map;
 public class DbLogAppender extends AppenderBase<ILoggingEvent> {
     private Connection connection;
 
-    Dotenv dotenv = Dotenv.load();
-    String dbPassword = dotenv.get("DB_PW");
-
-    // db 연결
     @Override
     public void start() {
+
+        String activeProfile = System.getProperty("spring.profiles.active");
+        if (activeProfile != null && activeProfile.contains("test")) {
+            // 테스트 환경이면 Appender 시작하지 않음
+            addInfo("테스트 환경 감지됨: DbLogAppender 비활성화");
+            return;
+        }
         try {
+            // db 연결
+            Dotenv dotenv = Dotenv.configure()
+                    .ignoreIfMissing()
+                    .load();
+            String dbPassword = dotenv.get("DB_PW");
+
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(
-                    "jdbc:mysql://3.34.178.122:3306/koda_2025?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8",
+                    "jdbc:mysql://13.125.154.31/koda_2025?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8",
                     "root",
                     dbPassword
             );
@@ -35,8 +44,8 @@ public class DbLogAppender extends AppenderBase<ILoggingEvent> {
             addError("DB 연결 실패", e);
         }
     }
-
     //db 데이터 삽입
+
     @Override
     protected void append(ILoggingEvent event) {
         Map<String, String> mdc = event.getMDCPropertyMap();

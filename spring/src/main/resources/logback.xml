@@ -19,17 +19,22 @@
         </encoder>
     </appender>
 
-    <!-- DB 로거: MDC 정보 포함 -->
-    <appender name="DB" class="com.ttasum.memorial.logging.DbLogAppender" />
+    <!-- ✅ test 환경 제외: DB Appender 로드 -->
+    <springProfile name="!test">
+        <!-- DB 로거: MDC 정보 포함 -->
+        <appender name="DB" class="com.ttasum.memorial.logging.DbLogAppender" />
+
+        <!-- AOP 관련 로그만 DB로 저장 -->
+        <logger name="com.ttasum.memorial.aop.logging" level="INFO" additivity="true">
+            <appender-ref ref="DB"/>
+        </logger>
+    </springProfile>
 
     <!-- 모든로그는 console, file 저장   -->
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="FILE"/>
+<!--        <appender-ref ref="FILE"/>-->
     </root>
 
-    <!-- AOP 관련 로그만 DB로 저장 -->
-    <logger name="com.ttasum.memorial.aop.logging" level="INFO" additivity="true">
-        <appender-ref ref="DB"/>
-    </logger>
+
 </configuration>

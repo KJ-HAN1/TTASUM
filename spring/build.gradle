@@ -40,7 +40,7 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher' // (중복) JUnit 플랫폼 런처
     implementation 'org.springframework.boot:spring-boot-starter-mail' // 이메일 발송 기능 (인증 메일 등)
     implementation 'io.springfox:springfox-boot-starter:3.0.0'  // Swagger (springfox)
-//    testImplementation 'com.h2database:h2' // 인메모리 DB
+    testImplementation 'com.h2database:h2' // 인메모리 DB
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'io.github.cdimascio:dotenv-java:2.2.4'  //.env
 
@@ -54,4 +54,10 @@ tasks.named('test') {
 // build.gradle
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
+}
+
+//test환경시 커스텀 어펜더 접근 제한
+test {
+    useJUnitPlatform()
+    systemProperty 'spring.profiles.active', 'test'
 }
