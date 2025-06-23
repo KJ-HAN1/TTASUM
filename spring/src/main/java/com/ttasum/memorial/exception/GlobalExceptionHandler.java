@@ -5,10 +5,7 @@ import com.ttasum.memorial.dto.common.ApiResponse;
 import com.ttasum.memorial.dto.heavenLetter.response.CommonResultResponseDto;
 import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterCommentResponseDto;
 import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterResponseDto;
-import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterCommonResponseDto;
-import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterResponseDto;
-import com.ttasum.memorial.dto.recipientLetter.response.RecipientLetterUpdateResponseDto;
-import com.ttasum.memorial.exception.common.Conflict.AlreadyDeletedException;
+import com.ttasum.memorial.exception.common.conflict.AlreadyDeletedException;
 import com.ttasum.memorial.exception.common.badRequest.BadRequestException;
 import com.ttasum.memorial.exception.common.badRequest.CaptchaVerificationFailedException;
 import com.ttasum.memorial.exception.common.notFound.NotFoundException;
@@ -58,13 +55,6 @@ public class GlobalExceptionHandler {
         log.info("리소스를 찾을 수 없음: {}", ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(ApiResponse.notFound(ex.getMessage()));
-    }
-    // 직접입력 시 장기명 누락 예외 (400)
-    @ExceptionHandler(RecipientOrganNameEmptyException.class)
-    public ResponseEntity<ApiResponse> handleOrganNameEmpty(RecipientOrganNameEmptyException ex) {
-        log.info("직접입력 장기명 누락 예외: {}", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(ApiResponse.badRequest(ex.getMessage()));
     }
 
     // ResponseStatusException 처리
@@ -135,13 +125,6 @@ public class GlobalExceptionHandler {
     public ResponseEntity<HeavenLetterResponseDto> handleMemorialNotFound(MemorialNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(HeavenLetterResponseDto.fail(404, ex.getMessage()));
-    }
-
-    //RecipientLetter - 편지 조회 실패 (404 Not Found)
-    @ExceptionHandler(RecipientLetterNotFoundException.class)
-    public ResponseEntity<RecipientLetterResponseDto> handleRecipientLetterNotFound(RecipientLetterNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(RecipientLetterResponseDto.fail(404, ex.getMessage()));
     }
 
     // 이미 삭제된 리소스 요청 (409 Conflict)

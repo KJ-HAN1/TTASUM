@@ -1,29 +1,23 @@
 package com.ttasum.memorial.service.recipientLetter;
 
-import com.ttasum.memorial.domain.entity.heavenLetter.HeavenLetterComment;
+
 import com.ttasum.memorial.domain.entity.recipientLetter.RecipientLetter;
 import com.ttasum.memorial.domain.entity.recipientLetter.RecipientLetterComment;
 import com.ttasum.memorial.domain.repository.recipientLetter.RecipientLetterCommentRepository;
 import com.ttasum.memorial.domain.repository.recipientLetter.RecipientLetterRepository;
-import com.ttasum.memorial.dto.common.ApiResponse;
-import com.ttasum.memorial.dto.heavenLetter.request.CommonCommentRequestDto;
-import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterCommentResponseDto;
 import com.ttasum.memorial.dto.recipientLetterComment.request.RecipientLetterCommentDeleteRequestDto;
 import com.ttasum.memorial.dto.recipientLetterComment.request.RecipientLetterCommentRequestDto;
 import com.ttasum.memorial.dto.recipientLetterComment.request.RecipientLetterCommentUpdateRequestDto;
 import com.ttasum.memorial.dto.recipientLetterComment.request.RecipientLetterCommentVerifyRequestDto;
-import com.ttasum.memorial.exception.common.Conflict.AlreadyDeletedException;
+import com.ttasum.memorial.exception.common.conflict.AlreadyDeletedException;
 import com.ttasum.memorial.exception.common.badRequest.InvalidPasscodeException;
 import com.ttasum.memorial.exception.common.badRequest.PathVariableMismatchException;
 import com.ttasum.memorial.exception.common.notFound.NotFoundException;
-import com.ttasum.memorial.exception.heavenLetter.HeavenLetterCommentMismatchException;
-import com.ttasum.memorial.exception.heavenLetter.HeavenLetterCommentNotFoundException;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 @Service
 @RequiredArgsConstructor

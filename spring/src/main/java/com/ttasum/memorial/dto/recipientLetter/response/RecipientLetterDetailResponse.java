@@ -3,7 +3,6 @@ package com.ttasum.memorial.dto.recipientLetter.response;
 import com.ttasum.memorial.domain.entity.recipientLetter.RecipientLetter;
 import com.ttasum.memorial.domain.enums.OrganCode;
 import com.ttasum.memorial.dto.recipientLetterComment.response.RecipientLetterCommentListResponseDto;
-//import com.ttasum.memorial.util.OrganCodeUtil;
 import com.ttasum.memorial.util.NameMaskUtil;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,6 +32,8 @@ public class RecipientLetterDetailResponse {
     private String letterContents;
     private String fileName;
     private String orgFileName;
+    private int letterPaper;
+    private int letterFont;
     private LocalDateTime writeTime;
     private String writerId;
     private LocalDateTime modifyTime;
@@ -57,6 +58,8 @@ public class RecipientLetterDetailResponse {
         this.letterContents = recipientLetter.getLetterContents();
         this.fileName = recipientLetter.getFileName();
         this.orgFileName = recipientLetter.getOrgFileName();
+        this.letterPaper = recipientLetter.getLetterPaper();
+        this.letterFont = recipientLetter.getLetterFont();
         this.writeTime = recipientLetter.getWriteTime();
         this.writerId = recipientLetter.getWriterId();
         this.modifyTime = recipientLetter.getModifyTime();

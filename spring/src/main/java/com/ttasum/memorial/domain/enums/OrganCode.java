@@ -35,24 +35,7 @@ public enum OrganCode {
     public String getName() {
         return name;
     }
-//    //코드값에서 enum 변환
-//    public static OrganCode fromCode(String code) {
-//        for (OrganCode organCode : values()) {
-//            if (organCode.code.equalsIgnoreCase(code)) {
-//                return organCode;
-//            }
-//        }
-//        throw new IllegalArgumentException("존재하지 않는 OrganCode 코드: " + code);
-//    }
-//    //장기명에서 enum 변환
-//    public static OrganCode fromName(String name) {
-//        for (OrganCode organCode : values()) {
-//            if (organCode.name.equalsIgnoreCase(name)) {
-//                return organCode;
-//            }
-//        }
-//        throw new IllegalArgumentException("존재하지 않는 OrganCode 장기명: " + name);
-//    }
+
     //검색용 변환
     public static Optional<OrganCode> findByName(String name) {
         for (OrganCode organCode : values()) {

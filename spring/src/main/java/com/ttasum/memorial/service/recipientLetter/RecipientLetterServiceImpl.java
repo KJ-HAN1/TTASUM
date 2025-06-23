@@ -1,26 +1,19 @@
 package com.ttasum.memorial.service.recipientLetter;
 
 
-import com.ttasum.memorial.domain.entity.heavenLetter.HeavenLetter;
 import com.ttasum.memorial.domain.entity.recipientLetter.RecipientLetter;
 import com.ttasum.memorial.domain.enums.OrganCode;
 import com.ttasum.memorial.domain.repository.recipientLetter.RecipientLetterCommentRepository;
 import com.ttasum.memorial.domain.repository.recipientLetter.RecipientLetterRepository;
-import com.ttasum.memorial.dto.common.ApiResponse;
-import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterResponseDto;
 import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterRequestDto;
 import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterUpdateRequestDto;
 import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterVerifyRequestDto;
 import com.ttasum.memorial.dto.recipientLetter.response.*;
-import com.ttasum.memorial.exception.common.Conflict.AlreadyDeletedException;
+import com.ttasum.memorial.exception.common.conflict.AlreadyDeletedException;
 import com.ttasum.memorial.exception.common.badRequest.InvalidPasscodeException;
 import com.ttasum.memorial.exception.common.badRequest.PathVariableMismatchException;
 import com.ttasum.memorial.exception.common.notFound.NotFoundException;
 import com.ttasum.memorial.exception.common.serverError.FileStorageException;
-import com.ttasum.memorial.exception.heavenLetter.InvalidPasswordException;
-//import com.ttasum.memorial.util.OrganCodeUtil;
-//import com.ttasum.memorial.util.OrganResult;
-import com.ttasum.memorial.exception.recipientLetter.RecipientInvalidOrganCodeException;
 import com.ttasum.memorial.exception.recipientLetter.RecipientOrganNameEmptyException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -39,7 +32,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.stream.Collectors;
+
 
 @Service
 @RequiredArgsConstructor
@@ -54,17 +47,11 @@ public class RecipientLetterServiceImpl implements RecipientLetterService {
     @Override
     public void createLetter(RecipientLetterRequestDto createRequestDto) {
 
-        boolean isValidOrganCode = Arrays.stream(OrganCode.values())
-                .anyMatch(code -> code.getCode().equalsIgnoreCase(createRequestDto.getOrganCode()));
+            if ("ORGAN000".equals(createRequestDto.getOrganCode())
+                    && (createRequestDto.getOrganEtc() == null || createRequestDto.getOrganEtc().isBlank())) {
+                throw new RecipientOrganNameEmptyException();
+            }
 
-        if (!isValidOrganCode) {
-            throw new RecipientInvalidOrganCodeException();
-        }
-
-        if ("ORGAN000".equals(createRequestDto.getOrganCode())
-                && (createRequestDto.getOrganEtc() == null || createRequestDto.getOrganEtc().isBlank())) {
-            throw new RecipientOrganNameEmptyException();
-        }
 
         RecipientLetter recipientLetter = RecipientLetter.builder()
                 .letterWriter(createRequestDto.getLetterWriter())
@@ -77,6 +64,8 @@ public class RecipientLetterServiceImpl implements RecipientLetterService {
                 .letterContents(createRequestDto.getLetterContents())
                 .orgFileName(createRequestDto.getOrgFileName())
                 .fileName(createRequestDto.getFileName())
+                .letterPaper(createRequestDto.getLetterPaper())
+                .letterFont(createRequestDto.getLetterFont())
                 .writerId(createRequestDto.getWriterId())
                 .build();
 
@@ -124,7 +113,7 @@ public class RecipientLetterServiceImpl implements RecipientLetterService {
 
 
         if (!recipientLetter.getLetterPasscode().equals(passcode)) {
-            throw new InvalidPasswordException();
+            throw new InvalidPasscodeException();
         }
 
         return true;
@@ -133,26 +122,31 @@ public class RecipientLetterServiceImpl implements RecipientLetterService {
     /* 편지 수정*/
     @Transactional
     @Override
-    public RecipientLetterUpdateResponseDto updateLetter(Integer letterSeq, RecipientLetterUpdateRequestDto recipientLetterUpdateRequestDto) {
+    public void updateLetter(Integer letterSeq, RecipientLetterUpdateRequestDto updateRequestDto) {
 
-        if (!letterSeq.equals(recipientLetterUpdateRequestDto.getLetterSeq())) {
+        if (!letterSeq.equals(updateRequestDto.getLetterSeq())) {
             throw new PathVariableMismatchException("수혜자 편지 번호와 요청 번호가 일치하지 않습니다.");
         }
 
-        // 리소스(수혜자 편지)를 찾을 수 없음 (404 Not Found)
+        // 2) 레코드 존재 확인
         RecipientLetter recipientLetter = recipientLetterRepository.findById(letterSeq)
                 .orElseThrow(RecipientLetterNotFoundException::new);
 
-        // 비밀번호 인증 실패 시 예외 발생(400)
-        if (!verifyPasscode(letterSeq, recipientLetterUpdateRequestDto.getLetterPasscode())) {
+        // 3) 비밀번호 검증
+        if (!verifyPasscode(letterSeq, updateRequestDto.getLetterPasscode())) {
             throw new InvalidPasscodeException();
         }
 
-        // 편지 내용 수정
-        recipientLetter.updateLetterContents(recipientLetterUpdateRequestDto); // 예: 내부에서 title, contents 세팅
+        // 4) organCode = "ORGAN000" 이면서 organEtc 가 비어있으면 예외
+        if ("ORGAN000".equalsIgnoreCase(updateRequestDto.getOrganCode())
+                && (updateRequestDto.getOrganEtc() == null || updateRequestDto.getOrganEtc().isBlank())) {
+            throw new RecipientOrganNameEmptyException();
+        }
 
-        return RecipientLetterUpdateResponseDto.success();
+        // 5) 실제 수정 메서드 호출
+        recipientLetter.updateLetterContents(updateRequestDto);
     }
+
 
     /* 편지 삭제(soft delete) */
     @Transactional

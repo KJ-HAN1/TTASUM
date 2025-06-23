@@ -34,7 +34,9 @@ public class RecipientLetterController {
             @RequestBody @Valid RecipientLetterRequestDto createRequestDto) {
         recipientLetterService.createLetter(createRequestDto);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.ok(HttpStatus.CREATED.value(), "편지가 성공적으로 등록되었습니다."));
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(ApiResponse.ok(HttpStatus.CREATED.value(), "편지가 성공적으로 등록되었습니다."));
     }
 
     //단건 조회
@@ -51,30 +53,38 @@ public class RecipientLetterController {
             @ModelAttribute CommonPageRequest commonPageRequest) {
 
         Pageable pageable = commonPageRequest.toPageable("letterSeq");
-        Page<RecipientLetterListResponseDto> result = recipientLetterService.getAllLetters(pageable);
-        return ResponseEntity.status(HttpStatus.OK).body(result);
+        Page<RecipientLetterListResponseDto> listResponse = recipientLetterService.getAllLetters(pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(listResponse);
     }
+
     //편지 수정 인증
     @PostMapping("/{letterSeq}/verifyPwd")
-    public ResponseEntity<RecipientLetterCommonResponseDto> verifyPasscode(
+    public ResponseEntity<ApiResponse> verifyPasscode(
             @PathVariable Integer letterSeq,
             @RequestBody @Valid RecipientLetterVerifyRequestDto recipientLetterVerifyRequestDto) {
 
         recipientLetterService.verifyPasscode(letterSeq, recipientLetterVerifyRequestDto.getLetterPasscode());
-        return ResponseEntity.status(HttpStatus.OK).body(RecipientLetterCommonResponseDto.success("비밀번호가 일치합니다."));
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ApiResponse.ok(HttpStatus.OK.value(), "비밀번호가 일치합니다."));
     }
-    //편지 수정 (letterUpdate.html)
+
+    //편지 수정
     @PatchMapping("/{letterSeq}")
-    public ResponseEntity<RecipientLetterUpdateResponseDto> updateLetter(
+    public ResponseEntity<ApiResponse> updateLetter(
             //값을 자바 변수로 맵핑
             @PathVariable Integer letterSeq,
             @RequestBody @Valid RecipientLetterUpdateRequestDto recipientLetterUpdateRequestDto) {
 
-        RecipientLetterUpdateResponseDto recipientLetterUpdateResponseDto = recipientLetterService.updateLetter(letterSeq,recipientLetterUpdateRequestDto);
+        recipientLetterService.updateLetter(letterSeq,recipientLetterUpdateRequestDto);
 
         // return "redirect://";
-        return ResponseEntity.status(HttpStatus.OK).body(recipientLetterUpdateResponseDto);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ApiResponse.ok(HttpStatus.OK.value(), "편지가 성공적으로 등록되었습니다."));
     }
+
     //편지 삭제
     @DeleteMapping("/{letterSeq}")
     public ResponseEntity<ApiResponse> deleteLetter(
@@ -87,6 +97,7 @@ public class RecipientLetterController {
                 .status(HttpStatus.OK)
                 .body(ApiResponse.ok(HttpStatus.OK.value(), "편지가 정상적으로 삭제 되었습니다."));
     }
+
     //검색
     @GetMapping("/search")
     public ResponseEntity<Page<RecipientLetterListResponseDto>> searchLetters(
@@ -96,9 +107,9 @@ public class RecipientLetterController {
 
         // 한글 타입을 영문으로 매핑
         type = switch (type) {
-            case "제목" -> "title";
-            case "내용" -> "contents";
-            case "전체" -> "all";
+            case "제목", "title" -> "title";
+            case "내용", "contents" -> "contents";
+            case "전체", "all" -> "all";
             default -> "all";
         };
 
@@ -114,6 +125,4 @@ public class RecipientLetterController {
         List<Map<String, String>> resultList = recipientLetterService.uploadFiles(files, "recipientLetter");
         return ResponseEntity.ok(resultList);
     }
-
-
 }

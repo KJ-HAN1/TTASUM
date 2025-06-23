@@ -31,7 +31,7 @@ public interface RecipientLetterService {
     boolean verifyPasscode(Integer letterSeq, String passcode);
 
     /* 편지 수정*/
-    RecipientLetterUpdateResponseDto updateLetter(Integer letterSeq, RecipientLetterUpdateRequestDto updateRequestDto);
+    void updateLetter(Integer letterSeq, RecipientLetterUpdateRequestDto updateRequestDto);
 
     /* 편지 삭제(soft delete) */
     void deleteLetter(Integer letterSeq, RecipientLetterVerifyRequestDto deleteRequest);

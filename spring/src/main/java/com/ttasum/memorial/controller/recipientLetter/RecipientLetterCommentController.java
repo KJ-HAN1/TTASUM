@@ -1,14 +1,10 @@
 package com.ttasum.memorial.controller.recipientLetter;
 
 import com.ttasum.memorial.dto.common.ApiResponse;
-import com.ttasum.memorial.dto.heavenLetter.request.CommonCommentRequestDto;
-import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterCommentResponseDto;
 import com.ttasum.memorial.dto.recipientLetterComment.request.RecipientLetterCommentDeleteRequestDto;
 import com.ttasum.memorial.dto.recipientLetterComment.request.RecipientLetterCommentRequestDto;
 import com.ttasum.memorial.dto.recipientLetterComment.request.RecipientLetterCommentUpdateRequestDto;
 import com.ttasum.memorial.dto.recipientLetterComment.request.RecipientLetterCommentVerifyRequestDto;
-import com.ttasum.memorial.exception.heavenLetter.HeavenLetterCommentMismatchException;
-import com.ttasum.memorial.service.heavenLetter.HeavenLetterCommentService;
 import com.ttasum.memorial.service.recipientLetter.RecipientLetterCommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

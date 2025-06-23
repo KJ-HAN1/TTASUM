@@ -64,6 +64,12 @@ public class RecipientLetter {
     @Column(name = "org_file_name", length = 600)
     private String orgFileName;
 
+    @Column(name = "letter_paper", nullable = false)
+    private int letterPaper;
+
+    @Column(name = "letter_font", nullable = false)
+    private int letterFont;
+
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "write_time", nullable = false)
     private LocalDateTime writeTime;
@@ -119,6 +125,8 @@ public class RecipientLetter {
         this.storyTitle = recipientLetterUpdateRequestDto.getStoryTitle();
         this.letterContents = recipientLetterUpdateRequestDto.getLetterContents();
         this.orgFileName = recipientLetterUpdateRequestDto.getOrgFileName();
+        this.letterPaper = recipientLetterUpdateRequestDto.getLetterPaper();
+        this.letterFont  = recipientLetterUpdateRequestDto.getLetterFont();
         this.modifyTime = LocalDateTime.now();
     }
 
