@@ -11,6 +11,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./spring/gradlew
+
       - uses: actions/setup-java@v3
         with:
           distribution: temurin
@@ -19,9 +23,9 @@ jobs:
       - name: Build WAR
         working-directory: ./spring
         # 임시로 test 빼고 빌드
-        run: ./gradlew clean bootWar -x test
+#        run: ./gradlew clean bootWar -x test
         # test 포함 코드
-#        run: ./gradlew clean bootWar
+        run: ./gradlew clean bootWar
 
       - name: Rename war file to ROOT.war
         working-directory: ./spring
