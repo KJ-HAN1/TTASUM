@@ -27,15 +27,19 @@ public class DbLogAppender extends AppenderBase<ILoggingEvent> {
             return;
         }
         try {
-            // db 연결
-            Dotenv dotenv = Dotenv.configure()
-                    .ignoreIfMissing()
-                    .load();
-            String dbPassword = dotenv.get("DB_PW");
+            // db 연결 로컬용
+//            Dotenv dotenv = Dotenv.configure()
+//                    .ignoreIfMissing()
+//                    .load();
+//            String dbPassword = dotenv.get("DB_PW");
+
+            // 서버용 getenv -> 서버 톹캣 setenv파일에서 get
+            String dbPassword = System.getenv("DB_PW");
+
 
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(
-                    "jdbc:mysql://13.125.154.31/koda_2025?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8",
+                    "jdbc:mysql://13.125.154.31:3306/koda_2025?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8",
                     "root",
                     dbPassword
             );
