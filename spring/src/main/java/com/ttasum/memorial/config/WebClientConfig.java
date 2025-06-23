@@ -18,7 +18,7 @@ public class WebClientConfig implements WebMvcConfigurer {
     // CORS 설정
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://127.0.0.1:5501") // TODO: 프론트엔드 서버 추가해야 함
+                .allowedOrigins("http://koda.elementsoft.biz")
                 .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .maxAge(3600); // 초
