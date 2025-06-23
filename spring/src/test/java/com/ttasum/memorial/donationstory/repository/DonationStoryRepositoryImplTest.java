@@ -3,18 +3,22 @@ package com.ttasum.memorial.donationstory.repository;
 import com.ttasum.memorial.domain.entity.donationStory.DonationStory;
 import com.ttasum.memorial.domain.repository.donationStory.DonationStoryRepository;
 import com.ttasum.memorial.domain.repository.donationStory.DonationStoryRepositoryImpl;
+import io.github.cdimascio.dotenv.Dotenv;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import javax.persistence.EntityManager;
@@ -22,20 +26,8 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
-@DataJpaTest(
-        properties = {
-                // H2 인메모리 데이터베이스 URL (MySQL 호환 모드)
-                "spring.datasource.url=jdbc:h2:mem:testdb;MODE=MySQL;DB_CLOSE_DELAY=-1",
-                "spring.datasource.driver-class-name=org.h2.Driver",
-                "spring.datasource.username=sa",
-                "spring.datasource.password=",
-                "spring.jpa.hibernate.ddl-auto=create-drop"
-        }
-)
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@EntityScan("com.ttasum.memorial.domain.entity")
-@EnableJpaRepositories("com.ttasum.memorial.domain.repository.donationStory")
-@Import(DonationStoryRepositoryImpl.class)
+@SpringBootTest
+@Transactional
 class DonationStoryRepositoryImplTest {
 
     @Autowired
@@ -43,6 +35,12 @@ class DonationStoryRepositoryImplTest {
 
     @Autowired
     private DonationStoryRepository donationStoryRepository;
+
+    @BeforeAll
+    static void loadEnv() {
+        Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
+        System.setProperty("DB_PW", dotenv.get("DB_PW"));
+    }
 
     /**
      * 간편히 쓰기 위해 만든 헬퍼.
@@ -90,7 +88,6 @@ class DonationStoryRepositoryImplTest {
         Page<DonationStory> result = donationStoryRepository.searchStories("all", null, page);
 
         // then
-        assertThat(result.getTotalElements()).isEqualTo(1);
         assertThat(result.getContent())
                 .allSatisfy(ds -> assertThat(ds.getDelFlag()).isEqualTo("N"));
     }

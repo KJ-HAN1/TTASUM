@@ -47,11 +47,11 @@ class MemorialControllerTest {
     void getStories_DefaultPaging_Success() throws Exception {
         // given
         var dto1 = new MemorialResponseDto(
-                1, "홍길동", "M", 45, "20230101", 2L,
+                1, "홍길동", "Y","M", 45, "20230101", 2L,
                 LocalDate.now().minusDays(2)
         );
         var dto2 = new MemorialResponseDto(
-                2, "김철수", "F", 50, "20230202", 0L,
+                2, "김철수", "N","F", 50, "20230202", 0L,
                 LocalDate.now().minusDays(2)
         );
         Page<MemorialResponseDto> page = new PageImpl<>(
@@ -68,7 +68,7 @@ class MemorialControllerTest {
         mvc.perform(get("/remembrance"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray())
-                .andExpect(jsonPath("$.content[0].donorName").value("홍길동"))
+                .andExpect(jsonPath("$.content[0].donorName").value("홍*동"))
                 .andExpect(jsonPath("$.totalElements").value(2));
     }
 

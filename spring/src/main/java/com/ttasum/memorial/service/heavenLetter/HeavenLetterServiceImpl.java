@@ -10,8 +10,10 @@ import com.ttasum.memorial.dto.heavenLetter.request.HeavenLetterVerifyRequestDto
 import com.ttasum.memorial.dto.heavenLetter.request.MemorialSearchRequestDto;
 import com.ttasum.memorial.dto.heavenLetter.response.*;
 import com.ttasum.memorial.domain.repository.heavenLetter.HeavenLetterRepository;
+import com.ttasum.memorial.exception.common.badRequest.InvalidPasscodeException;
+import com.ttasum.memorial.exception.common.badRequest.PathVariableMismatchException;
+import com.ttasum.memorial.exception.common.conflict.AlreadyDeletedException;
 import com.ttasum.memorial.exception.heavenLetter.HeavenLetterNotFoundException;
-import com.ttasum.memorial.exception.heavenLetter.InvalidPasswordException;
 import com.ttasum.memorial.exception.heavenLetter.MemorialNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -39,10 +41,10 @@ public class HeavenLetterServiceImpl implements HeavenLetterService {
     private final HeavenLetterCommentRepository heavenLetterCommentRepository;
     private final Logger log = LoggerFactory.getLogger(HeavenLetterServiceImpl.class);
 
-    //등록
+    /* 편지 등록 */
     @Transactional
     @Override
-    public HeavenLetterResponseDto createLetter(HeavenLetterRequestDto heavenLetterRequestDto) {
+    public void createLetter(HeavenLetterRequestDto heavenLetterRequestDto) {
 
         Memorial memorial = null;
         if (heavenLetterRequestDto.getDonateSeq() != null) {
@@ -61,14 +63,15 @@ public class HeavenLetterServiceImpl implements HeavenLetterService {
                 .letterContents(heavenLetterRequestDto.getLetterContents())
                 .fileName(heavenLetterRequestDto.getFileName())
                 .orgFileName(heavenLetterRequestDto.getOrgFileName())
+                .letterPaper(heavenLetterRequestDto.getLetterPaper())
+                .letterFont(heavenLetterRequestDto.getLetterFont())
                 .writerId(heavenLetterRequestDto.getWriterId())
                 .build();
 
         heavenLetterRepository.save(heavenLetter);
-
-        return HeavenLetterResponseDto.success();
     }
-    //추모관에서 등록하는 편지폼
+
+    /* 추모관 편지 등록 */
     @Override
     @Transactional(readOnly = true)
     public HeavenLetterFormResponseDto getFormWithDonor(Integer donateSeq) {
@@ -82,82 +85,110 @@ public class HeavenLetterServiceImpl implements HeavenLetterService {
                 .build();
     }
 
-    //조회 - 단건
+    /* 편지 상세 조회 (댓글 포함) */
     @Transactional
     @Override
-    public HeavenLetterResponseDto.HeavenLetterDetailResponse getLetterById(Integer letterSeq) {
+    public HeavenLetterDetailResponseDto getLetterById(Integer letterSeq) {
 
-        HeavenLetter heavenLetter = heavenLetterRepository.findByLetterSeqAndDelFlag(letterSeq, "N")
+        HeavenLetter heavenLetter = heavenLetterRepository
+                .findByLetterSeqAndDelFlag(letterSeq, "N")
                 .orElseThrow(HeavenLetterNotFoundException::new);
 
         //커맨드 메서드 사용
         heavenLetter.increaseReadCount();
 
         //엔티티 -> DTO
-        return new HeavenLetterResponseDto.HeavenLetterDetailResponse(heavenLetter);
+        return new HeavenLetterDetailResponseDto(heavenLetter);
     }
 
-    //페이징처리
+    /* 편지 전체 조회 */
     @Transactional
     @Override
-    public Page<HeavenLetterResponseDto.HeavenLetterListResponse> getAllLetters(Pageable pageable) {
-        return heavenLetterRepository.findAllByDelFlag("N", pageable)
+    public Page<HeavenLetterListResponseDto> getAllLetters(Pageable pageable) {
+        return heavenLetterRepository
+                .findAllByDelFlag("N", pageable)
                 .map(letter -> {
-                    Long commentCount = heavenLetterCommentRepository.countByLetterSeq_LetterSeqAndDelFlag(letter.getLetterSeq(), "N");
-                    return HeavenLetterResponseDto.HeavenLetterListResponse.fromEntity(letter, commentCount);
+                    Long commentCount = heavenLetterCommentRepository
+                            .countByLetterSeq_LetterSeqAndDelFlag(
+                                    letter.getLetterSeq(), "N");
+                    return HeavenLetterListResponseDto.fromEntity(letter, commentCount);
                 });
     }
-    //수정 인증 (공통)
+    /* 편지 수정/삭제 전 비밀번호 검증 */
     @Transactional(readOnly = true)
     @Override
     public boolean verifyPasscode(Integer letterSeq, String passcode) {
+
         HeavenLetter heavenLetter = heavenLetterRepository.findById(letterSeq)
                 .orElseThrow(HeavenLetterNotFoundException::new);
 
         if (!heavenLetter.getLetterPasscode().equals(passcode)) {
-            throw new InvalidPasswordException();
+            throw new InvalidPasscodeException();
         }
-
         return true;
     }
 
-    //수정
+    /* 편지 수정*/
     @Transactional
     @Override
-    public HeavenLetterUpdateResponsDto updateLetter(HeavenLetterUpdateRequestDto heavenLetterUpdateRequestDto) {
-        HeavenLetter heavenLetterUpdate = heavenLetterRepository.findById(heavenLetterUpdateRequestDto.getLetterSeq()).get();
+    public void updateLetter(Integer letterSeq,HeavenLetterUpdateRequestDto heavenLetterUpdateRequestDto) {
 
-        //기증자 외래키 변경(연결만 바꿔줌)
-        Memorial memorial = memorialRepository.findById(heavenLetterUpdateRequestDto.getDonateSeq()).get();
+        if (!letterSeq.equals(heavenLetterUpdateRequestDto.getLetterSeq())) {
+            throw new PathVariableMismatchException("하늘나라 편지 번호와 요청 번호가 일치하지 않습니다.");
+        }
+
+        HeavenLetter heavenLetterUpdate = heavenLetterRepository.findById(letterSeq)
+                .orElseThrow(HeavenLetterNotFoundException::new);
+
+        if ("Y".equals(heavenLetterUpdate.getDelFlag())) {
+            throw new AlreadyDeletedException("이미 삭제된 수혜자 편지입니다.");
+        }
+
+        if (!verifyPasscode(letterSeq, heavenLetterUpdateRequestDto.getLetterPasscode())) {
+            throw new InvalidPasscodeException();
+        }
+
+        Memorial memorial = null;
+        if (heavenLetterUpdateRequestDto.getDonateSeq() != null) {
+            memorial = memorialRepository.findById(heavenLetterUpdateRequestDto.getDonateSeq())
+                    .orElseThrow(MemorialNotFoundException::new);
+        }
 
         //내용수정
         heavenLetterUpdate.updateLetterContents(heavenLetterUpdateRequestDto, memorial);
-        //응답 반환
-        return HeavenLetterUpdateResponsDto.success();
 
     }
 
     //삭제
     @Transactional
     @Override
-    public CommonResultResponseDto deleteLetter(HeavenLetterVerifyRequestDto deleteRequest) {
+    public void deleteLetter(Integer letterSeq,HeavenLetterVerifyRequestDto deleteRequest) {
 
-        //비밀번호 인증
-        this.verifyPasscode(deleteRequest.getLetterSeq(), deleteRequest.getLetterPasscode());
-
-        HeavenLetter heavenLetter = heavenLetterRepository.findById(deleteRequest.getLetterSeq())
+        // 경로와 본문 값 불일치 (400 Bad Request)
+        if (!letterSeq.equals(deleteRequest.getLetterSeq())) {
+            throw new PathVariableMismatchException("하늘나라 편지 번호와 요청 번호가 일치하지 않습니다.");
+        }
+        // 리소스(수혜자 편지)를 찾을 수 없음 (404 Not Found)
+        HeavenLetter heavenLetter = heavenLetterRepository.findById(letterSeq)
                 .orElseThrow(HeavenLetterNotFoundException::new);
 
-        //소프트 삭제 커멘드 사용
+        // 비밀번호 인증 실패 시 예외 발생(400)
+        if (!verifyPasscode(letterSeq, deleteRequest.getLetterPasscode())) {
+            throw new InvalidPasscodeException();
+        }
+
+        // 이미 삭제된 리소스에 대한 요청 (409 Conflict)
+        if ("Y".equals(heavenLetter.getDelFlag())) {
+            throw new AlreadyDeletedException("이미 삭제된 수혜자 편지입니다.");
+        }
+
+        // 5. 삭제 처리
         heavenLetter.softDelete();
-
-        return CommonResultResponseDto.success("편지가 정상적으로 삭제 되었습니다.");
     }
-
     //검색
     @Transactional(readOnly = true)
     @Override
-    public Page<HeavenLetterResponseDto.HeavenLetterListResponse> searchLetters(String type, String keyword, Pageable pageable) {
+    public Page<HeavenLetterListResponseDto> searchLetters(String type, String keyword, Pageable pageable) {
 
 
         log.info("[HeavenLetter 검색] type={}, keyword={}, page={}, size={}",
@@ -176,7 +207,7 @@ public class HeavenLetterServiceImpl implements HeavenLetterService {
         Page<HeavenLetter> result = heavenLetterRepository.findAll(spec, pageable);
         log.info("[검색 결과] 총 건수: {}", result.getTotalElements());
 
-        return result.map(HeavenLetterResponseDto.HeavenLetterListResponse::fromEntity);
+        return result.map(HeavenLetterListResponseDto::fromEntity);
     }
 
     private Specification<HeavenLetter> notDeleted() {
@@ -258,32 +289,38 @@ public class HeavenLetterServiceImpl implements HeavenLetterService {
 //    }
 
     //기증자 검색
-    /**
-     * type:
-     * "name"  → donorName 검색
-     * "from"  → donateDate ≥ keyword (yyyy-MM-dd)
-     * "to"    → donateDate ≤ keyword (yyyy-MM-dd)
-     * "range" → keyword = "yyyy-MM-dd~yyyy-MM-dd"
-     */
     @Override
     @Transactional(readOnly = true)
+    public Page<MemorialSearchResponseDto> searchDonors(
+            MemorialSearchRequestDto SearchRequest,
+            Pageable pageable) {
 
-    public Page<MemorialSearchResponseDto> searchDonors(MemorialSearchRequestDto memorialSearchRequest, Pageable pageable) {
+        Specification<Memorial> spec = (root, q, cb) ->
+                cb.equal(root.get("delFlag"), "N");
 
-
-        Specification<Memorial> spec = (root, q, cb) -> cb.equal(root.get("delFlag"), "N");
-
-        if (memorialSearchRequest.getDonateName() != null && !memorialSearchRequest.getDonateName().isBlank()) {
+        // 이름 검색
+        if (SearchRequest.getDonateName() != null && !SearchRequest.getDonateName().isBlank()) {
+            String lower = SearchRequest.getDonateName().toLowerCase();
             spec = spec.and((root, q, cb) ->
-                    cb.like(cb.lower(root.get("donorName")), "%" + memorialSearchRequest.getDonateName().toLowerCase() + "%"));
+                    cb.like(cb.lower(root.get("donorName")), "%" + lower + "%"));
         }
-        if (memorialSearchRequest.getStartDate() != null) {
+
+        // 문자열 그대로 >=, <= 비교
+        if (SearchRequest.getStartDate() != null && !SearchRequest.getStartDate().isBlank()) {
             spec = spec.and((root, q, cb) ->
-                    cb.greaterThanOrEqualTo(root.get("donateDate"), memorialSearchRequest.getStartDate()));
+                    cb.greaterThanOrEqualTo(
+                            root.get("donateDate"),
+                            SearchRequest.getStartDate()
+                    )
+            );
         }
-        if (memorialSearchRequest.getEndDate() != null) {
+        if (SearchRequest.getEndDate() != null && !SearchRequest.getEndDate().isBlank()) {
             spec = spec.and((root, q, cb) ->
-                    cb.lessThanOrEqualTo(root.get("donateDate"), memorialSearchRequest.getEndDate()));
+                    cb.lessThanOrEqualTo(
+                            root.get("donateDate"),
+                            SearchRequest.getEndDate()
+                    )
+            );
         }
 
         return memorialRepository.findAll(spec, pageable)
