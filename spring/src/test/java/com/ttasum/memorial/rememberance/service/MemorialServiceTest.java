@@ -98,6 +98,7 @@ class MemorialServiceTest {
                 new MemorialResponseDto(
                         1,
                         "홍길동",
+                        "N",
                         "M",
                         45,
                         "20230601",   // String 타입
@@ -107,6 +108,7 @@ class MemorialServiceTest {
                 new MemorialResponseDto(
                         2,
                         "홍순자",
+                        "N",
                         "F",
                         52,
                         "20230315",

@@ -1,0 +1,60 @@
+name: CD Deploy to GABIA
+
+# main에 머지되면 cd_deploy 실행
+on:
+  push:
+    branches: [main,develop]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./spring/gradlew
+
+      - name: Set DB_PW from Secrets
+        run: echo "DB_PW=${{ secrets.DB_PW }}" >> $GITHUB_ENV
+
+      - uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Build WAR
+        working-directory: ./spring
+        # 임시로 test 빼고 빌드
+#        run: ./gradlew clean bootWar -x test
+        # test 포함 코드
+        run: ./gradlew clean bootWar
+
+      - name: Rename war file to ROOT.war
+        working-directory: ./spring
+        run: |
+          mkdir -p ../deploy
+          cp build/libs/*.war ../deploy/ROOT.war
+
+      - name: Upload WAR to GABIA server
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.GABIA_HOST }}
+          username: ${{ secrets.GABIA_USER }}
+          password: ${{ secrets.GABIA_PASSWORD }}
+          port: 22
+          source: "deploy/ROOT.war"
+          target: "/usr/local/tomcat9_BE/webapps/"
+
+        #war 파일 전송이후 톰캣 restart
+      - name: Restart Tomcat
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.GABIA_HOST }}
+          username: ${{ secrets.GABIA_USER }}
+          password: ${{ secrets.GABIA_PASSWORD }}
+          port: 22
+          script: |
+            bash /usr/local/tomcat9_BE/bin/shutdown.sh
+            sleep 3
+            bash /usr/local/tomcat9_BE/bin/startup.sh

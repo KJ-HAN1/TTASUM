@@ -1,4 +1,6 @@
-### root diractory용 ignore ###
+# Gradle artifacts
+.gradle/
+build/
 
 ### IntelliJ IDEA ###
 .idea
@@ -12,3 +14,4 @@ out/
 *.env
 
 */logs
+*.log
