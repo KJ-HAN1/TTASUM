@@ -3,21 +3,15 @@ package com.ttasum.memorial.service.DonationStory;
 
 import com.ttasum.memorial.domain.entity.DonationStory.DonationStory;
 import com.ttasum.memorial.domain.entity.DonationStory.DonationStoryComment;
-import com.ttasum.memorial.domain.entity.blameText.BlameTextLetter;
 import com.ttasum.memorial.domain.repository.DonationStory.DonationStoryCommentRepository;
 import com.ttasum.memorial.domain.repository.DonationStory.DonationStoryRepository;
-import com.ttasum.memorial.dto.ApiResponse;
 import com.ttasum.memorial.dto.DonationStory.*;
-import com.ttasum.memorial.dto.forbiddenWord.ReviewRequestDto;
 import com.ttasum.memorial.exception.CaptchaVerificationFailedException;
 import com.ttasum.memorial.exception.DonationStory.DonationStoryNotFoundException;
 import com.ttasum.memorial.service.common.CaptchaVerifier;
-import com.ttasum.memorial.service.forbiddenWord.TestReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,17 +33,16 @@ public class DonationStoryService {
     /**
      * 기증후 스토리 등록
      * @param dto 등록 요청용 dto
+     * @return 엔티티 -> dto 변환후 반환
      */
     @Transactional
-    public DonationStory createStory(DonationStoryCreateRequestDto dto){
+    public DonationStoryResponseDto createStory(DonationStoryCreateRequestDto dto){
         if (!captchaVerifier.verifyCaptcha(dto.getCaptchaToken())) {
             throw new CaptchaVerificationFailedException();
         }
-
         DonationStory story = dto.toEntity(); // DB 저장을 위해 Entity로 변환
-        return donationStoryRepository.save(story);
-
-
+        DonationStory saved = donationStoryRepository.save(story);
+        return DonationStoryResponseDto.fromEntity(saved);
     }
 
     /**
@@ -101,14 +94,14 @@ public class DonationStoryService {
      * @param dto 수정 요청 dto
      */
     @Transactional
-    public DonationStory updateStory(Integer storySeq, DonationStoryUpdateRequestDto dto) {
+    public void updateStory(Integer storySeq, DonationStoryUpdateRequestDto dto) {
 
         DonationStory story = donationStoryRepository.findByIdAndDelFlag(storySeq, "N")
                 .orElseThrow(() -> new DonationStoryNotFoundException(storySeq));
 
         // 엔티티 수정 - Dirty Checking 으로 변경 감지
         story.update(dto);
-        return story;
+
         // Dirty Checking 으로 자동 반영
         // donationStoryRepository.save(story);
     }

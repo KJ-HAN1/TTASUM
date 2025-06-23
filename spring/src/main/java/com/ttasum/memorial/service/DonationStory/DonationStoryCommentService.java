@@ -35,14 +35,14 @@ public class DonationStoryCommentService {
      * @return 댓글 id 반환
      */
     @Transactional
-    public DonationStoryComment createComment(Integer storySeq, DonationStoryCommentCreateRequestDto dto) {
+    public int createComment(Integer storySeq, DonationStoryCommentCreateRequestDto dto) {
         if (!captchaVerifier.verifyCaptcha(dto.getCaptchaToken())) {
             throw new CaptchaVerificationFailedException();
         }
         DonationStory story = storyRepository.findByIdAndDelFlag(storySeq, "N")
                 .orElseThrow(() -> new DonationStoryNotFoundException(storySeq));
 
-        return DonationStoryComment.builder()
+        DonationStoryComment comment = DonationStoryComment.builder()
                 .story(story)
                 .writer(dto.getCommentWriter())
                 .passcode(dto.getCommentPasscode())
@@ -50,6 +50,8 @@ public class DonationStoryCommentService {
                 .writerId(null) // 로그인 연동 시 변경
                 .modifierId(null) // 수정자도 임시 값 적용
                 .build();
+
+        return commentRepository.save(comment).getCommentSeq();
     }
 
     /**
@@ -82,13 +84,12 @@ public class DonationStoryCommentService {
      * @param dto 댓글 수정 요청 dto
      */
     @Transactional
-    public DonationStoryComment updateComment(Integer storySeq, Integer commentSeq, DonationStoryCommentUpdateRequestDto dto) {
+    public void updateComment(Integer storySeq, Integer commentSeq, DonationStoryCommentUpdateRequestDto dto) {
         DonationStoryComment comment = commentRepository.findByStory_IdAndCommentSeqAndDelFlag(storySeq, commentSeq,"N")
                 .orElseThrow(() -> new DonationStoryCommentNotFoundException(commentSeq));
 
         // String modifierId = getUserIdFromToken(request); // 비회원이면 anonymous 반환
-        // 로그인 연동 시 수정자 ID로 교체
-        return comment.updateIfPasscodeMatches(dto.getCommentPasscode(), dto.getContents(),null);
+        comment.updateIfPasscodeMatches(dto.getCommentPasscode(), dto.getContents(),null); // 로그인 연동 시 수정자 ID로 교체
     }
 
     // eGov 환경 -> Spring Security + JWT 필터 사용
