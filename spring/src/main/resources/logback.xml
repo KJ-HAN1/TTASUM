@@ -1,0 +1,35 @@
+<configuration>
+    <property name="LOG_FILE" value="logs/application.log"/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 개발중 확인용으로 local file로 저장-->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_FILE}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/application.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread] %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- DB 로거: MDC 정보 포함 -->
+    <appender name="DB" class="com.ttasum.memorial.logging.DbLogAppender" />
+
+    <!-- 모든로그는 console, file 저장   -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+<!--        <appender-ref ref="FILE"/>-->
+    </root>
+
+    <!-- AOP 관련 로그만 DB로 저장 -->
+    <logger name="com.ttasum.memorial.aop.logging" level="INFO" additivity="true">
+        <appender-ref ref="DB"/>
+    </logger>
+</configuration>
