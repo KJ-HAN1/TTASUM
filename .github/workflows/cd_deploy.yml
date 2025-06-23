@@ -3,7 +3,7 @@ name: CD Deploy to GABIA
 # main에 머지되면 cd_deploy 실행
 on:
   push:
-    branches: [main]
+    branches: [main,develop]
 
 jobs:
   deploy:

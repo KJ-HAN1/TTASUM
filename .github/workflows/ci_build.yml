@@ -3,7 +3,7 @@ name: CI Build & Test
 # main에 pr시 ci 동작
 on:
   pull_request:
-    branches: [main]
+    branches: [main,develop]
 
 jobs:
   build:
