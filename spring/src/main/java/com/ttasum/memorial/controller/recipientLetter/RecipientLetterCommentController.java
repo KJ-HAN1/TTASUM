@@ -38,10 +38,11 @@ public class RecipientLetterCommentController {
     // 수정 인증
     @PostMapping("/{commentSeq}/verifyPwd")
     public ResponseEntity<ApiResponse> verifyCommentPasscode(
+            @PathVariable Integer letterSeq,
             @PathVariable Integer commentSeq,
             @RequestBody @Valid RecipientLetterCommentVerifyRequestDto commentVerifyRequest) {
 
-        recipientLetterCommentService.verifyCommentPasscode(commentVerifyRequest, commentSeq);
+        recipientLetterCommentService.verifyCommentPasscode(commentVerifyRequest ,commentSeq);
 
         return ResponseEntity.ok(ApiResponse.ok(HttpStatus.OK.value(), "비밀번호가 일치합니다."));
     }
@@ -50,6 +51,7 @@ public class RecipientLetterCommentController {
     @PatchMapping("/{commentSeq}")
     public ResponseEntity<ApiResponse> updateComment(
             //값을 자바 변수로 맵핑
+            @PathVariable Integer letterSeq,
             @PathVariable Integer commentSeq,
             @RequestBody @Valid RecipientLetterCommentUpdateRequestDto updateCommentRequest) {
 
@@ -60,6 +62,7 @@ public class RecipientLetterCommentController {
     // 댓글 삭제
     @DeleteMapping("/{commentSeq}")
     public ResponseEntity<ApiResponse> deleteComment(
+            @PathVariable Integer letterSeq,
             @PathVariable Integer commentSeq,
             @RequestBody @Valid RecipientLetterCommentDeleteRequestDto deleteRequestDto
     ) {
