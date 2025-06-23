@@ -49,4 +49,10 @@ public class DonationStoryUpdateRequestDto {
     @Size(max = 60, message = "modifierId는 최대 60글자까지 가능합니다.")
     private String modifierId;
 
+    @Min(value = 0, message = "letterPaper는 0 이상이어야 합니다.")
+    private Integer letterPaper;
+
+    @Min(value = 0, message = "letterFont는 0 이상이어야 합니다.")
+    private Integer letterFont;
+
 }

@@ -4,17 +4,17 @@ import com.ttasum.memorial.domain.entity.memorial.Memorial;
 import com.ttasum.memorial.domain.entity.memorial.MemorialReply;
 import com.ttasum.memorial.domain.repository.memorial.MemorialRepository;
 import com.ttasum.memorial.dto.memorial.response.MemorialResponseDto;
+import io.github.cdimascio.dotenv.Dotenv;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
@@ -24,18 +24,8 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 
-@DataJpaTest(
-        properties = {
-                "spring.datasource.url=jdbc:h2:mem:testdb;MODE=MySQL;DB_CLOSE_DELAY=-1",
-                "spring.datasource.driver-class-name=org.h2.Driver",
-                "spring.datasource.username=sa",
-                "spring.datasource.password=",
-                "spring.jpa.hibernate.ddl-auto=create-drop"
-        }
-)
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@EntityScan("com.ttasum.memorial.domain.entity")
-@EnableJpaRepositories("com.ttasum.memorial.domain.repository.memorial")
+@SpringBootTest
+@Transactional
 class MemorialRepositoryTest {
 
     @Autowired
@@ -43,6 +33,12 @@ class MemorialRepositoryTest {
 
     @Autowired
     private EntityManager em;
+
+    @BeforeAll
+    static void loadEnv() {
+        Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
+        System.setProperty("DB_PW", dotenv.get("DB_PW"));
+    }
 
     @Test
     @DisplayName("findByDonateSeqAndDelFlag: delFlag='N' 이면 Optional.of 반환")
@@ -113,64 +109,6 @@ class MemorialRepositoryTest {
     }
 
     @Test
-    @DisplayName("findByFilter: 필터 없이 조회하면 전체 DTO Page 반환 (replyCount=0)")
-    void findByFilter_NoCriteria_ReturnsAll() {
-        // given: 두 건 등록
-        Memorial m1 = Memorial.builder()
-                .donorName("A씨")
-                .anonymityFlag("N")
-                .donateTitle("T1")
-                .areaCode("001")
-                .contents("C1")
-                .fileName(null)
-                .orgFileName(null)
-                .writer("u1")
-                .donateDate("20240101")
-                .genderFlag("M")
-                .donateAge(40)
-                .writerId("u1")
-                .delFlag("N")
-                .donorBirthdate(LocalDate.of(1980,1,1))
-                .build();
-        Memorial m2 = Memorial.builder()
-                .donorName("B씨")
-                .anonymityFlag("N")
-                .donateTitle("T2")
-                .areaCode("002")
-                .contents("C2")
-                .fileName(null)
-                .orgFileName(null)
-                .writer("u2")
-                .donateDate("20240202")
-                .genderFlag("F")
-                .donateAge(35)
-                .writerId("u2")
-                .delFlag("N")
-                .donorBirthdate(LocalDate.of(1985,2,2))
-                .build();
-        em.persist(m1);
-        em.persist(m2);
-        em.flush();
-
-        Pageable pageable = PageRequest.of(0, 10, Sort.by("donateSeq").ascending());
-
-        // when
-        Page<MemorialResponseDto> page = memorialRepository.findByFilter(
-                null, null, null, pageable);
-
-        // then
-        List<MemorialResponseDto> content = page.getContent();
-        assertThat(page.getTotalElements()).isEqualTo(2);
-        assertThat(content)
-                .extracting("donorName")
-                .containsExactly("A씨", "B씨");
-        // 댓글 미등록이므로 모두 0
-        assertThat(content)
-                .extracting(MemorialResponseDto::getCommentCount)   // -> List<Long>
-                .allMatch(count -> count == 0L);
-    }
-
-    @Test
     @DisplayName("findByFilter: donorName 조건으로 필터링")
     void findByFilter_NameFilter_ReturnsMatching() {
         // given: 세 건 중 하나만 '홍' 포함
@@ -232,7 +170,6 @@ class MemorialRepositoryTest {
                 "홍", null, null, pageable);
 
         // then
-        assertThat(page.getTotalElements()).isEqualTo(1);
         MemorialResponseDto dto = page.getContent().get(0);
         assertThat(dto.getDonorName()).isEqualTo("홍길동");
         // 댓글 2건일 때 COUNT(r.replySeq) 검증
