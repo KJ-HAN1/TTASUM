@@ -19,11 +19,9 @@ public class MemorialSearchRequestDto {
     private String donateName;
 
     //시작일 검색
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private LocalDate startDate;
+    private String startDate;
 
     //종료일 검색
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private LocalDate endDate;
+    private String endDate;
 }
 
