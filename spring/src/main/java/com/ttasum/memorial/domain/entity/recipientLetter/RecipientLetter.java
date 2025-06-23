@@ -89,6 +89,7 @@ public class RecipientLetter {
     private String delFlag;
 
     /* 댓글 연관 매핑 */
+    @Builder.Default
     @OneToMany(mappedBy = "letterSeq")
     private List<RecipientLetterComment> comments = new ArrayList<>();
 

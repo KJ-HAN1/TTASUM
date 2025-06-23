@@ -15,7 +15,7 @@ public class MemorialSearchResponseDto {
     private Integer donateAge;
 
     public MemorialSearchResponseDto(Memorial memorial) {
-        this.donateSeq = memorial.getDonateSeq();
+        this.donateSeq = memorial.getId();
         this.donorName  =  NameMaskUtil.maskDonorNameIfAnonymous(
                 memorial.getDonorName(),
                 memorial.getAnonymityFlag()

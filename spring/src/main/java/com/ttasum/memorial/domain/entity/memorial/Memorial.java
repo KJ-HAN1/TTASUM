@@ -67,35 +67,35 @@ public class Memorial extends Story {
     @Column(name = "donate_age")
     private Integer donateAge;
 
-    @Builder.Default
+
     @Column(name = "flower_count")
     private Integer flowerCount;
 
-    @Builder.Default
+
     @Column(name = "love_count")
     private Integer loveCount;
 
-    @Builder.Default
+
     @Column(name = "see_count")
     private Integer seeCount;
 
-    @Builder.Default
+
     @Column(name = "miss_count")
     private Integer missCount;
 
-    @Builder.Default
+
     @Column(name = "proud_count")
     private Integer proudCount;
 
-    @Builder.Default
+
     @Column(name = "hard_count")
     private Integer hardCount;
 
-    @Builder.Default
+
     @Column(name = "sad_count")
     private Integer sadCount;
 
-    @Builder.Default
+
     @ColumnDefault("'N'")
     @Column(name = "del_flag", nullable = false, length = 1)
     private String delFlag = "N";

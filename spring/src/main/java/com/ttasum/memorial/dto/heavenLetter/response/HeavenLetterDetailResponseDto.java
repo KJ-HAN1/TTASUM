@@ -38,11 +38,11 @@ public class HeavenLetterDetailResponseDto {
         private List<HeavenLetterCommentListResponseDto> comments;
 
         public HeavenLetterDetailResponseDto(HeavenLetter heavenLetter) {
-            this.letterSeq = heavenLetter.getLetterSeq();
+            this.letterSeq = heavenLetter.getId();
 //            this.donateSeq = heavenLetter.getDonateSeq().getDonateSeq() != null ? heavenLetter.getDonateSeq().getDonateSeq() : null;
             Memorial memorial = heavenLetter.getDonateSeq();
-            this.donateSeq = (memorial != null && memorial.getDonateSeq() != null)
-                    ? memorial.getDonateSeq()
+            this.donateSeq = (memorial != null && memorial.getId() != null)
+                    ? memorial.getId()
                     : null;
             this.areaCode = heavenLetter.getAreaCode();
             this.letterTitle = heavenLetter.getLetterTitle();
@@ -57,7 +57,7 @@ public class HeavenLetterDetailResponseDto {
             );
             this.anonymityFlag = heavenLetter.getAnonymityFlag();
             this.readCount = heavenLetter.getReadCount();
-            this.letterContents = heavenLetter.getLetterContents();
+            this.letterContents = heavenLetter.getContents();
             this.fileName = heavenLetter.getFileName();
             this.orgFileName = heavenLetter.getOrgFileName();
             this.letterPaper = heavenLetter.getLetterPaper();
