@@ -125,6 +125,8 @@ class DonationStoryControllerTest {
         req.setFileName("test.jpg");
         req.setOrgFileName("test.jpg");
         req.setCaptchaToken("token");
+        req.setLetterFont(1);
+        req.setLetterPaper(1);
 
         // 서비스 동작 스텁 (컨트롤러는 반환값을 응답하지 않습니다)
         BDDMockito.given(donationStoryService.createStory(
@@ -149,6 +151,8 @@ class DonationStoryControllerTest {
         req.setStoryTitle("수정된 제목");
         req.setStoryWriter("test");
         req.setStoryContents("test");
+        req.setLetterFont(1);
+        req.setLetterPaper(1);
 
 
         BDDMockito.doNothing()
