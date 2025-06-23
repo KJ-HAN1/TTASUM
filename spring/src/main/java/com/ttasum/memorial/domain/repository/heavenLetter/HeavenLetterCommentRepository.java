@@ -7,5 +7,6 @@ import java.util.Optional;
 
 public interface HeavenLetterCommentRepository extends JpaRepository<HeavenLetterComment, Integer> {
     Optional<HeavenLetterComment> findByCommentSeqAndDelFlag(int seq, String n);
+    Long countByLetterSeq_LetterSeqAndDelFlag(Integer letterSeq, String delFlag);
 }
 

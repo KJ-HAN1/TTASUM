@@ -9,6 +9,7 @@ import com.ttasum.memorial.dto.donationStoryComment.request.DonationStoryComment
 import com.ttasum.memorial.dto.donationStoryComment.request.DonationStoryCommentUpdateRequestDto;
 import com.ttasum.memorial.dto.donationStoryComment.response.DonationStoryCommentResponseDto;
 import com.ttasum.memorial.exception.common.badRequest.CaptchaVerificationFailedException;
+import com.ttasum.memorial.exception.donationStory.DonationStoryCommentNotFoundException;
 import com.ttasum.memorial.exception.common.badRequest.InvalidCommentPasscodeException;
 import com.ttasum.memorial.exception.donationStory.DonationStoryCommentNotFoundException;
 import com.ttasum.memorial.exception.donationStory.DonationStoryNotFoundException;

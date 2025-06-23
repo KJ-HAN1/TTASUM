@@ -2,9 +2,11 @@ package com.ttasum.memorial.controller.heavenLetter;
 
 import com.ttasum.memorial.domain.entity.heavenLetter.HeavenLetterComment;
 import com.ttasum.memorial.dto.common.ApiResponse;
-import com.ttasum.memorial.dto.heavenLetter.request.CommonCommentRequestDto;
-import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterCommentResponseDto;
-import com.ttasum.memorial.exception.heavenLetter.HeavenLetterCommentMismatchException;
+
+import com.ttasum.memorial.dto.heavenLetterComment.request.HeavenLetterCommentDeleteRequestDto;
+import com.ttasum.memorial.dto.heavenLetterComment.request.HeavenLetterCommentRequestDto;
+import com.ttasum.memorial.dto.heavenLetterComment.request.HeavenLetterCommentUpdateRequestDto;
+import com.ttasum.memorial.dto.heavenLetterComment.request.HeavenLetterCommentVerifyRequestDto;
 import com.ttasum.memorial.service.blameText.BlameTextPersistenceService;
 import com.ttasum.memorial.service.forbiddenWord.TestReviewService;
 import com.ttasum.memorial.service.heavenLetter.HeavenLetterCommentService;
@@ -15,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-import static com.ttasum.memorial.domain.type.BoardType.DONATION;
+
 import static com.ttasum.memorial.domain.type.BoardType.HEAVEN;
 
 @RestController
@@ -29,72 +31,58 @@ public class HeavenLetterCommentController {
 
     //등록
     @PostMapping
-    public ResponseEntity<?> createComment(
-            @RequestBody @Valid CommonCommentRequestDto.CreateCommentRequest createCommentRequest) {
-        HeavenLetterComment comment = heavenLetterCommentService.createComment(createCommentRequest);
+    public ResponseEntity<ApiResponse> createComment(
+            @PathVariable Integer letterSeq,
+            @RequestBody @Valid HeavenLetterCommentRequestDto createCommentRequest) {
+        HeavenLetterComment comment = heavenLetterCommentService.createComment(letterSeq, createCommentRequest);
 
         // 비난글 AI 필터링 추가
         testReviewService.saveCommentFromBlameTable(comment, true, HEAVEN.getType());
 
-        return ResponseEntity.ok().body(ApiResponse.ok(
-                HttpStatus.CREATED.value(),
-                "편지 댓글이 성공적으로 등록되었습니다."
-        ));    }
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(ApiResponse.ok(HttpStatus.CREATED.value(), "편지 댓글이 성공적으로 등록되었습니다."));
+    }
 
     // 수정 인증
     @PostMapping("/{commentSeq}/verifyPwd")
-    public ResponseEntity<HeavenLetterCommentResponseDto.CommentVerifyResponse> verifyCommentPasscode(
+    public ResponseEntity<ApiResponse> verifyCommentPasscode(
+            @PathVariable Integer letterSeq,
             @PathVariable Integer commentSeq,
-            @RequestBody @Valid CommonCommentRequestDto.CommentVerifyRequest commentVerifyRequest) {
+            @RequestBody @Valid HeavenLetterCommentVerifyRequestDto commentVerifyRequest) {
 
-        heavenLetterCommentService.verifyCommentPasscode(commentSeq, commentVerifyRequest.getCommentPasscode());
+        heavenLetterCommentService.verifyCommentPasscode(commentSeq, commentVerifyRequest);
 
-        return ResponseEntity.status(HttpStatus.OK).body(HeavenLetterCommentResponseDto.CommentVerifyResponse.success("비밀번호가 일치합니다."));
+        return ResponseEntity.ok(ApiResponse.ok(HttpStatus.OK.value(), "비밀번호가 일치합니다."));
     }
 
     //댓글 수정
     @PatchMapping("/{commentSeq}")
-    public ResponseEntity<?> updateComment(
+    public ResponseEntity<ApiResponse> updateComment(
             //값을 자바 변수로 맵핑
+            @PathVariable Integer letterSeq,
             @PathVariable Integer commentSeq,
-            @RequestBody @Valid CommonCommentRequestDto.UpdateCommentRequest updateCommentRequest) {
+            @RequestBody @Valid HeavenLetterCommentUpdateRequestDto updateCommentRequest) {
 
-        if (!commentSeq.equals(updateCommentRequest.getCommentSeq())) {
-            throw new HeavenLetterCommentMismatchException();
-        }
+        heavenLetterCommentService.updateComment(commentSeq, updateCommentRequest);
 
-        // 실제 편지 번호는 본문에서 추출
-        Integer letterSeq = updateCommentRequest.getLetterSeq();
-
-        HeavenLetterComment comment = heavenLetterCommentService.updateComment(commentSeq, letterSeq, updateCommentRequest);
+        HeavenLetterComment comment = heavenLetterCommentService.updateComment(commentSeq, updateCommentRequest);
         // 비난글 AI 필터링 추가
         testReviewService.saveCommentFromBlameTable(comment, false, HEAVEN.getType());
 
-        return ResponseEntity.ok().body(ApiResponse.ok(
-                HttpStatus.OK.value(),
-                "스토리 댓글이 성공적으로 수정되었습니다."
-        ));
+        return ResponseEntity.ok(ApiResponse.ok(HttpStatus.OK.value(), "편지 댓글이 성공적으로 수정되었습니다."));
     }
 
     //댓글 삭제
     @DeleteMapping("/{commentSeq}")
-    public ResponseEntity<HeavenLetterCommentResponseDto.CommentVerifyResponse> deleteComment(
-            @PathVariable(name = "commentSeq") Integer commentSeq,
-            @PathVariable(name = "letterSeq") Short letterSeq,
-            @RequestBody CommonCommentRequestDto.DeleteCommentRequest deleteCommentRequest) {
+    public ResponseEntity<ApiResponse> deleteComment(
+            @PathVariable Integer letterSeq,
+            @PathVariable Integer commentSeq,
+            @RequestBody HeavenLetterCommentDeleteRequestDto deleteCommentRequest) {
 
-        if (!commentSeq.equals(deleteCommentRequest.getCommentSeq())) {
-            throw new HeavenLetterCommentMismatchException();
-        }
-
-        HeavenLetterCommentResponseDto.CommentVerifyResponse deleteCommentResponse = heavenLetterCommentService.deleteComment(deleteCommentRequest);
+        heavenLetterCommentService.deleteComment(commentSeq, deleteCommentRequest);
 
         blameTextPersistenceService.deleteBlameTextComment(letterSeq, commentSeq, HEAVEN.getType());
-        // 결과에 따라 상태코드 분기
-        if (deleteCommentResponse.getResult() == 1) {
-            return ResponseEntity.ok(deleteCommentResponse);
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(deleteCommentResponse);
-        }
+        return ResponseEntity.ok(ApiResponse.ok(HttpStatus.OK.value(), "편지 댓글이 성공적으로 삭제되었습니다."));
     }
 }

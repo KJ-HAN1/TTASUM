@@ -3,13 +3,18 @@ package com.ttasum.memorial.service.donationStory;
 
 import com.ttasum.memorial.domain.entity.donationStory.DonationStory;
 import com.ttasum.memorial.domain.entity.donationStory.DonationStoryComment;
+import com.ttasum.memorial.domain.repository.donationStory.CommentCount;
 import com.ttasum.memorial.domain.repository.donationStory.DonationStoryCommentRepository;
 import com.ttasum.memorial.domain.repository.donationStory.DonationStoryRepository;
+import com.ttasum.memorial.domain.repository.donationStory.DonationStoryRepositoryCustom;
 import com.ttasum.memorial.dto.donationStory.request.DonationStoryCreateRequestDto;
 import com.ttasum.memorial.dto.donationStory.request.DonationStoryUpdateRequestDto;
+import com.ttasum.memorial.dto.donationStory.response.DonationStoryListResponseDto;
 import com.ttasum.memorial.dto.donationStory.response.DonationStoryPasswordVerifyResponseDto;
 import com.ttasum.memorial.dto.donationStory.response.DonationStoryResponseDto;
-import com.ttasum.memorial.dto.donationStory.response.PageResponse;
+import com.ttasum.memorial.exception.common.badRequest.InvalidKeywordLengthException;
+import com.ttasum.memorial.exception.common.badRequest.InvalidPaginationParameterException;
+import com.ttasum.memorial.exception.common.badRequest.InvalidSearchFieldException;
 import com.ttasum.memorial.exception.common.badRequest.CaptchaVerificationFailedException;
 import com.ttasum.memorial.exception.donationStory.DonationStoryNotFoundException;
 import com.ttasum.memorial.service.common.CaptchaVerifier;
@@ -19,9 +24,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.*;
 
 /**
  * 기증후 스토리 게시글의 저장 및 조회 로직을 처리하는 서비스 클래스
@@ -29,14 +32,70 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class DonationStoryService {
+    // 허용 가능한 정렬 필드 집합
+    private static final Set<String> ALLOWED_SEARCH_FIELDS = Set.of("title", "contents", "all");
+    private static final int MIN_KEYWORD_LENGTH = 2;
+    private static final int MAX_KEYWORD_LENGTH = 100;
 
     private final DonationStoryRepository donationStoryRepository;
     private final DonationStoryCommentRepository commentRepository;
     private final CaptchaVerifier captchaVerifier;
 
     /**
+     * 검색 + 페이징 조회 (추가된 메서드)
+     * @param searchField ("title", "contents", "all")
+     * @param keyword     검색어 (null 또는 빈 문자열 -> 전체 조회)
+     * @param pageable    페이징 정보
+     * @return 엔티티 -> DTO 변환 후 반환
+     */
+    @Transactional(readOnly = true)
+    public Page<DonationStoryListResponseDto> searchStories(String searchField, String keyword, Pageable pageable) {
+        // 1. 페이지 방어
+        if (pageable.getPageNumber() < 0 || pageable.getPageSize() < 1) {
+            throw new InvalidPaginationParameterException("유효하지 않은 페이지 번호 또는 크기입니다.");
+        }
+
+        // 2. 검색 필드 검증
+        if (searchField != null && !ALLOWED_SEARCH_FIELDS.contains(searchField)) {
+            throw new InvalidSearchFieldException("유효하지 않은 검색 대상입니다: " + searchField);
+        }
+
+        // 3. 검색어 길이 검증 및 trim 처리
+        if (keyword != null && !keyword.isBlank()) {
+            keyword = keyword.trim();
+            if (keyword.length() < MIN_KEYWORD_LENGTH || keyword.length() > MAX_KEYWORD_LENGTH) {
+                throw new InvalidKeywordLengthException("검색어는 " + MIN_KEYWORD_LENGTH + "자 이상 " + MAX_KEYWORD_LENGTH + "자 이하로 입력해야 합니다.");
+            }
+        }
+
+        // 1. 스토리 목록 조회
+        Page<DonationStory> page = donationStoryRepository.searchStories(searchField, keyword, pageable);
+
+        // 2. 스토리 ID 목록 추출
+        List<Integer> storyIds = page.getContent().stream()
+                .map(DonationStory::getId)
+                .toList();
+
+        // 3. 댓글 수 조회 (Projection 기반)
+        List<CommentCount> result = commentRepository.countCommentsByStoryIds(storyIds);
+        Map<Integer, Integer> commentCountMap = new HashMap<>();
+        for (CommentCount cc : result) {
+            commentCountMap.put(cc.getStoryId(), cc.getCount().intValue());
+        }
+
+        // 4. 엔티티 → DTO 변환 (댓글 수 포함)
+        return page.map(story ->
+                DonationStoryListResponseDto.fromEntity(
+                        story,
+                        commentCountMap.getOrDefault(story.getId(), 0)
+                )
+        );
+    }
+
+    /**
      * 기증후 스토리 등록
      * @param dto 등록 요청용 dto
+     * @return 엔티티 -> dto 변환후 반환
      */
     @Transactional
     public DonationStory createStory(DonationStoryCreateRequestDto dto){
@@ -66,31 +125,6 @@ public class DonationStoryService {
         story.increaseReadCount();
 
         return DonationStoryResponseDto.fromEntity(story, comments);
-    }
-
-    /**
-     * 활성화된 스토리 페이징 조회
-     * @param pageable 페이징 처리 객체 -> Page<T> 반환
-     * @return Page 객체 -> dto 반환
-     */
-    @Transactional(readOnly = true)
-    public PageResponse<DonationStoryResponseDto> getActiveStories(Pageable pageable) {
-        // JPA가 반환한 Page<DonationStory> 조회
-        Page<DonationStory> page = donationStoryRepository.findByDelFlagOrderByWriteTimeDesc("N", pageable);
-
-        // 엔티티 dto 변환 작업
-        List<DonationStoryResponseDto> dtoList = page.getContent().stream()
-                .map(DonationStoryResponseDto::fromEntity)
-                .collect(Collectors.toList());
-
-        // PageResponse<> 생성 후 반환
-        return new PageResponse<>(
-                dtoList,
-                page.getNumber(),        // 현재 페이지 번호
-                page.getSize(),          // 페이지 크기
-                page.getTotalElements(), // 전체 요소 개수
-                page.getTotalPages()     // 전체 페이지 수
-        );
     }
 
     /**

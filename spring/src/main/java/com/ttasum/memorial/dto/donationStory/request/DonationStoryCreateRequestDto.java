@@ -5,9 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 /**
  * 기증후 스토리 등록 요청 DTO
@@ -59,6 +57,14 @@ public class DonationStoryCreateRequestDto {
     @Size(max = 60)
     private String writerId;
 
+    @Min(value = 0, message = "letterPaper는 0 이상이어야 합니다.")
+    @NotNull(message = "letterPaper는 필수 항목입니다.")
+    private Integer letterPaper;
+
+    @Min(value = 0, message = "letterFont는 0 이상이어야 합니다.")
+    @NotNull(message = "letterFont는 필수 항목입니다.")
+    private Integer letterFont;
+
 
     // DTO → Entity 변환
     public DonationStory toEntity() {
@@ -73,6 +79,8 @@ public class DonationStoryCreateRequestDto {
                 .fileName(this.fileName)
                 .originalFileName(this.orgFileName)
                 .writerId(this.writerId)
+                .letterPaper(this.letterPaper != null ? this.letterPaper : 0)
+                .letterFont(this.letterFont != null ? this.letterFont : 0)
                 .build();
     }
 }

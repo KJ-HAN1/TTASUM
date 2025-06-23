@@ -1,5 +1,7 @@
 package com.ttasum.memorial.controller.heavenLetter;
 
+import com.ttasum.memorial.dto.common.ApiResponse;
+import com.ttasum.memorial.dto.common.CommonPageRequest;
 import com.ttasum.memorial.domain.entity.heavenLetter.HeavenLetter;
 import com.ttasum.memorial.dto.common.ApiResponse;
 import com.ttasum.memorial.dto.heavenLetter.request.*;
@@ -34,17 +36,16 @@ public class HeavenLetterController {
 
     //등록
     @PostMapping
-    public ResponseEntity<?> createLetter(
+    public ResponseEntity<ApiResponse> createLetter(
             @RequestBody @Valid HeavenLetterRequestDto creatRequest) {
-        HeavenLetter Story = heavenLetterService.createLetter(creatRequest);
+        HeavenLetter story = heavenLetterService.createLetter(creatRequest);
 
         // 비난글 AI 필터링 추가
-        testReviewService.saveBoardFromBlameTable(Story, true, HEAVEN.getType());
+        testReviewService.saveBoardFromBlameTable(story, true, HEAVEN.getType());
 
-        return ResponseEntity.ok().body(ApiResponse.ok(
-                HttpStatus.CREATED.value(),
-                "스토리가 성공적으로 등록되었습니다."
-        ));
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(ApiResponse.ok(HttpStatus.CREATED.value(), "편지가 성공적으로 등록되었습니다."));
     }
 
     //추모관에서 등록하는 편지폼
@@ -55,83 +56,82 @@ public class HeavenLetterController {
 
     //단건 조회
     @GetMapping("/{letterSeq}")
-    public ResponseEntity<HeavenLetterResponseDto.HeavenLetterDetailResponse> getLetterById(
+    public ResponseEntity<HeavenLetterDetailResponseDto> getLetterById(
             @PathVariable Integer letterSeq) {
-        HeavenLetterResponseDto.HeavenLetterDetailResponse detailResponse = heavenLetterService.getLetterById(letterSeq);
+        HeavenLetterDetailResponseDto detailResponse = heavenLetterService.getLetterById(letterSeq);
         return ResponseEntity.status(HttpStatus.OK).body(detailResponse);
     }
 
     //목록(페이징 처리)
     @GetMapping
-    public ResponseEntity<Page<HeavenLetterResponseDto.HeavenLetterListResponse>> getLetters(
-            @ModelAttribute PageRequest pageRequest) {
+    public ResponseEntity<Page<HeavenLetterListResponseDto>> getLetters(
+            @ModelAttribute CommonPageRequest commonPageRequest) {
 
-        Pageable pageable = pageRequest.toPageable("letterSeq");
-        Page<HeavenLetterResponseDto.HeavenLetterListResponse> result = heavenLetterService.getAllLetters(pageable);
-        return ResponseEntity.status(HttpStatus.OK).body(result);
+        Pageable pageable = commonPageRequest.toPageable("letterSeq");
+        Page<HeavenLetterListResponseDto> listResponse = heavenLetterService.getAllLetters(pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(listResponse);
     }
 
     //편지 수정 인증
     @PostMapping("/{letterSeq}/verifyPwd")
-    public ResponseEntity<CommonResultResponseDto> verifyPasscode(
+    public ResponseEntity<ApiResponse> verifyPasscode(
             @PathVariable Integer letterSeq,
             @RequestBody @Valid HeavenLetterVerifyRequestDto heavenLetterVerifyRequestDto) {
 
         heavenLetterService.verifyPasscode(letterSeq, heavenLetterVerifyRequestDto.getLetterPasscode());
-        return ResponseEntity.status(HttpStatus.OK).body(CommonResultResponseDto.success("비밀번호가 일치합니다."));
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ApiResponse.ok(HttpStatus.OK.value(), "비밀번호가 일치합니다."));
     }
 
     //편지 수정 (letterUpdate.html)
     @PatchMapping("/{letterSeq}")
-    public ResponseEntity<?> updateLetter(
+    public ResponseEntity<ApiResponse> updateLetter(
             //값을 자바 변수로 맵핑
             @PathVariable Integer letterSeq,
             @RequestBody @Valid HeavenLetterUpdateRequestDto heavenLetterUpdateRequestDto) {
 
-        //letterSeq 값을 요청 DTO에 직접 주입
-        heavenLetterUpdateRequestDto.setLetterSeq(letterSeq);
-
-        HeavenLetter Story = heavenLetterService.updateLetter(heavenLetterUpdateRequestDto);
+        HeavenLetter story = heavenLetterService.updateLetter(letterSeq, heavenLetterUpdateRequestDto);
 
         // 비난글 AI 필터링 추가
-        testReviewService.saveBoardFromBlameTable(Story, false, HEAVEN.getType());
+        testReviewService.saveBoardFromBlameTable(story, false, HEAVEN.getType());
 
         // return "redirect://";
-        return ResponseEntity.ok(ApiResponse.ok(
-                HttpStatus.OK.value(),
-                "스토리가 성공적으로 수정되었습니다."
-        ));
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ApiResponse.ok(HttpStatus.OK.value(), "편지가 성공적으로 등록되었습니다."));
     }
 
     //편지 삭제
     @DeleteMapping("/{letterSeq}")
-    public ResponseEntity<CommonResultResponseDto> deleteLetter(
-            @RequestBody HeavenLetterVerifyRequestDto deleteRequest) {
+    public ResponseEntity<ApiResponse> deleteLetter(
+            @PathVariable Integer letterSeq,
+            @RequestBody @Valid HeavenLetterVerifyRequestDto deleteRequest) {
 
-        CommonResultResponseDto deleteResponse = heavenLetterService.deleteLetter(deleteRequest);
-
+        heavenLetterService.deleteLetter(letterSeq, deleteRequest);
         blameTextPersistenceService.deleteBlameTextLetter(deleteRequest.getLetterSeq(), HEAVEN.getType());
-
-        return ResponseEntity.ok(deleteResponse);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ApiResponse.ok(HttpStatus.OK.value(), "편지가 정상적으로 삭제 되었습니다."));
     }
 
     //검색
     @GetMapping("/search")
-    public ResponseEntity<Page<HeavenLetterResponseDto.HeavenLetterListResponse>> searchLetters(
+    public ResponseEntity<Page<HeavenLetterListResponseDto>> searchLetters(
             @RequestParam(defaultValue = "전체") String type,
             @RequestParam(defaultValue = "") String keyword,
-            @ModelAttribute PageRequest pageRequest) {
+            @ModelAttribute CommonPageRequest commonPageRequest) {
 
         // 한글 타입을 영문으로 매핑
         type = switch (type) {
-            case "제목" -> "title";
-            case "내용" -> "contents";
-            case "전체" -> "all";
+            case "제목","title" -> "title";
+            case "내용","contents" -> "contents";
+            case "전체","all" -> "all";
             default -> "all";
         };
 
-        Pageable pageable = pageRequest.toPageable("letterSeq");
-        Page<HeavenLetterResponseDto.HeavenLetterListResponse> result =
+        Pageable pageable = commonPageRequest.toPageable("letterSeq");
+        Page<HeavenLetterListResponseDto> result =
                 heavenLetterService.searchLetters(type, keyword, pageable);
         return ResponseEntity.ok(result);
     }
@@ -143,12 +143,12 @@ public class HeavenLetterController {
         return ResponseEntity.ok(resultList);
     }
     //기증자 검색
-    @GetMapping("/donate_pop.do")
+    @GetMapping("/donorSearch")
     public ResponseEntity<Page<MemorialSearchResponseDto>> searchDonors(
             @ModelAttribute MemorialSearchRequestDto memorialSearchRequest,
-            @ModelAttribute PageRequest pageRequest
+            @ModelAttribute CommonPageRequest commonPageRequest
     ) {
-        Pageable pageable = pageRequest.toPageable("donateDate");
+        Pageable pageable = commonPageRequest.toPageable("donateDate");
         Page<MemorialSearchResponseDto> result =
                 heavenLetterService.searchDonors(memorialSearchRequest, pageable);
 

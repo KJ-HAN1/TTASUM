@@ -30,7 +30,7 @@ public class Memorial extends Story {
     //반대쪽 엔티티의 필드명을 기준으로 연결하는 어노테이션
     @OneToMany(mappedBy = "donateSeq")
     //HeavenLetter를 heavenLetters라는 리스트에 담아서 가져옴
-    private List<HeavenLetter> heavenLetter1s;
+    private List<HeavenLetter> heavenLetters;
 
     @Column(name = "donor_name", length = 150)
     private String donorName;
@@ -69,31 +69,31 @@ public class Memorial extends Story {
 
     @Builder.Default
     @Column(name = "flower_count")
-    private Integer flowerCount = 0;
+    private Integer flowerCount;
 
     @Builder.Default
     @Column(name = "love_count")
-    private Integer loveCount = 0;
+    private Integer loveCount;
 
     @Builder.Default
     @Column(name = "see_count")
-    private Integer seeCount = 0;
+    private Integer seeCount;
 
     @Builder.Default
     @Column(name = "miss_count")
-    private Integer missCount = 0;
+    private Integer missCount;
 
     @Builder.Default
     @Column(name = "proud_count")
-    private Integer proudCount = 0;
+    private Integer proudCount;
 
     @Builder.Default
     @Column(name = "hard_count")
-    private Integer hardCount = 0;
+    private Integer hardCount;
 
     @Builder.Default
     @Column(name = "sad_count")
-    private Integer sadCount = 0;
+    private Integer sadCount;
 
     @Builder.Default
     @ColumnDefault("'N'")
@@ -104,14 +104,14 @@ public class Memorial extends Story {
     @Column(name = "write_time", nullable = false, updatable = false)
     private LocalDateTime writeTime;
 
-    @Column(name = "writer_id", nullable = false, length = 60)
+    @Column(name = "writer_id", length = 60)
     private String writerId;
 
     @UpdateTimestamp
     @Column(name = "modify_time")
     private LocalDateTime modifyTime;
 
-    @Column(name = "modifier_id", nullable = false, length = 60)
+    @Column(name = "modifier_id", length = 60)
     private String modifierId;
 
     @Column(name = "donor_birthdate")

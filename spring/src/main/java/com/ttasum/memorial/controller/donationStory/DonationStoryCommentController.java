@@ -37,7 +37,7 @@ public class DonationStoryCommentController {
      */
     @PostMapping("/{storySeq}/comments")
     public ResponseEntity<ApiResponse> createComment(@PathVariable Integer storySeq, @RequestBody @Valid DonationStoryCommentCreateRequestDto dto) {
-            log.info("POST /donationLetters/{}/comments - 댓글 등록 요청", storySeq);
+            log.debug("POST /donationLetters/{}/comments - 댓글 등록 요청", storySeq);
             DonationStoryComment comment = commentService.createComment(storySeq, dto);
             // 201 Created -> location 다음 동작(조회 등)을 위한 URI를 제공
 //        int commentSeq = commentService.createComment(storySeq, dto);

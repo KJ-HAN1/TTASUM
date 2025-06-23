@@ -16,9 +16,12 @@ import java.util.Map;
 
 public class DbLogAppender extends AppenderBase<ILoggingEvent> {
     private Connection connection;
+    // 로컬용 dotenv
+//    Dotenv dotenv = Dotenv.load();
+//    String dbPassword = dotenv.get("DB_PW");
 
-    Dotenv dotenv = Dotenv.load();
-    String dbPassword = dotenv.get("DB_PW");
+    // 서버용 getenv -> 서버 톹캣 setenv파일에서 get
+    String dbPassword = System.getenv("DB_PW");
 
     // db 연결
     @Override
@@ -26,7 +29,7 @@ public class DbLogAppender extends AppenderBase<ILoggingEvent> {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(
-                    "jdbc:mysql://3.34.178.122:3306/koda_2025?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8",
+                    "jdbc:mysql://13.125.154.31:3306/koda_2025?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8",
                     "root",
                     dbPassword
             );

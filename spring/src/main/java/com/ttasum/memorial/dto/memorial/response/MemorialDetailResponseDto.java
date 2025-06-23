@@ -1,5 +1,8 @@
 package com.ttasum.memorial.dto.memorial.response;
 
+import com.ttasum.memorial.annotation.ConvertGender;
+import com.ttasum.memorial.annotation.FormatDate;
+import com.ttasum.memorial.annotation.MaskNameIfAnonymous;
 import com.ttasum.memorial.domain.entity.memorial.Memorial;
 import com.ttasum.memorial.dto.HeavenLetterSummaryDto;
 import com.ttasum.memorial.dto.memorialComment.response.MemorialReplyResponseDto;
@@ -14,10 +17,17 @@ import java.util.List;
 public class MemorialDetailResponseDto {
 
     private Integer donateSeq;
+
+    @MaskNameIfAnonymous
     private String donorName;
+
+    @FormatDate(pattern = "yyyyMMdd", output = "yyyy-MM-dd")
     private String donateDate;
     private String contents;
+
+    @ConvertGender
     private String genderFlag;
+
     private Integer donateAge;
 
     // 이모지 카운트

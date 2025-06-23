@@ -23,25 +23,25 @@ public interface HeavenLetterService {
     HeavenLetterFormResponseDto getFormWithDonor(Integer donateSeq);
 
     //편지 단건 조회
-    HeavenLetterResponseDto.HeavenLetterDetailResponse getLetterById(Integer letterSeq);
+    HeavenLetterDetailResponseDto getLetterById(Integer letterSeq);
 
 //    //편지 전체 조회
 //    List<HeavenLetterResponse.HeavenLetterListResponse> getLetterList();
 
     //편지 전체 조회(페이징 처리)
-    Page<HeavenLetterResponseDto.HeavenLetterListResponse> getAllLetters(Pageable pageable);
+    Page<HeavenLetterListResponseDto> getAllLetters(Pageable pageable);
 
     //편지 수정 인증(공통)
-   boolean verifyPasscode(Integer letterSeq, String passcode);
+    boolean verifyPasscode(Integer letterSeq, String passcode);
 
     //편지 수정
-    HeavenLetter updateLetter(HeavenLetterUpdateRequestDto heavenLetterUpdateRequestDto);
+    HeavenLetter updateLetter(Integer letterSeq,HeavenLetterUpdateRequestDto heavenLetterUpdateRequestDto);
 
     //편지 삭제
-    CommonResultResponseDto deleteLetter(HeavenLetterVerifyRequestDto deleteRequest);
+    void deleteLetter(Integer letterSeq,HeavenLetterVerifyRequestDto deleteRequest);
 
     //편지 전체 조회(검색 포함)
-    Page<HeavenLetterResponseDto.HeavenLetterListResponse> searchLetters(String type, String keyword, Pageable pageable);
+    Page<HeavenLetterListResponseDto> searchLetters(String type, String keyword, Pageable pageable);
 
     //사진 업로드
     List<Map<String, String>> uploadFiles(List<MultipartFile> files, String subFolder) throws IOException;

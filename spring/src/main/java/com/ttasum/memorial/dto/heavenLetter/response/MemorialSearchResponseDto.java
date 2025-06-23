@@ -8,12 +8,14 @@ import lombok.*;
 
 public class MemorialSearchResponseDto {
 
+    private Integer donateSeq;
     private String donorName;
     private String donateDate;
     private String genderFlag;
     private Integer donateAge;
 
     public MemorialSearchResponseDto(Memorial memorial) {
+        this.donateSeq = memorial.getDonateSeq();
         this.donorName  =  NameMaskUtil.maskDonorNameIfAnonymous(
                 memorial.getDonorName(),
                 memorial.getAnonymityFlag()

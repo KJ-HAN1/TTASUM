@@ -3,6 +3,8 @@ package com.ttasum.memorial.domain.repository.donationStory;
 import com.ttasum.memorial.domain.entity.donationStory.DonationStory;
 import com.ttasum.memorial.domain.entity.donationStory.DonationStoryComment;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,5 +18,12 @@ public interface DonationStoryCommentRepository extends JpaRepository<DonationSt
     // 댓글 ID와 비밀번호 일치 여부 확인
     Optional<DonationStoryComment> findByCommentSeqAndLetterSeqAndDelFlag(Integer commentSeq, DonationStory storySeq, String delFlag);
 
+    @Query("""
+                SELECT c.letterSeq.id AS storyId, COUNT(c) AS count
+                FROM DonationStoryComment c
+                WHERE c.letterSeq.id IN :storyIds AND c.delFlag = 'N'
+                GROUP BY c.letterSeq.id
+            """)
+    List<CommentCount> countCommentsByStoryIds(@Param("storyIds") List<Integer> storyIds);
     Optional<DonationStoryComment> findByCommentSeqAndDelFlag(int seq, String n);
 }
