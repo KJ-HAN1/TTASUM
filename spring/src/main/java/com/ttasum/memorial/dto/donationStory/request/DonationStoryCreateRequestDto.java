@@ -5,10 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 /**
  * 기증후 스토리 등록 요청 DTO
@@ -61,9 +58,11 @@ public class DonationStoryCreateRequestDto {
     private String writerId;
 
     @Min(value = 0, message = "letterPaper는 0 이상이어야 합니다.")
+    @NotNull(message = "letterPaper는 필수 항목입니다.")
     private Integer letterPaper;
 
     @Min(value = 0, message = "letterFont는 0 이상이어야 합니다.")
+    @NotNull(message = "letterFont는 필수 항목입니다.")
     private Integer letterFont;
 
 

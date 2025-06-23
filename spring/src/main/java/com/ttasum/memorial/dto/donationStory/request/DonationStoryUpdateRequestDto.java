@@ -50,9 +50,11 @@ public class DonationStoryUpdateRequestDto {
     private String modifierId;
 
     @Min(value = 0, message = "letterPaper는 0 이상이어야 합니다.")
+    @NotNull(message = "letterPaper는 필수 항목입니다.")
     private Integer letterPaper;
 
     @Min(value = 0, message = "letterFont는 0 이상이어야 합니다.")
+    @NotNull(message = "letterFont는 필수 항목입니다.")
     private Integer letterFont;
 
 }
