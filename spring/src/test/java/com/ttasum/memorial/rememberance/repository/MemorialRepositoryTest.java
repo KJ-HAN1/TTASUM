@@ -14,6 +14,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -34,10 +36,10 @@ class MemorialRepositoryTest {
     @Autowired
     private EntityManager em;
 
-    @BeforeAll
-    static void loadEnv() {
+    @DynamicPropertySource
+    static void registerProperties(DynamicPropertyRegistry registry) {
         Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
-        System.setProperty("DB_PW", dotenv.get("DB_PW"));
+        registry.add("spring.datasource.password", () -> dotenv.get("DB_PW"));
     }
 
     @Test

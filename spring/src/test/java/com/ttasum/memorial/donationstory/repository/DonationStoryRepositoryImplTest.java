@@ -17,6 +17,8 @@ import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,10 +38,10 @@ class DonationStoryRepositoryImplTest {
     @Autowired
     private DonationStoryRepository donationStoryRepository;
 
-    @BeforeAll
-    static void loadEnv() {
+    @DynamicPropertySource
+    static void registerProperties(DynamicPropertyRegistry registry) {
         Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
-        System.setProperty("DB_PW", dotenv.get("DB_PW"));
+        registry.add("spring.datasource.password", () -> dotenv.get("DB_PW"));
     }
 
     /**
