@@ -61,7 +61,8 @@ async def reply(chat: ChatInput, request: Request):
 	logger.info(f"[INPUT_CHECK_OK] 챗봇 입력 유효성 검사 성공: \"{question}\"")
 
 	# 2. 입력 요약 및 유형 분류 (1차 LLM 호출)
-	summarized_question = summarize_chain.invoke({'question': question})
+	summarized_question = await summarize_chain.ainvoke({'question':
+															 question})
 	try:
 		parsed_data = json.loads(summarized_question.content)
 		summary = parsed_data['summary']
@@ -81,14 +82,14 @@ async def reply(chat: ChatInput, request: Request):
 		raise JsonParsingError(
 			{'summarized_result': summarized_question.content})
 
-	# 3. 요약된 질문으로 벡터 DB에서 관련 문서 검색 (2차 LLM 호출)
-	context = retriever.invoke(summary)
+	# 3. 요약된 질문으로 벡터 DB에서 관련 문서 검색
+	context = await retriever.ainvoke(summary)
 	if not context:
 		raise DocumentNotFoundError()
 	logger.info('[DB DOCS] 챗봇 문서 불러오기 성공')
 
-	# 4. 최종 응답 생성
-	result = chain.invoke({'question': summary, 'context': context})
+	# 4. 최종 응답 생성 (2차 LLM 호출)
+	result = await chain.ainvoke({'question': summary, 'context': context})
 	return JSONResponse(
 		status_code=HTTPStatus.OK,
 		content=ApiResponse.ok(

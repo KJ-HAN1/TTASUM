@@ -1,11 +1,14 @@
 import logging
+import os
 from contextlib import asynccontextmanager
 
+from asyncmy import create_pool
+from dotenv import load_dotenv
 from fastapi import FastAPI, Request
 from starlette.responses import JSONResponse
 
 from .api.reply import router
-from .core.exceptions import GeneralError, CustomBaseError
+from .core.exceptions import GeneralError, CustomBaseError, DBConnectionError
 from .core.services import prepare_chat_data
 from .schemas.response import ApiResponse
 
@@ -21,15 +24,54 @@ logger = logging.getLogger(__name__)
 async def lifespan(app: FastAPI):
 	# Startup tasks
 	logger.info('[chatbot] FastAPI 챗봇 애플리케이션 실행')
+
+	# .env 파일을 읽어 환경 변수로 로드
+	load_dotenv()
+
+	app.state.pool = await create_db_pool()
 	await prepare_chat_data(app)
 
 	yield
+
 	# Shutdown tasks
+	app.state.pool.close()
+	await app.state.pool.wait_closed()
+	logger.info('[DB POOL] 풀 내의 모든 DB 연결 종료')
 	logger.info('[chatbot] FastAPI 챗봇 애플리케이션 종료')
 
 
 app = FastAPI(lifespan=lifespan)
 app.include_router(router)
+
+
+async def create_db_pool():
+	""" MySQL DB 풀을 생성합니다.
+
+	Returns:
+		Pool: DB 풀 객체.
+
+	Raises:
+		DBConnectionError: DB 풀 생성에 실패할 경우.
+		GeneralError: MySQL 관련 오류 외의 예상치 못한 일반적인 오류가 발생할 경우.
+					  (예: 환경 변수 설정 오류 등)
+
+	"""
+	# MySQL DB 연결 및 예외 처리
+	try:
+		pool = await create_pool(
+			host=os.getenv('DB_HOST'),
+			port=int(os.getenv('DB_PORT')),
+			user=os.getenv('DB_USER'),
+			password=os.getenv('DB_PASSWORD'),
+			database=os.getenv('DB_DATABASE'),
+			autocommit=True,  # 현재 SELECT 문만 실행하기 때문에 설정
+			maxsize=10
+		)
+	except Exception as e:
+		raise DBConnectionError(details={'reason': 'DB 풀 생성 실패',
+										 'error': str(e)})
+	logger.info("[DB POOL] DB 풀 생성 완료")
+	return pool
 
 
 @app.exception_handler(CustomBaseError)

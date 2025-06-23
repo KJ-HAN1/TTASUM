@@ -1,9 +1,8 @@
 import logging
 import os
 
-import pymysql
-from dotenv import load_dotenv
-from fastapi import FastAPI
+from asyncmy.cursors import DictCursor
+from asyncmy.errors import Error
 from langchain.retrievers import ParentDocumentRetriever
 from langchain_chroma import Chroma
 from langchain_core.documents import Document
@@ -11,7 +10,6 @@ from langchain_core.prompts import PromptTemplate
 from langchain_core.stores import InMemoryStore
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_upstage import UpstageEmbeddings, ChatUpstage
-from pymysql.cursors import DictCursor
 
 from .exceptions import DBConnectionError, GeneralError
 
@@ -20,7 +18,7 @@ httpx_logger = logging.getLogger("httpx")
 httpx_logger.setLevel(logging.WARNING)  # 임베딩 로깅 감추기
 
 
-async def prepare_chat_data(app: FastAPI):
+async def prepare_chat_data(app):
 	""" 응답에 참고할 데이터를 벡터 DB에 적재하고 LLM 체인을 생성합니다.
 
 	DB에서 데이터를 로드하여 개별 Document로 변환하고, 변환된 데이터를 벡터 DB에 임베딩하여 저장합니다.
@@ -35,12 +33,8 @@ async def prepare_chat_data(app: FastAPI):
 					  (예: 환경 변수 설정 오류 등)
 
 	"""
-
-	# .env 파일을 읽어 환경 변수로 로드
-	load_dotenv()
-
-	data = await connect_database()
-	docs = await create_documents(app, data)
+	data = await connect_database(app.state.pool)
+	docs = await create_documents(data)
 	await create_retriever(app, docs)
 	await create_chain(app)
 
@@ -179,7 +173,7 @@ async def create_retriever(app, documents):
 	"""
 	# 자식 청크 더 작게 분할할 splitter 설정
 	child_splitter = RecursiveCharacterTextSplitter(
-		chunk_size=33, # 33 이하가 최적
+		chunk_size=33,  # 33 이하가 최적
 		chunk_overlap=0,
 		separators=[", ", ": ", "\r\n", "\n", "\t", "·"],
 		is_separator_regex=False
@@ -204,16 +198,15 @@ async def create_retriever(app, documents):
 	)
 
 	logger.info('[DB EMBEDDING] 벡터 DB에 데이터 임베딩 및 저장 중 ...')
-	retriever.add_documents(documents)
+	await retriever.aadd_documents(documents)
 	logger.info('[DB LOAD] 벡터 DB에 데이터 저장 완료')
 	app.state.retriever = retriever
 
 
-async def create_documents(app, data):
+async def create_documents(data):
 	""" DB에서 가져온 데이터를 Document로 변환합니다.
 
 	Args:
-		app: FastAPI 인스턴스.
 		data(list): DB 테이블에서 전체 조회한 데이터.
 
 	Returns:
@@ -237,8 +230,11 @@ async def create_documents(app, data):
 	return docs
 
 
-async def connect_database():
+async def connect_database(pool):
 	""" MySQL DB를 연결하고 데이터를 로드합니다.
+
+	Args:
+		pool: DB 풀 객체.
 
 	Returns:
 		list: DB 테이블에서 전체 조회한 데이터.
@@ -249,35 +245,22 @@ async def connect_database():
 					  (예: 환경 변수 설정 오류 등)
 
 	"""
-	conn = None
 	chart_table = os.getenv('TBL_ORG_CHART')
 	stmt = f"SELECT * FROM {chart_table}"  # 테이블 데이터 전체 조회
+
 	try:
-		# MySQL DB 연결 및 예외 처리
-		conn = pymysql.connect(
-			host=os.getenv('DB_HOST'),
-			port=int(os.getenv('DB_PORT')),
-			user=os.getenv('DB_USER'),
-			password=os.getenv('DB_PASSWORD'),
-			database=os.getenv('DB_DATABASE'),
-			cursorclass=DictCursor
-		)
+		async with pool.acquire() as conn:
+			async with conn.cursor(DictCursor) as cursor:
+				await cursor.execute(stmt)
+				data = await cursor.fetchall()
+				if data:
+					logger.info('[DB LOAD] 데이터 로드 완료')
 
-		with conn.cursor() as cursor:
-			cursor.execute(stmt)
-			data = cursor.fetchall()
-			if data:
-				logger.info('[DB LOAD] 데이터 로드 완료')
-
-	except pymysql.Error as e:
+	except Error as e:  # asyncmy 명령어 오류 시
 		raise DBConnectionError(
 			details={'table': chart_table,
 					 'attempted query': stmt,
 					 'error': str(e)})  # 오류 코드와 메시지 표시
 	except Exception:
 		raise GeneralError()
-	finally:
-		if conn:
-			logger.info('[DB DISCONNECT] DB 연결 닫기 성공')
-			conn.close()
 	return data
