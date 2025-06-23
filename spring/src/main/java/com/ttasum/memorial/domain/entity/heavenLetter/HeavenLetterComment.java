@@ -1,12 +1,11 @@
 package com.ttasum.memorial.domain.entity.heavenLetter;
 
-import com.ttasum.memorial.dto.heavenLetter.request.CommonCommentRequestDto;
+import com.ttasum.memorial.dto.heavenLetterComment.request.HeavenLetterCommentUpdateRequestDto;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Getter
@@ -67,7 +66,7 @@ public class HeavenLetterComment {
         this.delFlag = "N";
     }
     //수정 메서드
-    public void updateComment(CommonCommentRequestDto.UpdateCommentRequest updateCommentRequest) {
+    public void updateComment(HeavenLetterCommentUpdateRequestDto updateCommentRequest) {
 //        this.commentSeq = updateCommentRequest.getCommentSeq();
 //        this.letterSeq = heavenLetter;
         this.commentWriter = updateCommentRequest.getCommentWriter();

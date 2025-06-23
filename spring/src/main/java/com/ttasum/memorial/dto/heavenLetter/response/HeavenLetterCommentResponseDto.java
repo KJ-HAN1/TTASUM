@@ -26,7 +26,6 @@ public class HeavenLetterCommentResponseDto {
     //등록 - 실패 400, 500
     public static HeavenLetterCommentResponseDto fail(int code, String message) {
         return new HeavenLetterCommentResponseDto(false, code, message);
-
     }
 
     //조회
