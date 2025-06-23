@@ -8,6 +8,7 @@ import com.ttasum.memorial.dto.donationStoryComment.response.DonationStoryCommen
 import lombok.Builder;
 import lombok.Getter;
 
+import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -43,6 +44,10 @@ public class DonationStoryResponseDto {
 
     private String writerId;
 
+    private Integer letterPaper;
+
+    private Integer letterFont;
+
     private List<DonationStoryCommentResponseDto> comments;
 
     // 댓글 제외
@@ -65,6 +70,8 @@ public class DonationStoryResponseDto {
                 .modifierId(entity.getModifierId())
                 .delFlag(entity.getDelFlag())
                 .donorName(entity.getDonorName())
+                .letterPaper(entity.getLetterPaper())
+                .letterFont(entity.getLetterFont())
                 .comments(null)
                 .build();
     }
@@ -98,6 +105,8 @@ public class DonationStoryResponseDto {
                 .modifierId(entity.getModifierId())
                 .delFlag(entity.getDelFlag())
                 .donorName(entity.getDonorName())
+                .letterPaper(entity.getLetterPaper())
+                .letterFont(entity.getLetterFont())
                 .comments(commentDtos)
                 .build();
     }
