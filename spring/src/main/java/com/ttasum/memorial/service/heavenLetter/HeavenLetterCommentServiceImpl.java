@@ -9,11 +9,13 @@ import com.ttasum.memorial.dto.heavenLetterComment.request.HeavenLetterCommentDe
 import com.ttasum.memorial.dto.heavenLetterComment.request.HeavenLetterCommentRequestDto;
 import com.ttasum.memorial.dto.heavenLetterComment.request.HeavenLetterCommentUpdateRequestDto;
 import com.ttasum.memorial.dto.heavenLetterComment.request.HeavenLetterCommentVerifyRequestDto;
+import com.ttasum.memorial.exception.common.badRequest.CaptchaVerificationFailedException;
 import com.ttasum.memorial.exception.common.badRequest.InvalidPasscodeException;
 import com.ttasum.memorial.exception.common.badRequest.PathVariableMismatchException;
 import com.ttasum.memorial.exception.common.conflict.AlreadyDeletedException;
 
 import com.ttasum.memorial.exception.heavenLetter.HeavenLetterNotFoundException;
+import com.ttasum.memorial.service.common.CaptchaVerifier;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,11 +29,15 @@ public class HeavenLetterCommentServiceImpl implements HeavenLetterCommentServic
 
     private final HeavenLetterCommentRepository commentRepository;
     private final HeavenLetterRepository heavenLetterRepository;
+    private final CaptchaVerifier captchaVerifier;
 
     //댓글 등록
     @Transactional
     @Override
     public void createComment(Integer letterSeq, HeavenLetterCommentRequestDto createCommentRequest) {
+        if (!captchaVerifier.verifyCaptcha(createCommentRequest.getCaptchaToken())) {
+            throw new CaptchaVerificationFailedException();
+        }
 
         // 경로와 본문 값 불일치 (400 Bad Request)
         if(!letterSeq.equals(createCommentRequest.getLetterSeq())) {
