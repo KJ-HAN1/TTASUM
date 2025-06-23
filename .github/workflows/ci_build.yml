@@ -24,6 +24,8 @@ jobs:
       - name: Build and Test
         working-directory: ./spring
         #임시로 test 제외하고 빌드
+
 #        run: ./gradlew clean build -x test
         #test 포함 코드
         run: ./gradlew clean build
+
