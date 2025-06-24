@@ -40,6 +40,7 @@ class MemorialRepositoryTest {
     static void registerProperties(DynamicPropertyRegistry registry) {
         Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
         registry.add("spring.datasource.password", () -> dotenv.get("DB_PW"));
+        registry.add("turnstile.secret", () -> dotenv.get("CAP_KEY"));
     }
 
     @Test
