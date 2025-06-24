@@ -6,6 +6,7 @@ import com.ttasum.memorial.dto.heavenLetter.request.*;
 import com.ttasum.memorial.dto.heavenLetter.response.*;
 import com.ttasum.memorial.service.heavenLetter.HeavenLetterService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -17,7 +18,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/heavenLetters")
