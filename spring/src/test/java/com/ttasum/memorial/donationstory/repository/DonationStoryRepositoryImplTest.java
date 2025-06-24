@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -42,8 +43,15 @@ class DonationStoryRepositoryImplTest {
     static void registerProperties(DynamicPropertyRegistry registry) {
         Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
         registry.add("spring.datasource.password", () -> dotenv.get("DB_PW"));
-        registry.add("turnstile.secret", () -> dotenv.get("CAP_KEY"));
+        String capKey = dotenv.get("CAP_KEY") != null
+                ? dotenv.get("CAP_KEY")
+                : System.getenv("CAP_KEY");
+
+        registry.add("turnstile.secret", () -> capKey);
     }
+
+    @Value("${turnstile.secret}")
+    private String turnstileSecret;
 
     /**
      * 간편히 쓰기 위해 만든 헬퍼.
