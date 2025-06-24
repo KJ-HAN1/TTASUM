@@ -85,7 +85,7 @@ public class HeavenLetterController {
         // return "redirect://";
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(ApiResponse.ok(HttpStatus.OK.value(), "편지가 성공적으로 등록되었습니다."));
+                .body(ApiResponse.ok(HttpStatus.OK.value(), "편지 수정이 성공적으로 되었습니다."));
     }
 
     //편지 삭제

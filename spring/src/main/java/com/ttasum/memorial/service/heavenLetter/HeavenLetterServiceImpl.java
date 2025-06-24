@@ -124,6 +124,7 @@ public class HeavenLetterServiceImpl implements HeavenLetterService {
                     return HeavenLetterListResponseDto.fromEntity(letter, commentCount);
                 });
     }
+
     /* 편지 수정/삭제 전 비밀번호 검증 */
     @Transactional(readOnly = true)
     @Override
@@ -163,7 +164,11 @@ public class HeavenLetterServiceImpl implements HeavenLetterService {
             memorial = memorialRepository.findById(heavenLetterUpdateRequestDto.getDonateSeq())
                     .orElseThrow(MemorialNotFoundException::new);
         }
-
+        if(heavenLetterUpdateRequestDto.getDonateSeq() == null
+                || memorial == null
+                || !memorial.getDonorName().equals(heavenLetterUpdateRequestDto.getDonorName())){
+            throw new MemorialNotFoundException();
+        }
         //내용수정
         heavenLetterUpdate.updateLetterContents(heavenLetterUpdateRequestDto, memorial);
 
