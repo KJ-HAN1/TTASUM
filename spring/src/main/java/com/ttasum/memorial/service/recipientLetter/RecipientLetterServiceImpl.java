@@ -9,12 +9,14 @@ import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterRequestDto
 import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterUpdateRequestDto;
 import com.ttasum.memorial.dto.recipientLetter.request.RecipientLetterVerifyRequestDto;
 import com.ttasum.memorial.dto.recipientLetter.response.*;
+import com.ttasum.memorial.exception.common.badRequest.CaptchaVerificationFailedException;
 import com.ttasum.memorial.exception.common.conflict.AlreadyDeletedException;
 import com.ttasum.memorial.exception.common.badRequest.InvalidPasscodeException;
 import com.ttasum.memorial.exception.common.badRequest.PathVariableMismatchException;
 import com.ttasum.memorial.exception.common.notFound.NotFoundException;
 import com.ttasum.memorial.exception.common.serverError.FileStorageException;
 import com.ttasum.memorial.exception.recipientLetter.RecipientOrganNameEmptyException;
+import com.ttasum.memorial.service.common.CaptchaVerifier;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,12 +43,15 @@ public class RecipientLetterServiceImpl implements RecipientLetterService {
 
     private final RecipientLetterRepository recipientLetterRepository;
     private final RecipientLetterCommentRepository recipientLetterCommentRepository;
+    private final CaptchaVerifier captchaVerifier;
 
     /* 편지 등록 */
     @Transactional
     @Override
     public void createLetter(RecipientLetterRequestDto createRequestDto) {
-
+        if (!captchaVerifier.verifyCaptcha(createRequestDto.getCaptchaToken())) {
+            throw new CaptchaVerificationFailedException();
+        }
             if ("ORGAN000".equals(createRequestDto.getOrganCode())
                     && (createRequestDto.getOrganEtc() == null || createRequestDto.getOrganEtc().isBlank())) {
                 throw new RecipientOrganNameEmptyException();
