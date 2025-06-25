@@ -35,15 +35,10 @@ jobs:
           New-Item ..\deploy -ItemType Directory
           Copy-Item .\build\libs\*.war ..\deploy\ROOT.war
 
-      - name: Upload WAR to GABIA server
-        uses: appleboy/scp-action@v0.1.4
-        with:
-          host: ${{ secrets.GABIA_HOST }}
-          username: ${{ secrets.GABIA_USER }}
-          key: ${{ secrets.GABIA_SSH_PRIVATE_KEY }}
-          port: 22
-          source: "deploy/ROOT.war"
-          target: "/usr/local/tomcat9_BE/webapps/"
+      - name: Upload WAR to GABIA server (scp)
+        shell: powershell
+        run: |
+          scp -i ${{ secrets.GABIA_SSH_PRIVATE_KEY }} deploy/ROOT.war ${{ secrets.GABIA_USER }}@${{ secrets.GABIA_HOST }}:/usr/local/tomcat9_BE/webapps/
 
       - name: Restart Tomcat
         uses: appleboy/ssh-action@master
