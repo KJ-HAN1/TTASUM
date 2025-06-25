@@ -49,7 +49,6 @@ class DonationStoryControllerTest {
                 .storySeq(1)
                 .storyTitle("제목1")
                 .storyWriter("코디네이터 김*연")
-                .donorName("기증자1")
                 .writeTime(LocalDateTime.now())
                 .readCount(100)
                 .commentCount(3)
@@ -59,7 +58,6 @@ class DonationStoryControllerTest {
                 .storySeq(2)
                 .storyTitle("제목2")
                 .storyWriter("코디네이터 이*희")
-                .donorName("기증자2")
                 .writeTime(LocalDateTime.now())
                 .readCount(200)
                 .commentCount(5)
@@ -93,7 +91,6 @@ class DonationStoryControllerTest {
         DonationStoryResponseDto dto = DonationStoryResponseDto.builder()
                 .storySeq(42)
                 .storyTitle("단건 제목")
-                .donorName("기증자")
                 .storyContents("내용")
                 .writeTime(LocalDateTime.now())
                 .build();
@@ -117,7 +114,6 @@ class DonationStoryControllerTest {
         DonationStoryCreateRequestDto req = new DonationStoryCreateRequestDto();
         req.setAreaCode("A01");
         req.setStoryTitle("새 제목");
-        req.setDonorName("기증자");
         req.setStoryPasscode("asdf1234");
         req.setStoryWriter("테스트");
         req.setAnonymityFlag("N");
