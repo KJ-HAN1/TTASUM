@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 //조회 - 단건
@@ -47,9 +48,13 @@ public class HeavenLetterDetailResponseDto {
             this.areaCode = heavenLetter.getAreaCode();
             this.letterTitle = heavenLetter.getLetterTitle();
 //            this.letterPasscode = heavenLetter.getLetterPasscode();
+            String donorAnonyFlag = Optional.ofNullable(heavenLetter.getDonateSeq())
+                    .map(Memorial::getAnonymityFlag)
+                    .orElse("N");
+
             this.donorName = NameMaskUtil.maskDonorNameIfAnonymous(
                     heavenLetter.getDonorName(),
-                    heavenLetter.getAnonymityFlag()
+                    donorAnonyFlag
             );
             this.letterWriter =  NameMaskUtil.maskDonorNameIfAnonymous(
                     heavenLetter.getLetterWriter(),

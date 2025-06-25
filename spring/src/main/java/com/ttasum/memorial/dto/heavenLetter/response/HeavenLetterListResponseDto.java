@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 //조회 - 목록
 @Getter
@@ -30,9 +31,13 @@ public class HeavenLetterListResponseDto {
                     ? memorial.getDonateSeq()
                     : null;
             this.letterTitle = heavenLetter.getLetterTitle();
+            String donorAnonyFlag = Optional.ofNullable(heavenLetter.getDonateSeq())
+                    .map(Memorial::getAnonymityFlag)   // Memorial#getAnonymityFlag()
+                    .orElse("N");                      // null 안전 처리
+
             this.donorName = NameMaskUtil.maskDonorNameIfAnonymous(
                     heavenLetter.getDonorName(),
-                    heavenLetter.getAnonymityFlag()
+                    donorAnonyFlag
             );
             this.letterWriter =  NameMaskUtil.maskDonorNameIfAnonymous(
                     heavenLetter.getLetterWriter(),
