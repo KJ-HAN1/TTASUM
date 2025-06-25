@@ -6,7 +6,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: self-hosted  # Windows 환경이면 자동 감지됨
+    runs-on: self-hosted
 
     steps:
       - name: Checkout source code
