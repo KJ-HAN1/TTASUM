@@ -1,40 +1,38 @@
 name: CD Deploy to GABIA
 
-# main에 머지되면 cd_deploy 실행
 on:
   push:
-    branches: [main,develop]
+    branches: [main, develop]
 
 jobs:
   deploy:
     runs-on: self-hosted
 
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Grant execute permission for gradlew
-        run: chmod +x ./spring/gradlew
+      - name: Checkout source code
+        uses: actions/checkout@v3
 
       - name: Set DB_PW from Secrets
+        shell: bash
         run: echo "DB_PW=${{ secrets.DB_PW }}" >> $GITHUB_ENV
 
-      - uses: actions/setup-java@v3
+      - name: Setup Java
+        uses: actions/setup-java@v3
         with:
           distribution: temurin
           java-version: 17
 
       - name: Build WAR
         working-directory: ./spring
-        # 임시로 test 빼고 빌드
-#        run: ./gradlew clean bootWar -x test
-        # test 포함 코드
-        run: ./gradlew clean bootWar
+        run: .\gradlew.bat clean bootWar  # Windows에서는 .bat 파일 실행
 
-      - name: Rename war file to ROOT.war
+      - name: Rename WAR to ROOT.war
+        shell: pwsh
         working-directory: ./spring
         run: |
-          mkdir -p ../deploy
-          cp build/libs/*.war ../deploy/ROOT.war
+          Remove-Item ..\deploy -Recurse -Force -ErrorAction SilentlyContinue
+          New-Item ..\deploy -ItemType Directory
+          Copy-Item .\build\libs\*.war ..\deploy\ROOT.war
 
       - name: Upload WAR to GABIA server
         uses: appleboy/scp-action@v0.1.4
@@ -46,7 +44,6 @@ jobs:
           source: "deploy/ROOT.war"
           target: "/usr/local/tomcat9_BE/webapps/"
 
-        #war 파일 전송이후 톰캣 restart
       - name: Restart Tomcat
         uses: appleboy/ssh-action@master
         with:
