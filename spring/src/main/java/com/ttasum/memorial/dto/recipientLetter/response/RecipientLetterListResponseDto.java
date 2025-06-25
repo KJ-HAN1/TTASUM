@@ -1,8 +1,8 @@
 package com.ttasum.memorial.dto.recipientLetter.response;
 
-import com.ttasum.memorial.domain.entity.heavenLetter.HeavenLetter;
+
 import com.ttasum.memorial.domain.entity.recipientLetter.RecipientLetter;
-import com.ttasum.memorial.dto.heavenLetter.response.HeavenLetterResponseDto;
+
 import com.ttasum.memorial.util.NameMaskUtil;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
