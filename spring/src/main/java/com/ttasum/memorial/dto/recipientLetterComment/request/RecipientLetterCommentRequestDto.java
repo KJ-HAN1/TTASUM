@@ -27,5 +27,8 @@ public class RecipientLetterCommentRequestDto {
 
     @NotBlank(message = "필수 입력값이 누락되었습니다.")
     private String contents;
+
+    //    @NotBlank(message = "캡차 토큰이 필요합니다.")
+    private String captchaToken;
 }
 

@@ -50,6 +50,9 @@ private int letterPaper;
 @Min(value = 0, message = "글꼴의 코드는 0~2 사이여야 합니다.")
 @Max(value = 2, message = "글꼴의 코드는 0~2 사이여야 합니다.")
 private int letterFont;
+
+//@NotBlank(message = "캡차 토큰이 필요합니다.")
+private String captchaToken;
 }
 
 

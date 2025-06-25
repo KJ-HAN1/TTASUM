@@ -9,11 +9,13 @@ import com.ttasum.memorial.dto.recipientLetterComment.request.RecipientLetterCom
 import com.ttasum.memorial.dto.recipientLetterComment.request.RecipientLetterCommentRequestDto;
 import com.ttasum.memorial.dto.recipientLetterComment.request.RecipientLetterCommentUpdateRequestDto;
 import com.ttasum.memorial.dto.recipientLetterComment.request.RecipientLetterCommentVerifyRequestDto;
+import com.ttasum.memorial.exception.common.badRequest.CaptchaVerificationFailedException;
 import com.ttasum.memorial.exception.common.conflict.AlreadyDeletedException;
 import com.ttasum.memorial.exception.common.badRequest.InvalidPasscodeException;
 import com.ttasum.memorial.exception.common.badRequest.PathVariableMismatchException;
 import com.ttasum.memorial.exception.common.notFound.NotFoundException;
 
+import com.ttasum.memorial.service.common.CaptchaVerifier;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,12 +29,15 @@ public class RecipientLetterCommentServiceImpl implements RecipientLetterComment
 
     private final RecipientLetterRepository recipientLetterRepository;
     private final RecipientLetterCommentRepository recipientLetterCommentRepository;
+    private final CaptchaVerifier captchaVerifier;
 
     //등록
     @Transactional
     @Override
     public void createComment(Integer letterSeq, RecipientLetterCommentRequestDto createCommentRequest) {
-
+        if (!captchaVerifier.verifyCaptcha(createCommentRequest.getCaptchaToken())) {
+            throw new CaptchaVerificationFailedException();
+        }
         // 경로와 본문 값 불일치 (400 Bad Request)
         if(!letterSeq.equals(createCommentRequest.getLetterSeq())) {
             throw new PathVariableMismatchException("수혜자 편지 번호와 요청 번호가 일치하지 않습니다.");

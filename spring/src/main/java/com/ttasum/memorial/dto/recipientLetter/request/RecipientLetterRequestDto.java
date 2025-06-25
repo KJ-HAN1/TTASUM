@@ -57,6 +57,8 @@ public class RecipientLetterRequestDto {
 
     private String writerId;
 
+    //    @NotBlank(message = "캡차 토큰이 필요합니다.")
+    private String captchaToken;
     }
 
 

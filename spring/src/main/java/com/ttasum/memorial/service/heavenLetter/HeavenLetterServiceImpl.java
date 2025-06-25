@@ -10,11 +10,13 @@ import com.ttasum.memorial.dto.heavenLetter.request.HeavenLetterVerifyRequestDto
 import com.ttasum.memorial.dto.heavenLetter.request.MemorialSearchRequestDto;
 import com.ttasum.memorial.dto.heavenLetter.response.*;
 import com.ttasum.memorial.domain.repository.heavenLetter.HeavenLetterRepository;
+import com.ttasum.memorial.exception.common.badRequest.CaptchaVerificationFailedException;
 import com.ttasum.memorial.exception.common.badRequest.InvalidPasscodeException;
 import com.ttasum.memorial.exception.common.badRequest.PathVariableMismatchException;
 import com.ttasum.memorial.exception.common.conflict.AlreadyDeletedException;
 import com.ttasum.memorial.exception.heavenLetter.HeavenLetterNotFoundException;
 import com.ttasum.memorial.exception.heavenLetter.MemorialNotFoundException;
+import com.ttasum.memorial.service.common.CaptchaVerifier;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,19 +41,27 @@ public class HeavenLetterServiceImpl implements HeavenLetterService {
     private final HeavenLetterRepository heavenLetterRepository;
     private final MemorialRepository memorialRepository;
     private final HeavenLetterCommentRepository heavenLetterCommentRepository;
+    private final CaptchaVerifier captchaVerifier;
     private final Logger log = LoggerFactory.getLogger(HeavenLetterServiceImpl.class);
 
     /* 편지 등록 */
     @Transactional
     @Override
     public void createLetter(HeavenLetterRequestDto heavenLetterRequestDto) {
+        if (!captchaVerifier.verifyCaptcha(heavenLetterRequestDto.getCaptchaToken())) {
+            throw new CaptchaVerificationFailedException();
+        }
 
         Memorial memorial = null;
         if (heavenLetterRequestDto.getDonateSeq() != null) {
             memorial = memorialRepository.findById(heavenLetterRequestDto.getDonateSeq())
                     .orElseThrow(MemorialNotFoundException::new);
         }
-
+        if(heavenLetterRequestDto.getDonateSeq() == null
+            || memorial == null
+            || !memorial.getDonorName().equals(heavenLetterRequestDto.getDonorName())){
+            throw new MemorialNotFoundException();
+        }
         HeavenLetter heavenLetter = HeavenLetter.builder()
                 .donateSeq(memorial)
                 .areaCode(heavenLetterRequestDto.getAreaCode())
@@ -114,6 +124,7 @@ public class HeavenLetterServiceImpl implements HeavenLetterService {
                     return HeavenLetterListResponseDto.fromEntity(letter, commentCount);
                 });
     }
+
     /* 편지 수정/삭제 전 비밀번호 검증 */
     @Transactional(readOnly = true)
     @Override
@@ -153,7 +164,11 @@ public class HeavenLetterServiceImpl implements HeavenLetterService {
             memorial = memorialRepository.findById(heavenLetterUpdateRequestDto.getDonateSeq())
                     .orElseThrow(MemorialNotFoundException::new);
         }
-
+        if(heavenLetterUpdateRequestDto.getDonateSeq() == null
+                || memorial == null
+                || !memorial.getDonorName().equals(heavenLetterUpdateRequestDto.getDonorName())){
+            throw new MemorialNotFoundException();
+        }
         //내용수정
         heavenLetterUpdate.updateLetterContents(heavenLetterUpdateRequestDto, memorial);
 
