@@ -48,9 +48,6 @@ public class DonationStoryCreateRequestDto {
 //    @NotBlank(message = "캡차 토큰이 필요합니다.")
     private String captchaToken;
 
-    @Size(max = 150)
-    private String donorName;
-
     @Size(max = 600)
     private String fileName;
 
@@ -71,7 +68,6 @@ public class DonationStoryCreateRequestDto {
         return DonationStory.builder()
                 .areaCode(this.areaCode)
                 .title(this.storyTitle)
-                .donorName(this.donorName)
                 .passcode(this.storyPasscode)
                 .writer(this.storyWriter)
                 .anonymityFlag(this.anonymityFlag)

@@ -39,9 +39,6 @@ public class DonationStoryResponseDto {
     private String modifierId;
     private String delFlag;
 
-    @MaskNameIfAnonymous
-    private String donorName;
-
     private String writerId;
 
     private Integer letterPaper;
@@ -69,7 +66,6 @@ public class DonationStoryResponseDto {
                 .modifyTime(entity.getModifyTime())
                 .modifierId(entity.getModifierId())
                 .delFlag(entity.getDelFlag())
-                .donorName(entity.getDonorName())
                 .letterPaper(entity.getLetterPaper())
                 .letterFont(entity.getLetterFont())
                 .comments(null)
@@ -104,7 +100,6 @@ public class DonationStoryResponseDto {
                 .modifyTime(entity.getModifyTime())
                 .modifierId(entity.getModifierId())
                 .delFlag(entity.getDelFlag())
-                .donorName(entity.getDonorName())
                 .letterPaper(entity.getLetterPaper())
                 .letterFont(entity.getLetterFont())
                 .comments(commentDtos)
