@@ -91,6 +91,4 @@ public class GlobalExceptionHandler {
                 .body(HeavenLetterResponseDto.fail(500, "서버 내부 오류가 발생했습니다"));
 
     }
-
-
 }

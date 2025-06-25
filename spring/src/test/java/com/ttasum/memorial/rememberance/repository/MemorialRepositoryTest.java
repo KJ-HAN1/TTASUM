@@ -9,11 +9,14 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -34,11 +37,19 @@ class MemorialRepositoryTest {
     @Autowired
     private EntityManager em;
 
-    @BeforeAll
-    static void loadEnv() {
+    @DynamicPropertySource
+    static void registerProperties(DynamicPropertyRegistry registry) {
         Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
-        System.setProperty("DB_PW", dotenv.get("DB_PW"));
+        registry.add("spring.datasource.password", () -> dotenv.get("DB_PW"));
+        String capKey = dotenv.get("CAP_KEY") != null
+                ? dotenv.get("CAP_KEY")
+                : System.getenv("CAP_KEY");
+
+        registry.add("turnstile.secret", () -> capKey);
     }
+
+    @Value("${turnstile.secret}")
+    private String turnstileSecret;
 
     @Test
     @DisplayName("findByDonateSeqAndDelFlag: delFlag='N' 이면 Optional.of 반환")

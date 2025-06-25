@@ -57,3 +57,9 @@ tasks.named('test') {
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
+
+//test환경시 커스텀 어펜더 접근 제한
+test {
+    useJUnitPlatform()
+    systemProperty 'spring.profiles.active', 'test'
+}
