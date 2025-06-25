@@ -15,9 +15,6 @@ public class DonationStoryListResponseDto {
     private String storyTitle;
     private String storyWriter;
 
-    @MaskNameIfAnonymous
-    private String donorName;
-
     private String areaCode;
     private Integer readCount;
     private LocalDateTime writeTime;
@@ -35,7 +32,6 @@ public class DonationStoryListResponseDto {
                 .storySeq(entity.getId())
                 .storyTitle(truncate(entity.getTitle()))
                 .storyWriter(entity.getWriter())
-                .donorName(entity.getDonorName())
                 .areaCode(entity.getAreaCode())
                 .readCount(entity.getReadCount())
                 .writeTime(entity.getWriteTime())

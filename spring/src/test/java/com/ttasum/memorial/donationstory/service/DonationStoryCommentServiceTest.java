@@ -61,7 +61,6 @@ class DonationStoryCommentServiceTest {
         DonationStory story = DonationStory.builder()
                 .areaCode("A01")
                 .title("제목")
-                .donorName("기증자")
                 .passcode("spw")
                 .writer("작성자")
                 .anonymityFlag("N")

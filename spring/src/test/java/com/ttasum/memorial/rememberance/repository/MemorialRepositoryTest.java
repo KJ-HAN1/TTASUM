@@ -69,6 +69,7 @@ class MemorialRepositoryTest {
                 .genderFlag("M")
                 .donateAge(30)
                 .writerId("u1")
+                .modifierId("test-modifier")
                 .donorBirthdate(LocalDate.of(1990,1,1))
                 .delFlag("N")
                 .build();
@@ -106,6 +107,7 @@ class MemorialRepositoryTest {
                 .genderFlag("F")
                 .donateAge(25)
                 .writerId("u2")
+                .modifierId("test-modifier")
                 .donorBirthdate(LocalDate.of(1995,5,5))
                 .delFlag("Y")
                 .build();
@@ -135,9 +137,9 @@ class MemorialRepositoryTest {
                 .donateDate("20240101")
                 .genderFlag("M")
                 .donateAge(50)
+                .modifierId("123")
                 .writerId("u1")
                 .delFlag("N")
-                .donorBirthdate(LocalDate.of(1970,1,1))
                 .build();
         Memorial m2 = Memorial.builder()
                 .donorName("김철수")
@@ -151,9 +153,9 @@ class MemorialRepositoryTest {
                 .donateDate("20240202")
                 .genderFlag("M")
                 .donateAge(45)
+                .modifierId("123")
                 .writerId("u2")
                 .delFlag("N")
-                .donorBirthdate(LocalDate.of(1975,2,2))
                 .build();
         em.persist(m1);
         em.persist(m2);
@@ -163,12 +165,14 @@ class MemorialRepositoryTest {
                 .memorial(m1)
                 .replyContents("댓글1")
                 .replyWriteTime(LocalDateTime.now())
+                .delFlag("N")
                 .build();
         em.persist(r1);
         MemorialReply r2 = MemorialReply.builder()
                 .memorial(m1)
                 .replyContents("댓글2")
                 .replyWriteTime(LocalDateTime.now())
+                .delFlag("N")
                 .build();
         em.persist(r2);
 

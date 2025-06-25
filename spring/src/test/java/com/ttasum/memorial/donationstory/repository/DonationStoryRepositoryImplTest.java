@@ -43,6 +43,7 @@ class DonationStoryRepositoryImplTest {
     static void registerProperties(DynamicPropertyRegistry registry) {
         Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
         registry.add("spring.datasource.password", () -> dotenv.get("DB_PW"));
+        System.out.println(dotenv.get("DB_PW"));
         String capKey = dotenv.get("CAP_KEY") != null
                 ? dotenv.get("CAP_KEY")
                 : System.getenv("CAP_KEY");
@@ -64,7 +65,6 @@ class DonationStoryRepositoryImplTest {
         DonationStory story = DonationStory.builder()
                 .areaCode("A01")
                 .title(title)
-                .donorName("기증자")
                 .passcode("pw")
                 .writer("작성자")
                 .anonymityFlag("N")
