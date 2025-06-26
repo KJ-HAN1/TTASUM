@@ -7,22 +7,22 @@ on:
 jobs:
   deploy:
     runs-on: self-hosted
-
+    
     steps:
       - name: Checkout source code
         uses: actions/checkout@v3
-
+        
       - name: Set DB_PW from Secrets
         shell: powershell
         run: |
           "DB_PW=${{ secrets.DB_PW }}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-
+          
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
           distribution: temurin
           java-version: 17
-
+          
       - name: Build WAR
         working-directory: ./spring
         run: .\gradlew.bat clean bootWar  # Windows에서는 .bat 파일 실행
@@ -34,7 +34,7 @@ jobs:
           Remove-Item ..\deploy -Recurse -Force -ErrorAction SilentlyContinue
           New-Item ..\deploy -ItemType Directory
           Copy-Item .\build\libs\*.war ..\deploy\ROOT.war
-
+          
       - name: Save SSH private key
         shell: powershell
         run: |
@@ -44,22 +44,24 @@ jobs:
             New-Item -ItemType Directory -Path $sshPath -Force | Out-Null
           }
           $privateKeyPath = "$sshPath\id_rsa"
-
-          # 기존 파일 있으면 삭제
+          
+          # 기존 파일 권한 조정 + 삭제
           if (Test-Path $privateKeyPath) {
+            icacls $privateKeyPath /grant:r "$($env:USERNAME):(F)" /c
             Remove-Item $privateKeyPath -Force
           }
-          # Set-Content로 파일 작성 (Out-File 대신)
+          
+          # 새 키 저장
           $key | Set-Content -Path $privateKeyPath -Encoding ascii
-          # 파일 권한 설정
+          
+          # 읽기 권한만 다시 설정
           icacls $privateKeyPath /inheritance:r /grant:r "$($env:USERNAME):(R)" /c
-
-
+          
       - name: Upload WAR to GABIA server (scp)
         shell: powershell
         run: |
           scp -i "$env:USERPROFILE\.ssh\id_rsa" deploy/ROOT.war ${{ secrets.GABIA_USER }}@${{ secrets.GABIA_HOST }}:/usr/local/tomcat9_BE/webapps/
-
+          
       - name: Restart Tomcat via SSH
         shell: powershell
         run: |
