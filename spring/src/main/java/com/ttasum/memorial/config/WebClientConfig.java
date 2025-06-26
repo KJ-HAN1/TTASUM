@@ -13,25 +13,15 @@ import reactor.netty.http.client.HttpClient;
 import java.time.Duration;
 
 @Configuration
-public class WebClientConfig implements WebMvcConfigurer {
+public class WebClientConfig {
 
-    // CORS 설정
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("http://koda.elementsoft.biz")
-                .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
-                .allowedHeaders("*")
-                .maxAge(3600); // 초
-    }
-
-    // 최대 대기 시간 설정
     private final HttpClient httpClient = HttpClient.create()
-            .responseTimeout(Duration.ofSeconds(20));
+            .responseTimeout(Duration.ofSeconds(40));
 
     @Bean
     public WebClient getWebClient() {
         return WebClient.builder()
-                .baseUrl("https://ttasum-chat-449284363153.asia-northeast3.run.app") // FastAPI 서버 주소
+                .baseUrl("https://ttasum-chat-449284363153.asia-northeast3.run.app")
                 .clientConnector(new ReactorClientHttpConnector(httpClient))
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
