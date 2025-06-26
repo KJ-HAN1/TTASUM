@@ -19,6 +19,7 @@ public class MemorialApplication extends SpringBootServletInitializer {
                 .ignoreIfMissing()
                 .load();
         System.setProperty("DB_PW", dotenv.get("DB_PW"));
+        System.setProperty("CAP_KEY", dotenv.get("CAP_KEY"));
 
         SpringApplication.run(MemorialApplication.class, args);
     }

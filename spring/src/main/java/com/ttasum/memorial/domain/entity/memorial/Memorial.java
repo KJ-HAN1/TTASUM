@@ -117,7 +117,7 @@ public class Memorial {
                      String writer, String donateDate, String genderFlag, Integer donateAge,
                      Integer flowerCount, Integer loveCount, Integer seeCount,
                      Integer missCount, Integer proudCount, Integer hardCount, Integer sadCount,
-                     String writerId, LocalDate donorBirthdate) {
+                     String writerId, LocalDate donorBirthdate, String modifierId) {
         this.donateSeq = donateSeq;
         this.donorName = donorName;
         this.anonymityFlag = anonymityFlag;
@@ -138,6 +138,7 @@ public class Memorial {
         this.hardCount = hardCount != null ? hardCount : 0;
         this.sadCount = sadCount != null ? sadCount : 0;
         this.writerId = writerId;
+        this.modifierId = modifierId;
         this.delFlag = "N";
         this.donorBirthdate = donorBirthdate;
     }

@@ -14,8 +14,10 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x ./spring/gradlew
 
-      - name: Set DB_PW from Secrets
-        run: echo "DB_PW=${{ secrets.DB_PW }}" >> $GITHUB_ENV
+      - name: Set DB_PW and CAP_KEY from Secrets
+        run: |
+          echo "DB_PW=${{ secrets.DB_PW }}" >> $GITHUB_ENV
+          echo "CAP_KEY=${{ secrets.CAP_KEY }}" >> $GITHUB_ENV
 
       - uses: actions/setup-java@v3
         with:

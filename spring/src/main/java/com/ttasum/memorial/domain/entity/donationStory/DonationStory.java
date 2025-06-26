@@ -25,9 +25,6 @@ public class DonationStory {
     @Column(name = "story_title", length = 600)
     private String title;
 
-    @Column(name = "donor_name", length = 150)
-    private String donorName;
-
     @Column(name = "story_passcode", length = 60)
     private String passcode;
 
@@ -75,14 +72,13 @@ public class DonationStory {
     private Integer letterFont;
 
     @Builder
-    public DonationStory(String areaCode, String title, String donorName,
+    public DonationStory(String areaCode, String title,
                          String passcode, String writer, String anonymityFlag,
                          Integer readCount, String contents, String fileName,
                          String originalFileName, String writerId, String modifierId,
                          Integer letterPaper, Integer letterFont) {
         this.areaCode = areaCode;
         this.title = title;
-        this.donorName = donorName;
         this.passcode = passcode;
         this.writer = writer;
         this.anonymityFlag = anonymityFlag;
