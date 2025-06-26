@@ -39,7 +39,7 @@ public class DbLogAppender extends AppenderBase<ILoggingEvent> {
 
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(
-                    "jdbc:mysql://13.125.154.31:3306/koda_2025?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8",
+                    "jdbc:mysql://139.150.65.219:3306/koda_2025?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8",
                     "root",
                     dbPassword
             );
