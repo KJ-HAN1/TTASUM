@@ -10,7 +10,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**") // 또는 특정 경로
                 .allowedOrigins("http://localhost:5173",
-                        "https://effulgent-sherbet-319007.netlify.app")
+                        "https://mellifluous-mousse-204c04.netlify.app/")
                 // 프론트 주소
                 .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS") // 꼭 PATCH, OPTIONS 포함
                 .allowedHeaders("*")
