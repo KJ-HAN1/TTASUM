@@ -7,22 +7,22 @@ on:
 jobs:
   deploy:
     runs-on: self-hosted
-
+    
     steps:
       - name: Checkout source code
         uses: actions/checkout@v3
-
+        
       - name: Set DB_PW from Secrets
         shell: powershell
         run: |
           "DB_PW=${{ secrets.DB_PW }}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-
+          
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
           distribution: temurin
           java-version: 17
-
+          
       - name: Build WAR
         working-directory: ./spring
         run: .\gradlew.bat clean bootWar  # Windows에서는 .bat 파일 실행
@@ -34,25 +34,35 @@ jobs:
           Remove-Item ..\deploy -Recurse -Force -ErrorAction SilentlyContinue
           New-Item ..\deploy -ItemType Directory
           Copy-Item .\build\libs\*.war ..\deploy\ROOT.war
-
-      - name: Upload WAR to GABIA server
-        uses: appleboy/scp-action@v0.1.4
-        with:
-          host: ${{ secrets.GABIA_HOST }}
-          username: ${{ secrets.GABIA_USER }}
-          key: ${{ secrets.GABIA_SSH_PRIVATE_KEY }}
-          port: 22
-          source: "deploy/ROOT.war"
-          target: "/usr/local/tomcat9_BE/webapps/"
-
-      - name: Restart Tomcat
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.GABIA_HOST }}
-          username: ${{ secrets.GABIA_USER }}
-          key: ${{ secrets.GABIA_SSH_PRIVATE_KEY }}
-          port: 22
-          script: |
-            bash /usr/local/tomcat9_BE/bin/shutdown.sh || true
-            sleep 3
-            bash /usr/local/tomcat9_BE/bin/startup.sh
+          
+      - name: Save SSH private key
+        shell: powershell
+        run: |
+          $key = "${{ secrets.GABIA_SSH_PRIVATE_KEY }}"
+          $sshPath = "$env:USERPROFILE\.ssh"
+          if (-not (Test-Path $sshPath)) {
+            New-Item -ItemType Directory -Path $sshPath -Force | Out-Null
+          }
+          $privateKeyPath = "$sshPath\id_rsa"
+          
+          # 기존 파일 권한 조정 + 삭제
+          if (Test-Path $privateKeyPath) {
+            icacls $privateKeyPath /grant:r "$($env:USERNAME):(F)" /c
+            Remove-Item $privateKeyPath -Force
+          }
+          
+          # 새 키 저장
+          $key | Set-Content -Path $privateKeyPath -Encoding ascii
+          
+          # 읽기 권한만 다시 설정
+          icacls $privateKeyPath /inheritance:r /grant:r "$($env:USERNAME):(R)" /c
+          
+      - name: Upload WAR to GABIA server (scp)
+        shell: powershell
+        run: |
+          scp -i "$env:USERPROFILE\.ssh\id_rsa" deploy/ROOT.war ${{ secrets.GABIA_USER }}@${{ secrets.GABIA_HOST }}:/usr/local/tomcat9_BE/webapps/
+          
+      - name: Restart Tomcat via SSH
+        shell: powershell
+        run: |
+          ssh -i "$env:USERPROFILE\.ssh\id_rsa" ${{ secrets.GABIA_USER }}@${{ secrets.GABIA_HOST }} "bash /usr/local/tomcat9_BE/bin/shutdown.sh || true; sleep 3; bash /usr/local/tomcat9_BE/bin/startup.sh"
