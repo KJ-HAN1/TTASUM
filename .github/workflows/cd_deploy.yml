@@ -40,9 +40,19 @@ jobs:
         run: |
           $key = "${{ secrets.GABIA_SSH_PRIVATE_KEY }}"
           $sshPath = "$env:USERPROFILE\.ssh"
-          if (-not (Test-Path $sshPath)) { New-Item -ItemType Directory -Path $sshPath }
-          $key | Out-File -FilePath "$sshPath\id_rsa" -Encoding ascii
-          icacls "$sshPath\id_rsa" /inheritance:r /grant:r "$($env:USERNAME):(R)" /c
+          if (-not (Test-Path $sshPath)) {
+            New-Item -ItemType Directory -Path $sshPath -Force | Out-Null
+          }
+          $privateKeyPath = "$sshPath\id_rsa"
+
+          # 기존 파일 있으면 삭제
+          if (Test-Path $privateKeyPath) {
+            Remove-Item $privateKeyPath -Force
+          }
+          # Set-Content로 파일 작성 (Out-File 대신)
+          $key | Set-Content -Path $privateKeyPath -Encoding ascii
+          # 파일 권한 설정
+          icacls $privateKeyPath /inheritance:r /grant:r "$($env:USERNAME):(R)" /c
 
 
       - name: Upload WAR to GABIA server (scp)
