@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set DB_PW from Secrets
-        shell: pwsh
+        shell: powershell
         run: |
           "DB_PW=${{ secrets.DB_PW }}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
@@ -28,31 +28,29 @@ jobs:
         run: .\gradlew.bat clean bootWar  # Windows에서는 .bat 파일 실행
 
       - name: Rename WAR to ROOT.war
-        shell: pwsh
+        shell: powershell
         working-directory: ./spring
         run: |
           Remove-Item ..\deploy -Recurse -Force -ErrorAction SilentlyContinue
           New-Item ..\deploy -ItemType Directory
           Copy-Item .\build\libs\*.war ..\deploy\ROOT.war
 
-      - name: Upload WAR to GABIA server
-        uses: appleboy/scp-action@v0.1.4
-        with:
-          host: ${{ secrets.GABIA_HOST }}
-          username: ${{ secrets.GABIA_USER }}
-          key: ${{ secrets.GABIA_SSH_PRIVATE_KEY }}
-          port: 22
-          source: "deploy/ROOT.war"
-          target: "/usr/local/tomcat9_BE/webapps/"
+      - name: Save SSH private key
+        shell: powershell
+        run: |
+          $key = "${{ secrets.GABIA_SSH_PRIVATE_KEY }}"
+          $sshPath = "$env:USERPROFILE\.ssh"
+          if (-not (Test-Path $sshPath)) { New-Item -ItemType Directory -Path $sshPath }
+          $key | Out-File -FilePath "$sshPath\id_rsa" -Encoding ascii
+          icacls "$sshPath\id_rsa" /inheritance:r /grant:r "$($env:USERNAME):(R)" /c
 
-      - name: Restart Tomcat
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.GABIA_HOST }}
-          username: ${{ secrets.GABIA_USER }}
-          key: ${{ secrets.GABIA_SSH_PRIVATE_KEY }}
-          port: 22
-          script: |
-            bash /usr/local/tomcat9_BE/bin/shutdown.sh || true
-            sleep 3
-            bash /usr/local/tomcat9_BE/bin/startup.sh
+
+      - name: Upload WAR to GABIA server (scp)
+        shell: powershell
+        run: |
+          scp -i "$env:USERPROFILE\.ssh\id_rsa" deploy/ROOT.war ${{ secrets.GABIA_USER }}@${{ secrets.GABIA_HOST }}:/usr/local/tomcat9_BE/webapps/
+
+      - name: Restart Tomcat via SSH
+        shell: powershell
+        run: |
+          ssh -i "$env:USERPROFILE\.ssh\id_rsa" ${{ secrets.GABIA_USER }}@${{ secrets.GABIA_HOST }} "bash /usr/local/tomcat9_BE/bin/shutdown.sh || true; sleep 3; bash /usr/local/tomcat9_BE/bin/startup.sh"
